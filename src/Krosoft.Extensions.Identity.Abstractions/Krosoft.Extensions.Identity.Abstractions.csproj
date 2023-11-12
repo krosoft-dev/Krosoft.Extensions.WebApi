@@ -2,16 +2,7 @@
 	<Import Project="../../Nuget.target" />
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Identity JWT abstraction</PackageTags>
-
-	 
-		<Description>Package d'abstraction pour faciliter la gestion de l'authentification.</Description>	
-
-
-
-
-
-
-
+		<Description>Package d'abstraction pour faciliter la gestion de l'authentification.</Description>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
