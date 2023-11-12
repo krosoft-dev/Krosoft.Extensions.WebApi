@@ -1,0 +1,24 @@
+name: Build 'api' - $(Date:yyyy.MM.dd).$(Rev:r)
+
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    include:
+      - "IzRoadbook.Api/*"
+
+variables:
+  - template: ./vars/vars.yml
+
+stages:
+  - template: ./templates/stages/build-template.yml
+    parameters:
+      vmImage: ${{ variables.vmImage }}
+      dotNetVersion: ${{ variables.dotNetVersion }}
+      buildConfiguration: ${{ variables.buildConfiguration }}
+      buildPlatform: ${{ variables.buildPlatform }}
+      buildProjects: ${{ variables.buildProjects }}
+      testProjects: ${{ variables.testProjects }}
+      warningThreshold: ${{ variables.warningThreshold }}
+      coverageThreshold: ${{ variables.coverageThreshold }}

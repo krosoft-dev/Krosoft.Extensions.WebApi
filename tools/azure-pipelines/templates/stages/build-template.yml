@@ -1,0 +1,43 @@
+parameters:
+  - name: vmImage
+    type: string
+  - name: dotNetVersion
+    type: string
+  - name: buildConfiguration
+    type: string
+  - name: buildPlatform
+    type: string
+  - name: buildProjects
+    type: string
+  - name: testProjects
+    type: string
+  - name: warningThreshold
+    type: string
+  - name: coverageThreshold
+    type: string
+
+stages:
+  - stage: Build
+    displayName: Build
+    jobs:
+      - job: Build
+        pool:
+          vmImage: ${{ parameters.vmImage }}
+        steps:
+          - template: ../steps/build-template.yml
+            parameters:
+              dotNetVersion: ${{ parameters.dotNetVersion }}
+              buildConfiguration: ${{ parameters.buildConfiguration }}
+              buildPlatform: ${{ parameters.buildPlatform }}
+              buildProjects: ${{ parameters.buildProjects }}
+
+          - template: ../steps/test-template.yml
+            parameters:
+              buildConfiguration: ${{ parameters.buildConfiguration }}
+              buildPlatform: ${{ parameters.buildPlatform }}
+              testProjects: ${{ parameters.testProjects }}
+
+          - template: ../steps/quality-template.yml
+            parameters:
+              warningThreshold: ${{ parameters.warningThreshold }}
+              coverageThreshold: ${{ parameters.coverageThreshold }}

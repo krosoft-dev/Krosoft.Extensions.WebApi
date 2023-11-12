@@ -1,0 +1,18 @@
+<Project>
+	<Import Project="Common.target" />
+  <PropertyGroup>
+	  <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+	  <IsPackable>true</IsPackable>
+	  
+	  
+	   
+	    
+
+	  <Copyright>Copyright © 2012</Copyright>	
+	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	  <Authors>Krosoft</Authors>
+	  
+	  
+	  
+  </PropertyGroup> 
+</Project>
