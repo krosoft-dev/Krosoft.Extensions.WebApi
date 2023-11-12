@@ -9,6 +9,9 @@ public class JwtSettings
     /// </summary>
     public string? Issuer { get; set; }
 
+
+
+    
     /// <summary>
     /// "aud" (Audience) Claim - The "aud" (audience) claim identifies the recipients that the JWT is intended for.
     /// </summary>
