@@ -1,0 +1,17 @@
+name: Nuget 'Krosoft.Extensions.Identity.Abstractions' - $(Date:yyyy.MM.dd).$(Rev:r)
+
+pr: none
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Identity.Abstractions/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+      - "Krosoft.Extensions.Core"
+      - "Krosoft.Extensions.Identity.Abstractions"

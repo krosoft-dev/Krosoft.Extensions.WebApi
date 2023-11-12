@@ -1,4 +1,4 @@
-name: Build 'api' - $(Date:yyyy.MM.dd).$(Rev:r)
+name: Build 'Krosoft.Extensions' - $(Date:yyyy.MM.dd).$(Rev:r)
 
 trigger:
   branches:

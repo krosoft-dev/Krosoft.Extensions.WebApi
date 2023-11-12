@@ -139,4 +139,13 @@ public static class DirectoryHelper
             }
         }
     }
+
+    public static void ClearDirectory(string directoryPath)
+    {
+        if (Directory.Exists(directoryPath))
+        {
+            var di = new DirectoryInfo(directoryPath);
+            di.Delete(true);
+        }
+    }
 }
