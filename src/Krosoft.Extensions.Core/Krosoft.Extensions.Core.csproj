@@ -2,9 +2,7 @@
 	<Import Project="../../Nuget.target" />
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Core Helper Extensions</PackageTags>
-
 		<Description>Classes de base, extensions et helpers pour simplifier le développement d'application.</Description>
-
 	</PropertyGroup>
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">

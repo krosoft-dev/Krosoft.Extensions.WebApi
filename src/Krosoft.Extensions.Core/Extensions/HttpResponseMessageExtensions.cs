@@ -32,7 +32,7 @@ public static class HttpResponseMessageExtensions
         var isValid = JsonHelper.IsValid(json);
         if (isValid)
         {
-            var obj = JsonConvert.DeserializeObject<ErrorApiModel>(json);
+            var obj = JsonConvert.DeserializeObject<ErrorApi>(json);
             if (obj != null)
             {
                 if (Enum.TryParse(obj.StatusCode, out HttpStatusCode colorValue))

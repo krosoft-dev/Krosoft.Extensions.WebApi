@@ -116,13 +116,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{F3FA9F67-63BE-4314-98AB-A4F62C133DB2}"
 	ProjectSection(SolutionItems) = preProject
 		Common.target = Common.target
-		Test.target = Test.target
 		Nuget.target = Nuget.target
+		Test.target = Test.target
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Testing.Tests", "tests\Krosoft.Extensions.Testing.Tests\Krosoft.Extensions.Testing.Tests.csproj", "{BE6AF83E-BCF2-4EEB-A409-9F2E94F88780}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Core.Tests", "tests\Krosoft.Extensions.Core.Tests\Krosoft.Extensions.Core.Tests.csproj", "{C8DDBDD4-E7CD-4DA5-914B-1C8B8F25DFD5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05.Identity", "05.Identity", "{3BD47F09-23D3-460F-A082-D10E3302BA9F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Identity.Abstractions", "src\Krosoft.Extensions.Identity.Abstractions\Krosoft.Extensions.Identity.Abstractions.csproj", "{A8519B78-E63F-47C3-9B1F-1199AB629BCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -792,6 +796,22 @@ Global
 		{C8DDBDD4-E7CD-4DA5-914B-1C8B8F25DFD5}.Release|x64.Build.0 = Release|Any CPU
 		{C8DDBDD4-E7CD-4DA5-914B-1C8B8F25DFD5}.Release|x86.ActiveCfg = Release|Any CPU
 		{C8DDBDD4-E7CD-4DA5-914B-1C8B8F25DFD5}.Release|x86.Build.0 = Release|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Debug|x64.Build.0 = Debug|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Debug|x86.Build.0 = Debug|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Release|ARM.Build.0 = Release|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Release|x64.ActiveCfg = Release|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Release|x64.Build.0 = Release|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Release|x86.ActiveCfg = Release|Any CPU
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -838,6 +858,7 @@ Global
 		{BB91CCD2-81AE-4996-AC88-D14E20D151BA} = {1BA9DB0A-8961-4AA1-BB81-F8C2820FCB52}
 		{BE6AF83E-BCF2-4EEB-A409-9F2E94F88780} = {BFBCA122-F9F1-4A26-BD18-DFBA1A0E69D5}
 		{C8DDBDD4-E7CD-4DA5-914B-1C8B8F25DFD5} = {8C3E2A08-6FB2-4265-B537-A5508A4EC026}
+		{A8519B78-E63F-47C3-9B1F-1199AB629BCE} = {3BD47F09-23D3-460F-A082-D10E3302BA9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FD07ECB-B4B5-4D65-8E03-10F0C97C77A9}
