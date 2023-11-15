@@ -16,23 +16,22 @@ public class SimplePasswordHasher : ISimplePasswordHasher
         Guard.IsNotNull(nameof(hash), hash);
         Guard.IsNotNull(nameof(salt), salt);
 
-        using (var hmac = new HMACSHA512(salt!))
-        {
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        using var hmac = new HMACSHA512(salt!);
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
-            return hash!.SequenceEqual(computedHash);
-        }
+        return hash!.SequenceEqual(computedHash);
     }
 
     public HashSalt CreatePasswordHash(string password)
     {
         Guard.IsNotNull(nameof(password), password);
-        var hs = new HashSalt();
-        using (var hmac = new HMACSHA512())
+
+        using var hmac = new HMACSHA512();
+        var hs = new HashSalt
         {
-            hs.Salt = hmac.Key;
-            hs.Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-        }
+            Salt = hmac.Key,
+            Hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password))
+        };
 
         return hs;
     }

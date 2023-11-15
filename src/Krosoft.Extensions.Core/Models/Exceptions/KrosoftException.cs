@@ -18,7 +18,9 @@ public class KrosoftException : Exception
     {
     }
 
+#if !NET8_0_OR_GREATER
     public KrosoftException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
     }
+#endif
 }

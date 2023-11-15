@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+#if NET8_0_OR_GREATER
+using Microsoft.AspNetCore.Http;
+#endif
 
 namespace Krosoft.Extensions.Identity.Extensions;
 
@@ -87,7 +90,14 @@ public static class ServiceCollectionExtensions
                         {
                             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                             {
-                                context.Response.Headers.Add("Token-Expired", "true");
+#if NET8_0_OR_GREATER
+                                context.Response.Headers.Append("Token-Expired", "true");
+#else
+                                if (!context.Response.Headers.ContainsKey("Token-Expired"))
+                                {
+                                    context.Response.Headers.Add("X-Frame-Options", "DENY");
+                                }
+#endif
                             }
 
                             return Task.CompletedTask;
