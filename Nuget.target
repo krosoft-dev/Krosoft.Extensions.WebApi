@@ -1,10 +1,12 @@
 <Project>
 	<Import Project="Common.target" />
   <PropertyGroup>
-	  <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-	  <IsPackable>true</IsPackable>  
-	  <Authors>Krosoft</Authors>
-	  <Copyright>Copyright © 2012</Copyright>	
-	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>	
+	<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+	<IsPackable>true</IsPackable>  
+	<Authors>Krosoft</Authors>
+	<Copyright>Copyright © 2012</Copyright> 
+	<RepositoryUrl>https://github.com/krosoft-dev/Krosoft.Extensions.git</RepositoryUrl> 
+	<RepositoryType>git</RepositoryType> 
+	<GeneratePackageOnBuild>false</GeneratePackageOnBuild>	
   </PropertyGroup> 
 </Project>
