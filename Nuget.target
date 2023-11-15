@@ -7,6 +7,7 @@
 	<Copyright>Copyright © 2012</Copyright> 
 	<RepositoryUrl>https://github.com/krosoft-dev/Krosoft.Extensions.git</RepositoryUrl> 
 	<RepositoryType>git</RepositoryType> 
+    <PackageLicenseExpression>MIT License</PackageLicenseExpression>
 	<GeneratePackageOnBuild>false</GeneratePackageOnBuild>	
   </PropertyGroup> 
 </Project>
