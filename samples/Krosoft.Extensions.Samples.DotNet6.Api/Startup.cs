@@ -20,8 +20,8 @@
 //using Krosoft.Extensions.Samples.DotNet6.Api.Strategies;
 //using Krosoft.Extensions.WebApi.Extensions;
 
-using Krosoft.Extensions.WebApi.Extensions;
 using System.Reflection;
+using Krosoft.Extensions.WebApi.Extensions;
 
 namespace Krosoft.Extensions.Samples.DotNet6.Api;
 
@@ -43,7 +43,8 @@ public class Startup
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
-    {        services.AddWebApi( Assembly.GetExecutingAssembly(), _configuration );
+    {
+        services.AddWebApi(Assembly.GetExecutingAssembly(), _configuration);
 
         //
         //services.AddApplication(Assembly.GetExecutingAssembly());

@@ -1,6 +1,4 @@
-﻿
-
-//using System.ComponentModel.DataAnnotations;
+﻿//using System.ComponentModel.DataAnnotations;
 //using IzRoadbook.Api.Handlers.Queries.Roadbooks;
 //using IzRoadbook.Api.Models.Commands.Roadbooks;
 //using IzRoadbook.Api.Models.Dto;
@@ -57,12 +55,6 @@
 //        return BadRequestResult();
 //    }
 //}
-
-
-
-
-
-
 
 //namespace IzRoadbook.Api.Controllers;
 
@@ -157,3 +149,4 @@
 //		CancellationToken cancellationToken)
 //		=> await Mediator.Send(command, cancellationToken);
 //}
+

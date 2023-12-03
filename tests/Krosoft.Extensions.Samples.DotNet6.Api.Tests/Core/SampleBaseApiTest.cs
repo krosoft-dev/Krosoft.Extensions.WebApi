@@ -1,6 +1,5 @@
 ﻿using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Testing.WebApi;
-using Krosoft.Extensions.WebApi.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Krosoft.Extensions.Samples.DotNet6.Api.Tests.Core;
@@ -10,8 +9,6 @@ public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, TEntry> wh
 {
     protected override void ConfigureServices(IServiceCollection services)
     {
-      
-
         //// Remove DbContext registration.
         //services.RemoveService(d => d.ServiceType == typeof(DbContextOptions<PositiveExtensionTenantContext>));
         //services.AddDbContextInMemory<PositiveExtensionTenantContext>(true);

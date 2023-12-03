@@ -57,7 +57,6 @@ public class LogicielsController : ApiControllerBase
                    .ToCsvStreamResult()
                    .ToFileStreamResult();
 
-
     [HttpGet("Export/Pdf")]
     public Task<FileStreamResult> ExportPdfAsync(CancellationToken cancellationToken)
         => Mediator.Send(new LogicielsExportPdfQuery(), cancellationToken)

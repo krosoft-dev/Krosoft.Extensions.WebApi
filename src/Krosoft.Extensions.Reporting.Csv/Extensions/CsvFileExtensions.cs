@@ -27,7 +27,7 @@ public static class CsvFileExtensions
         }
     }
 
-    public static IFileStream  ToCsvStreamResult<T>(this CsvFileData<T> csvStreamFile)
+    public static IFileStream ToCsvStreamResult<T>(this CsvFileData<T> csvStreamFile)
     {
         var memoryStream = csvStreamFile.ToMemoryStream();
         return new CsvFileStream(memoryStream, csvStreamFile.FileName);

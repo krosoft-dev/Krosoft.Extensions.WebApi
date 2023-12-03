@@ -15,10 +15,10 @@ public class HelloControllerTests : ControllerBaseTest<HelloController>
     {
         var expectedOutput = "Hello-World";
 
-        Mock!.Setup(x => x.Send(It.IsAny<HelloWorlQuery>(), CancellationToken.None))
-             .ReturnsAsync(() => expectedOutput);
+        Mock.Setup(x => x.Send(It.IsAny<HelloWorlQuery>(), CancellationToken.None))
+            .ReturnsAsync(() => expectedOutput);
 
-        var result = await Controller!.HelloWorldAsync(CancellationToken.None);
+        var result = await Controller.HelloWorldAsync(CancellationToken.None);
 
         Mock.Verify(x => x.Send(It.IsAny<HelloWorlQuery>(), CancellationToken.None), Times.Once());
 

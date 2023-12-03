@@ -2,10 +2,10 @@
 
 namespace Krosoft.Extensions.Core.Models;
 
-public class PdfFileStream  : GenericFileStream
+public class PdfFileStream : GenericFileStream
 {
-    public PdfFileStream (Stream stream,
-                               string fileName)
+    public PdfFileStream(Stream stream,
+                         string fileName)
         : base(stream, fileName, MediaTypeNames.Application.Pdf)
     {
     }

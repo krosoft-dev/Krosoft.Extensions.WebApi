@@ -12,5 +12,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
+	  <ProjectReference Include="..\Krosoft.Extensions.Mapping\Krosoft.Extensions.Mapping.csproj" />
 	</ItemGroup>
 </Project>

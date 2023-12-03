@@ -52,8 +52,9 @@ public static class ServiceCollectionExtensions
         });
 
         //Services.
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly, typeof(ServiceCollectionExtensions).Assembly));
-
+        var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly, currentAssembly));
+        services.AddAutoMapper(assembly, currentAssembly);
         return services;
     }
 }

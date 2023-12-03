@@ -104,7 +104,7 @@ public class TaskListExtensionsTests
         var adressesUnique = await task!.DistinctBy(x => x.Ville).ToList();
 
         Check.That(adressesUnique).HasSize(5);
-        Check.That(adressesUnique!.Select(x => x.Ville)).ContainsExactly("city3", "city4", "city", "city1", "city2");
+        Check.That(adressesUnique.Select(x => x.Ville)).ContainsExactly("city3", "city4", "city", "city1", "city2");
     }
 
     [TestMethod]
@@ -112,7 +112,7 @@ public class TaskListExtensionsTests
     {
         var adresses = AddresseFactory.GetAdresses();
         var task = Task.FromResult(adresses.ToList());
-        var adressesUnique = await task!.DistinctBy(x => x.Ville);
+        var adressesUnique = await task.DistinctBy(x => x.Ville);
 
         Check.That(adressesUnique).HasSize(5);
         Check.That(adressesUnique.Select(x => x.Ville)).ContainsExactly("city3", "city4", "city", "city1", "city2");
