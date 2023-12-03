@@ -58,13 +58,17 @@ public static class StreamExtensions
     /// </summary>
     /// <param name="filePath">Chemin du fichier.</param>
     /// <param name="stream">Contenu du fichier.</param>
+    /// <param name="cancellationToken">Token d’annulation</param>
     /// <returns>Tache asynchrone.</returns>
-    public static async Task WriteAsync(this Stream stream, string filePath)
+    public static async Task WriteAsync(this Stream stream,
+                                        string filePath,
+                                        CancellationToken cancellationToken)
     {
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
         Guard.IsNotNull(nameof(stream), stream);
 
-        await FileHelper.WriteAsync(filePath, stream).ConfigureAwait(false);
+        await FileHelper.WriteAsync(filePath, stream, cancellationToken)
+                        .ConfigureAwait(false);
     }
 
     /// <summary>

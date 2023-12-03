@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿#if !NET8_0_OR_GREATER
+using System.Runtime.Serialization;
+#endif
 
 namespace Krosoft.Extensions.Core.Models.Exceptions;
 

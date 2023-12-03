@@ -4,8 +4,8 @@ namespace Krosoft.Extensions.Samples.Library.Factories;
 
 public static class UtilisateurFactory
 {
-    public static Utilisateur CreateUtilisateur(string nom, string prenom) =>
-        new Utilisateur
+    public static UtilisateurBasique CreateUtilisateur(string nom, string prenom) =>
+        new UtilisateurBasique
         {
             Nom = nom,
             Prenom = prenom,

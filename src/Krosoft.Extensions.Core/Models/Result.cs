@@ -32,3 +32,12 @@ public readonly struct Result<T>
     public bool IsSuccess => Exception == null;
     public bool IsFaulted => !IsSuccess;
 }
+
+
+
+
+
+
+
+
+ 

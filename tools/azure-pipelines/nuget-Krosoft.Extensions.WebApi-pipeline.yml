@@ -1,0 +1,19 @@
+name: Nuget 'Krosoft.Extensions.WebApi' - $(Date:yyyy.MM.dd).$(Rev:r)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.WebApi/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.WebApi"
+     - "Krosoft.Extensions.Core"
+

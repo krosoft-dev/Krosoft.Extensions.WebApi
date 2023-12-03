@@ -1,0 +1,17 @@
+name: Nuget 'KRO_PACKAGE_NAME' - $(Date:yyyy.MM.dd).$(Rev:r)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/KRO_PACKAGE_NAME/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+KRO_PACKAGES

@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+
+  # krosoft-extensions.postgres:
+  #   image: "postgres:14.3-alpine"
+  #   restart: on-failure
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: "positive_extensions"
+
+  # krosoft-extensions.redis:
+  #   image: redis:7.0.2-alpine
+  #   restart: on-failure
+
+    
+ 
+  krosoft-extensions.samples.dotnet6.api:
+    image: ${DOCKER_REGISTRY-}krosoft-extensions.samples.dotnet6.api:${TAG_VERSION}
+
+  # krosoft-extensions.samples.dotnet7.api:
+  #   image: ${DOCKER_REGISTRY-}krosoft-extensions.samples.dotnet7.api:${TAG_VERSION}

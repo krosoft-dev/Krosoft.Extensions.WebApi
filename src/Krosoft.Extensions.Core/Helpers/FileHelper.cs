@@ -436,11 +436,13 @@ public static class FileHelper
     /// </summary>
     /// <param name="filePath">Chemin du fichier.</param>
     /// <param name="stream">Contenu du fichier.</param>
+    /// <param name="cancellationToken">Token d’annulation</param>
     /// <returns>Tache asynchrone.</returns>
     /// <exception cref="SecurityException">L'appelant n'a pas l'autorisation requise.</exception>
     /// <exception cref="UnauthorizedAccessException">L'accès à <paramref name="filePath" /> est refusé.</exception>
     public static async Task WriteAsync(string filePath,
-                                        Stream stream)
+                                        Stream stream,
+                                        CancellationToken cancellationToken)
     {
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
         Guard.IsNotNull(nameof(stream), stream);
@@ -451,12 +453,10 @@ public static class FileHelper
             DirectoryHelper.CreateDirectoryIfNotExist(fi.DirectoryName);
         }
 
-        using (var destinationFichier = new FileStream(fi.FullName, FileMode.Create))
-        {
-            await stream.CopyToAsync(destinationFichier).ConfigureAwait(false);
-            destinationFichier.Flush();
-            destinationFichier.Close();
-        }
+        await using var destinationFichier = new FileStream(fi.FullName, FileMode.Create);
+        await stream.CopyToAsync(destinationFichier, cancellationToken).ConfigureAwait(false);
+        await destinationFichier.FlushAsync(cancellationToken);
+        destinationFichier.Close();
     }
 
     public static async Task WriteAsync(string filePath,
@@ -494,7 +494,7 @@ public static class FileHelper
 
         return files;
     }
- 
+
     public static string ComputeFileHash(byte[] clearBytes)
     {
         using (var sha1 = SHA1.Create())

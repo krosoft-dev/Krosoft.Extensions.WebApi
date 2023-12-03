@@ -16,7 +16,7 @@ public class SimplePasswordHasherTests : BaseTest
     private const string SaltString = "4j3KMAwlAA82fJ4d90EUhL8NVOOoj+22wLY1gX/I8/befgVogSNZnVnU8w8IifbzzTVF7ptTZ5Vf8VZiz6gVP3ZudkI5KWdwq/6/iTWCcY+5AG6nE/z4DTgIoz6yHAw1JIiSkWNUXgglsSHFqRfvUiW1nBlsQC7KdWAgjyQJgqU=";
     private ISimplePasswordHasher? _passwordHasher;
 
-    protected override void AddServices(ServiceCollection services, IConfiguration configuration)
+    protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddIdentityEx();
     }

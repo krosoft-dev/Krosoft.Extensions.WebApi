@@ -95,7 +95,7 @@ public static class ServiceCollectionExtensions
 #else
                                 if (!context.Response.Headers.ContainsKey("Token-Expired"))
                                 {
-                                    context.Response.Headers.Add("X-Frame-Options", "DENY");
+                                    context.Response.Headers.Add("Token-Expired", "true");
                                 }
 #endif
                             }

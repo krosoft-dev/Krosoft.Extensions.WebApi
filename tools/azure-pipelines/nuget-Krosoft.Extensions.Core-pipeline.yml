@@ -1,6 +1,7 @@
 name: Nuget 'Krosoft.Extensions.Core' - $(Date:yyyy.MM.dd).$(Rev:r)
 
 pr: none
+
 trigger:
   branches:
     include:
@@ -13,4 +14,5 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-      - "Krosoft.Extensions.Core"
+     - "Krosoft.Extensions.Core"
+

@@ -36,7 +36,9 @@ public static class NFluentExtension
         }
     }
 
-    public static IEnumerable Extracting<T>(this DataTable dt, Expression<Func<T, object>> expression) => dt.Rows.Extracting(expression);
+    public static IEnumerable Extracting<T>(this DataTable dt,
+                                            Expression<Func<T, object>> expression)
+        => dt.Rows.Extracting(expression);
 
     public static ICheck<string> IsFileEqualToEmbeddedFile(this ICheck<string> checkFilePath, Assembly executingAssembly, string resourceName, int numberOfLine)
     {

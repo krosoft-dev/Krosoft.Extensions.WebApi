@@ -15,7 +15,7 @@ public class ClaimsBuilderServiceTests : BaseTest
 {
     private IClaimsBuilderService? _claimsBuilderService;
 
-    protected override void AddServices(ServiceCollection services, IConfiguration configuration)
+    protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddIdentityEx();
     }

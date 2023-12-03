@@ -15,11 +15,11 @@ public static class MockExtensions
                                It.IsAny<EventId>(),
                                It.Is<It.IsAnyType>((o, t) => o.ToString()!.Contains(message)),
                                It.IsAny<Exception>(),
-                               (Func<It.IsAnyType, Exception, string>)It.IsAny<object>()),
+                               ((Func<It.IsAnyType, Exception, string>)It.IsAny<object>())!),
                     times);
     }
 
-    public static ICheck<Mock<T>> Verify<T>(this ICheck<Mock<T>> check, Expression<Action<T>> expression, Func<Times> times, string failMessage = null)
+    public static ICheck<Mock<T>> Verify<T>(this ICheck<Mock<T>> check, Expression<Action<T>> expression, Func<Times> times, string? failMessage = null)
         where T : class
     {
         var runnableCheck = ExtensibilityHelper.ExtractChecker(check);

@@ -1,11 +1,10 @@
 ﻿using System.Security.Claims;
 
-namespace Krosoft.Extensions.Identity.Abstractions.Interfaces
+namespace Krosoft.Extensions.Identity.Abstractions.Interfaces;
+
+public interface IJwtTokenGenerator
 {
-    public interface IJwtTokenGenerator
-    {
-        string CreateToken(string identifier, IEnumerable<Claim> claims);
-       
-        string? GetIdentifierFromToken(string accessToken); 
-    }
+    string CreateToken(string identifier, IEnumerable<Claim> claims);
+
+    string? GetIdentifierFromToken(string accessToken);
 }

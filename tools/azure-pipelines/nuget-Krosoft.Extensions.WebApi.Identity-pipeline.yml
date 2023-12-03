@@ -1,0 +1,19 @@
+name: Nuget 'Krosoft.Extensions.WebApi.Identity' - $(Date:yyyy.MM.dd).$(Rev:r)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.WebApi.Identity/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.WebApi.Identity"
+     - "Krosoft.Extensions.Core"
+

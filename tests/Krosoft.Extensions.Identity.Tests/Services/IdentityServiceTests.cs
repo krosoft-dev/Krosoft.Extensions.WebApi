@@ -18,7 +18,7 @@ public class IdentityServiceTests : BaseTest
     private const string ProprietaireId = "test";
     private IIdentityService? _identityService;
 
-    protected override void AddServices(ServiceCollection services, IConfiguration configuration)
+    protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddIdentityEx();
 

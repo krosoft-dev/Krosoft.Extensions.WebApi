@@ -1,0 +1,20 @@
+name: Nuget 'Krosoft.Extensions.Testing.Cqrs' - $(Date:yyyy.MM.dd).$(Rev:r)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Testing.Cqrs/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.Testing.Cqrs"
+     - "Krosoft.Extensions.Cqrs"
+     - "Krosoft.Extensions.Testing"
+

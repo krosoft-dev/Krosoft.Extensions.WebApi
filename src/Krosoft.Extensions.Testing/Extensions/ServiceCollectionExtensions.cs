@@ -31,7 +31,7 @@ public static class ServiceCollectionExtensions
     public static void SwapTransient<TService>(this IServiceCollection services, Func<IServiceProvider, TService> implementationFactory)
     {
         services.RemoveTransient<TService>();
-        services.AddTransient(typeof(TService), sp => implementationFactory(sp));
+        services.AddTransient(typeof(TService), sp => implementationFactory(sp) ?? throw new InvalidOperationException());
     }
 
     public static void SwapTransient<TService, TImplementation>(this IServiceCollection services)
