@@ -1,4 +1,4 @@
-name: Nuget 'Krosoft.Extensions.Reporting.Csv' - $(Date:yyyy.MM.dd).$(Rev:r)
+name: Nuget 'Krosoft.Extensions.Reporting.Csv' - $(Date:yyyy.MM.dd).$(BuildID)
 
 pr: none
 

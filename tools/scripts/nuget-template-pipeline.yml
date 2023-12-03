@@ -1,4 +1,4 @@
-name: Nuget 'KRO_PACKAGE_NAME' - $(Date:yyyy.MM.dd).$(Rev:r)
+name: Nuget 'KRO_PACKAGE_NAME' - $(Date:yyyy.MM.dd).$(BuildID)
 
 pr: none
 
