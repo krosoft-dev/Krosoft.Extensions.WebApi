@@ -1,0 +1,19 @@
+name: Nuget 'Krosoft.Extensions.Data.Json' - $(Date:yyyy.MM.dd).$(BuildID)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Data.Json/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.Data.Json"
+     - "Krosoft.Extensions.Core"
+

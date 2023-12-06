@@ -8,7 +8,7 @@ namespace Krosoft.Extensions.Core.Models.Exceptions;
 /// </summary>
 public class KrosoftMetierException : HttpException
 {
-    public KrosoftMetierException(HashSet<string> erreurs) : base(HttpStatusCode.BadRequest, erreurs.FirstOrDefault())
+    public KrosoftMetierException(ISet<string> erreurs) : base(HttpStatusCode.BadRequest, erreurs.FirstOrDefault())
     {
         Erreurs = erreurs;
     }

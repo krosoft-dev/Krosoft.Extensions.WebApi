@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../Nuget.target" />
+	<PropertyGroup>
+		<PackageTags>Krosoft Extension validations FluentValidation</PackageTags>
+		<Description>Package pour faciliter les validations.</Description>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.6.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
+	</ItemGroup>
+</Project>

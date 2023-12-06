@@ -1,0 +1,6 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../Test.target" />
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Validations\Krosoft.Extensions.Validations.csproj" />
+	</ItemGroup>
+</Project>
