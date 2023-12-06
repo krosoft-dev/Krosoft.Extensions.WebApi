@@ -5,7 +5,7 @@ using NFluent;
 namespace Krosoft.Extensions.Core.Tests.Extensions;
 
 [TestClass]
-public class StringExtensionTests
+public class StringExtensionsTests
 {
     [TestMethod]
     public void MatchTest()
@@ -55,5 +55,13 @@ public class StringExtensionTests
     {
         Check.That("včľťšľžšžščýščýťčáčáčťáčáťýčťž".RemoveDiacritics()).IsEqualTo("vcltslzszscyscytcacactacatyctz");
         Check.That("Rez-de-chaussée".RemoveDiacritics()).IsEqualTo("Rez-de-chaussee");
+    }
+
+    [TestMethod]
+    public void Replace_Ok()
+    {
+        char[] separators = { ';', '.', ',' };
+        var input = "this;is,a.test".Replace(separators, " ");
+        Check.That(input).IsEqualTo("this is a test");
     }
 }

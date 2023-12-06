@@ -6,52 +6,12 @@ public class UtilisateurBasique : IEquatable<UtilisateurBasique>
     public string? Prenom { get; set; }
     public DateTime DateModification { get; set; }
 
-    public bool Equals(UtilisateurBasique? other)
-    {
-        if (ReferenceEquals(null, other))
-        {
-            return false;
-        }
+    public bool Equals(UtilisateurBasique? other) =>
+        other != null &&
+        Nom == other.Nom &&
+        Prenom == other.Prenom;
 
-        if (ReferenceEquals(this, other))
-        {
-            return true;
-        }
+    public override bool Equals(object? obj) => Equals(obj as UtilisateurBasique);
 
-        return Nom == other.Nom && Prenom == other.Prenom;
-    }
-
-    public override bool Equals(object? obj)
-    {
-        if (ReferenceEquals(null, obj))
-        {
-            return false;
-        }
-
-        if (ReferenceEquals(this, obj))
-        {
-            return true;
-        }
-
-        if (obj.GetType() != GetType())
-        {
-            return false;
-        }
-
-        return Equals((UtilisateurBasique)obj);
-    }
-
-    public override int GetHashCode()
-    {
-        unchecked
-        {
-            return ((Nom != null
-                        ? Nom.GetHashCode()
-                        : 0) *
-                    397) ^
-                   (Prenom != null
-                       ? Prenom.GetHashCode()
-                       : 0);
-        }
-    }
+    public override int GetHashCode() => HashCode.Combine(Nom, Prenom);
 }

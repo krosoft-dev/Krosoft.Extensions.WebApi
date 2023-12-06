@@ -5,6 +5,20 @@ namespace Krosoft.Extensions.Core.Converters;
 
 public class NullableIntegerConverter : JsonConverter<int?>
 {
+    private readonly CultureInfo _culture;
+
+    public NullableIntegerConverter(CultureInfo? culture = null)
+    {
+        if (culture == null)
+        {
+            _culture = CultureInfo.InvariantCulture;
+        }
+        else
+        {
+            _culture = culture;
+        }
+    }
+
     public override void WriteJson(JsonWriter writer, int? value, JsonSerializer serializer)
     {
         writer.WriteValue(value);
@@ -20,7 +34,7 @@ public class NullableIntegerConverter : JsonConverter<int?>
                 var value = new string(input.Where(char.IsDigit).ToArray());
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    return int.Parse(value, CultureInfo.InvariantCulture);
+                    return int.Parse(value, _culture);
                 }
             }
         }

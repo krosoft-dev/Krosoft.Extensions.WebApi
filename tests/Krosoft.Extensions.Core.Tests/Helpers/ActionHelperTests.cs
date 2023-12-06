@@ -16,7 +16,8 @@ public class ActionHelperTests
 
         var adresses = await ActionHelper.ApplyWithAsync(cities, CompteFactory.ToCompteAsync);
 
-        Check.That(adresses).HasSize(5);
-        Check.That(adresses.Select(x => x.Name)).ContainsExactly("city3", "city4", "city", "city1", "city2");
+        var list = adresses.ToList();
+        Check.That(list).HasSize(5);
+        Check.That(list.Select(x => x.Name)).ContainsExactly("city3", "city4", "city", "city1", "city2");
     }
 }

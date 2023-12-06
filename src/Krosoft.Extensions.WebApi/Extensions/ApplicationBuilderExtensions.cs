@@ -4,6 +4,7 @@ using Krosoft.Extensions.WebApi.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -13,13 +14,9 @@ public static class ApplicationBuilderExtensions
 {
     public static IApplicationBuilder UseWebApi(this IApplicationBuilder builder,
                                                 IWebHostEnvironment env,
-                                                IConfiguration configuration) =>
-        builder.UseWebApi(env, configuration, null);
-
-    public static IApplicationBuilder UseWebApi(this IApplicationBuilder builder,
-                                                IWebHostEnvironment env,
                                                 IConfiguration configuration,
-                                                Action<IApplicationBuilder>? action)
+                                                Action<IApplicationBuilder>? actionBuilder = null,
+                                                Action<IEndpointRouteBuilder>? actionEndpoints = null)
     {
         if (env.IsDevelopment())
         {
@@ -35,9 +32,10 @@ public static class ApplicationBuilderExtensions
         builder.UseAuthentication();
         builder.UseAuthorization();
         builder.UseMiddlewares(true);
-        if (action != null)
+
+        if (actionBuilder != null)
         {
-            action(builder);
+            actionBuilder(builder);
         }
 
         //builder.UseHealthChecksExt(env);
@@ -47,6 +45,10 @@ public static class ApplicationBuilderExtensions
         builder.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
+            if (actionEndpoints != null)
+            {
+                actionEndpoints(endpoints);
+            }
             //endpoints.MapHealthChecksExt();
         });
         return builder;

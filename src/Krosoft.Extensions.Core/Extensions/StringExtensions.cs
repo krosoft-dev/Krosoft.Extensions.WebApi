@@ -282,4 +282,10 @@ public static class StringExtensions
     public static string Sanitize(this string fileName,
                                   string replacement = "_")
         => RemoveInvalidChars.Replace(fileName, replacement).RemoveSpecials();
+
+    public static string Replace(this string s, char[] separators, string input)
+    {
+        var temp = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+        return string.Join(input, temp);
+    }
 }

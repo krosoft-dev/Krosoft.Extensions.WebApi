@@ -135,12 +135,10 @@ public static class StringComparaisonHelper
         // Step 1
         for (var i = 0; i <= sourceLength; distance[i, 0] = i++)
         {
-            ;
         }
 
         for (var j = 0; j <= targetLength; distance[0, j] = j++)
         {
-            ;
         }
 
         for (var i = 1; i <= sourceLength; i++)

@@ -1,4 +1,4 @@
-name: Nuget 'Krosoft.Extensions.WebApi' - $(Date:yyyy.MM.dd).$(BuildID)
+name: Nuget 'Krosoft.Extensions.WebApi.Swagger' - $(Date:yyyy.MM.dd).$(BuildID)
 
 pr: none
 
@@ -8,13 +8,12 @@ trigger:
       - main
   paths:
     include:
-      - "**/Krosoft.Extensions.WebApi/*"
+      - "**/Krosoft.Extensions.WebApi.Swagger/*"
 
 extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     - "Krosoft.Extensions.WebApi"
+     - "Krosoft.Extensions.WebApi.Swagger"
      - "Krosoft.Extensions.Core"
-     - "Krosoft.Extensions.Mapping"
 

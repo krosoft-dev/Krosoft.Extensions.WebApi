@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../Nuget.target" />
+	<PropertyGroup>
+		<PackageTags>Krosoft Extension Web Api AspNetCore swagger health checks</PackageTags>
+		<Description>Package pour faciliter l'utilisation de Swagger et HealthChecks avec ASP.NET Core.</Description>
+	</PropertyGroup> 	
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup> 	
+	<ItemGroup>
+	  <ProjectReference Include="..\Krosoft.Extensions.WebApi.HealthChecks\Krosoft.Extensions.WebApi.HealthChecks.csproj" />
+	  <ProjectReference Include="..\Krosoft.Extensions.WebApi.Swagger\Krosoft.Extensions.WebApi.Swagger.csproj" />
+	</ItemGroup> 	
+ 
+</Project>

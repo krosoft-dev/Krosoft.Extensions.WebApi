@@ -19,20 +19,7 @@ public static class ServiceCollectionExtensions
         services.AddAuthorization();
         services.AddCors();
         services.AddControllers();
-
-        services.AddResponseCompression(options =>
-        {
-            options.Providers.Add<BrotliCompressionProvider>();
-            options.Providers.Add<GzipCompressionProvider>();
-        });
-
-        services.Configure<BrotliCompressionProviderOptions>(options => { options.Level = CompressionLevel.Fastest; });
-
-#if NET6_0_OR_GREATER
-        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.SmallestSize; });
-#else
-        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.Optimal; });
-#endif
+        services.AddCompression();
 
         services.AddHttpContextAccessor();
         services.AddLocalization();
@@ -55,6 +42,24 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly, currentAssembly));
         services.AddAutoMapper(assembly, currentAssembly);
+        return services;
+    }
+
+    public static IServiceCollection AddCompression(this IServiceCollection services)
+    {
+        services.AddResponseCompression(options =>
+        {
+            options.Providers.Add<BrotliCompressionProvider>();
+            options.Providers.Add<GzipCompressionProvider>();
+        });
+
+        services.Configure<BrotliCompressionProviderOptions>(options => { options.Level = CompressionLevel.Fastest; });
+
+#if NET6_0_OR_GREATER
+        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.SmallestSize; });
+#else
+        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.Optimal; });
+#endif
         return services;
     }
 }

@@ -22,6 +22,10 @@
 
 using System.Reflection;
 using Krosoft.Extensions.WebApi.Extensions;
+using Krosoft.Extensions.WebApi.HealthChecks.Extensions;
+using Krosoft.Extensions.WebApi.Swagger.Extensions;
+using Krosoft.Extensions.WebApi.Swagger.HealthChecks.Extensions;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Krosoft.Extensions.Samples.DotNet6.Api;
 
@@ -38,23 +42,29 @@ public class Startup
     public void Configure(IApplicationBuilder app,
                           IWebHostEnvironment env)
     {
-        app.UseWebApi(env, _configuration);
+        app.UseWebApi(env, _configuration,
+                      builder => builder.UseHealthChecksExt(env),
+                      endpoints => endpoints.MapHealthChecksExt())
+           .UseSwaggerExt();
     }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddWebApi(Assembly.GetExecutingAssembly(), _configuration);
+        var currentAssembly = Assembly.GetExecutingAssembly();
+        services.AddWebApi(currentAssembly, _configuration)
+                .AddSwagger(currentAssembly, options => options.AddHealthChecks().AddSecurityBearer().AddSecurityApiKey());
 
         //
         //services.AddApplication(Assembly.GetExecutingAssembly());
         //services.AddInfrastructure(_configuration);
         //services.AddJwtAuthentication(_configuration).AddBlocking(_configuration);
 
-        //services.AddHealthChecks()
-        //        .AddCheck("test", () => HealthCheckResult.Healthy())
-        //        .AddRedisCheck()
-        //        .AddDbContextCheck<KrosoftExtensionTenantContext>("KrosoftExtensionTenantContext");
+        services.AddHealthChecks()
+                .AddCheck("Test_Endpoint", () => HealthCheckResult.Healthy())
+            //        .AddRedisCheck()
+            //        .AddDbContextCheck<KrosoftExtensionTenantContext>("KrosoftExtensionTenantContext")
+            ;
 
         ////Data.
         //services.AddRepositories();

@@ -8,4 +8,6 @@ public class Item
     public string? Description { get; set; }
     public bool IsActif { get; set; }
     public DateTime Date { get; set; }
+    public int? ValeurInt { get; set; }
+    public decimal? ValeurDecimal { get; set; }
 }

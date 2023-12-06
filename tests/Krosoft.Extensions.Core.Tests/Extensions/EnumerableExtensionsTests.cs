@@ -69,8 +69,8 @@ public class EnumerableExtensionsTests
         var adresses = await AddresseFactory.GetAdresses()
                                             .Select(c => c.Ville)
                                             .ApplyWithAsync(CompteFactory.ToCompteAsync);
-
-        Check.That(adresses).HasSize(5);
-        Check.That(adresses.Select(x => x.Name)).ContainsExactly("city3", "city4", "city", "city1", "city2");
+        var list = adresses.ToList();
+        Check.That(list).HasSize(5);
+        Check.That(list.Select(x => x.Name)).ContainsExactly("city3", "city4", "city", "city1", "city2");
     }
 }

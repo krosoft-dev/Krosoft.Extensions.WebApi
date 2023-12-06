@@ -114,8 +114,9 @@ public class TaskEnumerableExtensionsTests
         var task = Task.FromResult(adresses.ToList());
         var adressesUnique = await task.DistinctBy(x => x.Ville);
 
-        Check.That(adressesUnique).HasSize(5);
-        Check.That(adressesUnique.Select(x => x.Ville)).ContainsExactly("city3", "city4", "city", "city1", "city2");
+        var list = adressesUnique.ToList();
+        Check.That(list).HasSize(5);
+        Check.That(list.Select(x => x.Ville)).ContainsExactly("city3", "city4", "city", "city1", "city2");
     }
 
     [TestMethod]

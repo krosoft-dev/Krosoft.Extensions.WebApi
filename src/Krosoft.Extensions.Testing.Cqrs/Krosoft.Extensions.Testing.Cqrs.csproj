@@ -5,7 +5,7 @@
 		<Description>Package pour faciliter la mise en place de tests avec CQRS.</Description>
 	</PropertyGroup>
  	<ItemGroup> 
-	  <PackageReference Include="MediatR" Version="12.1.1" />
+	  <PackageReference Include="MediatR" Version="12.2.0" />
 	</ItemGroup>
 	<ItemGroup> 
 	  <ProjectReference Include="..\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />

@@ -245,26 +245,32 @@ public static class EnumerableExtensions
     }
 
     public static IDictionary<string, TValue> ToDictionary<TValue>(this IEnumerable<TValue> source,
-                                                                   Func<TValue, string> selector,
+                                                                   Func<TValue, string>? selector,
                                                                    Func<string, string> modificator,
                                                                    bool useDistinct)
     {
         Guard.IsNotNull(nameof(source), source);
+        Guard.IsNotNull(nameof(selector), source);
 
-        return source.Where(x => selector(x) != null).ToDictionary(x => modificator(selector(x)), useDistinct);
+        return source.Where(x => selector?.Invoke(x) != null).ToDictionary(x => modificator(selector!(x)), useDistinct);
     }
 
     public static IReadOnlyDictionary<string, TValue> ToReadOnlyDictionary<TValue>(this IEnumerable<TValue> source,
-                                                                                   Func<TValue, string> selector,
+                                                                                   Func<TValue, string>? selector,
                                                                                    Func<string, string> modificator,
                                                                                    bool useDistinct)
     {
         Guard.IsNotNull(nameof(source), source);
+        Guard.IsNotNull(nameof(selector), source);
 
-        return source.Where(x => selector(x) != null).ToReadOnlyDictionary(x => modificator(selector(x)), useDistinct);
+        return source.Where(x => selector?.Invoke(x) != null).ToReadOnlyDictionary(x => modificator(selector!(x)), useDistinct);
     }
 
-    public static int MaxOrDefault<T>(this IEnumerable<T> enumeration, Func<T, int> selector) => enumeration.Any() ? enumeration.Max(selector) : default;
+    public static int MaxOrDefault<T>(this IEnumerable<T> enumeration, Func<T, int> selector)
+    {
+        var enumerable = enumeration.ToList();
+        return enumerable.Any() ? enumerable.Max(selector) : default;
+    }
 
 #if !NET6_0_OR_GREATER
     /// <summary>
