@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.WebApi.Middlewares;
 using Krosoft.Extensions.WebApi.Models;
 using Microsoft.AspNetCore.Builder;
@@ -29,32 +28,7 @@ public static class ApplicationBuilderExtensions
         var webApiSettings = new WebApiSettings();
         configuration.GetSection(nameof(WebApiSettings)).Bind(webApiSettings);
 
-        if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
-        {
-            builder.UseCors(policy =>
-            {
-                policy.AllowAnyMethod();
-
-                if (webApiSettings.AllowedOrigins.Any())
-                {
-                    policy.WithOrigins(webApiSettings.AllowedOrigins);
-                }
-                else
-                {
-                    policy.AllowAnyOrigin();
-                }
-
-                if (webApiSettings.ExposedHeaders.Any())
-                {
-                    policy.WithExposedHeaders(webApiSettings.ExposedHeaders);
-                }
-                else
-                {
-                    policy.AllowAnyHeader();
-                }
-            });
-        }
-
+        builder.UseCors(webApiSettings);
         builder.UseAuthentication();
         builder.UseAuthorization();
         builder.UseMiddlewares(true);
@@ -64,7 +38,7 @@ public static class ApplicationBuilderExtensions
             actionBuilder(builder);
         }
 
-        builder.UseCultures(configuration);
+        builder.UseCultures(webApiSettings);
         builder.UseResponseCompression();
 
         builder.UseEndpoints(endpoints =>
@@ -90,31 +64,62 @@ public static class ApplicationBuilderExtensions
                .UseMiddleware<RequestLoggingMiddleware>();
     }
 
-    public static IApplicationBuilder UseCultures(this IApplicationBuilder builder, IConfiguration configuration)
+    public static IApplicationBuilder UseCors(this IApplicationBuilder builder, WebApiSettings? webApiSettings)
     {
-        var configurationSection = configuration.GetSection("AppSettings:Cultures");
-        if (configurationSection == null)
+        if (webApiSettings != null)
         {
-            throw new KrosoftTechniqueException("Impossible de trouver la clé AppSettings:Cultures dans la configuration.");
+            if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
+            {
+                builder.UseCors(policy =>
+                {
+                    policy.AllowAnyMethod();
+
+                    if (webApiSettings.AllowedOrigins.Any())
+                    {
+                        policy.WithOrigins(webApiSettings.AllowedOrigins);
+                    }
+                    else
+                    {
+                        policy.AllowAnyOrigin();
+                    }
+
+                    if (webApiSettings.ExposedHeaders.Any())
+                    {
+                        policy.WithExposedHeaders(webApiSettings.ExposedHeaders);
+                    }
+                    else
+                    {
+                        policy.AllowAnyHeader();
+                    }
+                });
+            }
         }
 
-        var cultures = configurationSection.Get<string[]>();
-        if (cultures != null && cultures.Any())
+        return builder;
+    }
+
+    public static IApplicationBuilder UseCultures(this IApplicationBuilder builder, WebApiSettings? webApiSettings)
+    {
+        if (webApiSettings != null)
         {
-            IList<CultureInfo> supportedCultures = new List<CultureInfo>();
+            if (webApiSettings.Cultures.Any())
 
-            foreach (var culture in cultures)
             {
-                supportedCultures.Add(new CultureInfo(culture));
+                IList<CultureInfo> supportedCultures = new List<CultureInfo>();
+
+                foreach (var culture in webApiSettings.Cultures)
+                {
+                    supportedCultures.Add(new CultureInfo(culture));
+                }
+
+                var localizationOptions = new RequestLocalizationOptions
+                {
+                    DefaultRequestCulture = new RequestCulture(webApiSettings.Cultures[0]),
+                    SupportedCultures = supportedCultures,
+                    SupportedUICultures = supportedCultures
+                };
+                builder.UseRequestLocalization(localizationOptions);
             }
-
-            var localizationOptions = new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture(cultures[0]),
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures
-            };
-            builder.UseRequestLocalization(localizationOptions);
         }
 
         return builder;
