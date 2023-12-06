@@ -1,6 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Reflection;
 using FluentValidation;
+using Krosoft.Extensions.WebApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -18,7 +19,15 @@ public static class ServiceCollectionExtensions
                                                IConfiguration configuration)
     {
         services.AddAuthorization();
-        services.AddCors();
+
+        var webApiSettings = new WebApiSettings();
+        configuration.GetSection(nameof(WebApiSettings)).Bind(webApiSettings);
+
+        if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
+        {
+            services.AddCors();
+        }
+
         services.AddControllers();
         services.AddCompression();
 

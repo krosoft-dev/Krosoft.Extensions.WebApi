@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.WebApi.Middlewares;
+using Krosoft.Extensions.WebApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -25,9 +26,34 @@ public static class ApplicationBuilderExtensions
 
         builder.UseRouting();
 
-        builder.UseCors(b => b.AllowAnyMethod()
-                              .AllowAnyHeader()
-                              .AllowAnyOrigin());
+        var webApiSettings = new WebApiSettings();
+        configuration.GetSection(nameof(WebApiSettings)).Bind(webApiSettings);
+
+        if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
+        {
+            builder.UseCors(policy =>
+            {
+                policy.AllowAnyMethod();
+
+                if (webApiSettings.AllowedOrigins.Any())
+                {
+                    policy.WithOrigins(webApiSettings.AllowedOrigins);
+                }
+                else
+                {
+                    policy.AllowAnyOrigin();
+                }
+
+                if (webApiSettings.ExposedHeaders.Any())
+                {
+                    policy.WithExposedHeaders(webApiSettings.ExposedHeaders);
+                }
+                else
+                {
+                    policy.AllowAnyHeader();
+                }
+            });
+        }
 
         builder.UseAuthentication();
         builder.UseAuthorization();
@@ -38,7 +64,6 @@ public static class ApplicationBuilderExtensions
             actionBuilder(builder);
         }
 
-        //builder.UseHealthChecksExt(env);
         builder.UseCultures(configuration);
         builder.UseResponseCompression();
 
@@ -49,7 +74,6 @@ public static class ApplicationBuilderExtensions
             {
                 actionEndpoints(endpoints);
             }
-            //endpoints.MapHealthChecksExt();
         });
         return builder;
     }
