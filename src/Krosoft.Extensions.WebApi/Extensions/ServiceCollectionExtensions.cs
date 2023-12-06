@@ -1,5 +1,6 @@
 ﻿using System.IO.Compression;
 using System.Reflection;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -42,6 +43,7 @@ public static class ServiceCollectionExtensions
         var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly, currentAssembly));
         services.AddAutoMapper(assembly, currentAssembly);
+        services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
         return services;
     }
 
