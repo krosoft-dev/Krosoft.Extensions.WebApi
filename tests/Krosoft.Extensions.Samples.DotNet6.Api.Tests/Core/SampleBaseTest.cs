@@ -23,7 +23,7 @@ public abstract class SampleBaseTest<TEntry> : BaseTest
         //services.AddApplication(executingAssembly)
         //        .AddInfrastructure(configuration)
         //    ;
-        services.AddWebApi(executingAssembly, configuration);
+        services.AddWebApi(configuration, executingAssembly);
 
         ////Data.
         //services.AddRepositories();

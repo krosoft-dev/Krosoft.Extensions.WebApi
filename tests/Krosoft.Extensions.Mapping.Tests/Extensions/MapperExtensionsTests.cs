@@ -21,7 +21,7 @@ public class MapperExtensionsTests : BaseTest
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddWebApi(typeof(CompteProfile).Assembly, configuration);
+        services.AddWebApi(configuration, typeof(CompteProfile).Assembly);
     }
 
     [TestInitialize]

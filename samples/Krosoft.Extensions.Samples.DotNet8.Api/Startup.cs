@@ -21,6 +21,7 @@
 //using Krosoft.Extensions.WebApi.Extensions;
 
 using System.Reflection;
+using Krosoft.Extensions.Samples.Library.Mappings;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.HealthChecks.Extensions;
 using Krosoft.Extensions.WebApi.Swagger.Extensions;
@@ -52,7 +53,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         var currentAssembly = Assembly.GetExecutingAssembly();
-        services.AddWebApi(currentAssembly, _configuration)
+        services.AddWebApi(_configuration, currentAssembly, typeof(CompteProfile).Assembly)
                 .AddSwagger(currentAssembly, options => options.AddHealthChecks().AddSecurityBearer().AddSecurityApiKey());
 
         //

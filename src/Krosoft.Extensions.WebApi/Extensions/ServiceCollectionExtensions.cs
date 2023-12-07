@@ -15,8 +15,8 @@ namespace Krosoft.Extensions.WebApi.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWebApi(this IServiceCollection services,
-                                               Assembly assembly,
-                                               IConfiguration configuration)
+                                               IConfiguration configuration,
+                                               params Assembly[] assemblies)
     {
         services.AddAuthorization();
 
@@ -48,11 +48,13 @@ public static class ServiceCollectionExtensions
             });
         });
 
-        //Services.
-        var currentAssembly = typeof(ServiceCollectionExtensions).Assembly;
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assembly, currentAssembly));
-        services.AddAutoMapper(assembly, currentAssembly);
-        services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
+        var all = new List<Assembly> { typeof(ServiceCollectionExtensions).Assembly };
+        all.AddRange(assemblies);
+
+        //Services. 
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(all.ToArray()));
+        services.AddAutoMapper(all);
+        services.AddValidatorsFromAssemblies(all, includeInternalTypes: true);
         return services;
     }
 

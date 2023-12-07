@@ -95,9 +95,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Data.Jso
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Validations.Tests", "tests\Krosoft.Extensions.Validations.Tests\Krosoft.Extensions.Validations.Tests.csproj", "{2E035E53-8A5B-46E3-A1A5-271EA866250B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krosoft.Extensions.Samples.DotNet8.Api", "samples\Krosoft.Extensions.Samples.DotNet8.Api\Krosoft.Extensions.Samples.DotNet8.Api.csproj", "{BA0569FE-D278-4687-9986-9780E2EFC64C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Samples.DotNet8.Api", "samples\Krosoft.Extensions.Samples.DotNet8.Api\Krosoft.Extensions.Samples.DotNet8.Api.csproj", "{BA0569FE-D278-4687-9986-9780E2EFC64C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krosoft.Extensions.Samples.DotNet8.Api.Tests", "tests\Krosoft.Extensions.Samples.DotNet8.Api.Tests\Krosoft.Extensions.Samples.DotNet8.Api.Tests.csproj", "{2FFCC052-3C13-4E06-98B7-519A1ABEC465}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Samples.DotNet8.Api.Tests", "tests\Krosoft.Extensions.Samples.DotNet8.Api.Tests\Krosoft.Extensions.Samples.DotNet8.Api.Tests.csproj", "{2FFCC052-3C13-4E06-98B7-519A1ABEC465}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krosoft.Extensions.Samples.DotNet8.BlazorApp", "samples\Krosoft.Extensions.Samples.DotNet8.BlazorApp\Krosoft.Extensions.Samples.DotNet8.BlazorApp.csproj", "{DA634485-86E1-4F58-97F5-18B370FBE856}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -655,6 +657,22 @@ Global
 		{2FFCC052-3C13-4E06-98B7-519A1ABEC465}.Release|x64.Build.0 = Release|Any CPU
 		{2FFCC052-3C13-4E06-98B7-519A1ABEC465}.Release|x86.ActiveCfg = Release|Any CPU
 		{2FFCC052-3C13-4E06-98B7-519A1ABEC465}.Release|x86.Build.0 = Release|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Debug|ARM.Build.0 = Debug|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Debug|x64.Build.0 = Debug|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Debug|x86.Build.0 = Debug|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Release|ARM.ActiveCfg = Release|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Release|ARM.Build.0 = Release|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Release|x64.ActiveCfg = Release|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Release|x64.Build.0 = Release|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Release|x86.ActiveCfg = Release|Any CPU
+		{DA634485-86E1-4F58-97F5-18B370FBE856}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -694,6 +712,7 @@ Global
 		{2E035E53-8A5B-46E3-A1A5-271EA866250B} = {1DCE243A-7652-45C9-8779-621489B87469}
 		{BA0569FE-D278-4687-9986-9780E2EFC64C} = {1BA9DB0A-8961-4AA1-BB81-F8C2820FCB52}
 		{2FFCC052-3C13-4E06-98B7-519A1ABEC465} = {1BA9DB0A-8961-4AA1-BB81-F8C2820FCB52}
+		{DA634485-86E1-4F58-97F5-18B370FBE856} = {1BA9DB0A-8961-4AA1-BB81-F8C2820FCB52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FD07ECB-B4B5-4D65-8E03-10F0C97C77A9}
