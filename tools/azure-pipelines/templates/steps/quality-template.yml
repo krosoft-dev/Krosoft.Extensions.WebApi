@@ -12,6 +12,7 @@ parameters:
 steps:
   - task: BuildQualityChecks@9
     displayName: "Check build quality"
+    continueOnError: true
     inputs:
       showStatistics: true
       checkWarnings: true

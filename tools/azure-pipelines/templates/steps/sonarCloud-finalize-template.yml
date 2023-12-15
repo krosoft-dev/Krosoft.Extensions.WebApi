@@ -1,0 +1,10 @@
+steps:
+  - task: SonarCloudAnalyze@1
+    displayName: "Analyze SonarCloud"
+    inputs:
+      jdkversion: "JAVA_HOME_17_X64"
+
+  - task: SonarCloudPublish@1
+    displayName: "Publish SonarCloud"
+    inputs:
+      pollingTimeoutSec: "300"

@@ -12,3 +12,9 @@ variables:
   warningThreshold: 10
   coverageThreshold: 10
   disable.coverage.autogenerate: "true"
+
+  #SonarCloud
+  sonarCloudEndpoint: "SonarCloud"
+  sonarCloudOrganization: "krosoft-dev"
+  sonarCloudProjectKey: "krosoft-dev_Krosoft.Extensions"
+  sonarCloudProjectName: "Krosoft.Extensions"

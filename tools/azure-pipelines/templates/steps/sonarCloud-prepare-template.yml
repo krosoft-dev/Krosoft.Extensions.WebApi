@@ -1,0 +1,26 @@
+parameters:
+  - name: sonarCloudEndpoint
+    type: string
+
+  - name: sonarCloudOrganization
+    type: string
+
+  - name: sonarCloudProjectKey
+    type: string
+
+  - name: sonarCloudProjectName
+    type: string
+
+steps:
+  - task: SonarCloudPrepare@1
+    displayName: "Prepare SonarCloud"
+    inputs:
+      SonarCloud: ${{ parameters.sonarCloudEndpoint }}
+      organization: ${{ parameters.sonarCloudOrganization }}
+      scannerMode: "MSBuild"
+      projectKey: ${{ parameters.sonarCloudProjectKey }}
+      projectName: ${{ parameters.sonarCloudProjectName }}
+      extraProperties: |
+        # Additional properties that will be passed to the scanner, 
+        # Put one key=value per line, example:
+        # sonar.exclusions=**/*.bin

@@ -19,3 +19,9 @@ stages:
       testProjects: ${{ variables.testProjects }}
       warningThreshold: ${{ variables.warningThreshold }}
       coverageThreshold: ${{ variables.coverageThreshold }}
+      sonarCloudEndpoint: ${{ variables.sonarCloudEndpoint }}
+      sonarCloudOrganization: ${{ variables.sonarCloudOrganization }}
+      sonarCloudProjectKey: ${{ variables.sonarCloudProjectKey }}
+      sonarCloudProjectName: ${{ variables.sonarCloudProjectName }}
+      runUnitTests: true
+      runSonarCloudAnalyze: true
