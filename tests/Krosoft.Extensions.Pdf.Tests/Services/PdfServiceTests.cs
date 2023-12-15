@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Core.Models;

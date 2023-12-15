@@ -1,7 +1,7 @@
 ﻿using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Core.Models;
-using Krosoft.Extensions.Samples.DotNet8.Api.Models.Queries;
 using Krosoft.Extensions.Samples.Library.Factories;
+using Krosoft.Extensions.Samples.Library.Models.Queries;
 using Krosoft.Extensions.Zip.Interfaces;
 using MediatR;
 using Newtonsoft.Json;

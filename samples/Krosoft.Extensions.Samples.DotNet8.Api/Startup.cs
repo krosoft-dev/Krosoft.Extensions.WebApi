@@ -21,6 +21,8 @@
 //using Krosoft.Extensions.WebApi.Extensions;
 
 using System.Reflection;
+using Krosoft.Extensions.Cache.Distributed.Redis.Extensions;
+using Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.Extensions;
 using Krosoft.Extensions.Pdf.Extensions;
 using Krosoft.Extensions.Samples.Library.Mappings;
 using Krosoft.Extensions.WebApi.Extensions;
@@ -65,7 +67,7 @@ public class Startup
 
         services.AddHealthChecks()
                 .AddCheck("Test_Endpoint", () => HealthCheckResult.Healthy())
-            //        .AddRedisCheck()
+                  .AddRedisCheck()
             //        .AddDbContextCheck<KrosoftExtensionTenantContext>("KrosoftExtensionTenantContext")
             ;
 
@@ -76,8 +78,8 @@ public class Startup
         //services.AddRepositories();
         //services.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(_configuration);
 
-        ////Cache. 
-        //services.AddDistributedCacheExt();
+        //Cache. 
+         services.AddDistributedCacheExt();
         //services.AddCacheHandlers();
         //services.AddCacheRefreshHostedService(_configuration);
         //services.AddScoped<ICategorieCacheService, CategorieCacheService>();

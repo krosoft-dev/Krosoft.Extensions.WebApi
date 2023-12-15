@@ -4,9 +4,9 @@ using AutoMapper.QueryableExtensions;
 using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Reporting.Csv.Extensions;
 using Krosoft.Extensions.Reporting.Csv.Models;
-using Krosoft.Extensions.Samples.DotNet8.Api.Models.Queries;
 using Krosoft.Extensions.Samples.Library.Factories;
 using Krosoft.Extensions.Samples.Library.Models.Dto;
+using Krosoft.Extensions.Samples.Library.Models.Queries;
 using MediatR;
 
 namespace Krosoft.Extensions.Samples.DotNet8.Api.Handlers.Queries;

@@ -14,7 +14,7 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
     [TestMethod]
     public async Task HealthCheck_Ok()
     {
-        Factory = GetFactoryRedis(true);
+        Factory = GetFactory();
         var client = Factory.CreateClient();
         var response = await client.GetAsync("/Health/Check");
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
@@ -25,10 +25,10 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
         Check.That(model.Duration).IsNotEmpty();
         Check.That(model.Checks).IsNotNull();
         var checks = model.Checks.OrderBy(c => c.Key).ToList();
-        Check.That(checks).HasSize(2);
-        Check.That(checks.Select(c => c.Key)).ContainsExactly("self", "Test_Endpoint");
-        Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy");
-        Check.That(checks.Select(c => c.Description)).ContainsExactly(null, null);
+        Check.That(checks).HasSize(3);
+        Check.That(checks.Select(c => c.Key)).ContainsExactly("Redis", "self", "Test_Endpoint");
+        Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy", "Healthy");
+        Check.That(checks.Select(c => c.Description)).ContainsExactly("Ping Redis en 5s", null, null);
         //Check.That(checks).HasSize(4);
         //Check.That(checks.Select(c => c.Key)).ContainsExactly("PositiveExtensionTenantContext", "Redis", "self", "test");
         //Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy", "Healthy", "Healthy");
@@ -38,7 +38,7 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
     [TestMethod]
     public async Task HealthReadiness_Ok()
     {
-        Factory = GetFactoryRedis(true);
+        Factory = GetFactory();
         var client = Factory.CreateClient();
         var response = await client.GetAsync("/Health/Readiness");
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
@@ -50,9 +50,9 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
 
         Check.That(model.Entries).IsNotNull();
         var entries = model.Entries.OrderBy(c => c.Key).ToList();
-        Check.That(entries).HasSize(2);
-        Check.That(entries.Select(c => c.Key)).ContainsExactly("self", "Test_Endpoint");
-        Check.That(entries.Select(c => c.Value.Status)).ContainsExactly(UIHealthStatus.Healthy, UIHealthStatus.Healthy);
+        Check.That(entries).HasSize(3);
+        Check.That(entries.Select(c => c.Key)).ContainsExactly("Redis", "self", "Test_Endpoint");
+        Check.That(entries.Select(c => c.Value.Status)).ContainsExactly(UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy);
         //Check.That(entries).HasSize(4);
         //Check.That(entries.Select(c => c.Key)).ContainsExactly("PositiveExtensionTenantContext", "Redis", "self", "test");
         //Check.That(entries.Select(c => c.Value.Status)).ContainsExactly(UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy);
@@ -61,7 +61,7 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
     [TestMethod]
     public async Task HealthLiveness_Ok()
     {
-        Factory = GetFactoryRedis(true);
+        Factory = GetFactory();
         var client = Factory.CreateClient();
         var response = await client.GetAsync("/Health/Liveness");
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);

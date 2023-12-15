@@ -9,11 +9,9 @@ services:
   #     POSTGRES_USER: postgres
   #     POSTGRES_PASSWORD: "positive_extensions"
 
-  # krosoft-extensions.redis:
-  #   image: redis:7.0.2-alpine
-  #   restart: on-failure
-
-    
+  krosoft-extensions.redis:
+    image: redis:7.2.3-alpine3.19
+    restart: on-failure    
  
   krosoft-extensions.samples.dotnet6.api:
     image: ${DOCKER_REGISTRY-}krosoft-extensions.samples.dotnet6.api:${TAG_VERSION}

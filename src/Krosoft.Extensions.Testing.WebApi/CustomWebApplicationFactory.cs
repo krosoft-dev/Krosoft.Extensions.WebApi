@@ -26,7 +26,7 @@ public class CustomWebApplicationFactory<TStartup, TKrosoftContext> : WebApplica
     //where TKrosoftContext : KrosoftContext
 {
     private readonly Action<KrosoftToken>? _actionConfigureClaims;
-    private readonly Action<IServiceCollection> _actionConfigureServices;
+    private readonly Action<IServiceCollection>? _actionConfigureServices;
     private readonly bool _useFakeAuth;
 
     public CustomWebApplicationFactory(Action<IServiceCollection> actionConfigureServices,
@@ -70,10 +70,10 @@ public class CustomWebApplicationFactory<TStartup, TKrosoftContext> : WebApplica
             //services.RemoveServices(d => d.ImplementationType != null && d.ImplementationType.BaseType == typeof(InfiniteBackgroundService));
             //services.RemoveServices(d => d.ImplementationType != null && d.ImplementationType.BaseType == typeof(ScheduledHostedService));
 
-            //if (_actionConfigureServices != null)
-            //{
-            //    _actionConfigureServices(services);
-            //}
+            if (_actionConfigureServices != null)
+            {
+                _actionConfigureServices(services);
+            }
 
             //if (_useFakeAuth)
             //{

@@ -26,7 +26,7 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
         Factory = new CustomWebApplicationFactory<TStartup, TPositiveContext>(ConfigureServices, ConfigureClaims, UseFakeAuth);
     }
 
-    protected abstract void ConfigureServices(IServiceCollection obj);
+    protected abstract void ConfigureServices(IServiceCollection services);
 
     protected abstract void ConfigureClaims(KrosoftToken krosoftToken);
 
@@ -36,22 +36,12 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
         Factory.Dispose();
     }
 
-    protected CustomWebApplicationFactory<TStartup, TPositiveContext> GetFactoryRedis(bool fakeRedis)
+    protected CustomWebApplicationFactory<TStartup, TPositiveContext> GetFactory(   )
     {
         void Action(IServiceCollection services)
         {
             ConfigureServices(services);
-
-            //if (fakeRedis)
-            //{
-            //    //Mock pour Redis.
-            //    var mockDistributedCacheProvider = new Mock<IDistributedCacheProvider>();
-            //    mockDistributedCacheProvider.Setup(x => x.PingAsync(CancellationToken.None))
-            //                                .ReturnsAsync(() => throw new NotImplementedException());
-
-            //    services.SwapTransient(_ => mockDistributedCacheProvider.Object);
-            //}
-
+ 
             //Mock pour HttpClient.
             var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
             mockHttpMessageHandler.Protected()
@@ -69,5 +59,5 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
         }
 
         return new CustomWebApplicationFactory<TStartup, TPositiveContext>(Action, null, UseFakeAuth);
-    }
+    } 
 }

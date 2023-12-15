@@ -14,7 +14,7 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
     [TestMethod]
     public async Task HealthCheck_Ok()
     {
-        Factory = GetFactoryRedis(true);
+        Factory = GetFactory ( );
         var client = Factory.CreateClient();
         var response = await client.GetAsync("/Health/Check");
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
@@ -38,7 +38,7 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
     [TestMethod]
     public async Task HealthReadiness_Ok()
     {
-        Factory = GetFactoryRedis(true);
+        Factory = GetFactory();
         var client = Factory.CreateClient();
         var response = await client.GetAsync("/Health/Readiness");
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
@@ -60,8 +60,7 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
 
     [TestMethod]
     public async Task HealthLiveness_Ok()
-    {
-        Factory = GetFactoryRedis(true);
+    { Factory = GetFactory();
         var client = Factory.CreateClient();
         var response = await client.GetAsync("/Health/Liveness");
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);

@@ -9,13 +9,10 @@ services:
   #   ports:
   #     - "5433:5432"
 
-  # krosoft-extensions.redis:
-  #     ports:
-  #       - "6377:6379"
+  krosoft-extensions.redis:
+     ports:
+       - "6377:6379"      
 
-
-        
- 
         
   krosoft-extensions.samples.dotnet6.api:
     build:

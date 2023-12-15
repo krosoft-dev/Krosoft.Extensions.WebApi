@@ -1,8 +1,8 @@
 ﻿using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Pdf.Interfaces;
-using Krosoft.Extensions.Samples.DotNet8.Api.Models.Queries;
 using Krosoft.Extensions.Samples.Library.Factories;
+using Krosoft.Extensions.Samples.Library.Models.Queries;
 using MediatR;
 
 namespace Krosoft.Extensions.Samples.DotNet8.Api.Handlers.Queries;

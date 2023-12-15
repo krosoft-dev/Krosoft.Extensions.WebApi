@@ -1,4 +1,4 @@
-﻿using Krosoft.Extensions.Samples.DotNet6.Api.Models.Queries;
+﻿using Krosoft.Extensions.Samples.Library.Models.Queries;
 
 namespace Krosoft.Extensions.Samples.DotNet6.Api.Handlers.Queries;
 

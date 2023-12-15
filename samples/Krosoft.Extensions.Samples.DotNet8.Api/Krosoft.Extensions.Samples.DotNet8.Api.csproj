@@ -17,6 +17,7 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks\Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Pdf\Krosoft.Extensions.Pdf.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Reporting.Csv\Krosoft.Extensions.Reporting.Csv.csproj" />

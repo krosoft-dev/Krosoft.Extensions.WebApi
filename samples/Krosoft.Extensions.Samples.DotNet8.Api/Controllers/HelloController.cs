@@ -1,4 +1,4 @@
-using Krosoft.Extensions.Samples.DotNet8.Api.Models.Queries;
+using Krosoft.Extensions.Samples.Library.Models.Queries;
 using Krosoft.Extensions.WebApi.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -1,8 +1,7 @@
 using Krosoft.Extensions.Core.Models.Dto;
-using Krosoft.Extensions.Samples.DotNet8.Api.Models.Commands;
-using Krosoft.Extensions.Samples.DotNet8.Api.Models.Dto;
-using Krosoft.Extensions.Samples.DotNet8.Api.Models.Queries;
+using Krosoft.Extensions.Samples.Library.Models.Commands;
 using Krosoft.Extensions.Samples.Library.Models.Dto;
+using Krosoft.Extensions.Samples.Library.Models.Queries;
 using Krosoft.Extensions.WebApi.Controllers;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.Models.Dto;
