@@ -12,9 +12,9 @@ public static class CsvConfigurationHelper
         "fr-fr"
     };
 
-    public static CsvConfiguration GetCsvConfiguration(string cultureName)
+    public static CsvConfiguration GetCsvConfiguration(CultureInfo cultureInfo)
     {
-        var cultureInfo = new CultureInfo(cultureName);
+         
 
         if (CulturesOverridable.Contains(cultureInfo.Name.ToLowerInvariant()))
         {

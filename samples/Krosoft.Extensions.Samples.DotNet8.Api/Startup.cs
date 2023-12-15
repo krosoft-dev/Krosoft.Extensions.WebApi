@@ -21,11 +21,13 @@
 //using Krosoft.Extensions.WebApi.Extensions;
 
 using System.Reflection;
+using Krosoft.Extensions.Pdf.Extensions;
 using Krosoft.Extensions.Samples.Library.Mappings;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.HealthChecks.Extensions;
 using Krosoft.Extensions.WebApi.Swagger.Extensions;
 using Krosoft.Extensions.WebApi.Swagger.HealthChecks.Extensions;
+using Krosoft.Extensions.Zip.Extensions;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Krosoft.Extensions.Samples.DotNet8.Api;
@@ -66,6 +68,9 @@ public class Startup
             //        .AddRedisCheck()
             //        .AddDbContextCheck<KrosoftExtensionTenantContext>("KrosoftExtensionTenantContext")
             ;
+
+        services.AddZip();
+        services.AddPdf();
 
         ////Data.
         //services.AddRepositories();

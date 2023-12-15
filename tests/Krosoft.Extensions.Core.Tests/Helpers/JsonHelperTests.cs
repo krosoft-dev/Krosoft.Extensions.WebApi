@@ -21,7 +21,7 @@ public class JsonHelperTests
     [TestMethod]
     public void IsValidTest()
     {
-        var json = FileHelper.ReadAsString(typeof(JsonHelperTests).Assembly, $"{nameof(Item)}.json", EncodingHelper.GetEuropeOccidentale());
+        var json = AssemblyHelper.ReadAsString(typeof(JsonHelperTests).Assembly, $"{nameof(Item)}.json", EncodingHelper.GetEuropeOccidentale());
 
         Check.That(JsonHelper.IsValid(json)).IsEqualTo(true);
     }

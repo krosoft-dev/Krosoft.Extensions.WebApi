@@ -1,12 +1,19 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Krosoft.Extensions.Core.Tools;
 using Krosoft.Extensions.Identity.Abstractions.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Krosoft.Extensions.Identity.Helpers;
 
 public static class IdentitTokenHelper
 {
-    public static TokenValidationParameters GetTokenValidationParameters(SigningCredentials signingCredentials, JwtSettings jwtSettings, bool validateLifetime) =>
-        new TokenValidationParameters
+    public static TokenValidationParameters GetTokenValidationParameters(SigningCredentials signingCredentials,
+                                                                         JwtSettings jwtSettings,
+                                                                         bool validateLifetime)
+    {
+        Guard.IsNotNull(nameof(signingCredentials), signingCredentials);
+        Guard.IsNotNull(nameof(jwtSettings), jwtSettings);
+
+        return new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = signingCredentials.Key,
@@ -18,4 +25,5 @@ public static class IdentitTokenHelper
             ClockSkew = TimeSpan.Zero,
             RequireExpirationTime = true
         };
+    }
 }

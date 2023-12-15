@@ -3,6 +3,18 @@
   <PropertyGroup>
 	  <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Files\sample1.pdf" />
+    <None Remove="Files\sample2.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Files\sample1.pdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Files\sample2.pdf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="Bogus" Version="34.0.2" /> 

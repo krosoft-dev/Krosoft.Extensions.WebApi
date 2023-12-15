@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using CsvHelper.TypeConversion;
 using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Reporting.Csv.Extensions;
@@ -45,11 +46,11 @@ public class CsvReaderTests : BaseTest
                     VarianteNom = "TEST"
                 }
             };
-        var exportFile = new CsvFileData<PrixCsvDto>(lignesExport, "test.csv", "");
+        var exportFile = new CsvFileData<PrixCsvDto>(lignesExport, "test.csv", CultureInfo.InvariantCulture);
         var export = Convert.ToBase64String(exportFile.ToBytes());
         await FileHelper.WriteBase64Async("test.csv", export, CancellationToken.None);
 
-        var lignesNewExport = _csvReadService.GetRecordsFromPath<PrixCsvDto>("test.csv", Encoding.UTF8, "");
+        var lignesNewExport = _csvReadService.GetRecordsFromPath<PrixCsvDto>("test.csv", Encoding.UTF8, CultureInfo.InvariantCulture);
         Check.That(lignesNewExport.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
     }
 
@@ -57,7 +58,7 @@ public class CsvReaderTests : BaseTest
     public async Task CultureTestFromBase64FrOk()
     {
         var csvFile = await File.ReadAllTextAsync("Files/test-fr.csv", CancellationToken.None);
-        var lignes = _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, "FR-fr").ToList();
+        var lignes = _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, new CultureInfo("FR-fr")).ToList();
 
         Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
         Check.That(lignes.ElementAt(2).Prix).Equals(96.99);
@@ -67,7 +68,7 @@ public class CsvReaderTests : BaseTest
     [TestMethod]
     public void CultureTestFromPathFrOk()
     {
-        var lignes = _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-fr.csv", Encoding.UTF8, "FR-fr").ToList();
+        var lignes = _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-fr.csv", Encoding.UTF8, new CultureInfo("FR-fr")).ToList();
 
         Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
         Check.That(lignes.ElementAt(2).Prix).Equals(96.99);
@@ -79,7 +80,7 @@ public class CsvReaderTests : BaseTest
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         var csvFile = await File.ReadAllTextAsync("Files/test-us.csv", CancellationToken.None);
-        var lignes = _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, "EN-us").ToList();
+        var lignes = _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, new CultureInfo("EN-us")).ToList();
 
         Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
         Check.That(lignes.ElementAt(2).Prix).Equals(9699);
@@ -89,7 +90,7 @@ public class CsvReaderTests : BaseTest
     [TestMethod]
     public void EncodingTestFromPathUs()
     {
-        var lignes = _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-us.csv", Encoding.UTF8, "EN-us").ToList();
+        var lignes = _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-us.csv", Encoding.UTF8, new CultureInfo("EN-us")).ToList();
         Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
         Check.That(lignes.ElementAt(2).Prix).Equals(9699);
         Check.That(lignes.First().Prix).Equals(10.5);
@@ -100,7 +101,7 @@ public class CsvReaderTests : BaseTest
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         var csvFile = await File.ReadAllTextAsync("Files/test-fr-faux.csv", CancellationToken.None);
-        Check.ThatCode(() => { _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, "FR-fr"); })
+        Check.ThatCode(() => { _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, new CultureInfo("FR-fr")); })
              .Throws<TypeConverterException>();
     }
 
@@ -108,7 +109,7 @@ public class CsvReaderTests : BaseTest
     public void EncodingTestFrNotOk()
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-        Check.ThatCode(() => { _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-fr-faux.csv", Encoding.UTF8, "FR-fr"); })
+        Check.ThatCode(() => { _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-fr-faux.csv", Encoding.UTF8, new CultureInfo("FR-fr")); })
              .Throws<TypeConverterException>();
     }
 }

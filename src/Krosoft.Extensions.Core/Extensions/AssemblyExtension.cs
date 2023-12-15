@@ -14,6 +14,6 @@ public static class AssemblyExtension
         Guard.IsNotNull(nameof(assembly), assembly);
         Guard.IsNotNullOrWhiteSpace(nameof(resourceName), resourceName);
 
-        return FileHelper.Read(assembly, resourceName);
+        return AssemblyHelper.Read(assembly, resourceName);
     }
 }

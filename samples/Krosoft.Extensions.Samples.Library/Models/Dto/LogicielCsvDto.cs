@@ -1,4 +1,4 @@
-namespace Krosoft.Extensions.Samples.DotNet8.Api.Models.Dto;
+namespace Krosoft.Extensions.Samples.Library.Models.Dto;
 
 public class LogicielCsvDto
 {

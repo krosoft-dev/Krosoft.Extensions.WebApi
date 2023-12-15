@@ -25,8 +25,7 @@ public static class StringExtensions
 
     public static int ToInt(this string value)
     {
-        int num;
-        if (int.TryParse(value, out num))
+        if (int.TryParse(value, out var num))
         {
             return num;
         }
@@ -45,12 +44,12 @@ public static class StringExtensions
     {
         var smallestDiff = s.Length;
         var words = s.Split(' ');
-        if (words.Count() == 1)
+        if (words.Length == 1)
         {
             return s;
         }
 
-        if (words.Count() == 2)
+        if (words.Length == 2)
         {
             return words[0] + separator + words[1];
         }
@@ -70,7 +69,7 @@ public static class StringExtensions
                 }
 
                 res.Append(words[i - 1]).Append(separator).Append(words[i]);
-                for (var j = i + 1; j < words.Count(); j++)
+                for (var j = i + 1; j < words.Length; j++)
                 {
                     res.Append(" ").Append(words[j]);
                 }

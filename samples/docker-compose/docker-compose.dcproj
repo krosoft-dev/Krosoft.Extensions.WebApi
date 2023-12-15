@@ -6,8 +6,8 @@
 		<DockerTargetOS>Linux</DockerTargetOS>
 		<ProjectGuid>f7ef3b40-7c46-4a58-b5dc-9e765c39dc00</ProjectGuid>
 		<DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-		<DockerServiceUrl>{Scheme}://localhost:{ServicePort}/Health/Check</DockerServiceUrl>
-		<DockerServiceName>krosoft-extensions.samples.dotnet6.api</DockerServiceName>
+		<DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger/index.html</DockerServiceUrl>
+		<DockerServiceName>krosoft-extensions.samples.dotnet8.api</DockerServiceName>
 		<DockerComposeProjectName>krosoft-extensions</DockerComposeProjectName>
 	</PropertyGroup>
 	<ItemGroup>

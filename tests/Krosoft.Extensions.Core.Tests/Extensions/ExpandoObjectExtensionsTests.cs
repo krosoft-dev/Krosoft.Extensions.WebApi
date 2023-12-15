@@ -14,7 +14,7 @@ public class ExpandoObjectExtensionsTests
     [TestMethod]
     public void GetStringTest()
     {
-        var json = FileHelper.ReadAsString(typeof(ExpandoObjectExtensionsTests).Assembly, "en.json", EncodingHelper.GetEuropeOccidentale());
+        var json = AssemblyHelper.ReadAsString(typeof(ExpandoObjectExtensionsTests).Assembly, "en.json", EncodingHelper.GetEuropeOccidentale());
         var expandoObject = JsonConvert.DeserializeObject<ExpandoObject>(json, new ExpandoObjectConverter());
         var titre = expandoObject!.GetString("titre");
 

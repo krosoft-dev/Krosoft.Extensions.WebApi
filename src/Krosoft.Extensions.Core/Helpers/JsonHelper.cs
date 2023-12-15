@@ -11,7 +11,7 @@ public static class JsonHelper
 
     public static IEnumerable<T> Get<T>(Assembly assembly, string fileName)
     {
-        var results = FileHelper.ReadFromAssembly<T>(assembly, $"{fileName}.json");
+        var results = AssemblyHelper.ReadFromAssembly<T>(assembly, $"{fileName}.json");
         return results;
     }
 

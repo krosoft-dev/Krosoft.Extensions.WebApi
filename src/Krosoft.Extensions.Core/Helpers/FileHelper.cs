@@ -1,10 +1,8 @@
-﻿using System.Reflection;
-using System.Security;
+﻿using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Core.Tools;
-using Newtonsoft.Json;
 
 namespace Krosoft.Extensions.Core.Helpers;
 
@@ -73,77 +71,16 @@ public static class FileHelper
         }
     }
 
-    public static IEnumerable<T> ReadFromAssembly<T>(Assembly assembly, string resourceName)
-    {
-        var json = ReadAsString(assembly, resourceName, EncodingHelper.GetEuropeOccidentale());
-        var o = JsonConvert.DeserializeObject<IEnumerable<T>>(json);
-        if (o == null)
-        {
-            throw new InvalidOperationException();
-        }
-
-        return o;
-    }
-
-    public static string ReadAsString(Assembly assembly,
-                                      string filename,
-                                      Encoding encoding)
-    {
-        Guard.IsNotNull(nameof(assembly), assembly);
-        Guard.IsNotNullOrWhiteSpace(nameof(filename), filename);
-        var resourcesName = assembly.GetManifestResourceNames()
-                                    .Where(s => s.EndsWith($".{filename}", StringComparison.CurrentCultureIgnoreCase))
-                                    .ToList();
-        if (resourcesName.Count > 1)
-        {
-            throw new KrosoftTechniqueException($"Plusieurs fichiers correspondent au fichier {filename} dans {assembly.GetName().Name}");
-        }
-
-        var resourceName = resourcesName.FirstOrDefault();
-        if (string.IsNullOrEmpty(resourceName))
-        {
-            throw new KrosoftTechniqueException($"{filename} introuvable dans {assembly.GetName().Name}");
-        }
-
-        using (var stream = assembly.GetManifestResourceStream(resourceName))
-        {
-            if (stream == null)
-            {
-                throw new KrosoftTechniqueException($"{resourceName} introuvable dans {assembly.GetName().Name}");
-            }
-
-            using (var streamReader = new StreamReader(stream, encoding, true))
-            {
-                return streamReader.ReadToEnd();
-            }
-        }
-    }
-
-    public static MemoryStream ReadAsStream(Assembly assembly,
-                                            string filename,
-                                            Encoding encoding)
-    {
-        var data = ReadAsString(assembly, filename, encoding);
-        var dataByte = encoding.GetBytes(data);
-        var stream = new MemoryStream(dataByte);
-
-        return stream;
-    }
-
     public static void CreateFile(string filePath, Stream data)
     {
-        using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-        {
-            data.CopyTo(fileStream);
-        }
+        using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+        data.CopyTo(fileStream);
     }
 
     public static void CreateFile(string filePath, byte[] data)
     {
-        using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-        {
-            fileStream.Write(data, 0, data.Length);
-        }
+        using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+        fileStream.Write(data, 0, data.Length);
     }
 
     public static void DeleteSafely(string filePath)
@@ -194,21 +131,6 @@ public static class FileHelper
         }
     }
 
-    public static Stream Read(Assembly assembly,
-                              string resourceName)
-    {
-        Guard.IsNotNull(nameof(assembly), assembly);
-        Guard.IsNotNullOrWhiteSpace(nameof(resourceName), resourceName);
-
-        var stream = assembly.GetManifestResourceStream(resourceName);
-        if (stream == null)
-        {
-            throw new KrosoftTechniqueException($"{resourceName} introuvable dans {assembly.GetName().Name}");
-        }
-
-        return stream;
-    }
-
     public static string ReadAsBase64(string filePath)
     {
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
@@ -244,44 +166,6 @@ public static class FileHelper
             using (var stream = File.OpenRead(filePath))
             {
                 return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", string.Empty);
-            }
-        }
-    }
-
-    public static string ReadAsString(Assembly assembly,
-                                      string resourceName) =>
-        ReadAsString(assembly, resourceName, EncodingHelper.GetEuropeOccidentale());
-
-    public static IEnumerable<string> ReadAsStringArray(Assembly assembly,
-                                                        string resourceName)
-    {
-        Guard.IsNotNull(nameof(assembly), assembly);
-        Guard.IsNotNullOrWhiteSpace(nameof(resourceName), resourceName);
-
-        return ReadAsStringArray(assembly, resourceName, EncodingHelper.GetEuropeOccidentale());
-    }
-
-    public static IEnumerable<string> ReadAsStringArray(Assembly assembly,
-                                                        string resourceName,
-                                                        Encoding encoding)
-    {
-        Guard.IsNotNull(nameof(assembly), assembly);
-        Guard.IsNotNullOrWhiteSpace(nameof(resourceName), resourceName);
-
-        using (var stream = assembly.GetManifestResourceStream(resourceName))
-        {
-            if (stream == null)
-            {
-                throw new KrosoftTechniqueException($"{resourceName} introuvable dans {assembly.GetName().Name}");
-            }
-
-            using (var streamReader = new StreamReader(stream, encoding, true))
-            {
-                string? line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    yield return line;
-                }
             }
         }
     }
@@ -335,18 +219,23 @@ public static class FileHelper
         return collection;
     }
 
-    public static async Task<string> ReadAsStringAsync(string filePath) => await ReadAsStringAsync(filePath, EncodingHelper.GetEuropeOccidentale());
+    public static async Task<string> ReadAsStringAsync(string filePath, CancellationToken cancellationToken)
+        => await ReadAsStringAsync(filePath, EncodingHelper.GetEuropeOccidentale(), cancellationToken);
 
     public static async Task<string> ReadAsStringAsync(string filePath,
-                                                       Encoding encoding)
+                                                       Encoding encoding,
+                                                       CancellationToken cancellationToken)
     {
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
         Guard.IsNotNull(nameof(encoding), encoding);
 
-        using (var sourceReader = new StreamReader(filePath, encoding))
-        {
-            return await sourceReader.ReadToEndAsync();
-        }
+        using var sourceReader = new StreamReader(filePath, encoding);
+
+#if NET7_0_OR_GREATER
+        return await sourceReader.ReadToEndAsync(cancellationToken);
+#else
+        return await sourceReader.ReadToEndAsync();
+#endif
     }
 
     /// <summary>
@@ -383,10 +272,8 @@ public static class FileHelper
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
         Guard.IsNotNullOrWhiteSpace(nameof(content), content);
 
-        using (var writer = File.CreateText(filePath))
-        {
-            writer.Write(content);
-        }
+        using var writer = File.CreateText(filePath);
+        writer.Write(content);
     }
 
     public static void WriteAsBase64(string filePath,
@@ -409,10 +296,8 @@ public static class FileHelper
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
         Guard.IsNotNullOrWhiteSpace(nameof(content), content);
 
-        using (var writer = File.CreateText(filePath))
-        {
-            await writer.WriteAsync(content).ConfigureAwait(false);
-        }
+        await using var writer = File.CreateText(filePath);
+        await writer.WriteAsync(content).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -453,10 +338,10 @@ public static class FileHelper
             DirectoryHelper.CreateDirectoryIfNotExist(fi.DirectoryName);
         }
 
-        await using var destinationFichier = new FileStream(fi.FullName, FileMode.Create);
-        await stream.CopyToAsync(destinationFichier, cancellationToken).ConfigureAwait(false);
-        await destinationFichier.FlushAsync(cancellationToken);
-        destinationFichier.Close();
+        await using var fileStream = new FileStream(fi.FullName, FileMode.Create);
+        await stream.CopyToAsync(fileStream, cancellationToken).ConfigureAwait(false);
+        await fileStream.FlushAsync(cancellationToken);
+        fileStream.Close();
     }
 
     public static async Task WriteAsync(string filePath,
@@ -466,10 +351,8 @@ public static class FileHelper
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
         Guard.IsNotNull(nameof(encoding), encoding);
 
-        using (var writer = new StreamWriter(filePath, false, encoding))
-        {
-            await writer.WriteAsync(content).ConfigureAwait(false);
-        }
+        await using var writer = new StreamWriter(filePath, false, encoding);
+        await writer.WriteAsync(content).ConfigureAwait(false);
     }
 
     private static IEnumerable<string> GetFilesFromDirectoryRecursively(string sDir)
@@ -493,28 +376,5 @@ public static class FileHelper
         }
 
         return files;
-    }
-
-    public static string ComputeFileHash(byte[] clearBytes)
-    {
-        using (var sha1 = SHA1.Create())
-        {
-            var hashedBytes = sha1.ComputeHash(clearBytes);
-            return ConvertBytesToHex(hashedBytes);
-        }
-    }
-
-    public static string ComputeFileHash(string filename) => ComputeFileHash(File.ReadAllBytes(filename));
-
-    public static string ConvertBytesToHex(byte[] bytes)
-    {
-        var sb = new StringBuilder();
-
-        for (var i = 0; i < bytes.Length; i++)
-        {
-            sb.Append(bytes[i].ToString("x"));
-        }
-
-        return sb.ToString();
     }
 }

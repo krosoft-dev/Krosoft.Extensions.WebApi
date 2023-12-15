@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../Nuget.target" />
+	<PropertyGroup>
+		<PackageTags>Krosoft Extension Pdf</PackageTags>
+		<Description>Package pour faciliter l'utilisation des PDF.</Description>
+	</PropertyGroup>
+ 
+ 
+ 
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <PackageReference Include="PdfSharpCore" Version="1.3.62" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
+	</ItemGroup> 
+</Project>

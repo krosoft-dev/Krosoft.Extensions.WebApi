@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using System.IO;
+using System.IO.Compression;
 using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Core.Tools;
@@ -17,6 +18,17 @@ public class ZipService : IZipService
     {
         Guard.IsNotNull(nameof(dictionary), dictionary);
         Guard.IsNotNullOrWhiteSpace(nameof(fileName), fileName);
+
+        var ms = await ZipAsync(dictionary, cancellationToken);
+
+        return new ZipFileStream(ms, fileName.Sanitize());
+    }
+
+    public async Task<Stream> ZipAsync(IReadOnlyDictionary<string, string> dictionary,
+                                       CancellationToken cancellationToken)
+    {
+        Guard.IsNotNull(nameof(dictionary), dictionary);
+
         var ms = new MemoryStream();
         if (dictionary.Count > 0)
         {
@@ -36,7 +48,44 @@ public class ZipService : IZipService
             ms.Seek(0, SeekOrigin.Begin);
         }
 
+        return ms;
+    }
+
+    public async Task<ZipFileStream> ZipAsync(IReadOnlyDictionary<string, Stream> dictionary,
+                                              string fileName,
+                                              CancellationToken cancellationToken)
+    {
+        Guard.IsNotNull(nameof(dictionary), dictionary);
+        Guard.IsNotNullOrWhiteSpace(nameof(fileName), fileName);
+
+        var ms = await ZipAsync(dictionary, cancellationToken);
+
         return new ZipFileStream(ms, fileName.Sanitize());
+    }
+
+    public async Task<Stream> ZipAsync(IReadOnlyDictionary<string, Stream> dictionary,
+                                       CancellationToken cancellationToken)
+    {
+        Guard.IsNotNull(nameof(dictionary), dictionary);
+
+        var ms = new MemoryStream();
+        if (dictionary.Count > 0)
+        {
+            using var archive = new ZipArchive(ms, ZipArchiveMode.Create, true);
+
+            foreach (var x in dictionary)
+            {
+                var entry = archive.CreateEntry(x.Key);
+                await using var entryStream = entry.Open();
+                await x.Value.CopyToAsync(entryStream, cancellationToken);
+            }
+
+            //await ms.FlushAsync(cancellationToken);
+            //ms.Seek(0, SeekOrigin.Begin);
+            ms.Position = 0;
+        }
+
+        return ms;
     }
 
     public Stream Zip(Stream stream, string fileName)
@@ -91,10 +140,8 @@ public class ZipService : IZipService
             foreach (var fileStream in streams)
             {
                 var entry = archive.CreateEntry(fileStream.Key);
-                using (var entryStream = entry.Open())
-                {
-                    fileStream.Value.CopyTo(entryStream);
-                }
+                using var entryStream = entry.Open();
+                fileStream.Value.CopyTo(entryStream);
             }
         }
 

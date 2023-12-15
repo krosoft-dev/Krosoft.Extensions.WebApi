@@ -50,7 +50,7 @@ public static class NFluentExtension
             Check.That(filePath).IsNotNull();
 
             var source = FileHelper.ReadAsStringArray(filePath).ToArray();
-            var cible = FileHelper.ReadAsStringArray(executingAssembly, resourceName).ToArray();
+            var cible = AssemblyHelper.ReadAsStringArray(executingAssembly, resourceName).ToArray();
 
             Check.That(source).HasSize(numberOfLine);
             Check.That(cible).HasSize(numberOfLine);

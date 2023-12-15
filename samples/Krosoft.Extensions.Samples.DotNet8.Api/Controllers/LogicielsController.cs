@@ -1,5 +1,4 @@
 using Krosoft.Extensions.Core.Models.Dto;
-using Krosoft.Extensions.Reporting.Csv.Extensions;
 using Krosoft.Extensions.Samples.DotNet8.Api.Models.Commands;
 using Krosoft.Extensions.Samples.DotNet8.Api.Models.Dto;
 using Krosoft.Extensions.Samples.DotNet8.Api.Models.Queries;
@@ -57,7 +56,6 @@ public class LogicielsController : ApiControllerBase
     [HttpGet("Export/Csv")]
     public Task<FileStreamResult> ExportCsvAsync(CancellationToken cancellationToken)
         => Mediator.Send(new LogicielsExportCsvQuery(), cancellationToken)
-                   .ToCsvStreamResult()
                    .ToFileStreamResult();
 
     [HttpGet("Export/Pdf")]
