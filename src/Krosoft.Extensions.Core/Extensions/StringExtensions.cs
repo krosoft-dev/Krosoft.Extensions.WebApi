@@ -145,73 +145,6 @@ public static class StringExtensions
     }
 
     /// <summary>
-    /// Coupe une chaine de charactère en deux, en remplacant si possible un espace
-    /// par un retour à la ligne de manière à avoir deux lignes de longueurs les plus proches possibles
-    /// </summary>
-    /// <param name="s">Chaine à couper</param>
-    /// <param name="separator">Séparateur</param>
-    /// <returns>Chaine coupée</returns>
-    public static string SplitEqualLenght(this string s, string separator = "\\n")
-    {
-        var smallestDiff = s.Length;
-        var words = s.Split(' ');
-        if (words.Length == 1)
-        {
-            return s;
-        }
-
-        if (words.Length == 2)
-        {
-            return words[0] + separator + words[1];
-        }
-
-        var res = new StringBuilder();
-
-        var length = 0;
-        for (var i = 0; i < words.Length; i++)
-        {
-            length += words[i].Length + 1;
-            var diff = Math.Abs(s.Length / 2 - length);
-            if (diff > smallestDiff)
-            {
-                for (var j = 0; j < i - 1; j++)
-                {
-                    res.Append(words[j]).Append(' ');
-                }
-
-                res.Append(words[i - 1]).Append(separator).Append(words[i]);
-                for (var j = i + 1; j < words.Length; j++)
-                {
-                    res.Append(' ').Append(words[j]);
-                }
-
-                return res.ToString();
-            }
-
-            smallestDiff = diff;
-        }
-
-        // On ne devrait jamais sortir par ici, mais au cas où...
-        return s;
-    }
-
-    public static void SplitEqualLenght(this string s, out string l1, out string l2)
-    {
-        var chaine = s;
-        chaine = chaine.SplitEqualLenght("\n");
-        var cutPosition = chaine.IndexOf('\n');
-        if (cutPosition <= 0)
-        {
-            l1 = chaine;
-            l2 = string.Empty;
-            return;
-        }
-
-        l1 = chaine.Substring(0, cutPosition);
-        l2 = chaine.Substring(cutPosition + 1, chaine.Length - cutPosition - 1);
-    }
-
-    /// <summary>
     /// Extrait les caractères alpha-numériques de la valeur en paramètre.
     /// </summary>
     /// <param name="value">Valeur à extraire.</param>
@@ -232,15 +165,7 @@ public static class StringExtensions
         return char.ToLowerInvariant(value[0]) + value.Substring(1);
     }
 
-    public static int ToInt(this string value)
-    {
-        if (int.TryParse(value, out var num))
-        {
-            return num;
-        }
-
-        return 0;
-    }
+    public static int ToInteger(this string? value) => NumberHelper.ToInteger(value);
 
     /// <summary>
     /// Convertie le premier caractère de la chaîne en majuscule, puis le reste en minuscule.

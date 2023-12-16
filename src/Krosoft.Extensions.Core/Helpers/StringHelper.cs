@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Text.RegularExpressions;
-using Krosoft.Extensions.Core.Tools;
+﻿using System.Text.RegularExpressions;
 
 namespace Krosoft.Extensions.Core.Helpers;
 
@@ -109,15 +107,6 @@ public static class StringHelper
         return new string(Enumerable.Repeat(chars, length)
                                     .Select(s => s[Random.Next(s.Length)])
                                     .ToArray());
-    }
-
-    public static string ToBase64(string? payload)
-    {
-        Guard.IsNotNull(nameof(payload), payload);
-
-        var bytes = Encoding.GetEncoding(28591).GetBytes(payload!);
-        var dataBase64 = Convert.ToBase64String(bytes);
-        return dataBase64;
     }
 
     /// <summary>

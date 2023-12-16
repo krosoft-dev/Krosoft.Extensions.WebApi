@@ -1,5 +1,4 @@
 ﻿using Krosoft.Extensions.Core.Helpers;
-using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NFluent;
@@ -25,7 +24,7 @@ public class StringHelperTests : BaseTest
     [DataRow("Hello, World!", "Hello, World!")]
     [DataRow("", "")]
     [DataRow(null, null)]
-    public void GenerateStreamFromString_ShouldGenerateCorrectStream(string? input, string? expectedContent)
+    public void GenerateStreamFromString_Tests(string? input, string? expectedContent)
     {
         // Act
         var resultStream = StringHelper.GenerateStreamFromString(input);
@@ -43,19 +42,9 @@ public class StringHelperTests : BaseTest
         }
     }
 
-    [TestMethod]
-    public void GetAbbreviationEmptyTest()
-    {
-        Check.That(StringHelper.GetAbbreviation(string.Empty)).IsEqualTo(string.Empty);
-    }
-
-    [TestMethod]
-    public void GetAbbreviationNullTest()
-    {
-        Check.That(StringHelper.GetAbbreviation(null)).IsEqualTo(string.Empty);
-    }
-
     [DataTestMethod]
+    [DataRow(null, "")]
+    [DataRow("", "")]
     [DataRow("T", "T")]
     [DataRow("T ", "T")]
     [DataRow(" T", "T")]
@@ -72,32 +61,36 @@ public class StringHelperTests : BaseTest
     [DataRow("AdministratorAuService", "AA")]
     [DataRow("Pierre Louis-Calixte de la Comédie-Française", "PL")]
     [DataRow("Claire de La Rüe du Can de la Comédie-Française", "CD")]
-    public void GetAbbreviationTest(string input, string expected)
+    public void GetAbbreviation_Tests(string input, string expected)
     {
         var formatDate = StringHelper.GetAbbreviation(input);
         Check.That(formatDate).IsEqualTo(expected);
     }
 
-    [TestMethod]
-    public void ToBase64EmptyTest()
+    [DataTestMethod]
+    [DataRow(null, null)]
+    [DataRow("", "")]
+    [DataRow("abc123def456", "123456")]
+    [DataRow("12 34 56", "123456")]
+    [DataRow("!@#$%^&*()_+", "")]
+    public void KeepDigitsOnly_Tests(string input, string expectedOutput)
     {
-        var base64 = StringHelper.ToBase64(string.Empty);
-        Check.That(base64).IsEqualTo(string.Empty);
+        var result = StringHelper.KeepDigitsOnly(input);
+
+        // Assert
+        Check.That(result).IsEqualTo(expectedOutput);
     }
 
-    [TestMethod]
-    public void ToBase64NullTest()
+    [DataTestMethod]
+    [DataRow(5)]
+    [DataRow(10)]
+    [DataRow(15)]
+    public void RandomString_Tests(int length)
     {
-        Check.ThatCode(() => StringHelper.ToBase64(null))
-             .Throws<KrosoftTechniqueException>()
-             .WithMessage("La variable 'payload' n'est pas renseignée.");
-    }
-
-    [TestMethod]
-    public void ToBase64Test()
-    {
-        var base64 = StringHelper.ToBase64("jwtToken");
-        Check.That(base64).IsEqualTo("and0VG9rZW4=");
+        var result = StringHelper.RandomString(length);
+        Check.That(result).IsNotNull();
+        Check.That(result.Length).IsEqualTo(length);
+        Check.That(result.All(char.IsLetterOrDigit)).IsTrue();
     }
 
     [DataTestMethod]
@@ -106,7 +99,7 @@ public class StringHelperTests : BaseTest
     [DataRow("   test   ", "test")]
     [DataRow("test   ", "test")]
     [DataRow("     test   ", "test")]
-    public void TrimTest(string input, string expected)
+    public void Trim_Tests(string input, string expected)
     {
         var formatDate = StringHelper.Trim(input);
         Check.That(formatDate).IsEqualTo(expected);
@@ -123,7 +116,7 @@ public class StringHelperTests : BaseTest
     [DataRow("+4302", 4302)]
     [DataRow("(100);", 0)]
     [DataRow("01FA", 0)]
-    public void TryParseToIntTest(string input, int expected)
+    public void TryParseToInt_Tests(string input, int expected)
     {
         var formatDate = StringHelper.TryParseToInt(input);
         Check.That(formatDate).IsEqualTo(expected);

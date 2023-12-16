@@ -11,10 +11,23 @@ public class Base64HelperTests
     [DataRow("SGVsbG8sIFdvcmxkIQ==", "Hello, World!")]
     [DataRow("", "")]
     [DataRow(null, null)]
-    public void Base64ToString_ShouldConvertBase64ToString(string base64EncodedData, string expectedPlainText)
+    public void Base64ToString(string base64EncodedData, string expectedPlainText)
     {
         // Act
         var result = Base64Helper.Base64ToString(base64EncodedData);
+
+        // Assert
+        Check.That(result).IsEqualTo(expectedPlainText);
+    }
+
+    [DataTestMethod]
+    [DataRow("jwtToken", "and0VG9rZW4=")]
+    [DataRow("", "")]
+    [DataRow(null, null)]
+    public void StringToBase64(string base64EncodedData, string expectedPlainText)
+    {
+        // Act
+        var result = Base64Helper.StringToBase64(base64EncodedData);
 
         // Assert
         Check.That(result).IsEqualTo(expectedPlainText);

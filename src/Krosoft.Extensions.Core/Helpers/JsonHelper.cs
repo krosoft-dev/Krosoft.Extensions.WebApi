@@ -29,11 +29,11 @@ public static class JsonHelper
         }
     }
 
-    public static string ToBase64(object? obj)
+    public static string? ToBase64(object? obj)
     {
         Guard.IsNotNull(nameof(obj), obj);
         var json = JsonConvert.SerializeObject(obj);
-        var dataBase64 = StringHelper.ToBase64(json);
+        var dataBase64 = Base64Helper.StringToBase64(json);
         return dataBase64;
     }
 
