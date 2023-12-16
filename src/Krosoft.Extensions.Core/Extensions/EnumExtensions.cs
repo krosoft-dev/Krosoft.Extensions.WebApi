@@ -67,8 +67,6 @@ public static class EnumExtensions
         return value.ToString();
     }
 
-    
-
     private static IEnumerable<Enum> GetFlags(Enum? value, IReadOnlyList<Enum> values)
     {
         var bits = Convert.ToUInt64(value);
