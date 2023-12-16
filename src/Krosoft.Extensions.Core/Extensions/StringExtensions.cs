@@ -63,17 +63,16 @@ public static class StringExtensions
     public static bool Match(this string? searchText,
                              string? text)
     {
-        if (string.IsNullOrEmpty(searchText))
+        if (string.IsNullOrEmpty(searchText) || string.IsNullOrEmpty(text))
         {
             return false;
         }
 
-        if (string.IsNullOrEmpty(text))
-        {
-            return false;
-        }
+        //return searchText.ToUpper().Contains(text.RemoveSpecials().ToUpper()) 
+        //       || text.RemoveSpecials().ToUpper().Contains(searchText.RemoveSpecials().ToUpper());
 
-        return searchText.ToUpper().Contains(text.RemoveSpecials().ToUpper()) || text.RemoveSpecials().ToUpper().Contains(searchText.RemoveSpecials().ToUpper());
+        return searchText.RemoveSpecials().Contains(text.RemoveSpecials(), StringComparison.InvariantCultureIgnoreCase) ||
+               text.RemoveSpecials().Contains(searchText.RemoveSpecials(), StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>

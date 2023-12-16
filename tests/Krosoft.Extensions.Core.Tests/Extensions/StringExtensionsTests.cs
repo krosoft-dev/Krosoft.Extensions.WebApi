@@ -36,6 +36,7 @@ public class StringExtensionsTests
     [DataRow("TEXT", "un text court", true)]
     [DataRow("un TEXT", "unTEXTcourt", true)]
     [DataRow("un TEXT", "un-TEXT-court", true)]
+    [DataRow("un-TEXT-court", "un TEXT", true)]
     public void Match_Tests(string? searchText, string? text, bool expectedOutput)
     {
         var result = searchText.Match(text);
