@@ -68,9 +68,6 @@ public static class StringExtensions
             return false;
         }
 
-        //return searchText.ToUpper().Contains(text.RemoveSpecials().ToUpper()) 
-        //       || text.RemoveSpecials().ToUpper().Contains(searchText.RemoveSpecials().ToUpper());
-
         return searchText.RemoveSpecials().Contains(text.RemoveSpecials(), StringComparison.InvariantCultureIgnoreCase) ||
                text.RemoveSpecials().Contains(searchText.RemoveSpecials(), StringComparison.InvariantCultureIgnoreCase);
     }
@@ -276,15 +273,20 @@ public static class StringExtensions
     /// Sinon, renvoie la même référence
     /// </summary>
     /// <param name="value">La chaine à tronquer</param>
-    /// <param name="maxLength">longueur maximale</param>
+    /// <param name="length">longueur maximale</param>
     /// <returns>La chaine tronquée</returns>
-    public static string? Truncate(this string? value, int maxLength)
+    public static string? Truncate(this string? value, int length)
     {
         if (string.IsNullOrEmpty(value))
         {
             return value;
         }
 
-        return value.Length <= maxLength ? value : value.Substring(0, maxLength);
+        if (length < 0 || value.Length <= length)
+        {
+            return value;
+        }
+
+        return value.Substring(0, length);
     }
 }

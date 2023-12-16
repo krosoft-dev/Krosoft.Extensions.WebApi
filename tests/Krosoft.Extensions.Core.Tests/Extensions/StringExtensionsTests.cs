@@ -151,6 +151,48 @@ public class StringExtensionsTests
     }
 
     [DataTestMethod]
+    [DataRow(null, ' ', new string[] { })]
+    [DataRow("", ' ', new string[] { })]
+    [DataRow("   ", ' ', new string[] { })]
+    [DataRow("abc def  ghi", ' ', new[] { "abc", "def", "ghi" })]
+    [DataRow(" one, two , three ", ',', new[] { "one", "two", "three" })]
+    [DataRow("   leading   and   trailing   ", ' ', new[] { "leading", "and", "trailing" })]
+    public void SplitAndClean_Test(string? input, char splitString, string[] expectedOutput)
+    {
+        var result = input.SplitAndClean(splitString);
+
+        Check.That(result).IsEqualTo(expectedOutput);
+    }
+
+    [DataTestMethod]
+    [DataRow(null, "")]
+    [DataRow("", "")]
+    [DataRow("abc123", "abc123")]
+    [DataRow("special!@#$characters", "specialcharacters")]
+    [DataRow("remove spaces", "removespaces")]
+    [DataRow("   leading and trailing spaces   ", "leadingandtrailingspaces")]
+    public void ToAlphaNumeric_Tests(string? input, string expectedOutput)
+    {
+        var result = input.ToAlphaNumeric();
+
+        Check.That(result).IsEqualTo(expectedOutput);
+    }
+
+    [DataTestMethod]
+    [DataRow(null, 0)]
+    [DataRow("", 0)]
+    [DataRow("123", 123)]
+    [DataRow("456", 456)]
+    [DataRow("not a number", 0)]
+    [DataRow("   789   ", 789)]
+    public void ToInteger_Tests(string input, int expectedOutput)
+    {
+        var result = input.ToInteger();
+
+        Check.That(result).IsEqualTo(expectedOutput);
+    }
+
+    [DataTestMethod]
     [DataRow(null, null)]
     [DataRow("", "")]
     [DataRow("abc", "Abc")]
@@ -162,6 +204,25 @@ public class StringExtensionsTests
     {
         var result = input.ToUpperFirst();
 
+        Check.That(result).IsEqualTo(expectedOutput);
+    }
+
+    [DataTestMethod]
+    [DataRow(null, 10, null)]
+    [DataRow("", 10, "")]
+    [DataRow("abcdefghij", 5, "abcde")]
+    [DataRow("xyz", 10, "xyz")]
+    [DataRow("12345", 0, "")]
+    [DataRow("text", -1, "text")]
+    public void Truncate_Tests(string input, int maxLength, string expectedOutput)
+    {
+        // Arrange
+        // You might need to replace StringExtensions with the actual class name where the method is defined.
+
+        // Act
+        var result = input.Truncate(maxLength);
+
+        // Assert
         Check.That(result).IsEqualTo(expectedOutput);
     }
 }
