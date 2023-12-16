@@ -25,3 +25,4 @@ steps:
         sonar.coverage.exclusions="**/Migrations/*.cs,**/*Tests*/**/*"
         sonar.exclusions="**/Migrations/*.cs,**/samples/**/*.*"
         sonar.verbose=true
+        sonar.branch.name=$(Build.SourceBranchName)
