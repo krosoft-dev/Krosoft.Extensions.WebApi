@@ -6,7 +6,7 @@ parameters:
   - name: projectKey
     type: string
   - name: projectName
-    type: string  
+    type: string
   - name: version
     type: string
     default: $(Build.BuildNumber)
@@ -27,19 +27,3 @@ steps:
         sonar.exclusions="**/Migrations/*.cs,**/samples/**/*.*"
         sonar.verbose=true
         sonar.branch.name=$(Build.SourceBranchName)
-
-
-
-steps:
-  - ${{ if eq(parameters.sonarQubeEnable, 'true'  ) }}:
-      # Prepare SonarQube analysis.
-      - task: SonarQubePrepare@5
-        displayName: Prepare SonarQube scanner
-        continueOnError: true
-        inputs:
-          SonarQube: ${{ parameters.sonarQubeServiceConnection }}
-          scannerMode: "MSBuild"
-          projectKey: ${{ parameters.sonarQubeProjectKey }}
-          projectName: ${{ parameters.sonarQubeProjectKey }}
-          
-          extraProperties: |
