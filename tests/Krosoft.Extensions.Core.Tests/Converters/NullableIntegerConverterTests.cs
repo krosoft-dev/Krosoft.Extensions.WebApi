@@ -33,7 +33,7 @@ public class NullableIntegerConverterTests
         Check.That(obj).IsEmpty();
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow("           ", null)]
     [DataRow("null", null)]
     [DataRow("999", 999)]

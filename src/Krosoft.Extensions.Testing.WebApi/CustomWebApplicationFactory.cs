@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+
 //using Krosoft.Extensions.Cache.Distributed.Redis.Interfaces;
 //using Krosoft.Extensions.Cache.Distributed.Redis.Services;
 //using Krosoft.Extensions.Core.Extensions;
@@ -23,7 +24,7 @@ namespace Krosoft.Extensions.Testing.WebApi;
 /// <typeparam name="TKrosoftContext">DbContext du projet.</typeparam>
 public class CustomWebApplicationFactory<TStartup, TKrosoftContext> : WebApplicationFactory<TStartup>
     where TStartup : class
-    //where TKrosoftContext : KrosoftContext
+//where TKrosoftContext : KrosoftContext
 {
     private readonly Action<KrosoftToken>? _actionConfigureClaims;
     private readonly Action<IServiceCollection>? _actionConfigureServices;

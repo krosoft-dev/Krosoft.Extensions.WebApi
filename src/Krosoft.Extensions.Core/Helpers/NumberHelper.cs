@@ -3,13 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace Krosoft.Extensions.Core.Helpers;
 
-public class NumberHelper
+public static class NumberHelper
 {
     public static decimal ToDecimal(string? text)
     {
         if (text != null)
         {
-            var regex = new Regex(@"^-?\d+(?:\.\d+)?");
+            var regex = new Regex(@"^-?\d+(?:\.\d+)?", RegexOptions.None, RegexHelper.MatchTimeout);
             var match = regex.Match(text);
             if (match.Success)
             {
@@ -24,7 +24,7 @@ public class NumberHelper
     {
         if (text != null)
         {
-            var regex = new Regex(@"\d+");
+            var regex = new Regex(@"\d+", RegexOptions.None, RegexHelper.MatchTimeout);
             var match = regex.Match(text);
             if (match.Success)
             {

@@ -10,15 +10,17 @@ ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 
 # copy csproj and restore as distinct layers
 FROM mcr.microsoft.com/dotnet/sdk:$VERSION AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Krosoft.Extensions.Samples.DotNet6.Api/Krosoft.Extensions.Samples.DotNet6.Api.csproj", "Krosoft.Extensions.Samples.DotNet6.Api/"]
 RUN dotnet restore "Krosoft.Extensions.Samples.DotNet6.Api/Krosoft.Extensions.Samples.DotNet6.Api.csproj"
 COPY . .
 WORKDIR "/src/Krosoft.Extensions.Samples.DotNet6.Api"
-RUN dotnet build "Krosoft.Extensions.Samples.DotNet6.Api.csproj" -c Release -o /app/build 
+RUN dotnet build "Krosoft.Extensions.Samples.DotNet6.Api.csproj" -c "$BUILD_CONFIGURATION" -o /app/build 
 
 FROM build AS publish
-RUN dotnet publish "Krosoft.Extensions.Samples.DotNet6.Api.csproj" -c Release -o /app/publish  --no-restore
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "Krosoft.Extensions.Samples.DotNet6.Api.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish  --no-restore
 
 FROM base AS final
 WORKDIR /app

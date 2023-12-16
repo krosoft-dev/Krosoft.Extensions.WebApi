@@ -234,13 +234,6 @@ public class DistributedCacheProvider : IDistributedCacheProvider
         return entries.ToArray();
     }
 
-    private static byte[] ToRedisValue<T>(T entry)
-    {
-        var dataString = JsonConvert.SerializeObject(entry);
-        var data = Encoding.UTF8.GetBytes(dataString);
-        return data;
-    }
-
     private static T? ToObject<T>(RedisValue redisValue)
     {
         if (redisValue.HasValue)
@@ -252,5 +245,12 @@ public class DistributedCacheProvider : IDistributedCacheProvider
         }
 
         return default;
+    }
+
+    private static byte[] ToRedisValue<T>(T entry)
+    {
+        var dataString = JsonConvert.SerializeObject(entry);
+        var data = Encoding.UTF8.GetBytes(dataString);
+        return data;
     }
 }

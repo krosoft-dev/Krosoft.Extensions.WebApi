@@ -5,10 +5,17 @@
 /// </summary>
 public interface IDistributedCacheProvider
 {
-    IEnumerable<string> GetKeys(string pattern);
+    Task DeleteAllAsync(string pattern, CancellationToken cancellationToken = default);
+    Task<bool> DeleteAsync(string key, CancellationToken cancellationToken = default);
+    Task<bool> DeleteRowAsync(string collectionKey, string entryKey, CancellationToken cancellationToken = default);
+    Task<long> DeleteRowsAsync(string collectionKey, ISet<string> entriesKey, CancellationToken cancellationToken = default);
     Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default);
+    IEnumerable<string> GetKeys(string pattern);
     Task<long> GetLengthAsync(string collectionKey, CancellationToken cancellationToken = default);
-    Task SetAsync<T>(string key, T entry, CancellationToken cancellationToken = default);
+
+    Task<bool> IsExistAsync(string key, CancellationToken cancellationToken = default);
+    Task<bool> IsExistRowAsync(string collectionKey, string entryKey, CancellationToken cancellationToken = default);
+    Task<TimeSpan> PingAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Récupère une ligne de la collection parente.
@@ -36,6 +43,13 @@ public interface IDistributedCacheProvider
     Task<IEnumerable<T>> ReadRowsAsync<T>(string collectionKey,
                                           CancellationToken cancellationToken = default);
 
+    Task RefreshAsync<T>(string collectionKey,
+                         Func<Task<List<T>>> func,
+                         Func<T, string> getId,
+                         CancellationToken cancellationToken = default);
+
+    Task SetAsync<T>(string key, T entry, CancellationToken cancellationToken = default);
+
     Task<bool> SetRowAsync<T>(string collectionKey, string entryKey, T entry, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -47,17 +61,4 @@ public interface IDistributedCacheProvider
     Task SetRowAsync<T>(string collectionKey,
                         IDictionary<string, T> entryByKey,
                         CancellationToken cancellationToken = default);
-
-    Task RefreshAsync<T>(string collectionKey,
-                         Func<Task<List<T>>> func,
-                         Func<T, string> getId,
-                         CancellationToken cancellationToken = default);
-
-    Task<bool> IsExistAsync(string key, CancellationToken cancellationToken = default);
-    Task<bool> DeleteAsync(string key, CancellationToken cancellationToken = default);
-    Task DeleteAllAsync(string pattern, CancellationToken cancellationToken = default);
-    Task<TimeSpan> PingAsync(CancellationToken cancellationToken = default);
-    Task<bool> IsExistRowAsync(string collectionKey, string entryKey, CancellationToken cancellationToken = default);
-    Task<bool> DeleteRowAsync(string collectionKey, string entryKey, CancellationToken cancellationToken = default);
-    Task<long> DeleteRowsAsync(string collectionKey, ISet<string> entriesKey, CancellationToken cancellationToken = default);
 }

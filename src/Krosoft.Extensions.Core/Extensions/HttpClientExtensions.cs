@@ -13,27 +13,17 @@ public static class HttpClientExtensions
     /// </summary>
     public const string JwtAuthenticationScheme = "Bearer";
 
-    public static async Task<T?> ReadAsJsonAsync<T>(this HttpContent content, CancellationToken cancellationToken = default)
-    {
-        var json = await content.ReadAsStringAsync(cancellationToken);
-        return JsonConvert.DeserializeObject<T>(json);
-    }
+    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, string requestUri, T data)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) });
 
-    public static HttpClient SetBearerToken(this HttpClient client,
-                                            string token)
-    {
-        client.SetToken(JwtAuthenticationScheme, token);
+    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, string requestUri, T data, CancellationToken cancellationToken)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) }, cancellationToken);
 
-        return client;
-    }
+    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, Uri requestUri, T data)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) });
 
-    public static HttpClient SetToken(this HttpClient client,
-                                      string scheme,
-                                      string token)
-    {
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme, token);
-        return client;
-    }
+    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, Uri requestUri, T data, CancellationToken cancellationToken)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) }, cancellationToken);
 
     public static async Task EnsureAsync(this Task<HttpResponseMessage> task,
                                          CancellationToken cancellationToken = default)
@@ -51,22 +41,21 @@ public static class HttpClientExtensions
         return await httpResponseMessage.EnsureAsync<T?>(cancellationToken);
     }
 
-    public static Task<HttpResponseMessage> GetAsync<T>(this HttpClient httpClient, string requestUri, T data, CancellationToken cancellationToken)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, requestUri) { Content = Serialize(data) }, cancellationToken);
+    public static async Task<Stream?> EnsureStreamAsync(this Task<HttpResponseMessage> task,
+                                                        CancellationToken cancellationToken = default)
+    {
+        var httpResponseMessage = await task;
 
-    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, string requestUri, T data)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) });
+        if (httpResponseMessage.IsSuccessStatusCode)
+        {
+            var stream = await httpResponseMessage.Content.ReadAsStreamAsync(cancellationToken);
 
-    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, string requestUri, T data, CancellationToken cancellationToken)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) }, cancellationToken);
+            return stream;
+        }
 
-    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, Uri requestUri, T data)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) });
-
-    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, Uri requestUri, T data, CancellationToken cancellationToken)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) }, cancellationToken);
-
-    private static HttpContent Serialize(object? data) => new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, MediaTypeJson);
+        await httpResponseMessage.ManageErrorAsync(cancellationToken);
+        return null;
+    }
 
     public static async Task<string?> EnsureStringAsync(this Task<HttpResponseMessage> task,
                                                         CancellationToken cancellationToken = default)
@@ -85,19 +74,30 @@ public static class HttpClientExtensions
         return null;
     }
 
-    public static async Task<Stream?> EnsureStreamAsync(this Task<HttpResponseMessage> task,
-                                                        CancellationToken cancellationToken = default)
+    public static Task<HttpResponseMessage> GetAsync<T>(this HttpClient httpClient, string requestUri, T data, CancellationToken cancellationToken)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, requestUri) { Content = Serialize(data) }, cancellationToken);
+
+    public static async Task<T?> ReadAsJsonAsync<T>(this HttpContent content, CancellationToken cancellationToken = default)
     {
-        var httpResponseMessage = await task;
+        var json = await content.ReadAsStringAsync(cancellationToken);
+        return JsonConvert.DeserializeObject<T>(json);
+    }
 
-        if (httpResponseMessage.IsSuccessStatusCode)
-        {
-            var stream = await httpResponseMessage.Content.ReadAsStreamAsync(cancellationToken);
+    private static HttpContent Serialize(object? data) => new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, MediaTypeJson);
 
-            return stream;
-        }
+    public static HttpClient SetBearerToken(this HttpClient client,
+                                            string token)
+    {
+        client.SetToken(JwtAuthenticationScheme, token);
 
-        await httpResponseMessage.ManageErrorAsync(cancellationToken);
-        return null;
+        return client;
+    }
+
+    public static HttpClient SetToken(this HttpClient client,
+                                      string scheme,
+                                      string token)
+    {
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme, token);
+        return client;
     }
 }

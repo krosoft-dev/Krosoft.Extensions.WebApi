@@ -50,42 +50,13 @@ public static class ObjectExtensions
         return sb.ToString();
     }
 
-    public static IDictionary<string, string?> ToKeyValue(this object? metaToken)
-    {
-        if (metaToken == null)
-        {
-            return new Dictionary<string, string?>();
-        }
-
-        var propertyInfos = metaToken.GetType()
-                                     .GetProperties(BindingFlags.Instance | BindingFlags.Public);
-        var token = propertyInfos
-            .ToDictionary(prop => prop.Name, prop =>
-            {
-                var value = prop.GetValue(metaToken, null);
-                if (value != null)
-                {
-                    return value.ToString();
-                }
-
-                return string.Empty;
-            });
-
-        return token;
-    }
-
-    public static void SetPropertyValue<T, TProperty>(this T obj,
+    public static void SetPropertyValue<T, TProperty>(this T? obj,
                                                       Expression<Func<T, TProperty>> entityExpression,
                                                       TProperty newValueEntity) where T : new()
     {
         if (obj == null)
         {
             obj = new T();
-        }
-
-        if (obj == null)
-        {
-            throw new ArgumentNullException();
         }
 
         var memberExpression = (MemberExpression)entityExpression.Body;
@@ -199,5 +170,29 @@ public static class ObjectExtensions
         }
 
         return table;
+    }
+
+    public static IDictionary<string, string?> ToKeyValue(this object? metaToken)
+    {
+        if (metaToken == null)
+        {
+            return new Dictionary<string, string?>();
+        }
+
+        var propertyInfos = metaToken.GetType()
+                                     .GetProperties(BindingFlags.Instance | BindingFlags.Public);
+        var token = propertyInfos
+            .ToDictionary(prop => prop.Name, prop =>
+            {
+                var value = prop.GetValue(metaToken, null);
+                if (value != null)
+                {
+                    return value.ToString();
+                }
+
+                return string.Empty;
+            });
+
+        return token;
     }
 }

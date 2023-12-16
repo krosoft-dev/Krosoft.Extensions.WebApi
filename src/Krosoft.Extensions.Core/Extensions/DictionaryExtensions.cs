@@ -8,19 +8,27 @@ namespace Krosoft.Extensions.Core.Extensions;
 public static class DictionaryExtensions
 {
     /// <summary>
-    /// Cherche une valeur associée à une clé dans un dictionnaire.
-    /// Si non trouvée, renvoie la valeur par défaut.
+    /// Ajoute une nouvelle entrée au dictionnaire si la clé n'est pas déjà présente.
+    /// Remplace la valeur associée à la clé si celle-ci existe déjà.
     /// </summary>
     /// <typeparam name="TKey">Type de la clé.</typeparam>
     /// <typeparam name="TValue">Type de la valeur.</typeparam>
-    /// <param name="dictionary">Dictionnaire interrogé.</param>
+    /// <param name="source">Dictionnaire source.</param>
     /// <param name="key">Clé.</param>
-    /// <param name="defaultValue">Valeur par défaut.</param>
-    /// <returns>Valeur trouvée ou valeur par défaut.</returns>
-    public static TValue? GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue? defaultValue = default) =>
-        dictionary.TryGetValue(key, out var value)
-            ? value
-            : defaultValue;
+    /// <param name="value">Valeur.</param>
+    public static void AddOrReplace<TKey, TValue>(this IDictionary<TKey, TValue>? source, TKey key, TValue value)
+    {
+        Guard.IsNotNull(nameof(source), source);
+
+        if (source!.ContainsKey(key))
+        {
+            source[key] = value;
+        }
+        else
+        {
+            source.Add(key, value);
+        }
+    }
 
     public static void AddOrUpdate<T>(this IDictionary<T, decimal> dico, T key, decimal solde)
     {
@@ -32,6 +40,38 @@ public static class DictionaryExtensions
         else
         {
             dico.Add(key, solde);
+        }
+    }
+
+    /// <summary>
+    /// Ajout une valeur dans une liste stockée dans un dictionnaire.
+    /// </summary>
+    /// <typeparam name="TKey">Type de la clé du dictionnaire.</typeparam>
+    /// <typeparam name="TValue">Type de la valeur des éléments de la liste.</typeparam>
+    /// <param name="dictionary">Dictionnaire interrogé.</param>
+    /// <param name="key">Clé.</param>
+    /// <param name="val">Valeur à ajouter.</param>
+    /// <param name="ignoreDoublon">Si vrai, on n'ajoute la valeur uniquement si elle n'est pas présente.</param>
+    public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key, TValue val, bool ignoreDoublon = false)
+    {
+        Guard.IsNotNull(nameof(dictionary), dictionary);
+        if (dictionary.ContainsKey(key))
+        {
+            if (ignoreDoublon)
+            {
+                if (!dictionary[key].Contains(val))
+                {
+                    dictionary[key].Add(val);
+                }
+            }
+            else
+            {
+                dictionary[key].Add(val);
+            }
+        }
+        else
+        {
+            dictionary.Add(key, new List<TValue> { val });
         }
     }
 
@@ -69,57 +109,17 @@ public static class DictionaryExtensions
     }
 
     /// <summary>
-    /// Ajoute une nouvelle entrée au dictionnaire si la clé n'est pas déjà présente.
-    /// Remplace la valeur associée à la clé si celle-ci existe déjà.
+    /// Cherche une valeur associée à une clé dans un dictionnaire.
+    /// Si non trouvée, renvoie la valeur par défaut.
     /// </summary>
     /// <typeparam name="TKey">Type de la clé.</typeparam>
     /// <typeparam name="TValue">Type de la valeur.</typeparam>
-    /// <param name="source">Dictionnaire source.</param>
-    /// <param name="key">Clé.</param>
-    /// <param name="value">Valeur.</param>
-    public static void AddOrReplace<TKey, TValue>(this IDictionary<TKey, TValue>? source, TKey key, TValue value)
-    {
-        Guard.IsNotNull(nameof(source), source);
-
-        if (source!.ContainsKey(key))
-        {
-            source[key] = value;
-        }
-        else
-        {
-            source.Add(key, value);
-        }
-    }
-
-    /// <summary>
-    /// Ajout une valeur dans une liste stockée dans un dictionnaire.
-    /// </summary>
-    /// <typeparam name="TKey">Type de la clé du dictionnaire.</typeparam>
-    /// <typeparam name="TValue">Type de la valeur des éléments de la liste.</typeparam>
     /// <param name="dictionary">Dictionnaire interrogé.</param>
     /// <param name="key">Clé.</param>
-    /// <param name="val">Valeur à ajouter.</param>
-    /// <param name="ignoreDoublon">Si vrai, on n'ajoute la valeur uniquement si elle n'est pas présente.</param>
-    public static void AddOrUpdate<TKey, TValue>(this IDictionary<TKey, List<TValue>> dictionary, TKey key, TValue val, bool ignoreDoublon = false)
-    {
-        Guard.IsNotNull(nameof(dictionary), dictionary);
-        if (dictionary.ContainsKey(key))
-        {
-            if (ignoreDoublon)
-            {
-                if (!dictionary[key].Contains(val))
-                {
-                    dictionary[key].Add(val);
-                }
-            }
-            else
-            {
-                dictionary[key].Add(val);
-            }
-        }
-        else
-        {
-            dictionary.Add(key, new List<TValue> { val });
-        }
-    }
+    /// <param name="defaultValue">Valeur par défaut.</param>
+    /// <returns>Valeur trouvée ou valeur par défaut.</returns>
+    public static TValue? GetValueOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue? defaultValue = default) =>
+        dictionary.TryGetValue(key, out var value)
+            ? value
+            : defaultValue;
 }

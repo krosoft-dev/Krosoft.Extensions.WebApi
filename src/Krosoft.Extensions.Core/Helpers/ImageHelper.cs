@@ -7,7 +7,8 @@ public static class ImageHelper
 {
     public static void VerifierImage(string base64, string nomImage)
     {
-        var match = Regex.Match(base64, @"data:(?<type>.+?);base64,(?<data>.+)");
+        var match = Regex.Match(base64, @"data:(?<type>.+?);base64,(?<data>.+)"
+                                , RegexOptions.None, RegexHelper.MatchTimeout);
         var base64Data = match.Groups["data"].Value;
         if (string.IsNullOrEmpty(base64Data))
         {

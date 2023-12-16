@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Samples.Library.Models;
 
-public class UtilisateurBasique : IEquatable<UtilisateurBasique>
+public sealed class UtilisateurBasique : IEquatable<UtilisateurBasique>
 {
     public string? Nom { get; set; }
     public string? Prenom { get; set; }

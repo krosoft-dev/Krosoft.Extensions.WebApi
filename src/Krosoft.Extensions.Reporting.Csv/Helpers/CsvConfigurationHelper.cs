@@ -14,8 +14,6 @@ public static class CsvConfigurationHelper
 
     public static CsvConfiguration GetCsvConfiguration(CultureInfo cultureInfo)
     {
-         
-
         if (CulturesOverridable.Contains(cultureInfo.Name.ToLowerInvariant()))
         {
             cultureInfo.NumberFormat.NumberDecimalSeparator = ",";

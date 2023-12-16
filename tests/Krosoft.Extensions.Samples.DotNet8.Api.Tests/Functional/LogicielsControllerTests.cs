@@ -18,7 +18,7 @@ public class LogicielsControllerTests : SampleBaseApiTest<Startup>
         var response = await httpClient.GetAsync("/Logiciels");
 
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        var logiciels = await response.Content.ReadAsJsonAsync<IEnumerable<LogicielDto>>(CancellationToken.None);
+        var logiciels = await response.Content.ReadAsJsonAsync<IEnumerable<LogicielDto>>(CancellationToken.None).ToList();
         Check.That(logiciels).IsNotNull();
         Check.That(logiciels).HasSize(10);
     }
@@ -32,7 +32,7 @@ public class LogicielsControllerTests : SampleBaseApiTest<Startup>
         var response = await httpClient.GetAsync($"/Logiciels?Nom={nom}");
 
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        var logiciels = await response.Content.ReadAsJsonAsync<IEnumerable<LogicielDto>>(CancellationToken.None);
+        var logiciels = await response.Content.ReadAsJsonAsync<IEnumerable<LogicielDto>>(CancellationToken.None).ToList();
         Check.That(logiciels).IsNotNull();
         Check.That(logiciels).HasSize(10);
     }

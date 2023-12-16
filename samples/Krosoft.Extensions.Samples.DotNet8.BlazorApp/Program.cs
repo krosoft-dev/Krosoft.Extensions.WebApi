@@ -4,7 +4,7 @@ using Krosoft.Extensions.Samples.DotNet8.BlazorApp.Services;
 
 namespace Krosoft.Extensions.Samples.DotNet8.BlazorApp;
 
-public class Program
+public static class Program
 {
     public static void Main(string[] args)
     {

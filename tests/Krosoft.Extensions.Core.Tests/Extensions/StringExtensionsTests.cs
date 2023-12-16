@@ -20,10 +20,25 @@ public class StringExtensionsTests
     }
 
     [TestMethod]
+    public void RemoveDiacriticsTest()
+    {
+        Check.That("včľťšľžšžščýščýťčáčáčťáčáťýčťž".RemoveDiacritics()).IsEqualTo("vcltslzszscyscytcacactacatyctz");
+        Check.That("Rez-de-chaussée".RemoveDiacritics()).IsEqualTo("Rez-de-chaussee");
+    }
+
+    [TestMethod]
     public void RemoveSpecialsTest()
     {
         Check.That("text".RemoveSpecials()).IsEqualTo("text");
         Check.That("ét€".RemoveSpecials()).IsEqualTo("t");
+    }
+
+    [TestMethod]
+    public void Replace_Ok()
+    {
+        char[] separators = { ';', '.', ',' };
+        var input = "this;is,a.test".Replace(separators, " ");
+        Check.That(input).IsEqualTo("this is a test");
     }
 
     [TestMethod]
@@ -48,20 +63,5 @@ public class StringExtensionsTests
     public void Sanitize4Test()
     {
         Check.That("*_*.txt".Sanitize("Yo")).IsEqualTo("Yo_Yo.txt");
-    }
-
-    [TestMethod]
-    public void RemoveDiacriticsTest()
-    {
-        Check.That("včľťšľžšžščýščýťčáčáčťáčáťýčťž".RemoveDiacritics()).IsEqualTo("vcltslzszscyscytcacactacatyctz");
-        Check.That("Rez-de-chaussée".RemoveDiacritics()).IsEqualTo("Rez-de-chaussee");
-    }
-
-    [TestMethod]
-    public void Replace_Ok()
-    {
-        char[] separators = { ';', '.', ',' };
-        var input = "this;is,a.test".Replace(separators, " ");
-        Check.That(input).IsEqualTo("this is a test");
     }
 }

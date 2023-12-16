@@ -33,7 +33,7 @@ public class BooleanConverterTests
         Check.That(obj).IsEmpty();
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow("faux", false)]
     [DataRow("false", false)]
     [DataRow("no", false)]

@@ -67,7 +67,7 @@ public class Startup
 
         services.AddHealthChecks()
                 .AddCheck("Test_Endpoint", () => HealthCheckResult.Healthy())
-                  .AddRedisCheck()
+                .AddRedisCheck()
             //        .AddDbContextCheck<KrosoftExtensionTenantContext>("KrosoftExtensionTenantContext")
             ;
 
@@ -79,7 +79,7 @@ public class Startup
         //services.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(_configuration);
 
         //Cache. 
-         services.AddDistributedCacheExt();
+        services.AddDistributedCacheExt();
         //services.AddCacheHandlers();
         //services.AddCacheRefreshHostedService(_configuration);
         //services.AddScoped<ICategorieCacheService, CategorieCacheService>();

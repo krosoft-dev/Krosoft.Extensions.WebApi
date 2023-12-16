@@ -9,32 +9,38 @@ namespace Krosoft.Extensions.Core.Tests.Helpers;
 [TestClass]
 public class StringHelperTests : BaseTest
 {
-    [TestMethod]
-    public void ToBase64Test()
+    [DataTestMethod]
+    [DataRow("test", "01/01/0001")]
+    [DataRow(null!, "01/01/0001")]
+    [DataRow("", "01/01/0001")]
+    [DataRow("12/08/1988", "12/08/1988")]
+    [DataRow("2012-04-23T18:25:43.511Z", "23/04/2012")]
+    public void FormatDateStringIncorrectTest(string input, string expected)
     {
-        var base64 = StringHelper.ToBase64("jwtToken");
-        Check.That(base64).IsEqualTo("and0VG9rZW4=");
+        var formatDate = StringHelper.FormatDate(input);
+        Check.That(formatDate).IsEqualTo(expected);
     }
 
-    [TestMethod]
-    public void ToBase64EmptyTest()
+    [DataTestMethod]
+    [DataRow("Hello, World!", "Hello, World!")]
+    [DataRow("", "")]
+    [DataRow(null, null)]
+    public void GenerateStreamFromString_ShouldGenerateCorrectStream(string? input, string? expectedContent)
     {
-        var base64 = StringHelper.ToBase64(string.Empty);
-        Check.That(base64).IsEqualTo(string.Empty);
-    }
+        // Act
+        var resultStream = StringHelper.GenerateStreamFromString(input);
 
-    [TestMethod]
-    public void ToBase64NullTest()
-    {
-        Check.ThatCode(() => StringHelper.ToBase64(null))
-             .Throws<KrosoftTechniqueException>()
-             .WithMessage("La variable 'payload' n'est pas renseignée.");
-    }
-
-    [TestMethod]
-    public void GetAbbreviationNullTest()
-    {
-        Check.That(StringHelper.GetAbbreviation(null)).IsEqualTo(string.Empty);
+        // Assert
+        if (expectedContent == null)
+        {
+            Check.That(resultStream.Length).IsEqualTo(0);
+        }
+        else
+        {
+            using var reader = new StreamReader(resultStream);
+            var resultContent = reader.ReadToEnd();
+            Check.That(resultContent).IsEqualTo(expectedContent);
+        }
     }
 
     [TestMethod]
@@ -44,6 +50,12 @@ public class StringHelperTests : BaseTest
     }
 
     [TestMethod]
+    public void GetAbbreviationNullTest()
+    {
+        Check.That(StringHelper.GetAbbreviation(null)).IsEqualTo(string.Empty);
+    }
+
+    [DataTestMethod]
     [DataRow("T", "T")]
     [DataRow("T ", "T")]
     [DataRow(" T", "T")]
@@ -67,18 +79,28 @@ public class StringHelperTests : BaseTest
     }
 
     [TestMethod]
-    [DataRow("test", "01/01/0001")]
-    [DataRow(null!, "01/01/0001")]
-    [DataRow("", "01/01/0001")]
-    [DataRow("12/08/1988", "12/08/1988")]
-    [DataRow("2012-04-23T18:25:43.511Z", "23/04/2012")]
-    public void FormatDateStringIncorrectTest(string input, string expected)
+    public void ToBase64EmptyTest()
     {
-        var formatDate = StringHelper.FormatDate(input);
-        Check.That(formatDate).IsEqualTo(expected);
+        var base64 = StringHelper.ToBase64(string.Empty);
+        Check.That(base64).IsEqualTo(string.Empty);
     }
 
     [TestMethod]
+    public void ToBase64NullTest()
+    {
+        Check.ThatCode(() => StringHelper.ToBase64(null))
+             .Throws<KrosoftTechniqueException>()
+             .WithMessage("La variable 'payload' n'est pas renseignée.");
+    }
+
+    [TestMethod]
+    public void ToBase64Test()
+    {
+        var base64 = StringHelper.ToBase64("jwtToken");
+        Check.That(base64).IsEqualTo("and0VG9rZW4=");
+    }
+
+    [DataTestMethod]
     [DataRow(null, "")]
     [DataRow("", "")]
     [DataRow("   test   ", "test")]
@@ -90,7 +112,7 @@ public class StringHelperTests : BaseTest
         Check.That(formatDate).IsEqualTo(expected);
     }
 
-    [TestMethod]
+    [DataTestMethod]
     [DataRow(null, 0)]
     [DataRow("", 0)]
     [DataRow("160519", 160519)]

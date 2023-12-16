@@ -15,7 +15,7 @@ namespace Krosoft.Extensions.Testing.WebApi;
 
 public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
     where TStartup : class
-    //where TPositiveContext : PositiveContext
+//where TPositiveContext : PositiveContext
 {
     protected CustomWebApplicationFactory<TStartup, TPositiveContext> Factory = null!;
     protected virtual bool UseFakeAuth => true;
@@ -36,12 +36,12 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
         Factory.Dispose();
     }
 
-    protected CustomWebApplicationFactory<TStartup, TPositiveContext> GetFactory(   )
+    protected CustomWebApplicationFactory<TStartup, TPositiveContext> GetFactory()
     {
         void Action(IServiceCollection services)
         {
             ConfigureServices(services);
- 
+
             //Mock pour HttpClient.
             var mockHttpMessageHandler = new Mock<HttpMessageHandler>();
             mockHttpMessageHandler.Protected()
@@ -59,5 +59,5 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
         }
 
         return new CustomWebApplicationFactory<TStartup, TPositiveContext>(Action, null, UseFakeAuth);
-    } 
+    }
 }

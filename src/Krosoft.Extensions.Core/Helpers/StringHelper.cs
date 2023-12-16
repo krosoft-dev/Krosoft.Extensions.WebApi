@@ -11,10 +11,104 @@ public static class StringHelper
 {
     private static readonly Random Random = new Random();
 
+    public static string ClearFilePath(string text) =>
+        text
+            .Replace(" ", "-")
+            .Replace("/", "-");
+
+    public static string FormatCurrency(decimal montant, string currencyIsoCode) => $"{currencyIsoCode} {FormatNumber(montant)}";
+
     public static string FormatDate(string dateString)
     {
         DateTime.TryParse(dateString, out var date);
         return date.ToString("d");
+    }
+
+    public static string FormatNumber(decimal montant) => $"{montant:# ##0.00}".Replace('.', ',');
+
+    public static Stream GenerateStreamFromString(string? s)
+    {
+        var stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
+        writer.Write(s);
+        writer.Flush();
+        stream.Position = 0;
+        return stream;
+    }
+
+    public static string GetAbbreviation(string? data)
+    {
+        if (string.IsNullOrWhiteSpace(data))
+        {
+            return string.Empty;
+        }
+
+        var trimedData = data.Trim();
+        if (trimedData.Length <= 2)
+        {
+            return trimedData.ToUpper();
+        }
+
+        if (trimedData.Contains(' '))
+        {
+            var splited = trimedData.Split(' ');
+            return $"{splited[0].ToUpper()[0]}{splited[1].ToUpper()[0]}";
+        }
+
+        var pascalCase = trimedData;
+        pascalCase = trimedData.ToUpper()[0] + pascalCase.Substring(1);
+        var upperCaseOnly = string.Concat(pascalCase.Where(char.IsUpper));
+        if (upperCaseOnly.Length > 1 && upperCaseOnly.Length <= 3)
+        {
+            return upperCaseOnly.Substring(0, 2).ToUpper();
+        }
+
+        if (trimedData.Length <= 3)
+        {
+            return trimedData.Substring(0, 2).ToUpper();
+        }
+
+        return trimedData.Substring(0, 2).ToUpper();
+    }
+
+    /// <summary>Concatène plusieurs chaines et enlève les espaces superflus ou renvoie null si la chaine est vide</summary>
+    /// <param name="chaines">Les chaines a formater</param>
+    /// <returns>La chaine formatée </returns>
+    public static string? Join(params object?[] chaines)
+    {
+        var chainesTemp = chaines.ToList().Where(s => s != null).Select(s => s!.ToString()!.Trim()).ToList();
+
+        if (!chainesTemp.Any())
+        {
+            return string.Empty;
+        }
+
+        var chaine = string.Join(" ", chainesTemp);
+
+        if (string.IsNullOrWhiteSpace(chaine))
+        {
+            return null;
+        }
+
+        return chaine.Trim();
+    }
+
+    public static string KeepDigitsOnly(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return value;
+        }
+
+        return new string(value.Where(char.IsDigit).ToArray());
+    }
+
+    public static string RandomString(int length)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+                                    .Select(s => s[Random.Next(s.Length)])
+                                    .ToArray());
     }
 
     public static string ToBase64(string? payload)
@@ -24,16 +118,6 @@ public static class StringHelper
         var bytes = Encoding.GetEncoding(28591).GetBytes(payload!);
         var dataBase64 = Convert.ToBase64String(bytes);
         return dataBase64;
-    }
-
-    public static Stream GenerateStreamFromString(string s)
-    {
-        var stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-        writer.Write(s);
-        writer.Flush();
-        stream.Position = 0;
-        return stream;
     }
 
     /// <summary>
@@ -54,10 +138,62 @@ public static class StringHelper
 
         if (allWhiteSpace)
         {
-            return Regex.Replace(value, @"\s+", string.Empty);
+            return Regex.Replace(value, @"\s+", string.Empty, RegexOptions.None, RegexHelper.MatchTimeout);
         }
 
         return value.Trim();
+    }
+
+    /// <summary>Enleve les espaces superflus d'une chaine uniquement ou renvoie null si la chaine est vide</summary>
+    /// <param name="chaine">La chaine a formater</param>
+    /// <returns>La chaine formatée </returns>
+    public static string? Trim(object? chaine)
+    {
+        if (chaine == null)
+        {
+            return null;
+        }
+
+        var value = chaine.ToString();
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        return value.Trim();
+    }
+
+    /// <summary>
+    /// Enleve les espaces superflus d'une chaine uniquement ou renvoie string.Empty si la chaine est vide.
+    /// </summary>
+    /// <param name="chaine">La chaine à formater.</param>
+    /// <returns>La chaine formatée.</returns>
+    public static string TrimIfNotNull(object? chaine)
+    {
+        if (chaine == null)
+        {
+            return string.Empty;
+        }
+
+        var value = chaine.ToString();
+        if (string.IsNullOrEmpty(value))
+        {
+            return string.Empty;
+        }
+
+        return value.Trim();
+    }
+
+    public static string Truncate(string value, int maxLength)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return value;
+        }
+
+        return value.Length <= maxLength
+            ? value
+            : value.Substring(0, maxLength) + "...";
     }
 
     public static bool TryParseToBoolean(string value)
@@ -101,176 +237,5 @@ public static class StringHelper
         }
 
         return 0;
-    }
-
-    public static string ClearFilePath(string text) =>
-        text
-            .Replace(" ", "-")
-            .Replace("/", "-");
-
-    /// <summary>
-    /// Enleve les espaces superflus d'une chaine uniquement ou renvoie string.Empty si la chaine est vide.
-    /// </summary>
-    /// <param name="chaine">La chaine à formater.</param>
-    /// <returns>La chaine formatée.</returns>
-    public static string TrimIfNotNull(object? chaine)
-    {
-        if (chaine == null)
-        {
-            return string.Empty;
-        }
-
-        var value = chaine.ToString();
-        if (string.IsNullOrEmpty(value))
-        {
-            return string.Empty;
-        }
-
-        return value.Trim();
-    }
-
-    /// <summary>Enleve les espaces superflus d'une chaine uniquement ou renvoie null si la chaine est vide</summary>
-    /// <param name="chaine">La chaine a formater</param>
-    /// <returns>La chaine formatée </returns>
-    public static string? Trim(object? chaine)
-    {
-        if (chaine == null)
-        {
-            return null;
-        }
-
-        var value = chaine.ToString();
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return null;
-        }
-
-        return value.Trim();
-    }
-
-    /// <summary>Concatène plusieurs chaines et enlève les espaces superflus ou renvoie null si la chaine est vide</summary>
-    /// <param name="chaines">Les chaines a formater</param>
-    /// <returns>La chaine formatée </returns>
-    public static string? Join(params object?[] chaines)
-    {
-        var chainesTemp = chaines.ToList().Where(s => s != null).Select(s => s!.ToString()!.Trim()).ToList();
-
-        if (!chainesTemp.Any())
-        {
-            return string.Empty;
-        }
-
-        var chaine = string.Join(" ", chainesTemp);
-
-        if (string.IsNullOrWhiteSpace(chaine))
-        {
-            return null;
-        }
-
-        return chaine.Trim();
-    }
-
-    public static DateTime? DateStringToDateTime(string dateString)
-    {
-        if (!string.IsNullOrEmpty(dateString))
-        {
-            if (!string.IsNullOrWhiteSpace(dateString))
-            {
-                if (dateString.Length == 8)
-                {
-                    int year;
-
-                    if (int.TryParse(dateString.Substring(0, 4), out year))
-                    {
-                        int month;
-                        if (int.TryParse(dateString.Substring(4, 2), out month))
-                        {
-                            int day;
-                            if (int.TryParse(dateString.Substring(6, 2), out day))
-                            {
-                                var dateTime = new DateTime(year, month, day);
-
-                                // Epuration des valeurs extrêmes d'Anael
-                                if (!dateTime.Equals(new DateTime(1, 1, 1)) && !dateTime.Equals(new DateTime(9999, 12, 31)))
-                                {
-                                    return dateTime;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public static string RandomString(int length)
-    {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        return new string(Enumerable.Repeat(chars, length)
-                                    .Select(s => s[Random.Next(s.Length)])
-                                    .ToArray());
-    }
-
-    public static string Truncate(string value, int maxLength)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            return value;
-        }
-
-        return value.Length <= maxLength
-            ? value
-            : value.Substring(0, maxLength) + "...";
-    }
-
-    public static string KeepDigitsOnly(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-        {
-            return value;
-        }
-
-        return new string(value.Where(char.IsDigit).ToArray());
-    }
-
-    public static string FormatNumber(decimal montant) => $"{montant:# ##0.00}".Replace('.', ',');
-
-    public static string FormatCurrency(decimal montant, string currencyIsoCode) => $"{currencyIsoCode} {FormatNumber(montant)}";
-
-    public static string GetAbbreviation(string? data)
-    {
-        if (string.IsNullOrWhiteSpace(data))
-        {
-            return string.Empty;
-        }
-
-        var trimedData = data.Trim();
-        if (trimedData.Length <= 2)
-        {
-            return trimedData.ToUpper();
-        }
-
-        if (trimedData.Contains(' '))
-        {
-            var splited = trimedData.Split(' ');
-            return $"{splited[0].ToUpper()[0]}{splited[1].ToUpper()[0]}";
-        }
-
-        var pascalCase = trimedData;
-        pascalCase = trimedData.ToUpper()[0] + pascalCase.Substring(1);
-        var upperCaseOnly = string.Concat(pascalCase.Where(char.IsUpper));
-        if (upperCaseOnly.Length > 1 && upperCaseOnly.Length <= 3)
-        {
-            return upperCaseOnly.Substring(0, 2).ToUpper();
-        }
-
-        if (trimedData.Length <= 3)
-        {
-            return trimedData.Substring(0, 2).ToUpper();
-        }
-
-        return trimedData.Substring(0, 2).ToUpper();
     }
 }
