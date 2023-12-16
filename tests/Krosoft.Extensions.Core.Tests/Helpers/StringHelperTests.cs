@@ -116,9 +116,9 @@ public class StringHelperTests : BaseTest
     [DataRow("+4302", 4302)]
     [DataRow("(100);", 0)]
     [DataRow("01FA", 0)]
-    public void TryParseToInt_Tests(string input, int expected)
+    public void ToInteger_Tests(string input, int expected)
     {
-        var formatDate = StringHelper.TryParseToInt(input);
+        var formatDate = StringHelper.ToInteger(input);
         Check.That(formatDate).IsEqualTo(expected);
     }
 }

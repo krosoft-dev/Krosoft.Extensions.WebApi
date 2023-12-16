@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using Krosoft.Extensions.Core.Helpers;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Krosoft.Extensions.Core.Extensions;
 
@@ -14,9 +15,9 @@ public static class StringExtensions
                                                                  RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.CultureInvariant
                                                                  , RegexHelper.MatchTimeout);
 
-    public static string ClearFilePath(this string text) => StringHelper.ClearFilePath(text);
+    public static string? ClearFilePath(this string? text) => StringHelper.ClearFilePath(text);
 
-    public static string FromUtf8ToAscii(this string text)
+    public static string FromUtf8ToAscii(this string? text)
     {
         if (string.IsNullOrEmpty(text))
         {
@@ -45,18 +46,25 @@ public static class StringExtensions
     /// <param name="str">la chaine</param>
     /// <param name="length">le nombre de caractères</param>
     /// <returns>une sous chaine</returns>
-    public static string Left(this string str, int length) => str.Substring(0, Math.Min(length, str.Length));
+    public static string? Left(this string? str, int length) => str?.Substring(0, Math.Min(length, str.Length));
 
-    public static bool Match(this string searchText,
+    public static bool Match(this string? searchText,
                              string text)
-        => searchText.ToUpper().Contains(text.RemoveSpecials().ToUpper()) || text.RemoveSpecials().ToUpper().Contains(searchText.RemoveSpecials().ToUpper());
+    {
+        if (string.IsNullOrEmpty(searchText))
+        {
+            return false;
+        }
+
+        return searchText.ToUpper().Contains(text.RemoveSpecials().ToUpper()) || text.RemoveSpecials().ToUpper().Contains(searchText.RemoveSpecials().ToUpper());
+    }
 
     /// <summary>
     /// Enlève tous les espaces d'une chaîne.
     /// </summary>
     /// <param name="text">Texte source.</param>
     /// <returns>Chaîne sans les espaces.</returns>
-    public static string RemoveAllSpaces(this string text)
+    public static string? RemoveAllSpaces(this string? text)
     {
         if (string.IsNullOrEmpty(text))
         {
@@ -71,8 +79,13 @@ public static class StringExtensions
     /// </summary>
     /// <param name="text">valeur à transformer</param>
     /// <returns>la valeur sans accent</returns>
-    public static string RemoveDiacritics(this string text)
+    public static string RemoveDiacritics(this string? text)
     {
+        if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
+
         var normalizedString = text.Normalize(NormalizationForm.FormD);
         var stringBuilder = new StringBuilder();
 
@@ -88,24 +101,46 @@ public static class StringExtensions
         return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
     }
 
-    public static string RemoveSpecials(this string searchText)
-        => Regex.Replace(searchText, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled, RegexHelper.MatchTimeout);
-
-    public static string Replace(this string s, char[] separators, string input)
+    public static string RemoveSpecials(this string? text)
     {
-        var temp = s.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+        if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
+
+        return Regex.Replace(text, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled, RegexHelper.MatchTimeout);
+    }
+
+    public static string Replace(this string? text, char[] separators, string input)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
+
+        var temp = text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
         return string.Join(input, temp);
     }
 
-    public static string ReplaceFirstOccurrence(this string source, string find, string replace)
+    public static string ReplaceFirstOccurrence(this string? source, string find, string replace)
     {
+        if (string.IsNullOrEmpty(source))
+        {
+            return string.Empty;
+        }
+
         var place = source.IndexOf(find, StringComparison.Ordinal);
         var result = source.Remove(place, find.Length).Insert(place, replace);
         return result;
     }
 
-    public static string ReplaceLastOccurrence(this string source, string find, string replace)
+    public static string ReplaceLastOccurrence(this string? source, string find, string replace)
     {
+        if (string.IsNullOrEmpty(source))
+        {
+            return string.Empty;
+        }
+
         var place = source.LastIndexOf(find, StringComparison.Ordinal);
         var result = source.Remove(place, find.Length).Insert(place, replace);
         return result;
@@ -114,14 +149,27 @@ public static class StringExtensions
     /// <summary>
     /// Renvoie les n caractères de droite
     /// </summary>
-    /// <param name="str">la chaine</param>
+    /// <param name="text">la chaine</param>
     /// <param name="length">le nombre de caractères</param>
     /// <returns>une sous chaine</returns>
-    public static string Right(this string str, int length) => str.Substring(Math.Max(0, str.Length - length), Math.Min(length, str.Length));
+    public static string Right(this string? text, int length)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
 
-    public static string Sanitize(this string fileName,
+        return text.Substring(Math.Max(0, text.Length - length), Math.Min(length, text.Length));
+    }
+
+    public static string Sanitize(this string? text,
                                   string replacement = "_")
-        => RemoveInvalidChars.Replace(fileName, replacement).RemoveSpecials();
+    { if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
+        return RemoveInvalidChars.Replace(text, replacement).RemoveSpecials();
+    }
 
     /// <summary>
     /// Découpe une chaîne et nettoie les résultats.
@@ -129,7 +177,7 @@ public static class StringExtensions
     /// <param name="text">Chaîne à découper.</param>
     /// <param name="splitString">Chaîne de découpe.</param>
     /// <returns>Tableau des éléments trimmés après découpe, les éléments vides étant enlevés.</returns>
-    public static string[] SplitAndClean(this string text, char splitString)
+    public static string[] SplitAndClean(this string? text, char splitString)
     {
         if (string.IsNullOrEmpty(text))
         {
@@ -149,13 +197,18 @@ public static class StringExtensions
     /// </summary>
     /// <param name="value">Valeur à extraire.</param>
     /// <returns>Valeur extraite.</returns>
-    public static string ToAlphaNumeric(this string value)
+    public static string ToAlphaNumeric(this string? value)
     {
+        if (string.IsNullOrEmpty(value))
+        {
+            return string.Empty;
+        }
+
         var rgx = new Regex("[^a-zA-Z0-9]", RegexOptions.None, RegexHelper.MatchTimeout);
         return rgx.Replace(value, string.Empty);
     }
 
-    public static string ToCamelCase(this string value)
+    public static string? ToCamelCase(this string? value)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -172,7 +225,7 @@ public static class StringExtensions
     /// </summary>
     /// <param name="text">Texte source.</param>
     /// <returns>Premier caractère de la chaîne en majuscule, puis le reste en minuscule.</returns>
-    public static string ToUpperFirst(this string text)
+    public static string? ToUpperFirst(this string? text)
     {
         if (string.IsNullOrEmpty(text))
         {
@@ -192,7 +245,7 @@ public static class StringExtensions
     /// <param name="value">La chaine à tronquer</param>
     /// <param name="maxLength">longueur maximale</param>
     /// <returns>La chaine tronquée</returns>
-    public static string Truncate(this string value, int maxLength)
+    public static string? Truncate(this string? value, int maxLength)
     {
         if (string.IsNullOrEmpty(value))
         {

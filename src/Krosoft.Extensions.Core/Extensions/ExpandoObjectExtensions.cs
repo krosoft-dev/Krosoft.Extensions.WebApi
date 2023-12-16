@@ -10,10 +10,7 @@ public static class ExpandoObjectExtensions
 
         if (dictionary.TryGetValue(key, out var value))
         {
-            if (value != null)
-            {
-                return value.ToString();
-            }
+            return value?.ToString();
         }
 
         return null;

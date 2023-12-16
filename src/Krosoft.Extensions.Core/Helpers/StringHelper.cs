@@ -7,11 +7,8 @@ namespace Krosoft.Extensions.Core.Helpers;
 /// </summary>
 public static class StringHelper
 {
-    private static readonly Random Random = new Random();
-
-    public static string ClearFilePath(string text) =>
-        text
-            .Replace(" ", "-")
+    public static string? ClearFilePath(string? text) =>
+        text?.Replace(" ", "-")
             .Replace("/", "-");
 
     public static string FormatCurrency(decimal montant, string currencyIsoCode) => $"{currencyIsoCode} {FormatNumber(montant)}";
@@ -91,7 +88,7 @@ public static class StringHelper
         return chaine.Trim();
     }
 
-    public static string KeepDigitsOnly(string value)
+    public static string? KeepDigitsOnly(string? value)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -103,10 +100,43 @@ public static class StringHelper
 
     public static string RandomString(int length)
     {
+        var random = new Random();
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         return new string(Enumerable.Repeat(chars, length)
-                                    .Select(s => s[Random.Next(s.Length)])
+                                    .Select(s => s[random.Next(s.Length)])
                                     .ToArray());
+    }
+
+    /// <summary>
+    /// Essaye de convertir en int, si echec on retourne 0
+    /// </summary>
+    /// <param name="value">la chaine de caractère à convertir</param>
+    /// <returns>la chaine convertie, zero si echec</returns>
+    public static int ToInteger(string? value)
+    {
+        var result = int.TryParse(value, out var number);
+        if (result)
+        {
+            return number;
+        }
+
+        return 0;
+    }
+
+    /// <summary>
+    /// Essaye de convertir en int, si echec on retourne 0
+    /// </summary>
+    /// <param name="value">la chaine de caractère à convertir</param>
+    /// <returns>la chaine convertie, zero si echec</returns>
+    public static long ToLong(string? value)
+    {
+        var result = long.TryParse(value, out var number);
+        if (result)
+        {
+            return number;
+        }
+
+        return 0;
     }
 
     /// <summary>
@@ -118,7 +148,7 @@ public static class StringHelper
     /// chaine de caractères
     /// </param>
     /// <returns>une chaine de caractères sans espaces blancs</returns>
-    public static string Trim(string value, bool allWhiteSpace = false)
+    public static string Trim(string? value, bool allWhiteSpace = false)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -173,7 +203,7 @@ public static class StringHelper
         return value.Trim();
     }
 
-    public static string Truncate(string value, int maxLength)
+    public static string? Truncate(string? value, int maxLength)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -185,7 +215,7 @@ public static class StringHelper
             : value.Substring(0, maxLength) + "...";
     }
 
-    public static bool TryParseToBoolean(string value)
+    public static bool TryParseToBoolean(string? value)
     {
         var result = bool.TryParse(value, out var boolValue);
         if (result)
@@ -194,37 +224,5 @@ public static class StringHelper
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// Essaye de convertir en int, si echec on retourne 0
-    /// </summary>
-    /// <param name="value">la chaine de caractère à convertir</param>
-    /// <returns>la chaine convertie, zero si echec</returns>
-    public static int TryParseToInt(string? value)
-    {
-        var result = int.TryParse(value, out var number);
-        if (result)
-        {
-            return number;
-        }
-
-        return 0;
-    }
-
-    /// <summary>
-    /// Essaye de convertir en int, si echec on retourne 0
-    /// </summary>
-    /// <param name="value">la chaine de caractère à convertir</param>
-    /// <returns>la chaine convertie, zero si echec</returns>
-    public static long TryParseToLong(string value)
-    {
-        var result = long.TryParse(value, out var number);
-        if (result)
-        {
-            return number;
-        }
-
-        return 0;
     }
 }
