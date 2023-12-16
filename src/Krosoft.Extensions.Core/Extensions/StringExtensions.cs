@@ -2,7 +2,6 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using Krosoft.Extensions.Core.Helpers;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Krosoft.Extensions.Core.Extensions;
 
@@ -43,15 +42,33 @@ public static class StringExtensions
     /// <summary>
     /// Renvoie les n caractères de gauche
     /// </summary>
-    /// <param name="str">la chaine</param>
+    /// <param name="text">la chaine</param>
     /// <param name="length">le nombre de caractères</param>
     /// <returns>une sous chaine</returns>
-    public static string? Left(this string? str, int length) => str?.Substring(0, Math.Min(length, str.Length));
+    public static string Left(this string? text, int length)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return string.Empty;
+        }
+
+        if (length < 0)
+        {
+            return string.Empty;
+        }
+
+        return text.Substring(0, Math.Min(length, text.Length));
+    }
 
     public static bool Match(this string? searchText,
-                             string text)
+                             string? text)
     {
         if (string.IsNullOrEmpty(searchText))
+        {
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(text))
         {
             return false;
         }
@@ -130,8 +147,13 @@ public static class StringExtensions
         }
 
         var place = source.IndexOf(find, StringComparison.Ordinal);
-        var result = source.Remove(place, find.Length).Insert(place, replace);
-        return result;
+        if (place >= 0)
+        {
+            var result = source.Remove(place, find.Length).Insert(place, replace);
+            return result;
+        }
+
+        return source;
     }
 
     public static string ReplaceLastOccurrence(this string? source, string find, string replace)
@@ -142,8 +164,13 @@ public static class StringExtensions
         }
 
         var place = source.LastIndexOf(find, StringComparison.Ordinal);
-        var result = source.Remove(place, find.Length).Insert(place, replace);
-        return result;
+        if (place >= 0)
+        {
+            var result = source.Remove(place, find.Length).Insert(place, replace);
+            return result;
+        }
+
+        return source;
     }
 
     /// <summary>
@@ -159,15 +186,22 @@ public static class StringExtensions
             return string.Empty;
         }
 
+        if (length < 0)
+        {
+            return string.Empty;
+        }
+
         return text.Substring(Math.Max(0, text.Length - length), Math.Min(length, text.Length));
     }
 
     public static string Sanitize(this string? text,
                                   string replacement = "_")
-    { if (string.IsNullOrEmpty(text))
+    {
+        if (string.IsNullOrEmpty(text))
         {
             return string.Empty;
         }
+
         return RemoveInvalidChars.Replace(text, replacement).RemoveSpecials();
     }
 
