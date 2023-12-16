@@ -6,14 +6,14 @@ namespace Krosoft.Extensions.WebApi.Swagger.HealthChecks.Filters;
 
 public class HealthChecksFilter : IDocumentFilter
 {
-    public void Apply(OpenApiDocument openApiDocument, DocumentFilterContext context)
+    public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
 
     {
         var pathItem = CreateOpenApiPathItem();
 
-        openApiDocument.Paths.Add(Urls.Health.Check, pathItem);
-        openApiDocument.Paths.Add(Urls.Health.Readiness, pathItem);
-        openApiDocument.Paths.Add(Urls.Health.Liveness, pathItem);
+        swaggerDoc.Paths.Add(Urls.Health.Check, pathItem);
+        swaggerDoc.Paths.Add(Urls.Health.Readiness, pathItem);
+        swaggerDoc.Paths.Add(Urls.Health.Liveness, pathItem);
     }
 
     private static OpenApiPathItem CreateOpenApiPathItem()

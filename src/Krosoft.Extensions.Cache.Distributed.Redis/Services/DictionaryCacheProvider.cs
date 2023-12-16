@@ -63,7 +63,7 @@ public class DictionaryCacheProvider : IDistributedCacheProvider
         return await Task.FromResult(containsKey);
     }
 
-    public async Task<bool> IsExistRowAsync(string collectionKey, string entryKey, CancellationToken cancellationToken)
+    public async Task<bool> IsExistRowAsync(string collectionKey, string entryKey, CancellationToken cancellationToken = default)
     {
         var containsKey = _cache.ContainsKey(collectionKey);
         return await Task.FromResult(containsKey);
