@@ -15,11 +15,17 @@ public class MemoryCacheProvider : ICacheProvider
     }
 
     /// <summary>
-    /// Permet de savoir si une clé est définie dans le cache.
+    /// Vide le cache.
     /// </summary>
-    /// <param name="key">Clé à rechercher.</param>
-    /// <returns><c>true</c> si elle existe dans le cache, <c>false</c> sinon.</returns>
-    public bool IsSet(string key) => _memoryCache.TryGetValue(key, out _);
+    public void Clear()
+    {
+        var keys = GetKeys();
+
+        foreach (var key in keys)
+        {
+            Remove(key);
+        }
+    }
 
     /// <summary>
     /// Obtient une entrée du cache.
@@ -34,37 +40,28 @@ public class MemoryCacheProvider : ICacheProvider
     }
 
     /// <summary>
-    /// Obtient une entrée du cache.
-    /// Si non trouvée, renvoie la valeur par défaut.
+    /// Récupère une instance d'objet de type T en cache.
+    /// Si elle n'est pas présente, on l'y met.
     /// </summary>
-    /// <typeparam name="T">Type de la valeur.</typeparam>
-    /// <param name="key">Clé.</param>
-    /// <param name="defaultValue">Valeur par défaut.</param>
-    /// <returns>Valeur trouvée ou valeur par défaut.</returns>
-    public T? GetValueOrDefault<T>(string key, T? defaultValue = default)
-    {
-        if (!_memoryCache.TryGetValue(key, out T? cacheEntry))
-        {
-            return defaultValue;
-        }
-
-        return cacheEntry;
-    }
+    /// <typeparam name="T">Type de l'objet en cache.</typeparam>
+    /// <param name="key">Clé de l'entrée.</param>
+    /// <param name="firstLoad">Action à faire lors de la première mise en cache.</param>
+    /// <returns>Instance de T depuis le cache.</returns>
+    public T? Get<T>(string key, Func<T> firstLoad) => GetValueOrDefault(key, firstLoad());
 
     /// <summary>
-    /// Vide le cache.
+    /// Récupère une collection de type T en cache.
+    /// Si elle n'est pas présente, on l'y met.
     /// </summary>
-    public void Clear()
+    /// <typeparam name="T">Type de l'objet en cache.</typeparam>
+    /// <param name="firstLoad">Action à faire lors de la première mise en cache.</param>
+    /// <returns>Collection de T depuis le cache.</returns>
+    public IEnumerable<T>? Get<T>(Func<IEnumerable<T>> firstLoad)
     {
-        var keys = GetKeys();
+        var cacheKey = GetKey<T>();
 
-        foreach (var key in keys)
-        {
-            Remove(key);
-        }
+        return GetValueOrDefault(cacheKey, firstLoad());
     }
-
-    public string GetKey<T>() => $"Cache_{typeof(T).Name}";
 
     public IDictionary<string, Type> GetItemsType()
     {
@@ -84,6 +81,8 @@ public class MemoryCacheProvider : ICacheProvider
 
         return itemsInfo;
     }
+
+    public string GetKey<T>() => $"Cache_{typeof(T).Name}";
 
     /// <summary>
     /// Récupère les clés des objets en cache.
@@ -125,38 +124,34 @@ public class MemoryCacheProvider : ICacheProvider
         return items;
     }
 
+    /// <summary>
+    /// Obtient une entrée du cache.
+    /// Si non trouvée, renvoie la valeur par défaut.
+    /// </summary>
+    /// <typeparam name="T">Type de la valeur.</typeparam>
+    /// <param name="key">Clé.</param>
+    /// <param name="defaultValue">Valeur par défaut.</param>
+    /// <returns>Valeur trouvée ou valeur par défaut.</returns>
+    public T? GetValueOrDefault<T>(string key, T? defaultValue = default)
+    {
+        if (!_memoryCache.TryGetValue(key, out T? cacheEntry))
+        {
+            return defaultValue;
+        }
+
+        return cacheEntry;
+    }
+
+    /// <summary>
+    /// Permet de savoir si une clé est définie dans le cache.
+    /// </summary>
+    /// <param name="key">Clé à rechercher.</param>
+    /// <returns><c>true</c> si elle existe dans le cache, <c>false</c> sinon.</returns>
+    public bool IsSet(string key) => _memoryCache.TryGetValue(key, out _);
+
     public void Remove(string key)
     {
         _memoryCache.Remove(key);
-    }
-
-    public void Set(string key, object value)
-    {
-        _memoryCache.Set(key, value);
-    }
-
-    /// <summary>
-    /// Récupère une instance d'objet de type T en cache.
-    /// Si elle n'est pas présente, on l'y met.
-    /// </summary>
-    /// <typeparam name="T">Type de l'objet en cache.</typeparam>
-    /// <param name="key">Clé de l'entrée.</param>
-    /// <param name="firstLoad">Action à faire lors de la première mise en cache.</param>
-    /// <returns>Instance de T depuis le cache.</returns>
-    public T? Get<T>(string key, Func<T> firstLoad) => GetValueOrDefault(key, firstLoad());
-
-    /// <summary>
-    /// Récupère une collection de type T en cache.
-    /// Si elle n'est pas présente, on l'y met.
-    /// </summary>
-    /// <typeparam name="T">Type de l'objet en cache.</typeparam>
-    /// <param name="firstLoad">Action à faire lors de la première mise en cache.</param>
-    /// <returns>Collection de T depuis le cache.</returns>
-    public IEnumerable<T>? Get<T>(Func<IEnumerable<T>> firstLoad)
-    {
-        var cacheKey = GetKey<T>();
-
-        return GetValueOrDefault(cacheKey, firstLoad());
     }
 
     /// <summary>
@@ -177,5 +172,10 @@ public class MemoryCacheProvider : ICacheProvider
     public void Set(string key, object value, TimeSpan cacheTime)
     {
         _memoryCache.Set(key, value, cacheTime);
+    }
+
+    public void Set(string key, object value)
+    {
+        _memoryCache.Set(key, value);
     }
 }

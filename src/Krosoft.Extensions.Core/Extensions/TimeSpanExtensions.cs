@@ -5,6 +5,17 @@
 /// </summary>
 public static class TimeSpanExtensions
 {
+    private static IEnumerable<string> GetReadableStringElements(this TimeSpan span)
+    {
+        yield return GetString(span.Days, "j");
+        yield return GetString(span.Hours, "h");
+        yield return GetString(span.Minutes, "m");
+        yield return GetString(span.Seconds, "s");
+        yield return GetString(span.Milliseconds, "ms");
+    }
+
+    private static string GetString(int ms, string unite) => ms == 0 ? string.Empty : $"{ms}{unite}";
+
     /// <summary>
     /// Affichage en chaine de charactères du TimeSpan donné.
     /// </summary>
@@ -21,15 +32,4 @@ public static class TimeSpanExtensions
 
         return shortString;
     }
-
-    private static IEnumerable<string> GetReadableStringElements(this TimeSpan span)
-    {
-        yield return GetString(span.Days, "j");
-        yield return GetString(span.Hours, "h");
-        yield return GetString(span.Minutes, "m");
-        yield return GetString(span.Seconds, "s");
-        yield return GetString(span.Milliseconds, "ms");
-    }
-
-    private static string GetString(int ms, string unite) => ms == 0 ? string.Empty : $"{ms}{unite}";
 }

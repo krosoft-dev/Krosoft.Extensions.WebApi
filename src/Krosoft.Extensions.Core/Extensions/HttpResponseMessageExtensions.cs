@@ -25,34 +25,6 @@ public static class HttpResponseMessageExtensions
         return default;
     }
 
-    public static async Task ManageErrorAsync(this HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken)
-    {
-        var json = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
-
-        var isValid = JsonHelper.IsValid(json);
-        if (isValid)
-        {
-            var obj = JsonConvert.DeserializeObject<ErrorApi>(json);
-            if (obj != null)
-            {
-                if (Enum.TryParse(obj.StatusCode, out HttpStatusCode colorValue))
-                {
-                    if (Enum.IsDefined(typeof(HttpStatusCode), colorValue))
-                    {
-                        throw new HttpException(colorValue,
-                                                obj.Message);
-                    }
-                }
-
-                throw new HttpException(httpResponseMessage.StatusCode,
-                                        obj.Message);
-            }
-        }
-
-        throw new HttpException(httpResponseMessage.StatusCode,
-                                httpResponseMessage.ReasonPhrase);
-    }
-
     public static async Task EnsureAsync(this HttpResponseMessage httpResponseMessage,
                                          CancellationToken cancellationToken = default)
     {
@@ -79,5 +51,33 @@ public static class HttpResponseMessageExtensions
             throw new HttpException(httpResponseMessage.StatusCode,
                                     httpResponseMessage.ReasonPhrase);
         }
+    }
+
+    public static async Task ManageErrorAsync(this HttpResponseMessage httpResponseMessage, CancellationToken cancellationToken)
+    {
+        var json = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+
+        var isValid = JsonHelper.IsValid(json);
+        if (isValid)
+        {
+            var obj = JsonConvert.DeserializeObject<ErrorApi>(json);
+            if (obj != null)
+            {
+                if (Enum.TryParse(obj.StatusCode, out HttpStatusCode colorValue))
+                {
+                    if (Enum.IsDefined(typeof(HttpStatusCode), colorValue))
+                    {
+                        throw new HttpException(colorValue,
+                                                obj.Message);
+                    }
+                }
+
+                throw new HttpException(httpResponseMessage.StatusCode,
+                                        obj.Message);
+            }
+        }
+
+        throw new HttpException(httpResponseMessage.StatusCode,
+                                httpResponseMessage.ReasonPhrase);
     }
 }

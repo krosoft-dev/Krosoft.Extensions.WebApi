@@ -37,15 +37,6 @@ public static class ListExtensions
         return source.AsEnumerable().ToDictionary(valueSelector, useDistinct);
     }
 
-    public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this List<TValue> source,
-                                                                                       Func<TValue, TKey> valueSelector,
-                                                                                       bool useDistinct) where TKey : notnull
-    {
-        Guard.IsNotNull(nameof(source), source);
-
-        return source.AsEnumerable().ToReadOnlyDictionary(valueSelector, useDistinct);
-    }
-
     public static IDictionary<string, TValue> ToDictionary<TValue>(this List<TValue> source,
                                                                    Func<TValue, string> selector,
                                                                    Func<string, string> modificator,
@@ -54,5 +45,14 @@ public static class ListExtensions
         Guard.IsNotNull(nameof(source), source);
 
         return source.AsEnumerable().ToDictionary(selector, modificator, useDistinct);
+    }
+
+    public static IReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>(this List<TValue> source,
+                                                                                       Func<TValue, TKey> valueSelector,
+                                                                                       bool useDistinct) where TKey : notnull
+    {
+        Guard.IsNotNull(nameof(source), source);
+
+        return source.AsEnumerable().ToReadOnlyDictionary(valueSelector, useDistinct);
     }
 }
