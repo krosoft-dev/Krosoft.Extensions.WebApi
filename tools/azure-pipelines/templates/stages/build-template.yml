@@ -44,10 +44,10 @@ stages:
           - ${{ if eq(parameters.runSonarCloudAnalyze, true) }}:
               - template: ../steps/sonarCloud-prepare-template.yml
                 parameters:
-                  sonarCloudEndpoint: ${{ parameters.sonarCloudEndpoint }}
-                  sonarCloudOrganization: ${{ parameters.sonarCloudOrganization }}
-                  sonarCloudProjectKey: ${{ parameters.sonarCloudProjectKey }}
-                  sonarCloudProjectName: ${{ parameters.sonarCloudProjectName }}
+                  endpoint: ${{ parameters.sonarCloudEndpoint }}
+                  organization: ${{ parameters.sonarCloudOrganization }}
+                  projectKey: ${{ parameters.sonarCloudProjectKey }}
+                  projectName: ${{ parameters.sonarCloudProjectName }}
 
           - template: ../steps/build-template.yml
             parameters:

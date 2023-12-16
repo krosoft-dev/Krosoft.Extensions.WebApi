@@ -1,28 +1,45 @@
 parameters:
-  - name: sonarCloudEndpoint
+  - name: endpoint
     type: string
-
-  - name: sonarCloudOrganization
+  - name: organization
     type: string
-
-  - name: sonarCloudProjectKey
+  - name: projectKey
     type: string
-
-  - name: sonarCloudProjectName
+  - name: projectName
+    type: string  
+  - name: version
     type: string
+    default: $(Build.BuildNumber)
 
 steps:
   - task: SonarCloudPrepare@1
     displayName: "Prepare SonarCloud"
     inputs:
-      SonarCloud: ${{ parameters.sonarCloudEndpoint }}
-      organization: ${{ parameters.sonarCloudOrganization }}
+      SonarCloud: ${{ parameters.endpoint }}
+      organization: ${{ parameters.organization }}
       scannerMode: "MSBuild"
-      projectKey: ${{ parameters.sonarCloudProjectKey }}
-      projectName: ${{ parameters.sonarCloudProjectName }}
+      projectKey: ${{ parameters.projectKey }}
+      projectName: ${{ parameters.projectName }}
+      projectVersion: ${{ parameters.version }}
       extraProperties: |
         sonar.cs.opencover.reportsPaths="$(Build.SourcesDirectory)/**/coverage.opencover.xml"
         sonar.coverage.exclusions="**/Migrations/*.cs,**/*Tests*/**/*"
         sonar.exclusions="**/Migrations/*.cs,**/samples/**/*.*"
         sonar.verbose=true
         sonar.branch.name=$(Build.SourceBranchName)
+
+
+
+steps:
+  - ${{ if eq(parameters.sonarQubeEnable, 'true'  ) }}:
+      # Prepare SonarQube analysis.
+      - task: SonarQubePrepare@5
+        displayName: Prepare SonarQube scanner
+        continueOnError: true
+        inputs:
+          SonarQube: ${{ parameters.sonarQubeServiceConnection }}
+          scannerMode: "MSBuild"
+          projectKey: ${{ parameters.sonarQubeProjectKey }}
+          projectName: ${{ parameters.sonarQubeProjectKey }}
+          
+          extraProperties: |
