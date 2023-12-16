@@ -15,6 +15,24 @@ public class NFluentExtensionTests
     private const string ExportUtilisateursResourceName = "Krosoft.Extensions.Testing.Tests.Files.ExportUsers.csv";
 
     [TestMethod]
+    public void ExtractingFromDataTableTest()
+    {
+        var users = new List<UtilisateurBasique>
+        {
+            UtilisateurFactory.CreateUtilisateur("nom1", "prenom1"),
+            UtilisateurFactory.CreateUtilisateur("nom2", "prenom3")
+        };
+
+        var nomDataTable = "Utilisateurs";
+        var datatable = users.ToDataTable(nomDataTable);
+        Check.That(datatable).IsNotNull();
+        Check.That(datatable.TableName).IsEqualTo(nomDataTable);
+        Check.That(datatable.Rows).HasSize(2);
+        Check.That(datatable.Extracting<UtilisateurBasique>(d => d.Nom!)).ContainsExactly("nom1", "nom2");
+        Check.That(datatable.Extracting<UtilisateurBasique>(d => d.Prenom!)).ContainsExactly("prenom1", "prenom3");
+    }
+
+    [TestMethod]
     public void ExtractingTest()
     {
         var users = new List<UtilisateurBasique>
@@ -32,14 +50,6 @@ public class NFluentExtensionTests
     }
 
     [TestMethod]
-    public void IsEqualWithDeltaTest()
-    {
-        Check.That(0.98m).IsEqualWithDelta(0.98m, 0.01m);
-        Check.That(0.98m).IsEqualWithDelta(0.989m, 0.01m);
-        Check.That(64.87m).IsEqualWithDelta(64.88m, 0.01m);
-    }
-
-    [TestMethod]
     public void IsEqualWithDeltaChainageTest()
     {
         Check.That(0.98m).IsEqualTo(0.98m).And.IsStrictlyLessThan(1);
@@ -47,21 +57,11 @@ public class NFluentExtensionTests
     }
 
     [TestMethod]
-    public void ExtractingFromDataTableTest()
+    public void IsEqualWithDeltaTest()
     {
-        var users = new List<UtilisateurBasique>
-        {
-            UtilisateurFactory.CreateUtilisateur("nom1", "prenom1"),
-            UtilisateurFactory.CreateUtilisateur("nom2", "prenom3")
-        };
-
-        var nomDataTable = "Utilisateurs";
-        var datatable = users.ToDataTable(nomDataTable);
-        Check.That(datatable).IsNotNull();
-        Check.That(datatable.TableName).IsEqualTo(nomDataTable);
-        Check.That(datatable.Rows).HasSize(2);
-        Check.That(datatable.Extracting<UtilisateurBasique>(d => d.Nom!)).ContainsExactly("nom1", "nom2");
-        Check.That(datatable.Extracting<UtilisateurBasique>(d => d.Prenom!)).ContainsExactly("prenom1", "prenom3");
+        Check.That(0.98m).IsEqualWithDelta(0.98m, 0.01m);
+        Check.That(0.98m).IsEqualWithDelta(0.989m, 0.01m);
+        Check.That(64.87m).IsEqualWithDelta(64.88m, 0.01m);
     }
 
     [TestMethod]

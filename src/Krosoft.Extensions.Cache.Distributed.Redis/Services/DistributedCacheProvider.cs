@@ -20,6 +20,103 @@ public class DistributedCacheProvider : IDistributedCacheProvider
         _factory = factory;
     }
 
+    public async Task DeleteAllAsync(string pattern, CancellationToken cancellationToken = default)
+    {
+        var keys = GetKeys(pattern);
+        foreach (var key in keys)
+        {
+            await DeleteAsync(key, cancellationToken);
+        }
+    }
+
+    public async Task<bool> DeleteAsync(string key,
+                                        CancellationToken cancellationToken = default)
+    {
+        var db = _factory.Connection.GetDatabase();
+        var isDelete = await db.KeyDeleteAsync(key);
+        return isDelete;
+    }
+
+    public async Task<bool> DeleteRowAsync(string collectionKey,
+                                           string entryKey,
+                                           CancellationToken cancellationToken = default)
+    {
+        var db = _factory.Connection.GetDatabase();
+        var isDelete = await db.HashDeleteAsync(collectionKey, entryKey);
+        return isDelete;
+    }
+
+    public async Task<long> DeleteRowsAsync(string collectionKey,
+                                            ISet<string> entriesKey,
+                                            CancellationToken cancellationToken = default)
+    {
+        var db = _factory.Connection.GetDatabase();
+
+        var hashFields = Map(entriesKey);
+
+        var isDelete = await db.HashDeleteAsync(collectionKey, hashFields);
+        return isDelete;
+    }
+
+    public async Task<T?> GetAsync<T>(string key,
+                                      CancellationToken cancellationToken = default)
+    {
+        var db = _factory.Connection.GetDatabase();
+        var data = await db.StringGetAsync(key);
+        return ToObject<T>(data);
+    }
+
+    public IEnumerable<string> GetKeys(string pattern)
+    {
+        var endpoint = (DnsEndPoint)_factory.Connection.GetEndPoints()[0];
+        var server = _factory.Connection.GetServer(endpoint.Host, endpoint.Port);
+        var redisKeys = server.Keys(0, $"{pattern}*");
+        var keys = new List<string>();
+        foreach (var redisKey in redisKeys)
+        {
+            keys.Add(redisKey!);
+        }
+
+        return keys;
+    }
+
+    public async Task<long> GetLengthAsync(string collectionKey,
+                                           CancellationToken cancellationToken = default)
+    {
+        var db = _factory.Connection.GetDatabase();
+        var redisType = await db.KeyTypeAsync(collectionKey);
+        if (redisType == RedisType.Hash)
+        {
+            return await db.HashLengthAsync(collectionKey);
+        }
+
+        return 1;
+    }
+
+    public async Task<bool> IsExistAsync(string key, CancellationToken cancellationToken = default)
+    {
+        var db = _factory.Connection.GetDatabase();
+        var isExists = await db.KeyExistsAsync(key);
+        return isExists;
+    }
+
+    public async Task<bool> IsExistRowAsync(string collectionKey,
+                                            string entryKey,
+                                            CancellationToken cancellationToken = default)
+    {
+        var db = _factory.Connection.GetDatabase();
+        var keys = await db.HashKeysAsync(collectionKey);
+        var isExists = keys.Contains(entryKey);
+        return isExists;
+    }
+
+    public async Task<TimeSpan> PingAsync(CancellationToken cancellationToken = default)
+    {
+        var db = _factory.Connection.GetDatabase();
+        var timeSpan = await db.PingAsync();
+        return timeSpan;
+    }
+
     /// <summary>
     /// Récupère une ligne de la collection parente.
     /// </summary>
@@ -53,80 +150,6 @@ public class DistributedCacheProvider : IDistributedCacheProvider
                    .ToList()!;
     }
 
-    public async Task<bool> IsExistAsync(string key, CancellationToken cancellationToken = default)
-    {
-        var db = _factory.Connection.GetDatabase();
-        var isExists = await db.KeyExistsAsync(key);
-        return isExists;
-    }
-
-    public async Task<bool> IsExistRowAsync(string collectionKey,
-                                            string entryKey,
-                                            CancellationToken cancellationToken = default)
-    {
-        var db = _factory.Connection.GetDatabase();
-        var keys = await db.HashKeysAsync(collectionKey);
-        var isExists = keys.Contains(entryKey);
-        return isExists;
-    }
-
-    public IEnumerable<string> GetKeys(string pattern)
-    {
-        var endpoint = (DnsEndPoint)_factory.Connection.GetEndPoints()[0];
-        var server = _factory.Connection.GetServer(endpoint.Host, endpoint.Port);
-        var redisKeys = server.Keys(0, $"{pattern}*");
-        var keys = new List<string>();
-        foreach (var redisKey in redisKeys)
-        {
-            keys.Add(redisKey!);
-        }
-
-        return keys;
-    }
-
-    public async Task DeleteAllAsync(string pattern, CancellationToken cancellationToken = default)
-    {
-        var keys = GetKeys(pattern);
-        foreach (var key in keys)
-        {
-            await DeleteAsync(key, cancellationToken);
-        }
-    }
-
-    public async Task<TimeSpan> PingAsync(CancellationToken cancellationToken = default)
-    {
-        var db = _factory.Connection.GetDatabase();
-        var timeSpan = await db.PingAsync();
-        return timeSpan;
-    }
-
-    public async Task<bool> DeleteAsync(string key,
-                                        CancellationToken cancellationToken = default)
-    {
-        var db = _factory.Connection.GetDatabase();
-        var isDelete = await db.KeyDeleteAsync(key);
-        return isDelete;
-    }
-
-    public async Task<bool> DeleteRowAsync(string collectionKey,
-                                           string entryKey,
-                                           CancellationToken cancellationToken = default)
-    {
-        var db = _factory.Connection.GetDatabase();
-        var isDelete = await db.HashDeleteAsync(collectionKey, entryKey);
-        return isDelete;
-    }
-
-    public async Task<bool> SetRowAsync<T>(string collectionKey,
-                                           string entryKey,
-                                           T entry,
-                                           CancellationToken cancellationToken = default)
-    {
-        var db = _factory.Connection.GetDatabase();
-        var data = ToRedisValue(entry);
-        return await db.HashSetAsync(collectionKey, entryKey, data);
-    }
-
     public async Task<List<T>> ReadRowsAsync<T>(string collectionKey,
                                                 IEnumerable<string> entryKeys,
                                                 CancellationToken cancellationToken = default)
@@ -139,6 +162,18 @@ public class DistributedCacheProvider : IDistributedCacheProvider
                    .ToList()!;
     }
 
+    public async Task RefreshAsync<T>(string collectionKey, Func<Task<List<T>>> func, Func<T, string> getId, CancellationToken cancellationToken = default)
+    {
+        var sw = Stopwatch.StartNew();
+
+        var items = await func();
+        await DeleteAsync(collectionKey, cancellationToken);
+        var itemById = items.ToDictionary(getId);
+        await SetRowAsync(collectionKey, itemById, cancellationToken);
+
+        _logger.LogInformation($"Refresh du cache {collectionKey} en {sw.Elapsed.ToShortString()}");
+    }
+
     public async Task SetAsync<T>(string key,
                                   T entry,
                                   CancellationToken cancellationToken = default)
@@ -148,25 +183,14 @@ public class DistributedCacheProvider : IDistributedCacheProvider
         await db.StringSetAsync(key, data);
     }
 
-    public async Task<long> GetLengthAsync(string collectionKey,
+    public async Task<bool> SetRowAsync<T>(string collectionKey,
+                                           string entryKey,
+                                           T entry,
                                            CancellationToken cancellationToken = default)
     {
         var db = _factory.Connection.GetDatabase();
-        var redisType = await db.KeyTypeAsync(collectionKey);
-        if (redisType == RedisType.Hash)
-        {
-            return await db.HashLengthAsync(collectionKey);
-        }
-
-        return 1;
-    }
-
-    public async Task<T?> GetAsync<T>(string key,
-                                      CancellationToken cancellationToken = default)
-    {
-        var db = _factory.Connection.GetDatabase();
-        var data = await db.StringGetAsync(key);
-        return ToObject<T>(data);
+        var data = ToRedisValue(entry);
+        return await db.HashSetAsync(collectionKey, entryKey, data);
     }
 
     /// <summary>
@@ -182,30 +206,6 @@ public class DistributedCacheProvider : IDistributedCacheProvider
         var db = _factory.Connection.GetDatabase();
         var entries = ToHashEntries(entryByKey);
         await db.HashSetAsync(collectionKey, entries);
-    }
-
-    public async Task RefreshAsync<T>(string collectionKey, Func<Task<List<T>>> func, Func<T, string> getId, CancellationToken cancellationToken = default)
-    {
-        var sw = Stopwatch.StartNew();
-
-        var items = await func();
-        await DeleteAsync(collectionKey, cancellationToken);
-        var itemById = items.ToDictionary(getId);
-        await SetRowAsync(collectionKey, itemById, cancellationToken);
-
-        _logger.LogInformation($"Refresh du cache {collectionKey} en {sw.Elapsed.ToShortString()}");
-    }
-
-    public async Task<long> DeleteRowsAsync(string collectionKey,
-                                            ISet<string> entriesKey,
-                                            CancellationToken cancellationToken = default)
-    {
-        var db = _factory.Connection.GetDatabase();
-
-        var hashFields = Map(entriesKey);
-
-        var isDelete = await db.HashDeleteAsync(collectionKey, hashFields);
-        return isDelete;
     }
 
     private static RedisValue[] Map(ISet<string> entriesKey)

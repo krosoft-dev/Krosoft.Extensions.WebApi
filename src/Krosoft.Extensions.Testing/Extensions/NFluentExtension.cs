@@ -13,6 +13,19 @@ public static class NFluentExtension
 {
     public static IEnumerable Extracting<T>(this IEnumerable<T> enumerable, Expression<Func<T, object>> expression) => enumerable.Extracting(PropertyNameHelper.For(expression));
 
+    public static IEnumerable Extracting<T>(this DataRowCollection rows, Expression<Func<T, object>> expression)
+    {
+        foreach (DataRow dtRow in rows)
+        {
+            var value = dtRow[PropertyNameHelper.For(expression)].ToString();
+            yield return value;
+        }
+    }
+
+    public static IEnumerable Extracting<T>(this DataTable dt,
+                                            Expression<Func<T, object>> expression)
+        => dt.Rows.Extracting(expression);
+
     public static ICheckLink<ICheck<decimal>> IsEqualWithDelta(this ICheck<decimal> check, decimal target, decimal delta)
     {
         var runnableCheck = ExtensibilityHelper.ExtractChecker(check);
@@ -26,19 +39,6 @@ public static class NFluentExtension
                                               }
                                           }, $"La valeur {value} est égale à {target} avec un delta de {delta}");
     }
-
-    public static IEnumerable Extracting<T>(this DataRowCollection rows, Expression<Func<T, object>> expression)
-    {
-        foreach (DataRow dtRow in rows)
-        {
-            var value = dtRow[PropertyNameHelper.For(expression)].ToString();
-            yield return value;
-        }
-    }
-
-    public static IEnumerable Extracting<T>(this DataTable dt,
-                                            Expression<Func<T, object>> expression)
-        => dt.Rows.Extracting(expression);
 
     public static ICheck<string> IsFileEqualToEmbeddedFile(this ICheck<string> checkFilePath, Assembly executingAssembly, string resourceName, int numberOfLine)
     {

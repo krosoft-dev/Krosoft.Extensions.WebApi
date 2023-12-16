@@ -10,11 +10,16 @@ namespace Krosoft.Extensions.Identity.Tests.Helpers;
 public class IdentitTokenHelperTests
 {
     [TestMethod]
-    public void SigningCredentials_Null()
+    public void GetTokenValidationParametersTest()
     {
-        Check.ThatCode(() => IdentitTokenHelper.GetTokenValidationParameters(null!, null!, false))
-             .Throws<KrosoftTechniqueException>()
-             .WithMessage("La variable 'signingCredentials' n'est pas renseignée.");
+        var jwtSettings = new JwtSettings
+        {
+            SecurityKey = "test"
+        };
+        var tokenValidationParameters = IdentitTokenHelper.GetTokenValidationParameters(SigningCredentialsHelper.GetSigningCredentials(jwtSettings.SecurityKey!), jwtSettings, false);
+
+        Check.That(tokenValidationParameters).IsNotNull();
+        Check.That(tokenValidationParameters.IssuerSigningKey).IsNotNull();
     }
 
     [TestMethod]
@@ -26,15 +31,10 @@ public class IdentitTokenHelperTests
     }
 
     [TestMethod]
-    public void GetTokenValidationParametersTest()
+    public void SigningCredentials_Null()
     {
-        var jwtSettings = new JwtSettings
-        {
-            SecurityKey = "test"
-        };
-        var tokenValidationParameters = IdentitTokenHelper.GetTokenValidationParameters(SigningCredentialsHelper.GetSigningCredentials(jwtSettings.SecurityKey!), jwtSettings, false);
-
-        Check.That(tokenValidationParameters).IsNotNull();
-        Check.That(tokenValidationParameters.IssuerSigningKey).IsNotNull();
+        Check.ThatCode(() => IdentitTokenHelper.GetTokenValidationParameters(null!, null!, false))
+             .Throws<KrosoftTechniqueException>()
+             .WithMessage("La variable 'signingCredentials' n'est pas renseignée.");
     }
 }

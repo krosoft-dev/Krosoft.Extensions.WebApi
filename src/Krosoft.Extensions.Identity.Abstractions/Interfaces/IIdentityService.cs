@@ -3,12 +3,12 @@
 public interface IIdentityService
 {
     string? GetId();
-    string? GetProprietaireId();
+    string? GetLangueCode();
+    Guid GetLangueId();
     string? GetNom();
-    string? GetTenantId();
+    string? GetProprietaireId();
     Guid GetRoleId();
     bool GetRoleIsInterne();
-    Guid GetLangueId();
-    string? GetLangueCode();
+    string? GetTenantId();
     bool HasDroit(string droitCode);
 }

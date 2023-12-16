@@ -24,11 +24,25 @@ public class CsvReaderTests : BaseTest
         services.AddCsv();
     }
 
-    [TestInitialize]
-    public void SetUp()
+    [TestMethod]
+    public async Task CultureTestFromBase64FrOk()
     {
-        var serviceProvider = CreateServiceCollection();
-        _csvReadService = serviceProvider.GetRequiredService<ICsvReadService>();
+        var csvFile = await File.ReadAllTextAsync("Files/test-fr.csv", CancellationToken.None);
+        var lignes = _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, new CultureInfo("FR-fr")).ToList();
+
+        Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
+        Check.That(lignes.ElementAt(2).Prix).Equals(96.99);
+        Check.That(lignes.First().Prix).Equals(10.5);
+    }
+
+    [TestMethod]
+    public void CultureTestFromPathFrOk()
+    {
+        var lignes = _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-fr.csv", Encoding.UTF8, new CultureInfo("FR-fr")).ToList();
+
+        Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
+        Check.That(lignes.ElementAt(2).Prix).Equals(96.99);
+        Check.That(lignes.First().Prix).Equals(10.5);
     }
 
     [TestMethod]
@@ -55,42 +69,12 @@ public class CsvReaderTests : BaseTest
     }
 
     [TestMethod]
-    public async Task CultureTestFromBase64FrOk()
-    {
-        var csvFile = await File.ReadAllTextAsync("Files/test-fr.csv", CancellationToken.None);
-        var lignes = _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, new CultureInfo("FR-fr")).ToList();
-
-        Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
-        Check.That(lignes.ElementAt(2).Prix).Equals(96.99);
-        Check.That(lignes.First().Prix).Equals(10.5);
-    }
-
-    [TestMethod]
-    public void CultureTestFromPathFrOk()
-    {
-        var lignes = _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-fr.csv", Encoding.UTF8, new CultureInfo("FR-fr")).ToList();
-
-        Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
-        Check.That(lignes.ElementAt(2).Prix).Equals(96.99);
-        Check.That(lignes.First().Prix).Equals(10.5);
-    }
-
-    [TestMethod]
     public async Task EncodingTestBase64Us()
     {
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         var csvFile = await File.ReadAllTextAsync("Files/test-us.csv", CancellationToken.None);
         var lignes = _csvReadService.GetRecordsFromBase64<PrixCsvDto>(Convert.ToBase64String(Encoding.UTF8.GetBytes(csvFile)), Encoding.UTF8, new CultureInfo("EN-us")).ToList();
 
-        Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
-        Check.That(lignes.ElementAt(2).Prix).Equals(9699);
-        Check.That(lignes.First().Prix).Equals(10.5);
-    }
-
-    [TestMethod]
-    public void EncodingTestFromPathUs()
-    {
-        var lignes = _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-us.csv", Encoding.UTF8, new CultureInfo("EN-us")).ToList();
         Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
         Check.That(lignes.ElementAt(2).Prix).Equals(9699);
         Check.That(lignes.First().Prix).Equals(10.5);
@@ -111,5 +95,21 @@ public class CsvReaderTests : BaseTest
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         Check.ThatCode(() => { _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-fr-faux.csv", Encoding.UTF8, new CultureInfo("FR-fr")); })
              .Throws<TypeConverterException>();
+    }
+
+    [TestMethod]
+    public void EncodingTestFromPathUs()
+    {
+        var lignes = _csvReadService.GetRecordsFromPath<PrixCsvDto>("Files/test-us.csv", Encoding.UTF8, new CultureInfo("EN-us")).ToList();
+        Check.That(lignes.First().FournisseurNom).Equals("Bon Pied Bon Œil équipé");
+        Check.That(lignes.ElementAt(2).Prix).Equals(9699);
+        Check.That(lignes.First().Prix).Equals(10.5);
+    }
+
+    [TestInitialize]
+    public void SetUp()
+    {
+        var serviceProvider = CreateServiceCollection();
+        _csvReadService = serviceProvider.GetRequiredService<ICsvReadService>();
     }
 }

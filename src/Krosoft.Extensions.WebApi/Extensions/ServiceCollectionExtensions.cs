@@ -14,6 +14,24 @@ namespace Krosoft.Extensions.WebApi.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddCompression(this IServiceCollection services)
+    {
+        services.AddResponseCompression(options =>
+        {
+            options.Providers.Add<BrotliCompressionProvider>();
+            options.Providers.Add<GzipCompressionProvider>();
+        });
+
+        services.Configure<BrotliCompressionProviderOptions>(options => { options.Level = CompressionLevel.Fastest; });
+
+#if NET6_0_OR_GREATER
+        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.SmallestSize; });
+#else
+        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.Optimal; });
+#endif
+        return services;
+    }
+
     public static IServiceCollection AddWebApi(this IServiceCollection services,
                                                IConfiguration configuration,
                                                params Assembly[] assemblies)
@@ -55,24 +73,6 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(all.ToArray()));
         services.AddAutoMapper(all);
         services.AddValidatorsFromAssemblies(all, includeInternalTypes: true);
-        return services;
-    }
-
-    public static IServiceCollection AddCompression(this IServiceCollection services)
-    {
-        services.AddResponseCompression(options =>
-        {
-            options.Providers.Add<BrotliCompressionProvider>();
-            options.Providers.Add<GzipCompressionProvider>();
-        });
-
-        services.Configure<BrotliCompressionProviderOptions>(options => { options.Level = CompressionLevel.Fastest; });
-
-#if NET6_0_OR_GREATER
-        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.SmallestSize; });
-#else
-        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.Optimal; });
-#endif
         return services;
     }
 }

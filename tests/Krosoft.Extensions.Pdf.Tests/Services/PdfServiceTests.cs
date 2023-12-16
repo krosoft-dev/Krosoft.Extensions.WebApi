@@ -22,19 +22,12 @@ public class PdfServiceTests : BaseTest
     protected override void AddServices(IServiceCollection services,
                                         IConfiguration configuration) => services.AddPdf();
 
-    [TestInitialize]
-    public void SetUp()
-    {
-        var serviceProvider = CreateServiceCollection();
-        _pdfService = serviceProvider.GetRequiredService<IPdfService>();
-    }
-
     [TestMethod]
-    public void MergeStreamNull_Ok()
+    public void MergeByteEmpty_Ok()
     {
-        Check.ThatCode(() => { _pdfService.Merge((Stream[])null!); })
-             .Throws<KrosoftTechniqueException>()
-             .WithMessage("La variable 'streams' n'est pas renseignée.");
+        var stream = _pdfService.Merge(new List<byte[]>().ToArray());
+
+        Check.That(stream).IsNotNull();
     }
 
     [TestMethod]
@@ -46,6 +39,20 @@ public class PdfServiceTests : BaseTest
     }
 
     [TestMethod]
+    public void MergeBytes_Ok()
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var pdf1 = AssemblyHelper.Read(assembly, "sample1.pdf").ToByte();
+        var pdf2 = AssemblyHelper.Read(assembly, "sample1.pdf").ToByte();
+
+        var data = _pdfService.Merge(pdf1,
+                                     pdf2);
+        FileHelper.CreateFile("sample-byte.pdf", data);
+
+        Check.That(data).IsNotNull();
+    }
+
+    [TestMethod]
     public void MergeStreamEmpty_Ok()
     {
         var stream = _pdfService.Merge(new List<Stream>().ToArray());
@@ -54,11 +61,11 @@ public class PdfServiceTests : BaseTest
     }
 
     [TestMethod]
-    public void MergeByteEmpty_Ok()
+    public void MergeStreamNull_Ok()
     {
-        var stream = _pdfService.Merge(new List<byte[]>().ToArray());
-
-        Check.That(stream).IsNotNull();
+        Check.ThatCode(() => { _pdfService.Merge((Stream[])null!); })
+             .Throws<KrosoftTechniqueException>()
+             .WithMessage("La variable 'streams' n'est pas renseignée.");
     }
 
     [TestMethod]
@@ -76,20 +83,6 @@ public class PdfServiceTests : BaseTest
         var data = _pdfService.Merge(pdf1,
                                      pdf2);
         FileHelper.CreateFile("sample-stream.pdf", data);
-
-        Check.That(data).IsNotNull();
-    }
-
-    [TestMethod]
-    public void MergeBytes_Ok()
-    {
-        var assembly = Assembly.GetExecutingAssembly();
-        var pdf1 = AssemblyHelper.Read(assembly, "sample1.pdf").ToByte();
-        var pdf2 = AssemblyHelper.Read(assembly, "sample1.pdf").ToByte();
-
-        var data = _pdfService.Merge(pdf1,
-                                     pdf2);
-        FileHelper.CreateFile("sample-byte.pdf", data);
 
         Check.That(data).IsNotNull();
     }
@@ -120,5 +113,12 @@ public class PdfServiceTests : BaseTest
         Check.That(pdffile.ContentType).IsEqualTo("application/pdf");
         Check.That(pdffile.Stream).IsNotNull();
         Check.That(pdffile.Stream.CanRead).IsTrue();
+    }
+
+    [TestInitialize]
+    public void SetUp()
+    {
+        var serviceProvider = CreateServiceCollection();
+        _pdfService = serviceProvider.GetRequiredService<IPdfService>();
     }
 }

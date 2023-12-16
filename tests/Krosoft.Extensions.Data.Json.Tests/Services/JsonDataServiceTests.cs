@@ -25,22 +25,27 @@ public class JsonDataServiceTests : BaseTest
         services.AddJsonDataService(configuration);
     }
 
-    [TestInitialize]
-    public void SetUp()
-    {
-        var serviceProvider = CreateServiceCollection();
-        _jsonDataService = serviceProvider.GetRequiredService<IJsonDataService<Item>>();
-        _jsonDataServiceShortcut = serviceProvider.GetRequiredService<IJsonDataService<Shortcut>>();
-    }
-
     [TestMethod]
-    public void Query_Ok()
+    public async Task DeleteAsyncTest()
     {
-        var comptes = _jsonDataService.Query().ToList();
+        var countBefore = _jsonDataServiceShortcut.Query().Count();
 
-        Check.That(comptes).Not.IsNullOrEmpty();
-        Check.That(comptes).HasSize(2);
-        Check.That(comptes.Select(x => x.Code)).IsOnlyMadeOf("test 1", "test 2");
+        var max = _jsonDataServiceShortcut.Query().MaxOrDefault(x => x.Id);
+
+        var id = max + 1;
+
+        var shortcut = new Shortcut { Id = id, Code = "test" };
+        await _jsonDataServiceShortcut.InsertAsync(shortcut, CancellationToken.None);
+
+        var countAfter = _jsonDataServiceShortcut.Query().Count();
+        Check.That(countAfter).IsEqualTo(countBefore + 1);
+
+        var fromBdd = _jsonDataServiceShortcut.Query().FirstOrDefault(x => x.Id == id);
+        Check.That(fromBdd).IsNotNull();
+
+        await _jsonDataServiceShortcut.DeleteAsync(id, CancellationToken.None);
+        var fromBddAfterDelete = _jsonDataServiceShortcut.Query().FirstOrDefault(x => x.Id == id);
+        Check.That(fromBddAfterDelete).IsNull();
     }
 
     [TestMethod]
@@ -73,26 +78,21 @@ public class JsonDataServiceTests : BaseTest
     }
 
     [TestMethod]
-    public async Task DeleteAsyncTest()
+    public void Query_Ok()
     {
-        var countBefore = _jsonDataServiceShortcut.Query().Count();
+        var comptes = _jsonDataService.Query().ToList();
 
-        var max = _jsonDataServiceShortcut.Query().MaxOrDefault(x => x.Id);
+        Check.That(comptes).Not.IsNullOrEmpty();
+        Check.That(comptes).HasSize(2);
+        Check.That(comptes.Select(x => x.Code)).IsOnlyMadeOf("test 1", "test 2");
+    }
 
-        var id = max + 1;
-
-        var shortcut = new Shortcut { Id = id, Code = "test" };
-        await _jsonDataServiceShortcut.InsertAsync(shortcut, CancellationToken.None);
-
-        var countAfter = _jsonDataServiceShortcut.Query().Count();
-        Check.That(countAfter).IsEqualTo(countBefore + 1);
-
-        var fromBdd = _jsonDataServiceShortcut.Query().FirstOrDefault(x => x.Id == id);
-        Check.That(fromBdd).IsNotNull();
-
-        await _jsonDataServiceShortcut.DeleteAsync(id, CancellationToken.None);
-        var fromBddAfterDelete = _jsonDataServiceShortcut.Query().FirstOrDefault(x => x.Id == id);
-        Check.That(fromBddAfterDelete).IsNull();
+    [TestInitialize]
+    public void SetUp()
+    {
+        var serviceProvider = CreateServiceCollection();
+        _jsonDataService = serviceProvider.GetRequiredService<IJsonDataService<Item>>();
+        _jsonDataServiceShortcut = serviceProvider.GetRequiredService<IJsonDataService<Shortcut>>();
     }
 
     [TestMethod]

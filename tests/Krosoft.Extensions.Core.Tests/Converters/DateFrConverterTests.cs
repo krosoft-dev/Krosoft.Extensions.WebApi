@@ -17,20 +17,20 @@ public class DateFrConverterTests
     }
 
     [TestMethod]
+    public void ConvertJsonArrayEmptyTest()
+    {
+        var json = "[]";
+        var obj = JsonConvert.DeserializeObject<IEnumerable<Item>>(json, new DateFrConverter());
+        Check.That(obj).IsEmpty();
+    }
+
+    [TestMethod]
     public void ConvertJsonEmptyTest()
     {
         var json = "{}";
         var obj = JsonConvert.DeserializeObject<Item>(json, new DateFrConverter());
         Check.That(obj!.GetType()).IsEqualTo(typeof(Item));
         Check.That(obj).IsNotNull();
-    }
-
-    [TestMethod]
-    public void ConvertJsonArrayEmptyTest()
-    {
-        var json = "[]";
-        var obj = JsonConvert.DeserializeObject<IEnumerable<Item>>(json, new DateFrConverter());
-        Check.That(obj).IsEmpty();
     }
 
     [TestMethod]

@@ -11,46 +11,6 @@ namespace Krosoft.Extensions.Core.Tests.Extensions;
 public class ReadOnlyDictionaryExtensionsTests
 {
     [TestMethod]
-    public void GetValueOrDefaultReadOnlyDictionaryTest()
-    {
-        var adressesParStreetLine1 = new
-            ReadOnlyDictionary<string, Addresse>(AddresseFactory.GetAdresses().ToDictionary(x => x.Ligne1));
-
-        var address = adressesParStreetLine1.GetValueOrDefault("street1Line1");
-        Check.That(address).IsNotNull();
-        Check.That(address!.Ligne2).IsEqualTo("street1Line2");
-    }
-
-    [TestMethod]
-    public void GetValueOrDefaultIReadOnlyDictionaryTest()
-    {
-        IReadOnlyDictionary<string, Addresse> adressesParStreetLine1 = AddresseFactory.GetAdresses().ToReadOnlyDictionary(x => x.Ligne1);
-
-        var address = adressesParStreetLine1.GetValueOrDefault("street1Line1");
-        Check.That(address).IsNotNull();
-        Check.That(address!.Ligne2).IsEqualTo("street1Line2");
-    }
-
-    [TestMethod]
-    public void GetValueOrDefaultReadOnlyDictionaryDefaultValueTest()
-    {
-        var adressesParStreetLine1 = new
-            ReadOnlyDictionary<string, Addresse>(AddresseFactory.GetAdresses().ToDictionary(x => x.Ligne1));
-
-        var address = adressesParStreetLine1.GetValueOrDefault("test");
-        Check.That(address).IsNull();
-    }
-
-    [TestMethod]
-    public void GetValueOrDefaultIReadOnlyDictionaryDefaultValueTest()
-    {
-        IReadOnlyDictionary<string, Addresse> adressesParStreetLine1 = AddresseFactory.GetAdresses().ToReadOnlyDictionary(x => x.Ligne1);
-
-        var address = adressesParStreetLine1.GetValueOrDefault("test");
-        Check.That(address).IsNull();
-    }
-
-    [TestMethod]
     public void GetValueOrDefaultIReadOnlyDictionaryDefaultValueDictionaryEmptyTest()
     {
         IReadOnlyDictionary<string, Dictionary<string, Dictionary<string, decimal>>> valeursParKey = new ReadOnlyDictionary<string, Dictionary<string, Dictionary<string, decimal>>>(new Dictionary<string, Dictionary<string, Dictionary<string, decimal>>>());
@@ -106,5 +66,45 @@ public class ReadOnlyDictionaryExtensionsTests
 
         var valeurPourKey3 = valeurPourKey2!.GetValueOrDefault(key3);
         Check.That(valeurPourKey3).IsEqualTo(42);
+    }
+
+    [TestMethod]
+    public void GetValueOrDefaultIReadOnlyDictionaryDefaultValueTest()
+    {
+        var adressesParStreetLine1 = AddresseFactory.GetAdresses().ToReadOnlyDictionary(x => x.Ligne1);
+
+        var address = adressesParStreetLine1.GetValueOrDefault("test");
+        Check.That(address).IsNull();
+    }
+
+    [TestMethod]
+    public void GetValueOrDefaultIReadOnlyDictionaryTest()
+    {
+        var adressesParStreetLine1 = AddresseFactory.GetAdresses().ToReadOnlyDictionary(x => x.Ligne1);
+
+        var address = adressesParStreetLine1.GetValueOrDefault("street1Line1");
+        Check.That(address).IsNotNull();
+        Check.That(address!.Ligne2).IsEqualTo("street1Line2");
+    }
+
+    [TestMethod]
+    public void GetValueOrDefaultReadOnlyDictionaryDefaultValueTest()
+    {
+        var adressesParStreetLine1 = new
+            ReadOnlyDictionary<string, Addresse>(AddresseFactory.GetAdresses().ToDictionary(x => x.Ligne1));
+
+        var address = adressesParStreetLine1.GetValueOrDefault("test");
+        Check.That(address).IsNull();
+    }
+
+    [TestMethod]
+    public void GetValueOrDefaultReadOnlyDictionaryTest()
+    {
+        var adressesParStreetLine1 = new
+            ReadOnlyDictionary<string, Addresse>(AddresseFactory.GetAdresses().ToDictionary(x => x.Ligne1));
+
+        var address = adressesParStreetLine1.GetValueOrDefault("street1Line1");
+        Check.That(address).IsNotNull();
+        Check.That(address!.Ligne2).IsEqualTo("street1Line2");
     }
 }

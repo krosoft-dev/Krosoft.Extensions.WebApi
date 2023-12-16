@@ -10,15 +10,6 @@ namespace Krosoft.Extensions.Core.Tests.Tools;
 public class GuardTests
 {
     [TestMethod]
-    public void IsNotNullOkTest()
-    {
-        var item = new Item();
-
-        Check.ThatCode(() => Guard.IsNotNull(nameof(item), item))
-             .Not.Throws<KrosoftTechniqueException>();
-    }
-
-    [TestMethod]
     public void IsNotNullKoTest()
     {
         Addresse? addresse = null;
@@ -29,12 +20,12 @@ public class GuardTests
     }
 
     [TestMethod]
-    public void IsNotNullOrWhiteSpaceOkTest()
+    public void IsNotNullOkTest()
     {
-        var pdfFilepath = "test";
-        Check.ThatCode(() => Guard.IsNotNullOrWhiteSpace(nameof(pdfFilepath), pdfFilepath))
-             .Not
-             .Throws<KrosoftTechniqueException>();
+        var item = new Item();
+
+        Check.ThatCode(() => Guard.IsNotNull(nameof(item), item))
+             .Not.Throws<KrosoftTechniqueException>();
     }
 
     [TestMethod]
@@ -53,5 +44,14 @@ public class GuardTests
         Check.ThatCode(() => Guard.IsNotNullOrWhiteSpace(nameof(pdfFilepath), pdfFilepath))
              .Throws<KrosoftTechniqueException>()
              .WithMessage("La variable 'pdfFilepath' est vide ou non renseignée.");
+    }
+
+    [TestMethod]
+    public void IsNotNullOrWhiteSpaceOkTest()
+    {
+        var pdfFilepath = "test";
+        Check.ThatCode(() => Guard.IsNotNullOrWhiteSpace(nameof(pdfFilepath), pdfFilepath))
+             .Not
+             .Throws<KrosoftTechniqueException>();
     }
 }

@@ -24,66 +24,16 @@ public class MapperExtensionsTests : BaseTest
         services.AddWebApi(configuration, typeof(CompteProfile).Assembly);
     }
 
-    [TestInitialize]
-    public void SetUp()
+    private static IEnumerable<Compte> GetComptes()
     {
-        var serviceProvider = CreateServiceCollection();
-        _mapper = serviceProvider.GetRequiredService<IMapper>();
-    }
-
-    [TestMethod]
-    public void MapIfExist_Ok()
-    {
-        var source = new Compte { Name = "Test" };
-        var destination = new CompteDto();
-
-        _mapper.MapIfExist(source, destination);
-
-        Check.That(destination.Name).IsEqualTo("Test");
-    }
-
-    [TestMethod]
-    public void MapIfExist_Dictionary()
-    {
-        var comptesParId = GetComptes().ToDictionary(x => x.Id!);
-
-        var compteDto = new CompteDto();
-        _mapper.MapIfExist(comptesParId, "K", compteDto);
-
-        Check.That(compteDto.Name).IsEqualTo("Compte K");
-    }
-
-    [TestMethod]
-    public void MapIfExist_ReadOnlyDictionary()
-    {
-        var comptesParId = GetComptes().ToReadOnlyDictionary(x => x.Id!);
-
-        var compteDto = new CompteDto();
-        _mapper.MapIfExist((IDictionary<string, Compte>)comptesParId, "K", compteDto);
-
-        Check.That(compteDto.Name).IsEqualTo("Compte K");
-    }
-
-    [TestMethod]
-    public void MapIfExist_ConcurrentDictionary()
-    {
-        var comptesParId = GetComptes().ToConcurrentDictionary(x => x.Id!);
-
-        var compteDto = new CompteDto();
-        _mapper.MapIfExist(comptesParId, "K", compteDto);
-
-        Check.That(compteDto.Name).IsEqualTo("Compte K");
-    }
-
-    [TestMethod]
-    public void MapIfExist_Null()
-    {
-        Compte? source = null;
-        var destination = new CompteDto();
-
-        _mapper.MapIfExist(source, destination);
-
-        Check.That(destination.Name).IsNull();
+        for (var c = 'A'; c <= 'Z'; c++)
+        {
+            yield return new Compte
+            {
+                Id = $"{c}",
+                Name = $"Compte {c}"
+            };
+        }
     }
 
     [TestMethod]
@@ -108,16 +58,59 @@ public class MapperExtensionsTests : BaseTest
              .WithMessage("Test");
     }
 
-    private static IEnumerable<Compte> GetComptes()
+    [TestMethod]
+    public void MapIfExist_ConcurrentDictionary()
     {
-        for (var c = 'A'; c <= 'Z'; c++)
-        {
-            yield return new Compte
-            {
-                Id = $"{c}",
-                Name = $"Compte {c}"
-            };
-        }
+        var comptesParId = GetComptes().ToConcurrentDictionary(x => x.Id!);
+
+        var compteDto = new CompteDto();
+        _mapper.MapIfExist(comptesParId, "K", compteDto);
+
+        Check.That(compteDto.Name).IsEqualTo("Compte K");
+    }
+
+    [TestMethod]
+    public void MapIfExist_Dictionary()
+    {
+        var comptesParId = GetComptes().ToDictionary(x => x.Id!);
+
+        var compteDto = new CompteDto();
+        _mapper.MapIfExist(comptesParId, "K", compteDto);
+
+        Check.That(compteDto.Name).IsEqualTo("Compte K");
+    }
+
+    [TestMethod]
+    public void MapIfExist_Null()
+    {
+        Compte? source = null;
+        var destination = new CompteDto();
+
+        _mapper.MapIfExist(source, destination);
+
+        Check.That(destination.Name).IsNull();
+    }
+
+    [TestMethod]
+    public void MapIfExist_Ok()
+    {
+        var source = new Compte { Name = "Test" };
+        var destination = new CompteDto();
+
+        _mapper.MapIfExist(source, destination);
+
+        Check.That(destination.Name).IsEqualTo("Test");
+    }
+
+    [TestMethod]
+    public void MapIfExist_ReadOnlyDictionary()
+    {
+        var comptesParId = GetComptes().ToReadOnlyDictionary(x => x.Id!);
+
+        var compteDto = new CompteDto();
+        _mapper.MapIfExist((IDictionary<string, Compte>)comptesParId, "K", compteDto);
+
+        Check.That(compteDto.Name).IsEqualTo("Compte K");
     }
 
     [TestMethod]
@@ -129,16 +122,6 @@ public class MapperExtensionsTests : BaseTest
 
         Check.That(destination).IsNotNull();
         Check.That(destination!.Name).IsEqualTo("Test");
-    }
-
-    [TestMethod]
-    public void MapIfExist_ToTypeNull()
-    {
-        Compte? source = null;
-
-        var destination = _mapper.MapIfExist<CompteDto>(source);
-
-        Check.That(destination).IsNull();
     }
 
     [TestMethod]
@@ -159,5 +142,22 @@ public class MapperExtensionsTests : BaseTest
         Check.ThatCode(() => _mapper.MapIfExist<CompteDto>(source, () => throw new KrosoftTechniqueException("Test")))
              .Throws<KrosoftTechniqueException>()
              .WithMessage("Test");
+    }
+
+    [TestMethod]
+    public void MapIfExist_ToTypeNull()
+    {
+        Compte? source = null;
+
+        var destination = _mapper.MapIfExist<CompteDto>(source);
+
+        Check.That(destination).IsNull();
+    }
+
+    [TestInitialize]
+    public void SetUp()
+    {
+        var serviceProvider = CreateServiceCollection();
+        _mapper = serviceProvider.GetRequiredService<IMapper>();
     }
 }

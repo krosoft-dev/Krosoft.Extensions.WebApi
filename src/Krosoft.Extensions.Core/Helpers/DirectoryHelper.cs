@@ -4,6 +4,15 @@ namespace Krosoft.Extensions.Core.Helpers;
 
 public static class DirectoryHelper
 {
+    public static void ClearDirectory(string directoryPath)
+    {
+        if (Directory.Exists(directoryPath))
+        {
+            var di = new DirectoryInfo(directoryPath);
+            di.Delete(true);
+        }
+    }
+
     /// <summary>
     /// Créer un dossier s'il n'existe pas
     /// </summary>
@@ -18,6 +27,28 @@ public static class DirectoryHelper
         }
 
         return !isExist;
+    }
+
+    /// <summary>
+    /// </summary>
+    /// <param name="directoryPath">Chemin du dossier.</param>
+    public static void DeleteAllInDirectory(string directoryPath)
+    {
+        var exists = Directory.Exists(directoryPath);
+        if (exists)
+        {
+            var di = new DirectoryInfo(directoryPath);
+
+            foreach (var file in di.GetFiles())
+            {
+                file.Delete();
+            }
+
+            foreach (var dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+        }
     }
 
     public static IEnumerable<string> GetFiles(string path,
@@ -116,36 +147,5 @@ public static class DirectoryHelper
         }
 
         return fullPath;
-    }
-
-    /// <summary>
-    /// </summary>
-    /// <param name="directoryPath">Chemin du dossier.</param>
-    public static void DeleteAllInDirectory(string directoryPath)
-    {
-        var exists = Directory.Exists(directoryPath);
-        if (exists)
-        {
-            var di = new DirectoryInfo(directoryPath);
-
-            foreach (var file in di.GetFiles())
-            {
-                file.Delete();
-            }
-
-            foreach (var dir in di.GetDirectories())
-            {
-                dir.Delete(true);
-            }
-        }
-    }
-
-    public static void ClearDirectory(string directoryPath)
-    {
-        if (Directory.Exists(directoryPath))
-        {
-            var di = new DirectoryInfo(directoryPath);
-            di.Delete(true);
-        }
     }
 }

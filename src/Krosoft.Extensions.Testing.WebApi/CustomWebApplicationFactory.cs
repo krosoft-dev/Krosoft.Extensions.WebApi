@@ -39,29 +39,6 @@ public class CustomWebApplicationFactory<TStartup, TKrosoftContext> : WebApplica
         _useFakeAuth = useFakeAuth;
     }
 
-    public HttpClient CreateAuthenticatedClient()
-    {
-        var claimInfo = KrosoftTokenHelper.Defaut;
-        if (_actionConfigureClaims != null)
-        {
-            _actionConfigureClaims(claimInfo);
-        }
-
-        return CreateAuthenticatedClient(claimInfo);
-    }
-
-    public HttpClient CreateAuthenticatedClient(KrosoftToken positiveToken)
-    {
-        var client = CreateClient();
-
-        //var claims = GetClaims(positiveToken);
-
-        //var token = FakeJwtTokenGenerator.CreateToken(claims);
-        //client.SetBearerToken(token);
-
-        return client;
-    }
-
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
@@ -94,6 +71,29 @@ public class CustomWebApplicationFactory<TStartup, TKrosoftContext> : WebApplica
             //    });
             //}
         });
+    }
+
+    public HttpClient CreateAuthenticatedClient()
+    {
+        var claimInfo = KrosoftTokenHelper.Defaut;
+        if (_actionConfigureClaims != null)
+        {
+            _actionConfigureClaims(claimInfo);
+        }
+
+        return CreateAuthenticatedClient(claimInfo);
+    }
+
+    public HttpClient CreateAuthenticatedClient(KrosoftToken positiveToken)
+    {
+        var client = CreateClient();
+
+        //var claims = GetClaims(positiveToken);
+
+        //var token = FakeJwtTokenGenerator.CreateToken(claims);
+        //client.SetBearerToken(token);
+
+        return client;
     }
 
     //private IEnumerable<Claim> GetClaims(KrosoftToken positiveToken)

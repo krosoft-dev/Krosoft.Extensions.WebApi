@@ -4,10 +4,7 @@ namespace Krosoft.Extensions.Core.Converters;
 
 public class BooleanConverter : JsonConverter
 {
-    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
-    {
-        throw new NotImplementedException();
-    }
+    public override bool CanConvert(Type objectType) => objectType == typeof(bool);
 
     public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
     {
@@ -26,11 +23,11 @@ public class BooleanConverter : JsonConverter
             case "f":
             case "n":
             case "0":
-                return false;   
-            
+                return false;
+
             case "null":
             case "na":
-   
+
                 return null;
         }
 
@@ -38,5 +35,8 @@ public class BooleanConverter : JsonConverter
         return new JsonSerializer().Deserialize(reader, objectType);
     }
 
-    public override bool CanConvert(Type objectType) => objectType == typeof(bool);
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    {
+        throw new NotImplementedException();
+    }
 }

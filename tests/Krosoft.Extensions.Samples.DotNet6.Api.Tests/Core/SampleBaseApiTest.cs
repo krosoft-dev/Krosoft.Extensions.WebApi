@@ -9,6 +9,10 @@ namespace Krosoft.Extensions.Samples.DotNet6.Api.Tests.Core;
 //public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, PositiveExtensionTenantContext> where TEntry : class
 public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, TEntry> where TEntry : class
 {
+    protected override void ConfigureClaims(KrosoftToken krosoftToken)
+    {
+    }
+
     protected override void ConfigureServices(IServiceCollection services)
     {
         //// Remove DbContext registration.
@@ -28,9 +32,5 @@ public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, TEntry> wh
         //mock.Setup(x => x.PublishAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
         //    .Returns(() => Task.CompletedTask);
         //services.SwapTransient(_ => mock.Object);
-    }
-
-    protected override void ConfigureClaims(KrosoftToken krosoftToken)
-    {
     }
 }

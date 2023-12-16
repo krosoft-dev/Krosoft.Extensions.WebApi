@@ -20,11 +20,31 @@ public class ZipServiceTests : BaseTest
         services.AddZip();
     }
 
+    [TestMethod]
+    public void ExtractZip_Ok()
+    {
+        var extractPath = "ExtractZipTest";
+
+        _zipService.ExtractZip("Files/zip.zip", extractPath);
+
+        var numberFileExtract = Directory.GetFiles(extractPath).Select(Path.GetFileName).ToList();
+        Check.That(numberFileExtract.Count).IsEqualTo(3);
+        Check.That(numberFileExtract).Contains("file1.txt", "file2.txt", "file3.txt");
+    }
+
     [TestInitialize]
     public void SetUp()
     {
         var serviceProvider = CreateServiceCollection();
         _zipService = serviceProvider.GetRequiredService<IZipService>();
+    }
+
+    [TestMethod]
+    public void Zip_Null()
+    {
+        Check.ThatCode(() => _zipService.Zip(null!))
+             .Throws<KrosoftTechniqueException>()
+             .WithMessage("La variable 'streams' n'est pas renseignée.");
     }
 
     [TestMethod]
@@ -57,18 +77,6 @@ public class ZipServiceTests : BaseTest
     }
 
     [TestMethod]
-    public void ExtractZip_Ok()
-    {
-        var extractPath = "ExtractZipTest";
-
-        _zipService.ExtractZip("Files/zip.zip", extractPath);
-
-        var numberFileExtract = Directory.GetFiles(extractPath).Select(Path.GetFileName).ToList();
-        Check.That(numberFileExtract.Count).IsEqualTo(3);
-        Check.That(numberFileExtract).Contains("file1.txt", "file2.txt", "file3.txt");
-    }
-
-    [TestMethod]
     public void ZipStreams_Ok()
     {
         var streams = new Dictionary<string, Stream>();
@@ -90,13 +98,5 @@ public class ZipServiceTests : BaseTest
         var numberFileExtract = Directory.GetFiles(extractPath).Select(Path.GetFileName).ToList();
         Check.That(numberFileExtract.Count).IsEqualTo(3);
         Check.That(numberFileExtract).Contains("file1.txt", "file2.txt", "file3.txt");
-    }
-
-    [TestMethod]
-    public void Zip_Null()
-    {
-        Check.ThatCode(() => _zipService.Zip(null!))
-             .Throws<KrosoftTechniqueException>()
-             .WithMessage("La variable 'streams' n'est pas renseignée.");
     }
 }

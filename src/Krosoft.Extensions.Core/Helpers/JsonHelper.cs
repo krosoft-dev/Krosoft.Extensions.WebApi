@@ -7,14 +7,6 @@ namespace Krosoft.Extensions.Core.Helpers;
 
 public static class JsonHelper
 {
-    public static IEnumerable<T> Get<T>(Assembly assembly) => Get<T>(assembly, typeof(T).Name);
-
-    public static IEnumerable<T> Get<T>(Assembly assembly, string fileName)
-    {
-        var results = AssemblyHelper.ReadFromAssembly<T>(assembly, $"{fileName}.json");
-        return results;
-    }
-
     public static IEnumerable<JToken> AllTokens(JToken obj)
     {
         var toSearch = new Stack<JToken>(obj.Children());
@@ -29,12 +21,38 @@ public static class JsonHelper
         }
     }
 
-    public static string? ToBase64(object? obj)
+    public static IEnumerable<T> Get<T>(Assembly assembly) => Get<T>(assembly, typeof(T).Name);
+
+    public static IEnumerable<T> Get<T>(Assembly assembly, string fileName)
     {
-        Guard.IsNotNull(nameof(obj), obj);
-        var json = JsonConvert.SerializeObject(obj);
-        var dataBase64 = Base64Helper.StringToBase64(json);
-        return dataBase64;
+        var results = AssemblyHelper.ReadFromAssembly<T>(assembly, $"{fileName}.json");
+        return results;
+    }
+
+    public static bool IsValid(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return false;
+        }
+
+        var json = input.Trim();
+
+        if ((json.StartsWith("{") && json.EndsWith("}")) || //For object
+            (json.StartsWith("[") && json.EndsWith("]"))) //For array
+        {
+            try
+            {
+                JToken.Parse(json);
+                return true;
+            }
+            catch (JsonReaderException)
+            {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     public static JObject ReplacePath<T>(this JToken root, string path, T newValue)
@@ -63,29 +81,11 @@ public static class JsonHelper
         return (JObject)root;
     }
 
-    public static bool IsValid(string input)
+    public static string? ToBase64(object? obj)
     {
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            return false;
-        }
-
-        var json = input.Trim();
-
-        if ((json.StartsWith("{") && json.EndsWith("}")) || //For object
-            (json.StartsWith("[") && json.EndsWith("]"))) //For array
-        {
-            try
-            {
-                JToken.Parse(json);
-                return true;
-            }
-            catch (JsonReaderException)
-            {
-                return false;
-            }
-        }
-
-        return false;
+        Guard.IsNotNull(nameof(obj), obj);
+        var json = JsonConvert.SerializeObject(obj);
+        var dataBase64 = Base64Helper.StringToBase64(json);
+        return dataBase64;
     }
 }

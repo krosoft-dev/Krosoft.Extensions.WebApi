@@ -39,19 +39,6 @@ public class EnumExtensionsTests
     }
 
     [TestMethod]
-    public void GetFlags_ShouldReturnCorrectFlags()
-    {
-        // Arrange
-        var value = SampleCode.One | SampleCode.Three;
-
-        // Act
-        var result = value.GetFlags();
-
-        // Assert
-        Check.That(result).ContainsExactly(SampleCode.One, SampleCode.Three);
-    }
-
-    [TestMethod]
     public void GetIndividualFlags_ShouldReturnCorrectIndividualFlags()
     {
         // Arrange

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Options;
-using Krosoft.Extensions.Core.Extensions;
+﻿using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Interfaces;
 using Krosoft.Extensions.Core.Tools;
 using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Identity.Abstractions.Models;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Options;
 
 namespace Krosoft.Extensions.Identity.Services;
 

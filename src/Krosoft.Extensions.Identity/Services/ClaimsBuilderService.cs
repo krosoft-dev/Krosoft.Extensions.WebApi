@@ -1,10 +1,10 @@
 ﻿using System.Security.Claims;
 using Krosoft.Extensions.Core.Models;
-using Newtonsoft.Json;
 using Krosoft.Extensions.Core.Tools;
 using Krosoft.Extensions.Identity.Abstractions.Constantes;
 using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Identity.Abstractions.Models;
+using Newtonsoft.Json;
 
 namespace Krosoft.Extensions.Identity.Services;
 

@@ -18,15 +18,6 @@ public class KrosoftMetierExceptionConverterTests
     }
 
     [TestMethod]
-    public void ConvertJsonEmptyTest()
-    {
-        var json = "{}";
-        var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(json, new KrosoftMetierExceptionConverter());
-        Check.That(obj!.GetType()).IsEqualTo(typeof(KrosoftMetierException));
-        Check.That(obj).IsNotNull();
-    }
-
-    [TestMethod]
     public void ConvertJsonArrayEmptyTest()
     {
         var json = "[]";
@@ -46,6 +37,15 @@ public class KrosoftMetierExceptionConverterTests
         Check.That(obj).IsNotNull();
         Check.That(obj!.Code).IsEqualTo(HttpStatusCode.BadRequest);
         Check.That(obj.Erreurs).IsEmpty();
+    }
+
+    [TestMethod]
+    public void ConvertJsonEmptyTest()
+    {
+        var json = "{}";
+        var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(json, new KrosoftMetierExceptionConverter());
+        Check.That(obj!.GetType()).IsEqualTo(typeof(KrosoftMetierException));
+        Check.That(obj).IsNotNull();
     }
 
     [TestMethod]

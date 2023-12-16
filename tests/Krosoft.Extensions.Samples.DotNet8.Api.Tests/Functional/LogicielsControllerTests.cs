@@ -11,6 +11,34 @@ namespace Krosoft.Extensions.Samples.DotNet8.Api.Tests.Functional;
 [TestClass]
 public class LogicielsControllerTests : SampleBaseApiTest<Startup>
 {
+    private static async Task CheckExportFile(HttpResponseMessage response, string fileNameExpected)
+    {
+        var content = await response.Content.ReadAsStringAsync(CancellationToken.None);
+        Console.WriteLine(content);
+
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
+
+        var fileName = response.Content.Headers.ContentDisposition?.FileName;
+
+        Check.That(fileName).IsEqualTo(fileNameExpected);
+
+        var stream = await response.Content.ReadAsStreamAsync(CancellationToken.None);
+        Check.That(stream).IsNotNull();
+        Check.That(stream.CanRead).IsTrue();
+
+        await FileHelper.WriteAsync(fileName!, stream, CancellationToken.None);
+        Check.That(File.Exists(fileName)).IsTrue();
+    }
+
+    [TestMethod]
+    public async Task Csv_Ok()
+    {
+        var httpClient = Factory.CreateClient();
+        var response = await httpClient.GetAsync("/Logiciels/Export/Csv");
+
+        await CheckExportFile(response, "Logiciels.csv");
+    }
+
     [TestMethod]
     public async Task Logiciels_Ok()
     {
@@ -38,15 +66,6 @@ public class LogicielsControllerTests : SampleBaseApiTest<Startup>
     }
 
     [TestMethod]
-    public async Task Csv_Ok()
-    {
-        var httpClient = Factory.CreateClient();
-        var response = await httpClient.GetAsync("/Logiciels/Export/Csv");
-
-        await CheckExportFile(response, "Logiciels.csv");
-    }
-
-    [TestMethod]
     public async Task Pdf_Ok()
     {
         var httpClient = Factory.CreateClient();
@@ -62,24 +81,5 @@ public class LogicielsControllerTests : SampleBaseApiTest<Startup>
         var response = await httpClient.GetAsync("/Logiciels/Export/Zip");
 
         await CheckExportFile(response, "Logiciels.zip");
-    }
-
-    private static async Task CheckExportFile(HttpResponseMessage response, string fileNameExpected)
-    {
-        var content = await response.Content.ReadAsStringAsync(CancellationToken.None);
-        Console.WriteLine(content);
-
-        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-
-        var fileName = response.Content.Headers.ContentDisposition?.FileName;
-
-        Check.That(fileName).IsEqualTo(fileNameExpected);
-
-        var stream = await response.Content.ReadAsStreamAsync(CancellationToken.None);
-        Check.That(stream).IsNotNull();
-        Check.That(stream.CanRead).IsTrue();
-
-        await FileHelper.WriteAsync(fileName!, stream, CancellationToken.None);
-        Check.That(File.Exists(fileName)).IsTrue();
     }
 }

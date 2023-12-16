@@ -9,6 +9,15 @@ namespace Krosoft.Extensions.Samples.DotNet6.Api.Tests.Functional;
 public class LogicielsControllerTests : SampleBaseApiTest<Startup>
 {
     [TestMethod]
+    public async Task Csv_Ok()
+    {
+        var httpClient = Factory.CreateClient();
+        var response = await httpClient.GetAsync("/Logiciels/Export/Csv");
+
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.InternalServerError);
+    }
+
+    [TestMethod]
     public async Task Logiciels_Ok()
     {
         var httpClient = Factory.CreateClient();
@@ -24,15 +33,6 @@ public class LogicielsControllerTests : SampleBaseApiTest<Startup>
 
         var httpClient = Factory.CreateClient();
         var response = await httpClient.GetAsync($"/Logiciels?Nom={nom}");
-
-        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.InternalServerError);
-    }
-
-    [TestMethod]
-    public async Task Csv_Ok()
-    {
-        var httpClient = Factory.CreateClient();
-        var response = await httpClient.GetAsync("/Logiciels/Export/Csv");
 
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.InternalServerError);
     }

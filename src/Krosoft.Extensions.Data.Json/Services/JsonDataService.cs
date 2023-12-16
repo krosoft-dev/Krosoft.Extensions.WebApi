@@ -15,10 +15,10 @@ internal class JsonDataService<T> : IJsonDataService<T> where T : class
         _jsonDataSettings = options.Value;
     }
 
-    public IEnumerable<T> Query()
+    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
     {
         var collection = GetCollection();
-        return collection.AsQueryable();
+        await collection.DeleteOneAsync(id);
     }
 
     public async Task InsertAsync(T item, CancellationToken cancellationToken)
@@ -27,10 +27,10 @@ internal class JsonDataService<T> : IJsonDataService<T> where T : class
         await collection.InsertOneAsync(item);
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken)
+    public IEnumerable<T> Query()
     {
         var collection = GetCollection();
-        await collection.DeleteOneAsync(id);
+        return collection.AsQueryable();
     }
 
     public async Task UpdateAsync(int id, T item, CancellationToken cancellationToken)

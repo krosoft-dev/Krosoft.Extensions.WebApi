@@ -22,19 +22,6 @@ public class CustomExceptionHandlerMiddleware
         _logProvider = logProvider;
     }
 
-    public async Task Invoke(HttpContext context)
-    {
-        try
-        {
-            await _next(context);
-        }
-        catch (Exception ex)
-        {
-            _logProvider.LogError(ex, ex.Message);
-            await HandleExceptionAsync(context, ex);
-        }
-    }
-
     private static Task HandleExceptionAsync(HttpContext context,
                                              Exception ex)
     {
@@ -67,5 +54,18 @@ public class CustomExceptionHandlerMiddleware
         context.Response.ContentType = MediaTypeNames.Application.Json;
         context.Response.StatusCode = (int)error.Status;
         return context.Response.WriteAsync(result);
+    }
+
+    public async Task Invoke(HttpContext context)
+    {
+        try
+        {
+            await _next(context);
+        }
+        catch (Exception ex)
+        {
+            _logProvider.LogError(ex, ex.Message);
+            await HandleExceptionAsync(context, ex);
+        }
     }
 }

@@ -25,6 +25,22 @@ public class IdentityServiceTests : BaseTest
         MockClaims(services);
     }
 
+    [TestMethod]
+    public void GetProprietaireIdTest()
+    {
+        var proprietaireId = _identityService!.GetProprietaireId();
+
+        Check.That(proprietaireId).IsEqualTo(ProprietaireId);
+    }
+
+    [TestMethod]
+    public void GetRoleIsInterneTest()
+    {
+        var roleIsInterne = _identityService!.GetRoleIsInterne();
+
+        Check.That(roleIsInterne).IsTrue();
+    }
+
     private static void MockClaims(IServiceCollection services)
     {
         var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[]
@@ -47,21 +63,5 @@ public class IdentityServiceTests : BaseTest
     {
         var serviceProvider = CreateServiceCollection();
         _identityService = serviceProvider.GetRequiredService<IIdentityService>();
-    }
-
-    [TestMethod]
-    public void GetProprietaireIdTest()
-    {
-        var proprietaireId = _identityService!.GetProprietaireId();
-
-        Check.That(proprietaireId).IsEqualTo(ProprietaireId);
-    }
-
-    [TestMethod]
-    public void GetRoleIsInterneTest()
-    {
-        var roleIsInterne = _identityService!.GetRoleIsInterne();
-
-        Check.That(roleIsInterne).IsTrue();
     }
 }

@@ -8,14 +8,6 @@ public static class AutoMapperExtensions
 {
     private static readonly PropertyInfo TypeMapActionsProperty = typeof(TypeMapConfiguration).GetProperty("TypeMapActions", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException();
 
-    public static async Task<TDestination> Map<TSource, TDestination>(this Task<TSource> task,
-                                                                      IMapper mapper)
-    {
-        var item = await task;
-
-        return mapper.Map<TDestination>(item);
-    }
-
     public static void ForAllOtherMembers<TSource, TDestination>(this IMappingExpression<TSource, TDestination> expression, Action<IMemberConfigurationExpression<TSource, TDestination, object>> memberOptions)
     {
         var typeMapConfiguration = (TypeMapConfiguration)expression;
@@ -35,5 +27,13 @@ public static class AutoMapperExtensions
                 }
             });
         }
+    }
+
+    public static async Task<TDestination> Map<TSource, TDestination>(this Task<TSource> task,
+                                                                      IMapper mapper)
+    {
+        var item = await task;
+
+        return mapper.Map<TDestination>(item);
     }
 }

@@ -191,11 +191,16 @@ public static class StringExtensions
     }
 
     public static string Sanitize(this string? text,
-                                  string replacement = "_")
+                                  string? replacement = "_")
     {
         if (string.IsNullOrEmpty(text))
         {
             return string.Empty;
+        }
+
+        if (string.IsNullOrEmpty(replacement))
+        {
+            replacement = "_";
         }
 
         return RemoveInvalidChars.Replace(text, replacement).RemoveSpecials();

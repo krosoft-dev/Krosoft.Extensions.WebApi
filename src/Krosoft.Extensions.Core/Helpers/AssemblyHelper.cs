@@ -8,16 +8,50 @@ namespace Krosoft.Extensions.Core.Helpers;
 
 public static class AssemblyHelper
 {
-    public static IEnumerable<T> ReadFromAssembly<T>(Assembly assembly, string resourceName)
+    private static string? GetResourceName(Assembly assembly, string filename)
     {
-        var json = ReadAsString(assembly, resourceName, EncodingHelper.GetEuropeOccidentale());
-        var o = JsonConvert.DeserializeObject<IEnumerable<T>>(json);
-        if (o == null)
+        var resourcesName = assembly.GetManifestResourceNames()
+                                    .Where(s => s.EndsWith($".{filename}", StringComparison.CurrentCultureIgnoreCase))
+                                    .ToList();
+        if (resourcesName.Count > 1)
         {
-            throw new InvalidOperationException();
+            throw new KrosoftTechniqueException($"Plusieurs fichiers correspondent au fichier {filename} dans {assembly.GetName().Name}");
         }
 
-        return o;
+        var resourceName = resourcesName.FirstOrDefault();
+        return resourceName;
+    }
+
+    public static Stream Read(Assembly assembly,
+                              string filename)
+    {
+        Guard.IsNotNull(nameof(assembly), assembly);
+        Guard.IsNotNullOrWhiteSpace(nameof(filename), filename);
+
+        var resourceName = GetResourceName(assembly, filename);
+        if (string.IsNullOrEmpty(resourceName))
+        {
+            throw new KrosoftTechniqueException($"{filename} introuvable dans {assembly.GetName().Name}");
+        }
+
+        var stream = assembly.GetManifestResourceStream(resourceName);
+        if (stream == null)
+        {
+            throw new KrosoftTechniqueException($"{resourceName} introuvable dans {assembly.GetName().Name}");
+        }
+
+        return stream;
+    }
+
+    public static MemoryStream ReadAsStream(Assembly assembly,
+                                            string filename,
+                                            Encoding encoding)
+    {
+        var data = ReadAsString(assembly, filename, encoding);
+        var dataByte = encoding.GetBytes(data);
+        var stream = new MemoryStream(dataByte);
+
+        return stream;
     }
 
     public static string ReadAsString(Assembly assembly,
@@ -45,52 +79,6 @@ public static class AssemblyHelper
                 return streamReader.ReadToEnd();
             }
         }
-    }
-
-    private static string? GetResourceName(Assembly assembly, string filename)
-    {
-        var resourcesName = assembly.GetManifestResourceNames()
-                                    .Where(s => s.EndsWith($".{filename}", StringComparison.CurrentCultureIgnoreCase))
-                                    .ToList();
-        if (resourcesName.Count > 1)
-        {
-            throw new KrosoftTechniqueException($"Plusieurs fichiers correspondent au fichier {filename} dans {assembly.GetName().Name}");
-        }
-
-        var resourceName = resourcesName.FirstOrDefault();
-        return resourceName;
-    }
-
-    public static MemoryStream ReadAsStream(Assembly assembly,
-                                            string filename,
-                                            Encoding encoding)
-    {
-        var data = ReadAsString(assembly, filename, encoding);
-        var dataByte = encoding.GetBytes(data);
-        var stream = new MemoryStream(dataByte);
-
-        return stream;
-    }
-
-    public static Stream Read(Assembly assembly,
-                              string filename)
-    {
-        Guard.IsNotNull(nameof(assembly), assembly);
-        Guard.IsNotNullOrWhiteSpace(nameof(filename), filename);
-
-        var resourceName = GetResourceName(assembly, filename);
-        if (string.IsNullOrEmpty(resourceName))
-        {
-            throw new KrosoftTechniqueException($"{filename} introuvable dans {assembly.GetName().Name}");
-        }
-
-        var stream = assembly.GetManifestResourceStream(resourceName);
-        if (stream == null)
-        {
-            throw new KrosoftTechniqueException($"{resourceName} introuvable dans {assembly.GetName().Name}");
-        }
-
-        return stream;
     }
 
     public static string ReadAsString(Assembly assembly,
@@ -129,5 +117,17 @@ public static class AssemblyHelper
                 }
             }
         }
+    }
+
+    public static IEnumerable<T> ReadFromAssembly<T>(Assembly assembly, string resourceName)
+    {
+        var json = ReadAsString(assembly, resourceName, EncodingHelper.GetEuropeOccidentale());
+        var o = JsonConvert.DeserializeObject<IEnumerable<T>>(json);
+        if (o == null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        return o;
     }
 }

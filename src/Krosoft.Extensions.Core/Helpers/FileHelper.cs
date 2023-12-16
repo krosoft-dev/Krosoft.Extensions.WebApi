@@ -10,50 +10,6 @@ public static class FileHelper
 {
     private const int BufferSize = 4096;
 
-    /// <summary>
-    /// Ecrit l'ensemble d'une chaine de caractères dans un fichier.
-    /// </summary>
-    /// <param name="filePath">Chemin du fichier.</param>
-    /// <param name="base64">Contenu du fichier en base64.</param>
-    /// <param name="cancellationToken">Token d’annulation</param>
-    public static async Task WriteBase64Async(string filePath, string base64, CancellationToken cancellationToken)
-    {
-        var bytes = Convert.FromBase64String(base64);
-        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Write, BufferSize, true))
-        {
-            await stream.WriteAsync(bytes, 0, bytes.Length, cancellationToken).ConfigureAwait(false);
-        }
-    }
-
-    /// <summary>
-    /// Ecrit l'ensemble d'une chaine de caractères dans un fichier.
-    /// </summary>
-    /// <param name="filePath">Chemin du fichier.</param>
-    /// <param name="content">Contenu du fichier.</param>
-    /// <param name="encoding">Encoding du fichier.</param>
-    /// <param name="cancellationToken">Token d’annulation</param>
-    public static async Task WriteTextAsync(string filePath, string content, Encoding encoding, CancellationToken cancellationToken)
-    {
-        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-        var encodedText = encoding.GetBytes(content);
-
-        using (var sourceStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, BufferSize, true))
-        {
-            await sourceStream.WriteAsync(encodedText, 0, encodedText.Length, cancellationToken).ConfigureAwait(false);
-        }
-    }
-
-    /// <summary>
-    /// Ecrit l'ensemble d'une chaine de caractères dans un fichier.
-    /// </summary>
-    /// <param name="filePath">Chemin du fichier.</param>
-    /// <param name="content">Contenu du fichier.</param>
-    /// <param name="cancellationToken">Token d’annulation</param>
-    public static async Task WriteTextAsync(string filePath, string content, CancellationToken cancellationToken)
-    {
-        await WriteTextAsync(filePath, content, EncodingHelper.GetEuropeOccidentale(), cancellationToken);
-    }
-
     public static void CreateDirectoryFromFile(string filePath)
     {
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
@@ -89,6 +45,29 @@ public static class FileHelper
         {
             File.Delete(filePath);
         }
+    }
+
+    private static IEnumerable<string> GetFilesFromDirectoryRecursively(string sDir)
+    {
+        var files = new List<string>();
+
+        var directories = Directory.GetDirectories(sDir);
+        if (directories.Any())
+        {
+            foreach (var d in directories)
+            {
+                foreach (var f in Directory.GetFiles(d))
+                {
+                    files.Add(f);
+                }
+
+                var subFiles = GetFilesFromDirectoryRecursively(d);
+
+                files.AddRange(subFiles);
+            }
+        }
+
+        return files;
     }
 
     public static List<string> GetFilesRecursively(string directoryPath)
@@ -355,26 +334,47 @@ public static class FileHelper
         await writer.WriteAsync(content).ConfigureAwait(false);
     }
 
-    private static IEnumerable<string> GetFilesFromDirectoryRecursively(string sDir)
+    /// <summary>
+    /// Ecrit l'ensemble d'une chaine de caractères dans un fichier.
+    /// </summary>
+    /// <param name="filePath">Chemin du fichier.</param>
+    /// <param name="base64">Contenu du fichier en base64.</param>
+    /// <param name="cancellationToken">Token d’annulation</param>
+    public static async Task WriteBase64Async(string filePath, string base64, CancellationToken cancellationToken)
     {
-        var files = new List<string>();
-
-        var directories = Directory.GetDirectories(sDir);
-        if (directories.Any())
+        var bytes = Convert.FromBase64String(base64);
+        using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.Write, BufferSize, true))
         {
-            foreach (var d in directories)
-            {
-                foreach (var f in Directory.GetFiles(d))
-                {
-                    files.Add(f);
-                }
-
-                var subFiles = GetFilesFromDirectoryRecursively(d);
-
-                files.AddRange(subFiles);
-            }
+            await stream.WriteAsync(bytes, 0, bytes.Length, cancellationToken).ConfigureAwait(false);
         }
+    }
 
-        return files;
+    /// <summary>
+    /// Ecrit l'ensemble d'une chaine de caractères dans un fichier.
+    /// </summary>
+    /// <param name="filePath">Chemin du fichier.</param>
+    /// <param name="content">Contenu du fichier.</param>
+    /// <param name="encoding">Encoding du fichier.</param>
+    /// <param name="cancellationToken">Token d’annulation</param>
+    public static async Task WriteTextAsync(string filePath, string content, Encoding encoding, CancellationToken cancellationToken)
+    {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        var encodedText = encoding.GetBytes(content);
+
+        using (var sourceStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, BufferSize, true))
+        {
+            await sourceStream.WriteAsync(encodedText, 0, encodedText.Length, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    /// <summary>
+    /// Ecrit l'ensemble d'une chaine de caractères dans un fichier.
+    /// </summary>
+    /// <param name="filePath">Chemin du fichier.</param>
+    /// <param name="content">Contenu du fichier.</param>
+    /// <param name="cancellationToken">Token d’annulation</param>
+    public static async Task WriteTextAsync(string filePath, string content, CancellationToken cancellationToken)
+    {
+        await WriteTextAsync(filePath, content, EncodingHelper.GetEuropeOccidentale(), cancellationToken);
     }
 }

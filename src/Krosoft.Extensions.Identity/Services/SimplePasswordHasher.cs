@@ -8,20 +8,6 @@ namespace Krosoft.Extensions.Identity.Services;
 
 public class SimplePasswordHasher : ISimplePasswordHasher
 {
-    public bool Verify(string password,
-                       byte[]? hash,
-                       byte[]? salt)
-    {
-        Guard.IsNotNull(nameof(password), password);
-        Guard.IsNotNull(nameof(hash), hash);
-        Guard.IsNotNull(nameof(salt), salt);
-
-        using var hmac = new HMACSHA512(salt!);
-        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-        return hash!.SequenceEqual(computedHash);
-    }
-
     public HashSalt CreatePasswordHash(string password)
     {
         Guard.IsNotNull(nameof(password), password);
@@ -34,5 +20,19 @@ public class SimplePasswordHasher : ISimplePasswordHasher
         };
 
         return hs;
+    }
+
+    public bool Verify(string password,
+                       byte[]? hash,
+                       byte[]? salt)
+    {
+        Guard.IsNotNull(nameof(password), password);
+        Guard.IsNotNull(nameof(hash), hash);
+        Guard.IsNotNull(nameof(salt), salt);
+
+        using var hmac = new HMACSHA512(salt!);
+        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+        return hash!.SequenceEqual(computedHash);
     }
 }

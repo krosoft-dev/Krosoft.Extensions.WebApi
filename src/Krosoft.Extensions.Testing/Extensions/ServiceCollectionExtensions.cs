@@ -13,6 +13,24 @@ public static class ServiceCollectionExtensions
         }
     }
 
+    public static void RemoveServices<T>(this IServiceCollection services)
+    {
+        services.RemoveServices(d => d.ServiceType == typeof(T));
+    }
+
+    public static void RemoveServices(this IServiceCollection services,
+                                      Func<ServiceDescriptor, bool> filter)
+    {
+        var servicesDescriptor = services.Where(filter).ToList();
+        if (servicesDescriptor.Any())
+        {
+            foreach (var serviceDescriptor in servicesDescriptor)
+            {
+                services.Remove(serviceDescriptor);
+            }
+        }
+    }
+
     public static void RemoveTransient<TService>(this IServiceCollection services)
     {
         var serviceDescriptors = services.Where(x => x.ServiceType == typeof(TService) && x.Lifetime == ServiceLifetime.Transient).ToList();
@@ -40,23 +58,5 @@ public static class ServiceCollectionExtensions
     {
         services.RemoveTransient<TService>();
         services.AddSingleton<TService, TImplementation>();
-    }
-
-    public static void RemoveServices<T>(this IServiceCollection services)
-    {
-        services.RemoveServices(d => d.ServiceType == typeof(T));
-    }
-
-    public static void RemoveServices(this IServiceCollection services,
-                                      Func<ServiceDescriptor, bool> filter)
-    {
-        var servicesDescriptor = services.Where(filter).ToList();
-        if (servicesDescriptor.Any())
-        {
-            foreach (var serviceDescriptor in servicesDescriptor)
-            {
-                services.Remove(serviceDescriptor);
-            }
-        }
     }
 }

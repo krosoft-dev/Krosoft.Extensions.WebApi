@@ -4,6 +4,14 @@ namespace Krosoft.Extensions.Zip.Interfaces;
 
 public interface IZipService
 {
+    void ExtractZip(string zipPath, string extractPath);
+
+    Stream GetZipStream(IEnumerable<string> filePaths);
+
+    Stream Zip(IDictionary<string, Stream> streams);
+
+    Stream Zip(Stream stream, string fileName);
+
     Task<ZipFileStream> ZipAsync(IReadOnlyDictionary<string, string> dictionary,
                                  string fileName,
                                  CancellationToken cancellationToken);
@@ -17,12 +25,4 @@ public interface IZipService
 
     Task<Stream> ZipAsync(IReadOnlyDictionary<string, Stream> dictionary,
                           CancellationToken cancellationToken);
-
-    Stream Zip(IDictionary<string, Stream> streams);
-
-    Stream Zip(Stream stream, string fileName);
-
-    Stream GetZipStream(IEnumerable<string> filePaths);
-
-    void ExtractZip(string zipPath, string extractPath);
 }

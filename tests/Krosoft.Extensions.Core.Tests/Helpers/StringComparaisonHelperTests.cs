@@ -7,6 +7,20 @@ namespace Krosoft.Extensions.Core.Tests.Helpers;
 [TestClass]
 public class StringComparaisonHelperTests
 {
+    private void CalculateJaroWinkler(string source, string target, decimal attendu)
+    {
+        var resultat = Math.Round(StringComparaisonHelper.CalculateJaroWinkler(source.ToLower(), target.ToLower()), 4);
+
+        Check.That(resultat).IsEqualTo(attendu);
+    }
+
+    private void CalculateJaroWinklerInPourcent(string source, string target, decimal attendu)
+    {
+        var resultat = Math.Round(StringComparaisonHelper.CalculateJaroWinklerInPourcent(source.ToLower(), target.ToLower()), 4);
+
+        Check.That(resultat).IsEqualTo(attendu);
+    }
+
     [TestMethod]
     public void CalculateJaroWinklerInPourcentTest()
     {
@@ -75,6 +89,20 @@ public class StringComparaisonHelperTests
         CalculateJaroWinkler(serie5, "iNTERNAL.TURBO", 0.4772m);
     }
 
+    private void CalculateLevenshtein(string source, string target, int attendu)
+    {
+        var resultat = StringComparaisonHelper.CalculateLevenshtein(source.ToLower(), target.ToLower());
+
+        Check.That(resultat).IsEqualTo(attendu);
+    }
+
+    private void CalculateLevenshteinInPourcent(string source, string target, decimal attendu)
+    {
+        var resultat = Math.Round(StringComparaisonHelper.CalculateLevenshteinInPourcent(source.ToLower(), target.ToLower()), 4);
+
+        Check.That(resultat).IsEqualTo(attendu);
+    }
+
     [TestMethod]
     public void CalculateLevenshteinInPourcentTest()
     {
@@ -141,33 +169,5 @@ public class StringComparaisonHelperTests
         CalculateLevenshtein(serie5, "AMZN.WEBRip", 35);
         CalculateLevenshtein(serie5, "WEB.h264-TBS", 38);
         CalculateLevenshtein(serie5, "iNTERNAL.TURBO", 38);
-    }
-
-    private void CalculateJaroWinkler(string source, string target, decimal attendu)
-    {
-        var resultat = Math.Round(StringComparaisonHelper.CalculateJaroWinkler(source.ToLower(), target.ToLower()), 4);
-
-        Check.That(resultat).IsEqualTo(attendu);
-    }
-
-    private void CalculateJaroWinklerInPourcent(string source, string target, decimal attendu)
-    {
-        var resultat = Math.Round(StringComparaisonHelper.CalculateJaroWinklerInPourcent(source.ToLower(), target.ToLower()), 4);
-
-        Check.That(resultat).IsEqualTo(attendu);
-    }
-
-    private void CalculateLevenshtein(string source, string target, int attendu)
-    {
-        var resultat = StringComparaisonHelper.CalculateLevenshtein(source.ToLower(), target.ToLower());
-
-        Check.That(resultat).IsEqualTo(attendu);
-    }
-
-    private void CalculateLevenshteinInPourcent(string source, string target, decimal attendu)
-    {
-        var resultat = Math.Round(StringComparaisonHelper.CalculateLevenshteinInPourcent(source.ToLower(), target.ToLower()), 4);
-
-        Check.That(resultat).IsEqualTo(attendu);
     }
 }

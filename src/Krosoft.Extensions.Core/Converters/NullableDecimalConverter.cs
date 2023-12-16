@@ -21,11 +21,6 @@ public class NullableDecimalConverter : JsonConverter<decimal?>
         }
     }
 
-    public override void WriteJson(JsonWriter writer, decimal? value, JsonSerializer serializer)
-    {
-        writer.WriteValue(value);
-    }
-
     public override decimal? ReadJson(JsonReader reader, Type objectType, decimal? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
         if (reader.Value != null)
@@ -45,5 +40,10 @@ public class NullableDecimalConverter : JsonConverter<decimal?>
         }
 
         return null;
+    }
+
+    public override void WriteJson(JsonWriter writer, decimal? value, JsonSerializer serializer)
+    {
+        writer.WriteValue(value);
     }
 }

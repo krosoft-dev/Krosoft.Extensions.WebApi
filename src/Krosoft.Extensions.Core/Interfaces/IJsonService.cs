@@ -2,6 +2,6 @@
 
 public interface IJsonService
 {
-    string Serialize<T>(T obj);
     T? Deserialize<T>(string jsonString);
+    string Serialize<T>(T obj);
 }

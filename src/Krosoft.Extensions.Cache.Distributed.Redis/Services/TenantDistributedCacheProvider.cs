@@ -11,12 +11,20 @@ public class TenantDistributedCacheProvider : ITenantDistributedCacheProvider
         _distributedCacheProvider = distributedCacheProvider;
     }
 
-    public IEnumerable<string> GetKeys(string tenantId,
-                                       string pattern)
-
+    public Task DeleteAllAsync(string tenantId,
+                               string pattern,
+                               CancellationToken cancellationToken = default)
     {
         var tenantKey = GetTenantKey(tenantId, pattern);
-        return _distributedCacheProvider.GetKeys(tenantKey);
+        return _distributedCacheProvider.DeleteAllAsync(tenantKey, cancellationToken);
+    }
+
+    public Task<bool> DeleteAsync(string tenantId,
+                                  string key,
+                                  CancellationToken cancellationToken = default)
+    {
+        var tenantKey = GetTenantKey(tenantId, key);
+        return _distributedCacheProvider.DeleteAsync(tenantKey, cancellationToken);
     }
 
     public Task<T?> GetAsync<T>(string tenantId,
@@ -27,6 +35,14 @@ public class TenantDistributedCacheProvider : ITenantDistributedCacheProvider
         return _distributedCacheProvider.GetAsync<T>(tenantKey, cancellationToken);
     }
 
+    public IEnumerable<string> GetKeys(string tenantId,
+                                       string pattern)
+
+    {
+        var tenantKey = GetTenantKey(tenantId, pattern);
+        return _distributedCacheProvider.GetKeys(tenantKey);
+    }
+
     public Task<long> GetLengthAsync(string tenantId,
                                      string collectionKey,
                                      CancellationToken cancellationToken = default)
@@ -35,14 +51,15 @@ public class TenantDistributedCacheProvider : ITenantDistributedCacheProvider
         return _distributedCacheProvider.GetLengthAsync(tenantKey, cancellationToken);
     }
 
-    public Task SetAsync<T>(string tenantId,
-                            string key,
-                            T entry,
-                            CancellationToken cancellationToken = default)
+    public Task<bool> IsExistAsync(string tenantId,
+                                   string key,
+                                   CancellationToken cancellationToken = default)
     {
         var tenantKey = GetTenantKey(tenantId, key);
-        return _distributedCacheProvider.SetAsync(tenantKey, entry, cancellationToken);
+        return _distributedCacheProvider.IsExistAsync(tenantKey, cancellationToken);
     }
+
+    public Task<TimeSpan> PingAsync(CancellationToken cancellationToken = default) => _distributedCacheProvider.PingAsync(cancellationToken);
 
     /// <summary>
     /// Récupère une ligne de la collection parente.
@@ -79,6 +96,25 @@ public class TenantDistributedCacheProvider : ITenantDistributedCacheProvider
         return _distributedCacheProvider.ReadRowsAsync<T>(tenantKey, cancellationToken);
     }
 
+    public Task RefreshAsync<T>(string tenantId,
+                                string collectionKey,
+                                Func<Task<List<T>>> func,
+                                Func<T, string> getId,
+                                CancellationToken cancellationToken = default)
+    {
+        var tenantKey = GetTenantKey(tenantId, collectionKey);
+        return _distributedCacheProvider.RefreshAsync(tenantKey, func, getId, cancellationToken);
+    }
+
+    public Task SetAsync<T>(string tenantId,
+                            string key,
+                            T entry,
+                            CancellationToken cancellationToken = default)
+    {
+        var tenantKey = GetTenantKey(tenantId, key);
+        return _distributedCacheProvider.SetAsync(tenantKey, entry, cancellationToken);
+    }
+
     public Task<bool> SetRowAsync<T>(string tenantId,
                                      string collectionKey,
                                      string entryKey,
@@ -97,42 +133,6 @@ public class TenantDistributedCacheProvider : ITenantDistributedCacheProvider
         var tenantKey = GetTenantKey(tenantId, collectionKey);
         return _distributedCacheProvider.SetRowAsync(tenantKey, entryByKey, cancellationToken);
     }
-
-    public Task RefreshAsync<T>(string tenantId,
-                                string collectionKey,
-                                Func<Task<List<T>>> func,
-                                Func<T, string> getId,
-                                CancellationToken cancellationToken = default)
-    {
-        var tenantKey = GetTenantKey(tenantId, collectionKey);
-        return _distributedCacheProvider.RefreshAsync(tenantKey, func, getId, cancellationToken);
-    }
-
-    public Task<bool> IsExistAsync(string tenantId,
-                                   string key,
-                                   CancellationToken cancellationToken = default)
-    {
-        var tenantKey = GetTenantKey(tenantId, key);
-        return _distributedCacheProvider.IsExistAsync(tenantKey, cancellationToken);
-    }
-
-    public Task<bool> DeleteAsync(string tenantId,
-                                  string key,
-                                  CancellationToken cancellationToken = default)
-    {
-        var tenantKey = GetTenantKey(tenantId, key);
-        return _distributedCacheProvider.DeleteAsync(tenantKey, cancellationToken);
-    }
-
-    public Task DeleteAllAsync(string tenantId,
-                               string pattern,
-                               CancellationToken cancellationToken = default)
-    {
-        var tenantKey = GetTenantKey(tenantId, pattern);
-        return _distributedCacheProvider.DeleteAllAsync(tenantKey, cancellationToken);
-    }
-
-    public Task<TimeSpan> PingAsync(CancellationToken cancellationToken = default) => _distributedCacheProvider.PingAsync(cancellationToken);
 
     private static string GetTenantKey(string tenantId,
                                        string collectionKey) => $"{tenantId}/{collectionKey}";

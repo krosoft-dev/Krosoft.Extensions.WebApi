@@ -23,7 +23,7 @@ public static class ServiceCollectionExtensions
             options.DocumentFilter<EnumDescriptionFilter>();
             options.SchemaFilter<SwaggerExcludeSchemaFilter>();
             options.OperationFilter<SwaggerExcludeOperationFilter>();
-            options.EnableAnnotations(true, true); 
+            options.EnableAnnotations(true, true);
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{assembly.GetName().Name}.xml"));
         });
 

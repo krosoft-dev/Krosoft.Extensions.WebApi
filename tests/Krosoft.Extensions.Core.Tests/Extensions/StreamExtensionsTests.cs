@@ -10,6 +10,14 @@ namespace Krosoft.Extensions.Core.Tests.Extensions;
 public class StreamExtensionsTests
 {
     [TestMethod]
+    public void ToBase64_MemoryStream_Ok()
+    {
+        using var stream = StreamHelper.GenerateStreamFromString("test");
+        var base64 = stream.ToBase64();
+        Check.That(base64).IsEqualTo("dGVzdA==");
+    }
+
+    [TestMethod]
     public void ToBase64_Ok()
     {
         using (var fs = File.Create("test.txt"))
@@ -20,14 +28,6 @@ public class StreamExtensionsTests
             var base64 = fs.ToBase64();
             Check.That(base64).IsEqualTo("dGVzdA==");
         }
-    }
-
-    [TestMethod]
-    public void ToBase64_MemoryStream_Ok()
-    {
-        using var stream = StreamHelper.GenerateStreamFromString("test");
-        var base64 = stream.ToBase64();
-        Check.That(base64).IsEqualTo("dGVzdA==");
     }
 
     [TestMethod]

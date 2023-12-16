@@ -126,28 +126,16 @@ public class StringExtensionsTests
         Check.That(result).IsEqualTo(expectedOutput);
     }
 
-    [TestMethod]
-    public void Sanitize1Test()
+    [DataTestMethod]
+    [DataRow("asdf.txt", null, "asdf.txt")]
+    [DataRow("\"<>|:*?\\/.txt", null, "_________.txt")]
+    [DataRow("yes_its_valid_~!@#$%^&()_+.txt", null, "yes_its_valid__.txt")]
+    [DataRow("*_*.txt", "Yo", "Yo_Yo.txt")]
+    public void Sanitize_Tests(string? input, string? replacement, string? expectedOutput)
     {
-        Check.That("asdf.txt".Sanitize()).IsEqualTo("asdf.txt");
-    }
+        var result = input.Sanitize(replacement);
 
-    [TestMethod]
-    public void Sanitize2Test()
-    {
-        Check.That("\"<>|:*?\\/.txt".Sanitize()).IsEqualTo("_________.txt");
-    }
-
-    [TestMethod]
-    public void Sanitize3Test()
-    {
-        Check.That("yes_its_valid_~!@#$%^&()_+.txt".Sanitize()).IsEqualTo("yes_its_valid__.txt");
-    }
-
-    [TestMethod]
-    public void Sanitize4Test()
-    {
-        Check.That("*_*.txt".Sanitize("Yo")).IsEqualTo("Yo_Yo.txt");
+        Check.That(result).IsEqualTo(expectedOutput);
     }
 
     [DataTestMethod]

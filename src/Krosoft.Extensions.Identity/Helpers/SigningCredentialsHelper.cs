@@ -1,14 +1,25 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using Krosoft.Extensions.Core.Tools;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Krosoft.Extensions.Identity.Helpers;
 
 public static class SigningCredentialsHelper
 {
     private const string Algorithm = SecurityAlgorithms.HmacSha256Signature;
+
+    public static bool CheckValidity(SecurityToken securityToken)
+    {
+        var jwtSecurityToken = securityToken as JwtSecurityToken;
+        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Contains(Algorithm, StringComparison.InvariantCultureIgnoreCase))
+        {
+            throw new SecurityTokenException("Invalid token");
+        }
+
+        return true;
+    }
 
     public static SigningCredentials GetSigningCredentials(string securityKey)
     {
@@ -31,16 +42,5 @@ public static class SigningCredentialsHelper
             };
             return signingCredentials;
         }
-    }
-
-    public static bool CheckValidity(SecurityToken securityToken)
-    {
-        var jwtSecurityToken = securityToken as JwtSecurityToken;
-        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Contains(Algorithm, StringComparison.InvariantCultureIgnoreCase))
-        {
-            throw new SecurityTokenException("Invalid token");
-        }
-
-        return true;
     }
 }

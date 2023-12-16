@@ -4,17 +4,6 @@ namespace Krosoft.Extensions.Core.Helpers;
 
 public static class ByteHelper
 {
-    public static byte[] GetBytes(string str)
-    {
-        var bytes = new byte[str.Length * sizeof(char)];
-        Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-        return bytes;
-    }
-
-    public static string GetString(byte[] bytes) => GetString(bytes, EncodingHelper.GetEuropeOccidentale());
-
-    public static string GetString(byte[] bytes, Encoding encoding) => encoding.GetString(bytes, 0, bytes.Length);
-
     public static byte[] Combine(params byte[][] arrays)
     {
         var rv = new byte[arrays.Sum(a => a.Length)];
@@ -27,6 +16,17 @@ public static class ByteHelper
 
         return rv;
     }
+
+    public static byte[] GetBytes(string str)
+    {
+        var bytes = new byte[str.Length * sizeof(char)];
+        Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+        return bytes;
+    }
+
+    public static string GetString(byte[] bytes) => GetString(bytes, EncodingHelper.GetEuropeOccidentale());
+
+    public static string GetString(byte[] bytes, Encoding encoding) => encoding.GetString(bytes, 0, bytes.Length);
 
     public static string ToHex(this byte[] bytes, bool upperCase)
     {

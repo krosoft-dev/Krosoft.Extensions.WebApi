@@ -12,14 +12,29 @@ public class IdentityService : IIdentityService
         _claimsService = claimsService;
     }
 
-    public string? GetProprietaireId()
-    {
-        return _claimsService.CheckClaim(KrosoftClaimNames.ProprietaireId, claim => claim, false);
-    }
-
     public string? GetId()
     {
         return _claimsService.CheckClaim(KrosoftClaimNames.Id, claim => claim, true);
+    }
+
+    public string? GetLangueCode()
+    {
+        return _claimsService.CheckClaim(KrosoftClaimNames.LangueCode, claim => claim, true);
+    }
+
+    public Guid GetLangueId()
+    {
+        return _claimsService.CheckClaim(KrosoftClaimNames.LangueId, claim => new Guid(claim), true);
+    }
+
+    public string? GetNom()
+    {
+        return _claimsService.CheckClaim(KrosoftClaimNames.Nom, claim => claim, true);
+    }
+
+    public string? GetProprietaireId()
+    {
+        return _claimsService.CheckClaim(KrosoftClaimNames.ProprietaireId, claim => claim, false);
     }
 
     public Guid GetRoleId()
@@ -36,28 +51,13 @@ public class IdentityService : IIdentityService
         }, false);
     }
 
-    public Guid GetLangueId()
+    public string? GetTenantId()
     {
-        return _claimsService.CheckClaim(KrosoftClaimNames.LangueId, claim => new Guid(claim), true);
-    }
-
-    public string? GetLangueCode()
-    {
-        return _claimsService.CheckClaim(KrosoftClaimNames.LangueCode, claim => claim, true);
-    }
-
-    public string? GetNom()
-    {
-        return _claimsService.CheckClaim(KrosoftClaimNames.Nom, claim => claim, true);
+        return _claimsService.CheckClaim(KrosoftClaimNames.TenantId, claim => claim, false);
     }
 
     public bool HasDroit(string droitCode)
     {
         return _claimsService.CheckClaims(KrosoftClaimNames.Droits, droitsCode => droitsCode.Contains(droitCode));
-    }
-
-    public string? GetTenantId()
-    {
-        return _claimsService.CheckClaim(KrosoftClaimNames.TenantId, claim => claim, false);
     }
 }

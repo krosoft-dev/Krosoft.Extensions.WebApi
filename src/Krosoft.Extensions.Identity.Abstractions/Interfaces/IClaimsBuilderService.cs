@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Krosoft.Extensions.Core.Models; 
+using Krosoft.Extensions.Core.Models;
 
 namespace Krosoft.Extensions.Identity.Abstractions.Interfaces;
 

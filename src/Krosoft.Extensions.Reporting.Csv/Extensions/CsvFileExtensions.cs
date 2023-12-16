@@ -7,13 +7,6 @@ namespace Krosoft.Extensions.Reporting.Csv.Extensions;
 
 public static class CsvFileExtensions
 {
-    public static MemoryStream ToMemoryStream<T>(this CsvFileData<T> csvFile)
-    {
-        var result = csvFile.ToBytes();
-        var memoryStream = new MemoryStream(result);
-        return memoryStream;
-    }
-
     public static byte[] ToBytes<T>(this CsvFileData<T> csvFile)
     {
         var config = CsvConfigurationHelper.GetCsvConfiguration(csvFile.Culture);
@@ -37,5 +30,12 @@ public static class CsvFileExtensions
     {
         var file = await task;
         return file.ToCsvStreamResult();
+    }
+
+    public static MemoryStream ToMemoryStream<T>(this CsvFileData<T> csvFile)
+    {
+        var result = csvFile.ToBytes();
+        var memoryStream = new MemoryStream(result);
+        return memoryStream;
     }
 }

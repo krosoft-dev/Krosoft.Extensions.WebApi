@@ -26,6 +26,29 @@ public class EnumDescriptionFilter : IDocumentFilter
         }
     }
 
+    private static string? DescribeEnum(IEnumerable<IOpenApiAny> enums, string proprtyTypeName)
+    {
+        var enumType = GetEnumTypeByName(proprtyTypeName);
+        if (enumType != null)
+        {
+            var enumDescriptions = new List<string>();
+
+            foreach (var openApiAny in enums)
+            {
+                if (openApiAny is OpenApiInteger openApiInteger)
+                {
+                    var enumAsInt = openApiInteger.Value;
+
+                    enumDescriptions.Add($"{enumAsInt} = {Enum.GetName(enumType, enumAsInt)}");
+                }
+            }
+
+            return string.Join(", ", enumDescriptions.ToArray());
+        }
+
+        return null;
+    }
+
     private static void DescribeEnumParameters(IDictionary<OperationType, OpenApiOperation>? operations,
                                                OpenApiDocument swaggerDoc)
     {
@@ -51,28 +74,5 @@ public class EnumDescriptionFilter : IDocumentFilter
                         .GetAssemblies()
                         .SelectMany(x => x.GetTypes())
                         .FirstOrDefault(x => x.Name == enumTypeName);
-    }
-
-    private static string? DescribeEnum(IEnumerable<IOpenApiAny> enums, string proprtyTypeName)
-    {
-        var enumType = GetEnumTypeByName(proprtyTypeName);
-        if (enumType != null)
-        {
-            var enumDescriptions = new List<string>();
-
-            foreach (var openApiAny in enums)
-            {
-                if (openApiAny is OpenApiInteger openApiInteger)
-                {
-                    var enumAsInt = openApiInteger.Value;
-
-                    enumDescriptions.Add($"{enumAsInt} = {Enum.GetName(enumType, enumAsInt)}");
-                }
-            }
-
-            return string.Join(", ", enumDescriptions.ToArray());
-        }
-
-        return null;
     }
 }

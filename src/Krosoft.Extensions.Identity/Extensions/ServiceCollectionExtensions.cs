@@ -18,16 +18,6 @@ namespace Krosoft.Extensions.Identity.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddTokenProvider(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddOptions();
-        services.Configure<TokenSettings>(configuration.GetSection(nameof(TokenSettings)));
-        services.AddDataProtection();
-        services.AddTransient<ITokenProvider, TokenProvider>();
-
-        return services;
-    }
-
     public static IServiceCollection AddIdentityEx(this IServiceCollection services)
     {
         services.AddTransient<IClaimsService, ClaimsService>();
@@ -35,24 +25,6 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IKrosoftTokenBuilderService, KrosoftTokenBuilderService>();
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddPasswordHasher();
-
-        return services;
-    }
-
-    public static IServiceCollection AddPasswordHasher(this IServiceCollection services)
-    {
-        services.AddTransient<ISimplePasswordHasher, SimplePasswordHasher>();
-
-        return services;
-    }
-
-    public static IServiceCollection AddJwtGenerator(this IServiceCollection services,
-                                                     IConfiguration configuration)
-    {
-        services.AddOptions();
-        services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
-        services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
-        services.AddTransient<IRefreshTokenGenerator, RefreshTokenGenerator>();
 
         return services;
     }
@@ -124,6 +96,34 @@ public static class ServiceCollectionExtensions
                         }
                     };
                 });
+
+        return services;
+    }
+
+    public static IServiceCollection AddJwtGenerator(this IServiceCollection services,
+                                                     IConfiguration configuration)
+    {
+        services.AddOptions();
+        services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+        services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.AddTransient<IRefreshTokenGenerator, RefreshTokenGenerator>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddPasswordHasher(this IServiceCollection services)
+    {
+        services.AddTransient<ISimplePasswordHasher, SimplePasswordHasher>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddTokenProvider(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddOptions();
+        services.Configure<TokenSettings>(configuration.GetSection(nameof(TokenSettings)));
+        services.AddDataProtection();
+        services.AddTransient<ITokenProvider, TokenProvider>();
 
         return services;
     }

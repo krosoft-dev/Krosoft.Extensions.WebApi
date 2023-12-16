@@ -9,37 +9,17 @@ namespace Krosoft.Extensions.Core.Tests.Models;
 [TestClass]
 public class ResultTests
 {
-    [TestMethod]
-    public void SuccessTest()
+    private static Result<Addresse> CheckFaulted()
     {
-        CheckSuccess();
-    }
+        var result = new Result<Addresse>(new Exception("Test"));
+        Check.That(result).IsInstanceOf<Result<Addresse>>();
+        Check.That(result.IsSuccess).IsFalse();
+        Check.That(result.IsFaulted).IsTrue();
+        Check.That(result.Value).IsNull();
+        Check.That(result.Exception).IsNotNull();
+        Check.That(result.Exception?.Message).IsEqualTo("Test");
 
-    [TestMethod]
-    public void FaultedTest()
-    {
-        CheckFaulted();
-    }
-
-    [TestMethod]
-    public void ValidateTest()
-    {
-        var result = CheckSuccess();
-
-        var address = result.Validate();
-
-        Check.That(address).IsNotNull();
-        Check.That(address.Ville).IsEqualTo("Paris");
-    }
-
-    [TestMethod]
-    public void ValidateFailTest()
-    {
-        var result = CheckFaulted();
-
-        Check.ThatCode(() => result.Validate())
-             .Throws<KrosoftMetierException>()
-             .WithMessage("Test");
+        return result;
     }
 
     private static Result<Addresse> CheckSuccess()
@@ -56,16 +36,36 @@ public class ResultTests
         return result;
     }
 
-    private static Result<Addresse> CheckFaulted()
+    [TestMethod]
+    public void FaultedTest()
     {
-        var result = new Result<Addresse>(new Exception("Test"));
-        Check.That(result).IsInstanceOf<Result<Addresse>>();
-        Check.That(result.IsSuccess).IsFalse();
-        Check.That(result.IsFaulted).IsTrue();
-        Check.That(result.Value).IsNull();
-        Check.That(result.Exception).IsNotNull();
-        Check.That(result.Exception?.Message).IsEqualTo("Test");
+        CheckFaulted();
+    }
 
-        return result;
+    [TestMethod]
+    public void SuccessTest()
+    {
+        CheckSuccess();
+    }
+
+    [TestMethod]
+    public void ValidateFailTest()
+    {
+        var result = CheckFaulted();
+
+        Check.ThatCode(() => result.Validate())
+             .Throws<KrosoftMetierException>()
+             .WithMessage("Test");
+    }
+
+    [TestMethod]
+    public void ValidateTest()
+    {
+        var result = CheckSuccess();
+
+        var address = result.Validate();
+
+        Check.That(address).IsNotNull();
+        Check.That(address.Ville).IsEqualTo("Paris");
     }
 }

@@ -20,43 +20,6 @@ public class ClaimsBuilderServiceTests : BaseTest
         services.AddIdentityEx();
     }
 
-    [TestInitialize]
-    public void SetUp()
-    {
-        var serviceProvider = CreateServiceCollection();
-        _claimsBuilderService = serviceProvider.GetRequiredService<IClaimsBuilderService>();
-    }
-
-    [TestMethod]
-    public void BuildNullTest()
-    {
-        Check.ThatCode(() => { _claimsBuilderService!.Build(null); })
-             .Throws<KrosoftTechniqueException>()
-             .WithMessage("La variable 'krosoftToken' n'est pas renseignée.");
-    }
-
-    [TestMethod]
-    public void BuildTest()
-    {
-        var krosoftToken = new KrosoftToken
-        {
-            Id = "Claim_Id",
-            TenantId = "Claim_TenantId",
-            Nom = "Claim_Nom",
-            Email = "Claim_Email",
-            RoleId = "Claim_RoleId",
-            RoleHomePage = "Claim_RoleHomePage",
-            LangueId = "Claim_LangueId",
-            LangueCode = "Claim_LangueCode"
-        };
-        var claims = _claimsBuilderService!.Build(krosoftToken).ToList();
-
-        Check.That(claims).IsNotNull();
-        Check.That(claims).HasSize(10);
-        Check.That(claims.Select(c => c.Type)).ContainsExactly("id", "nom", "email", "roleId", "roleIsInterne", "roleHomePage", "langueId", "langueCode", "droits", "tenantId");
-        Check.That(claims.Select(c => c.Value)).ContainsExactly("Claim_Id", "Claim_Nom", "Claim_Email", "Claim_RoleId", "False", "Claim_RoleHomePage", "Claim_LangueId", "Claim_LangueCode", "[]", "Claim_TenantId");
-    }
-
     [TestMethod]
     public void BuildAvecTenantIdTest()
     {
@@ -136,5 +99,42 @@ public class ClaimsBuilderServiceTests : BaseTest
         Check.That(claims).HasSize(9);
         Check.That(claims.Select(c => c.Type)).ContainsExactly("id", "nom", "email", "roleId", "roleIsInterne", "roleHomePage", "langueId", "langueCode", "droits");
         Check.That(claims.Select(c => c.Value)).ContainsExactly("Claim_Id", "Claim_Nom", "Claim_Email", "Claim_RoleId", "False", "Claim_RoleHomePage", "Claim_LangueId", "Claim_LangueCode", "[]");
+    }
+
+    [TestMethod]
+    public void BuildNullTest()
+    {
+        Check.ThatCode(() => { _claimsBuilderService!.Build(null); })
+             .Throws<KrosoftTechniqueException>()
+             .WithMessage("La variable 'krosoftToken' n'est pas renseignée.");
+    }
+
+    [TestMethod]
+    public void BuildTest()
+    {
+        var krosoftToken = new KrosoftToken
+        {
+            Id = "Claim_Id",
+            TenantId = "Claim_TenantId",
+            Nom = "Claim_Nom",
+            Email = "Claim_Email",
+            RoleId = "Claim_RoleId",
+            RoleHomePage = "Claim_RoleHomePage",
+            LangueId = "Claim_LangueId",
+            LangueCode = "Claim_LangueCode"
+        };
+        var claims = _claimsBuilderService!.Build(krosoftToken).ToList();
+
+        Check.That(claims).IsNotNull();
+        Check.That(claims).HasSize(10);
+        Check.That(claims.Select(c => c.Type)).ContainsExactly("id", "nom", "email", "roleId", "roleIsInterne", "roleHomePage", "langueId", "langueCode", "droits", "tenantId");
+        Check.That(claims.Select(c => c.Value)).ContainsExactly("Claim_Id", "Claim_Nom", "Claim_Email", "Claim_RoleId", "False", "Claim_RoleHomePage", "Claim_LangueId", "Claim_LangueCode", "[]", "Claim_TenantId");
+    }
+
+    [TestInitialize]
+    public void SetUp()
+    {
+        var serviceProvider = CreateServiceCollection();
+        _claimsBuilderService = serviceProvider.GetRequiredService<IClaimsBuilderService>();
     }
 }

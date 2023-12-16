@@ -20,21 +20,9 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
     protected CustomWebApplicationFactory<TStartup, TPositiveContext> Factory = null!;
     protected virtual bool UseFakeAuth => true;
 
-    [TestInitialize]
-    public void TestInitialize()
-    {
-        Factory = new CustomWebApplicationFactory<TStartup, TPositiveContext>(ConfigureServices, ConfigureClaims, UseFakeAuth);
-    }
-
-    protected abstract void ConfigureServices(IServiceCollection services);
-
     protected abstract void ConfigureClaims(KrosoftToken krosoftToken);
 
-    [TestCleanup]
-    public void TestCleanup()
-    {
-        Factory.Dispose();
-    }
+    protected abstract void ConfigureServices(IServiceCollection services);
 
     protected CustomWebApplicationFactory<TStartup, TPositiveContext> GetFactory()
     {
@@ -59,5 +47,17 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
         }
 
         return new CustomWebApplicationFactory<TStartup, TPositiveContext>(Action, null, UseFakeAuth);
+    }
+
+    [TestCleanup]
+    public void TestCleanup()
+    {
+        Factory.Dispose();
+    }
+
+    [TestInitialize]
+    public void TestInitialize()
+    {
+        Factory = new CustomWebApplicationFactory<TStartup, TPositiveContext>(ConfigureServices, ConfigureClaims, UseFakeAuth);
     }
 }

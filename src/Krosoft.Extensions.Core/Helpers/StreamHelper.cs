@@ -4,6 +4,16 @@ namespace Krosoft.Extensions.Core.Helpers;
 
 public static class StreamHelper
 {
+    public static Stream GenerateStreamFromString(string s)
+    {
+        var stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
+        writer.Write(s);
+        writer.Flush();
+        stream.Position = 0;
+        return stream;
+    }
+
     public static byte[] ReadAsByteArray(Stream stream)
     {
         Guard.IsNotNull(nameof(stream), stream);
@@ -57,15 +67,5 @@ public static class StreamHelper
                 stream.Position = originalPosition;
             }
         }
-    }
-
-    public static Stream GenerateStreamFromString(string s)
-    {
-        var stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-        writer.Write(s);
-        writer.Flush();
-        stream.Position = 0;
-        return stream;
     }
 }

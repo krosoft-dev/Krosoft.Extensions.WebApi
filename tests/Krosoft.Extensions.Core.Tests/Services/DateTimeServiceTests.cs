@@ -12,6 +12,21 @@ namespace Krosoft.Extensions.Core.Tests.Services;
 public class DateTimeServiceTests
 {
     [TestMethod]
+    public void NowMockTest()
+    {
+        var services = new ServiceCollection();
+        services.AddDateTimeService();
+        var mockDateTimeService = new Mock<IDateTimeService>();
+        mockDateTimeService.Setup(x => x.Now)
+                           .Returns(new DateTime(2012, 1, 3));
+        services.SwapTransient(_ => mockDateTimeService.Object);
+        var buildServiceProvider = services.BuildServiceProvider();
+        var service = buildServiceProvider.GetRequiredService<IDateTimeService>();
+
+        Check.That(service.Now).IsEqualTo(new DateTime(2012, 1, 3));
+    }
+
+    [TestMethod]
     public void NowTest()
     {
         var services = new ServiceCollection();
@@ -26,20 +41,5 @@ public class DateTimeServiceTests
         Console.WriteLine($"threshold : {threshold}");
 
         Check.That(delta).IsLessThan(threshold);
-    }
-
-    [TestMethod]
-    public void NowMockTest()
-    {
-        var services = new ServiceCollection();
-        services.AddDateTimeService();
-        var mockDateTimeService = new Mock<IDateTimeService>();
-        mockDateTimeService.Setup(x => x.Now)
-                           .Returns(new DateTime(2012, 1, 3));
-        services.SwapTransient(_ => mockDateTimeService.Object);
-        var buildServiceProvider = services.BuildServiceProvider();
-        var service = buildServiceProvider.GetRequiredService<IDateTimeService>();
-
-        Check.That(service.Now).IsEqualTo(new DateTime(2012, 1, 3));
     }
 }

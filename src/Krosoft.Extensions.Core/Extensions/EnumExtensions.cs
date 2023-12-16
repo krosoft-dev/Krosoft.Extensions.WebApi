@@ -67,15 +67,7 @@ public static class EnumExtensions
         return value.ToString();
     }
 
-    public static IEnumerable<Enum> GetFlags(this Enum? value)
-    {
-        if (value != null)
-        {
-            return GetFlags(value, Enum.GetValues(value.GetType()).Cast<Enum>().ToArray());
-        }
-
-        return new List<Enum>();
-    }
+    
 
     private static IEnumerable<Enum> GetFlags(Enum? value, IReadOnlyList<Enum> values)
     {

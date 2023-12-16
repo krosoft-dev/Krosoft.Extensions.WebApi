@@ -9,6 +9,17 @@ namespace Krosoft.Extensions.Core.Tests.Extensions;
 public class EnumerableExtensionsTests
 {
     [TestMethod]
+    public async Task ApplyWithAsyncTest()
+    {
+        var adresses = await AddresseFactory.GetAdresses()
+                                            .Select(c => c.Ville)
+                                            .ApplyWithAsync(CompteFactory.ToCompteAsync);
+        var list = adresses.ToList();
+        Check.That(list).HasSize(5);
+        Check.That(list.Select(x => x.Name)).ContainsExactly("city3", "city4", "city", "city1", "city2");
+    }
+
+    [TestMethod]
     public void ChunkByTest()
     {
         var adresses = AddresseFactory.GetAdresses().ToList();
@@ -61,16 +72,5 @@ public class EnumerableExtensionsTests
 
         var adressesParCity = adresses.ToList().ToDictionary(x => x.Ville, x => x.ToUpper(), true);
         Check.That(adressesParCity).HasSize(5);
-    }
-
-    [TestMethod]
-    public async Task ApplyWithAsyncTest()
-    {
-        var adresses = await AddresseFactory.GetAdresses()
-                                            .Select(c => c.Ville)
-                                            .ApplyWithAsync(CompteFactory.ToCompteAsync);
-        var list = adresses.ToList();
-        Check.That(list).HasSize(5);
-        Check.That(list.Select(x => x.Name)).ContainsExactly("city3", "city4", "city", "city1", "city2");
     }
 }

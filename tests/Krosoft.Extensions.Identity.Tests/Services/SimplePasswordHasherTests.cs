@@ -21,20 +21,23 @@ public class SimplePasswordHasherTests : BaseTest
         services.AddIdentityEx();
     }
 
+    [TestMethod]
+    public void CreatePasswordHashTest()
+    {
+        var hashSalt = _passwordHasher!.CreatePasswordHash(Password);
+        Check.That(hashSalt).IsNotNull();
+        Check.That(hashSalt.Hash).IsNotNull();
+        Check.That(hashSalt.Salt).IsNotNull();
+
+        var isOk = _passwordHasher.Verify(Password, hashSalt.Hash, hashSalt.Salt);
+        Check.That(isOk).IsTrue();
+    }
+
     [TestInitialize]
     public void SetUp()
     {
         var serviceProvider = CreateServiceCollection();
         _passwordHasher = serviceProvider.GetRequiredService<ISimplePasswordHasher>();
-    }
-
-    [TestMethod]
-    public void VerifyOkTest()
-    {
-        var hash = Convert.FromBase64String(HashString);
-        var salt = Convert.FromBase64String(SaltString);
-        var isOk = _passwordHasher!.Verify(Password, hash, salt);
-        Check.That(isOk).IsTrue();
     }
 
     [TestMethod]
@@ -47,14 +50,11 @@ public class SimplePasswordHasherTests : BaseTest
     }
 
     [TestMethod]
-    public void CreatePasswordHashTest()
+    public void VerifyOkTest()
     {
-        var hashSalt = _passwordHasher!.CreatePasswordHash(Password);
-        Check.That(hashSalt).IsNotNull();
-        Check.That(hashSalt.Hash).IsNotNull();
-        Check.That(hashSalt.Salt).IsNotNull();
-
-        var isOk = _passwordHasher.Verify(Password, hashSalt.Hash, hashSalt.Salt);
+        var hash = Convert.FromBase64String(HashString);
+        var salt = Convert.FromBase64String(SaltString);
+        var isOk = _passwordHasher!.Verify(Password, hash, salt);
         Check.That(isOk).IsTrue();
     }
 }

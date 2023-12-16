@@ -11,14 +11,8 @@ public abstract class BaseTest
         SetDefaultCulture();
     }
 
-    private static IConfigurationRoot GetConfiguration() =>
-        new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", true)
-            .Build();
-
-    protected static void SetDefaultCulture()
+    protected virtual void AddServices(IServiceCollection services, IConfiguration configuration)
     {
-        Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-fr");
     }
 
     protected ServiceProvider CreateServiceCollection(Action<IServiceCollection>? action = null)
@@ -37,7 +31,13 @@ public abstract class BaseTest
         return services.BuildServiceProvider();
     }
 
-    protected virtual void AddServices(IServiceCollection services, IConfiguration configuration)
+    private static IConfigurationRoot GetConfiguration() =>
+        new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", true)
+            .Build();
+
+    protected static void SetDefaultCulture()
     {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-fr");
     }
 }

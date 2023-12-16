@@ -49,7 +49,7 @@ public class SwaggerExcludeSchemaFilter : ISchemaFilter
 
         foreach (var name in ignoredProperties)
         {
-            if (schema.Properties.ContainsKey(name))
+            if (name != null && schema.Properties.ContainsKey(name))
             {
                 schema.Properties.Remove(name);
             }

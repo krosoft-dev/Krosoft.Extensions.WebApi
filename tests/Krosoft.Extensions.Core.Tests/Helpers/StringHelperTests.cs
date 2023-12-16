@@ -94,18 +94,6 @@ public class StringHelperTests : BaseTest
     }
 
     [DataTestMethod]
-    [DataRow(null, "")]
-    [DataRow("", "")]
-    [DataRow("   test   ", "test")]
-    [DataRow("test   ", "test")]
-    [DataRow("     test   ", "test")]
-    public void Trim_Tests(string input, string expected)
-    {
-        var formatDate = StringHelper.Trim(input);
-        Check.That(formatDate).IsEqualTo(expected);
-    }
-
-    [DataTestMethod]
     [DataRow(null, 0)]
     [DataRow("", 0)]
     [DataRow("160519", 160519)]
@@ -119,6 +107,18 @@ public class StringHelperTests : BaseTest
     public void ToInteger_Tests(string input, int expected)
     {
         var formatDate = StringHelper.ToInteger(input);
+        Check.That(formatDate).IsEqualTo(expected);
+    }
+
+    [DataTestMethod]
+    [DataRow(null, "")]
+    [DataRow("", "")]
+    [DataRow("   test   ", "test")]
+    [DataRow("test   ", "test")]
+    [DataRow("     test   ", "test")]
+    public void Trim_Tests(string input, string expected)
+    {
+        var formatDate = StringHelper.Trim(input);
         Check.That(formatDate).IsEqualTo(expected);
     }
 }

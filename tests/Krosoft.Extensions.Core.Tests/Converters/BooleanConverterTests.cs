@@ -17,6 +17,14 @@ public class BooleanConverterTests
     }
 
     [TestMethod]
+    public void ConvertJsonArrayEmptyTest()
+    {
+        var json = "[]";
+        var obj = JsonConvert.DeserializeObject<IEnumerable<Item>>(json, new BooleanConverter());
+        Check.That(obj).IsEmpty();
+    }
+
+    [TestMethod]
     public void ConvertJsonEmptyTest()
     {
         var json = "{}";
@@ -26,11 +34,15 @@ public class BooleanConverterTests
     }
 
     [TestMethod]
-    public void ConvertJsonArrayEmptyTest()
+    public void ConvertJsonErrorTest()
     {
-        var json = "[]";
-        var obj = JsonConvert.DeserializeObject<IEnumerable<Item>>(json, new BooleanConverter());
-        Check.That(obj).IsEmpty();
+        const string json = @"{
+            ""IsActif"": ""test""
+        }";
+
+        Check.ThatCode(() => JsonConvert.DeserializeObject<Item>(json, new BooleanConverter()))
+             .Throws<JsonSerializationException>()
+             .WithMessage("Error converting value \"test\" to type 'System.Boolean'. Path 'IsActif', line 2, position 29.");
     }
 
     [DataTestMethod]
@@ -47,17 +59,5 @@ public class BooleanConverterTests
         var obj = JsonConvert.DeserializeObject<Item>(json, new BooleanConverter());
         Check.That(obj).IsNotNull();
         Check.That(obj!.IsActif).IsEqualTo(expected);
-    }
-
-    [TestMethod]
-    public void ConvertJsonErrorTest()
-    {
-        const string json = @"{
-            ""IsActif"": ""test""
-        }";
-
-        Check.ThatCode(() => JsonConvert.DeserializeObject<Item>(json, new BooleanConverter()))
-             .Throws<JsonSerializationException>()
-             .WithMessage("Error converting value \"test\" to type 'System.Boolean'. Path 'IsActif', line 2, position 29.");
     }
 }

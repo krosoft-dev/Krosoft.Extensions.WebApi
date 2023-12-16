@@ -42,11 +42,12 @@ public class SequentialGuid
         }
     }
 
-    /// <summary>
-    /// Permet d'obtenir un nouveau Guid séquentiel.
-    /// </summary>
-    /// <returns>Guid séquentiel nouvellement généré.</returns>
-    public static Guid NewGuid() => Instance.GetGuid();
+    private long GetCurrentSequence(DateTime value)
+    {
+        var ticksUntilNow = value.Ticks - _sequenceStartDate.Ticks;
+        var result = (decimal)ticksUntilNow / TotalPeriod.Ticks * _maximumPermutations - 1;
+        return (long)result;
+    }
 
     public Guid GetGuid() => GetGuid(DateTime.Now);
 
@@ -81,11 +82,10 @@ public class SequentialGuid
         return result;
     }
 
-    private long GetCurrentSequence(DateTime value)
+    private static IEnumerable<byte> GetGuidBytes()
     {
-        var ticksUntilNow = value.Ticks - _sequenceStartDate.Ticks;
-        var result = (decimal)ticksUntilNow / TotalPeriod.Ticks * _maximumPermutations - 1;
-        return (long)result;
+        var result = Guid.NewGuid().ToByteArray().Take(10).ToArray();
+        return result;
     }
 
     private static IEnumerable<byte> GetSequenceBytes(long sequence)
@@ -96,9 +96,9 @@ public class SequentialGuid
         return result;
     }
 
-    private static IEnumerable<byte> GetGuidBytes()
-    {
-        var result = Guid.NewGuid().ToByteArray().Take(10).ToArray();
-        return result;
-    }
+    /// <summary>
+    /// Permet d'obtenir un nouveau Guid séquentiel.
+    /// </summary>
+    /// <returns>Guid séquentiel nouvellement généré.</returns>
+    public static Guid NewGuid() => Instance.GetGuid();
 }

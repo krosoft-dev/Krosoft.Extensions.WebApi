@@ -27,17 +27,10 @@ public class JsonHelperTests
     }
 
     [TestMethod]
-    public void ToBase64Test()
+    public void ToBase64NoObjectTest()
     {
-        var data = new
-        {
-            id = "requestId",
-            jwt = "jwtToken"
-        };
-
-        var base64 = JsonHelper.ToBase64(data);
-
-        Check.That(base64).IsEqualTo("eyJpZCI6InJlcXVlc3RJZCIsImp3dCI6Imp3dFRva2VuIn0=");
+        var base64 = JsonHelper.ToBase64(1);
+        Check.That(base64).IsEqualTo("MQ==");
     }
 
     [TestMethod]
@@ -49,9 +42,16 @@ public class JsonHelperTests
     }
 
     [TestMethod]
-    public void ToBase64NoObjectTest()
+    public void ToBase64Test()
     {
-        var base64 = JsonHelper.ToBase64(1);
-        Check.That(base64).IsEqualTo("MQ==");
+        var data = new
+        {
+            id = "requestId",
+            jwt = "jwtToken"
+        };
+
+        var base64 = JsonHelper.ToBase64(data);
+
+        Check.That(base64).IsEqualTo("eyJpZCI6InJlcXVlc3RJZCIsImp3dCI6Imp3dFRva2VuIn0=");
     }
 }
