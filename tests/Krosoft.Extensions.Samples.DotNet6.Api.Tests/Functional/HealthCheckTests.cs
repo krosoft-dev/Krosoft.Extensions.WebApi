@@ -30,7 +30,7 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
         Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy");
         Check.That(checks.Select(c => c.Description)).ContainsExactly(null, null);
         //Check.That(checks).HasSize(4);
-        //Check.That(checks.Select(c => c.Key)).ContainsExactly("PositiveExtensionTenantContext", "Redis", "self", "test");
+        //Check.That(checks.Select(c => c.Key)).ContainsExactly("KrosoftExtensionTenantContext", "Redis", "self", "test");
         //Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy", "Healthy", "Healthy");
         //Check.That(checks.Select(c => c.Description)).ContainsExactly(null, "Ping Redis en 0ms", null, null);
     }
@@ -74,7 +74,7 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
         Check.That(entries.Select(c => c.Key)).ContainsExactly("self", "Test_Endpoint");
         Check.That(entries.Select(c => c.Value.Status)).ContainsExactly(UIHealthStatus.Healthy, UIHealthStatus.Healthy);
         //Check.That(entries).HasSize(4);
-        //Check.That(entries.Select(c => c.Key)).ContainsExactly("PositiveExtensionTenantContext", "Redis", "self", "test");
+        //Check.That(entries.Select(c => c.Key)).ContainsExactly("KrosoftExtensionTenantContext", "Redis", "self", "test");
         //Check.That(entries.Select(c => c.Value.Status)).ContainsExactly(UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy);
     }
 }

@@ -13,10 +13,8 @@ public class Base64HelperTests
     [DataRow(null, null)]
     public void Base64ToString(string base64EncodedData, string expectedPlainText)
     {
-        // Act
         var result = Base64Helper.Base64ToString(base64EncodedData);
 
-        // Assert
         Check.That(result).IsEqualTo(expectedPlainText);
     }
 
@@ -26,10 +24,8 @@ public class Base64HelperTests
     [DataRow(null, null)]
     public void StringToBase64(string base64EncodedData, string expectedPlainText)
     {
-        // Act
         var result = Base64Helper.StringToBase64(base64EncodedData);
 
-        // Assert
         Check.That(result).IsEqualTo(expectedPlainText);
     }
 }

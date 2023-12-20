@@ -26,10 +26,8 @@ public class StringHelperTests : BaseTest
     [DataRow(null, null)]
     public void GenerateStreamFromString_Tests(string? input, string? expectedContent)
     {
-        // Act
         var resultStream = StringHelper.GenerateStreamFromString(input);
 
-        // Assert
         if (expectedContent == null)
         {
             Check.That(resultStream.Length).IsEqualTo(0);
@@ -77,7 +75,6 @@ public class StringHelperTests : BaseTest
     {
         var result = StringHelper.KeepDigitsOnly(input);
 
-        // Assert
         Check.That(result).IsEqualTo(expectedOutput);
     }
 
@@ -120,5 +117,18 @@ public class StringHelperTests : BaseTest
     {
         var formatDate = StringHelper.Trim(input);
         Check.That(formatDate).IsEqualTo(expected);
+    }
+
+    [DataTestMethod]
+    [DataRow(null, 10, null)]
+    [DataRow("", 10, "")]
+    [DataRow("Short text", 20, "Short text")]
+    [DataRow("This is a long text", 10, "This is a ...")]
+    [DataRow("Another long text", 5, "Anoth...")]
+    [DataRow("ABCDE", 3, "ABC...")]
+    public void Truncate_Tests(string input, int maxLength, string expected)
+    {
+        var result = StringHelper.Truncate(input, maxLength);
+        Check.That(result).IsEqualTo(expected);
     }
 }

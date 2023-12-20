@@ -17,11 +17,16 @@
   </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
-		<PackageReference Include="Bogus" Version="34.0.2" /> 
+		<PackageReference Include="Bogus" Version="34.0.2" />
+		<PackageReference Include="FluentValidation" Version="11.8.1" /> 
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.Abstractions\Krosoft.Extensions.Data.Abstractions.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Mapping\Krosoft.Extensions.Mapping.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="NewFolder\" />
 	</ItemGroup>
 </Project>

@@ -15,10 +15,8 @@ public class NumberHelperTest
     [DataRow(null, 0)]
     public void ToDecimal_ShouldConvertStringToDecimal(string input, double expectedResult)
     {
-        // Act
         var result = NumberHelper.ToDecimal(input);
 
-        // Assert
         Check.That(result).IsEqualTo((decimal)expectedResult);
     }
 
@@ -40,10 +38,8 @@ public class NumberHelperTest
     [DataRow(null, 0)]
     public void ToInteger_ShouldConvertStringToInteger(string input, int expectedResult)
     {
-        // Act
         var result = NumberHelper.ToInteger(input);
 
-        // Assert
         Check.That(result).IsEqualTo(expectedResult);
     }
 }

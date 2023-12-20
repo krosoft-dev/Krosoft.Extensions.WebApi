@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Positive.Extensions.Cache.Distributed.Redis.Tests": {
+    "Krosoft.Extensions.Cache.Distributed.Redis.Tests": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

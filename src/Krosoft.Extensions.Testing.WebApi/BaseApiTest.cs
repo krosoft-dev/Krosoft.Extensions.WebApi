@@ -13,18 +13,18 @@ using Moq.Protected;
 
 namespace Krosoft.Extensions.Testing.WebApi;
 
-public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
+public abstract class BaseApiTest<TStartup, TKrosoftContext> : BaseTest
     where TStartup : class
-//where TPositiveContext : PositiveContext
+//where TKrosoftContext : KrosoftContext
 {
-    protected CustomWebApplicationFactory<TStartup, TPositiveContext> Factory = null!;
+    protected CustomWebApplicationFactory<TStartup, TKrosoftContext> Factory = null!;
     protected virtual bool UseFakeAuth => true;
 
     protected abstract void ConfigureClaims(KrosoftToken krosoftToken);
 
     protected abstract void ConfigureServices(IServiceCollection services);
 
-    protected CustomWebApplicationFactory<TStartup, TPositiveContext> GetFactory()
+    protected CustomWebApplicationFactory<TStartup, TKrosoftContext> GetFactory()
     {
         void Action(IServiceCollection services)
         {
@@ -46,7 +46,7 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
             services.SwapTransient(_ => mockHttpClientFactory.Object);
         }
 
-        return new CustomWebApplicationFactory<TStartup, TPositiveContext>(Action, null, UseFakeAuth);
+        return new CustomWebApplicationFactory<TStartup, TKrosoftContext>(Action, null, UseFakeAuth);
     }
 
     [TestCleanup]
@@ -58,6 +58,6 @@ public abstract class BaseApiTest<TStartup, TPositiveContext> : BaseTest
     [TestInitialize]
     public void TestInitialize()
     {
-        Factory = new CustomWebApplicationFactory<TStartup, TPositiveContext>(ConfigureServices, ConfigureClaims, UseFakeAuth);
+        Factory = new CustomWebApplicationFactory<TStartup, TKrosoftContext>(ConfigureServices, ConfigureClaims, UseFakeAuth);
     }
 }

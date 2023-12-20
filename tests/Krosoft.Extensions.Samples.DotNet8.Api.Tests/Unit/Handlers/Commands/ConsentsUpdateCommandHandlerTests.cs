@@ -1,8 +1,8 @@
-﻿//using Positive.Extensions.Core.Models.Exceptions;
-//using Positive.Extensions.Samples.Api.Models.Commands;
-//using Positive.Extensions.Samples.Api.Tests.Core;
+﻿//using Krosoft.Extensions.Core.Models.Exceptions;
+//using Krosoft.Extensions.Samples.Api.Models.Commands;
+//using Krosoft.Extensions.Samples.Api.Tests.Core;
 
-//namespace Positive.Extensions.Samples.Api.Tests.Unit.Handlers.Commands;
+//namespace Krosoft.Extensions.Samples.Api.Tests.Unit.Handlers.Commands;
 
 //[TestClass]
 //public class LogicielsUpdateCommandHandlerTests : SampleBaseTest<Startup>
@@ -15,7 +15,7 @@
 //        var command = new LogicielUpdateCommand();
 
 //        Check.ThatCode(async () => { await SendCommandAsync<MediatR.Unit>(serviceProvider, command); })
-//             .Throws<PositiveMetierException>()
+//             .Throws<KrosoftMetierException>()
 //             .WhichMember(c => c.Erreurs)
 //             .ContainsExactly("'Id' is mandatory.");
 //    }

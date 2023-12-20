@@ -27,7 +27,7 @@ public abstract class SampleBaseTest<TEntry> : BaseTest
 
         ////Data.
         //services.AddRepositories();
-        //services.AddDbContextInMemory<PositiveExtensionTenantContext>(true);
+        //services.AddDbContextInMemory<KrosoftExtensionTenantContext>(true);
         //services.AddDbContextSettings();
 
         ////Mock

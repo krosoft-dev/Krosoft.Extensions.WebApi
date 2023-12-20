@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Krosoft.Extensions.Samples.DotNet6.Api.Tests.Core;
 
-//public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, PositiveExtensionTenantContext> where TEntry : class
+//public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, KrosoftExtensionTenantContext> where TEntry : class
 public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, TEntry> where TEntry : class
 {
     protected override void ConfigureClaims(KrosoftToken krosoftToken)
@@ -16,9 +16,9 @@ public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, TEntry> wh
     protected override void ConfigureServices(IServiceCollection services)
     {
         //// Remove DbContext registration.
-        //services.RemoveService(d => d.ServiceType == typeof(DbContextOptions<PositiveExtensionTenantContext>));
-        //services.AddDbContextInMemory<PositiveExtensionTenantContext>(true);
-        //services.AddSeedService<PositiveExtensionTenantContext, SampleSeedService>();
+        //services.RemoveService(d => d.ServiceType == typeof(DbContextOptions<KrosoftExtensionTenantContext>));
+        //services.AddDbContextInMemory<KrosoftExtensionTenantContext>(true);
+        //services.AddSeedService<KrosoftExtensionTenantContext, SampleSeedService>();
 
         //// Remove Redis registration.
         //services.MockRedis();

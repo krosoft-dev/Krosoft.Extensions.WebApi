@@ -39,5 +39,6 @@ public abstract class BaseTest
     protected static void SetDefaultCulture()
     {
         Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-fr");
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr-fr");
     }
 }

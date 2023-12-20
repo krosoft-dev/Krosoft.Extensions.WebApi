@@ -22,8 +22,6 @@ steps:
       projectName: ${{ parameters.projectName }}
       projectVersion: ${{ parameters.version }}
       extraProperties: |
-        sonar.branch.name=$(Build.SourceBranchName)
         sonar.cs.opencover.reportsPaths="$(Build.SourcesDirectory)/**/coverage.opencover.xml"
-        sonar.coverage.exclusions="**/Migrations/*.cs,**/*Tests*/**/*"
-        sonar.exclusions="**/Migrations/*.cs,samples/**/*.*"
-        sonar.verbose=true
+        sonar.coverage.exclusions="samples/**"
+        sonar.verbose=false

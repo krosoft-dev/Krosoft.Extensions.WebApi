@@ -15,10 +15,10 @@ public class IntegerExtensionsTests
     [DataRow(11, 1, 10, false, false)]
     public void IsBetween_ShouldReturnCorrectResult(int num, int lower, int upper, bool inclusive, bool expectedResult)
     {
-        // Act
+        
         var result = num.IsBetween(lower, upper, inclusive);
 
-        // Assert
+        
         Check.That(result).IsEqualTo(expectedResult);
     }
 
@@ -28,10 +28,10 @@ public class IntegerExtensionsTests
     [DataRow(999999999999, "00000000-0000-0000-0000-999999999999")]
     public void ToGuid_ShouldReturnCorrectGuid(long num, string expectedGuid)
     {
-        // Act
+        
         var result = num.ToGuid();
 
-        // Assert
+        
         Check.That(result).IsEqualTo(new Guid(expectedGuid));
     }
 }
