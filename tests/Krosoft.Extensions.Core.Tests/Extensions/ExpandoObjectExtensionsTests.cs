@@ -1,10 +1,8 @@
 ﻿using System.Dynamic;
 using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Helpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using NFluent;
 
 namespace Krosoft.Extensions.Core.Tests.Extensions;
 

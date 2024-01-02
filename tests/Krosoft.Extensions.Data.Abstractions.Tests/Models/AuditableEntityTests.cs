@@ -58,5 +58,4 @@ public class AuditableEntityTests
 
         Check.That(entity.ModificateurId).IsEqualTo(modificateurId);
     }
-
 }

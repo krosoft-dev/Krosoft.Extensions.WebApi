@@ -1,7 +1,5 @@
 ﻿using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Samples.Library.Factories;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Core.Tests.Extensions;
 

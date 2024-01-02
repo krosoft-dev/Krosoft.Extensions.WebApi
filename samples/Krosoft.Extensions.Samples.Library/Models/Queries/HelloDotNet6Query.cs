@@ -2,6 +2,4 @@
 
 namespace Krosoft.Extensions.Samples.Library.Models.Queries;
 
-public class HelloDotNet6Query : BaseQuery<string>
-{
-}
+public class HelloDotNet6Query : BaseQuery<string>;

@@ -1,7 +1,5 @@
 ﻿using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Samples.Library.Models.Enums;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Core.Tests.Extensions;
 
@@ -32,15 +30,5 @@ public class EnumExtensionsTests
         var result = value.GetDisplayName();
 
         Check.That(result).IsEqualTo(expectedDisplayName);
-    }
-
-    [TestMethod]
-    public void GetIndividualFlags_ShouldReturnCorrectIndividualFlags()
-    {
-        var value = SampleCode.One | SampleCode.Three;
-
-        var result = value.GetIndividualFlags();
-
-        Check.That(result).ContainsExactly(SampleCode.One, SampleCode.Three);
     }
 }

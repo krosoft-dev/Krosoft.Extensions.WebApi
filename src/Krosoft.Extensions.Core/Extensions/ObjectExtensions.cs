@@ -12,6 +12,44 @@ namespace Krosoft.Extensions.Core.Extensions;
 /// </summary>
 public static class ObjectExtensions
 {
+    private static List<string> GetPropertiesExclusions<T>(Expression<Func<T, object>>[]? expressionsPropertiesExclusions)
+    {
+        var propertiesExclusions = new List<string>();
+        if (expressionsPropertiesExclusions != null && expressionsPropertiesExclusions.Any())
+        {
+            foreach (var expression in expressionsPropertiesExclusions)
+            {
+                propertiesExclusions.Add(PropertyNameHelper.For(expression));
+            }
+        }
+
+        return propertiesExclusions;
+    }
+
+    private static List<string> GetPropertiesInclusions(PropertyInfo[] properties, List<string> propertiesExclusions, Type t)
+    {
+        var propertiesInclusions = new List<string>();
+        foreach (var propertyInfo in properties)
+        {
+            if (!propertiesExclusions.Contains(propertyInfo.Name))
+            {
+                var property = t.GetProperty(propertyInfo.Name);
+                if (property != null)
+                {
+                    var attributes = (DescriptionAttribute[]?)property.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+                    var columnName = attributes != null && attributes.Length > 0
+                        ? attributes[0].Description
+                        : propertyInfo.Name;
+
+                    propertiesInclusions.Add(columnName);
+                }
+            }
+        }
+
+        return propertiesInclusions;
+    }
+
     /// <summary>
     /// Affiche l'ensemble des propriétés
     /// </summary>
@@ -77,36 +115,10 @@ public static class ObjectExtensions
                                   string separator,
                                   params Expression<Func<T, object>>[]? expressionsPropertiesExclusions)
     {
-        var propertiesExclusions = new List<string>();
-        if (expressionsPropertiesExclusions != null && expressionsPropertiesExclusions.Any())
-        {
-            foreach (var expression in expressionsPropertiesExclusions)
-            {
-                propertiesExclusions.Add(PropertyNameHelper.For(expression));
-            }
-        }
-
         var t = typeof(T);
         var properties = t.GetProperties();
-
-        var propertiesInclusions = new List<string>();
-        foreach (var propertyInfo in properties)
-        {
-            if (!propertiesExclusions.Contains(propertyInfo.Name))
-            {
-                var property = t.GetProperty(propertyInfo.Name);
-                if (property != null)
-                {
-                    var attributes = (DescriptionAttribute[]?)property.GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-                    var columnName = attributes != null && attributes.Length > 0
-                        ? attributes[0].Description
-                        : propertyInfo.Name;
-
-                    propertiesInclusions.Add(columnName);
-                }
-            }
-        }
+        var propertiesExclusions = GetPropertiesExclusions(expressionsPropertiesExclusions);
+        var propertiesInclusions = GetPropertiesInclusions(properties, propertiesExclusions, t);
 
         var header = string.Join(separator, propertiesInclusions.ToArray());
         var csvdata = new StringBuilder();

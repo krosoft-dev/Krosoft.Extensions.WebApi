@@ -5,8 +5,6 @@ using Krosoft.Extensions.Zip.Extensions;
 using Krosoft.Extensions.Zip.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Zip.Tests.Services;
 

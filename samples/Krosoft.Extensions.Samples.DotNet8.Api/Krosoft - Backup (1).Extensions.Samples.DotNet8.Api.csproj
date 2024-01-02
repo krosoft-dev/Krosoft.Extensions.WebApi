@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<Import Project="../../Sample.target" />
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>	
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileTag>krosoft-extensions.samples.dotnet8.api</DockerfileTag>
+		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Krosoft.Extensions.Samples.DotNet8.Api.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />	
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" /> 
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks\Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.EntityFramework.Identity\Krosoft.Extensions.Data.EntityFramework.Identity.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.EntityFramework.InMemory\Krosoft.Extensions.Data.EntityFramework.InMemory.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Pdf\Krosoft.Extensions.Pdf.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Reporting.Csv\Krosoft.Extensions.Reporting.Csv.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.Swagger.HealthChecks\Krosoft.Extensions.WebApi.Swagger.HealthChecks.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.Swagger\Krosoft.Extensions.WebApi.Swagger.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Zip\Krosoft.Extensions.Zip.csproj" />
+	  <ProjectReference Include="..\Krosoft.Extensions.Samples.Library\Krosoft.Extensions.Samples.Library.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Handlers\Commands\" />
+	</ItemGroup>
+</Project>

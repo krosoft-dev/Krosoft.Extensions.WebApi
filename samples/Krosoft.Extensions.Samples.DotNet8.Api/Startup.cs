@@ -23,7 +23,10 @@
 using System.Reflection;
 using Krosoft.Extensions.Cache.Distributed.Redis.Extensions;
 using Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.Extensions;
+using Krosoft.Extensions.Data.EntityFramework.Extensions;
+using Krosoft.Extensions.Data.EntityFramework.InMemory.Extensions;
 using Krosoft.Extensions.Pdf.Extensions;
+using Krosoft.Extensions.Samples.DotNet8.Api.Data;
 using Krosoft.Extensions.Samples.Library.Mappings;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.HealthChecks.Extensions;
@@ -74,8 +77,10 @@ public class Startup
         services.AddZip();
         services.AddPdf();
 
-        ////Data.
-        //services.AddRepositories();
+        //Data.
+        services.AddRepositories(); 
+        services.AddDbContextInMemory<SampleKrosoftContext>(true);
+        services.AddSeedService<SampleKrosoftContext, SampleSeedService<SampleKrosoftContext>>();
         //services.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(_configuration);
 
         //Cache. 

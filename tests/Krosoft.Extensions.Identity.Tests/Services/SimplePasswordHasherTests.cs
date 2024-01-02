@@ -1,14 +1,15 @@
-﻿using Krosoft.Extensions.Identity.Abstractions.Interfaces;
+﻿using JetBrains.Annotations;
+using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Identity.Extensions;
+using Krosoft.Extensions.Identity.Services;
 using Krosoft.Extensions.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Identity.Tests.Services;
 
 [TestClass]
+[TestSubject(typeof(SimplePasswordHasher))]
 public class SimplePasswordHasherTests : BaseTest
 {
     private const string HashString = "jgfPcJM+rUjk4EKjyrQXY/Xm9vaxPlK/g4jflQZU11d++xqVhfXCMV4SVd1T+QeU6lFQ1tdul8xZt34DhdIsbw==";

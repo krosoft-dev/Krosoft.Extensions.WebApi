@@ -17,7 +17,6 @@ public static class HttpResponseMessageExtensions
         {
             var json = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
             var obj = JsonConvert.DeserializeObject<T>(json);
-
             return obj;
         }
 
@@ -36,15 +35,12 @@ public static class HttpResponseMessageExtensions
             var json = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
 
             var isValid = JsonHelper.IsValid(json);
-            if (isValid)
+            if (isValid && httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
             {
-                if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
+                var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(json, new KrosoftMetierExceptionConverter());
+                if (obj != null)
                 {
-                    var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(json, new KrosoftMetierExceptionConverter());
-                    if (obj != null)
-                    {
-                        throw obj;
-                    }
+                    throw obj;
                 }
             }
 
@@ -63,13 +59,9 @@ public static class HttpResponseMessageExtensions
             var obj = JsonConvert.DeserializeObject<ErrorApi>(json);
             if (obj != null)
             {
-                if (Enum.TryParse(obj.StatusCode, out HttpStatusCode colorValue))
+                if (Enum.TryParse(obj.StatusCode, out HttpStatusCode value) && Enum.IsDefined(typeof(HttpStatusCode), value))
                 {
-                    if (Enum.IsDefined(typeof(HttpStatusCode), colorValue))
-                    {
-                        throw new HttpException(colorValue,
-                                                obj.Message);
-                    }
+                    throw new HttpException(value, obj.Message);
                 }
 
                 throw new HttpException(httpResponseMessage.StatusCode,

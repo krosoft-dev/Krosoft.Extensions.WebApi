@@ -1,8 +1,6 @@
 ﻿using System.IO.Compression;
 using System.Reflection;
 using Krosoft.Extensions.Core.Helpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Core.Tests.Helpers;
 

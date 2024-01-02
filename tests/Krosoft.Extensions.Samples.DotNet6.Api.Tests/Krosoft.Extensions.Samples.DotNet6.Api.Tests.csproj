@@ -6,4 +6,7 @@
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing.Cqrs\Krosoft.Extensions.Testing.Cqrs.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing.WebApi\Krosoft.Extensions.Testing.WebApi.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Unit\Handlers\Commands\" />
+	</ItemGroup>
 </Project>

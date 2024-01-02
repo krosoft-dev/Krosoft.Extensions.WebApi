@@ -6,7 +6,7 @@ public class LogicielDto
 {
     public Guid Id { get; set; }
     public string? Nom { get; set; }
-    public string? Categorie { get; set; }
+    public string? Description { get; set; }
     public StatutCode StatutCode { get; set; }
     public DateTime DateCreation { get; set; }
 }

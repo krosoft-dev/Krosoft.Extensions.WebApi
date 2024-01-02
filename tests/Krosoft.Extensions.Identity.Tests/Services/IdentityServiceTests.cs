@@ -1,22 +1,24 @@
 ﻿using System.Security.Claims;
+using JetBrains.Annotations;
 using Krosoft.Extensions.Identity.Abstractions.Constantes;
 using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Identity.Extensions;
+using Krosoft.Extensions.Identity.Services;
 using Krosoft.Extensions.Testing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using NFluent;
 
 namespace Krosoft.Extensions.Identity.Tests.Services;
 
 [TestClass]
+[TestSubject(typeof(IdentityService))]
 public class IdentityServiceTests : BaseTest
 {
     private const string ProprietaireId = "test";
-    private IIdentityService? _identityService;
+
+    //TestInitialize
+    private IIdentityService _identityService = null!;
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
@@ -28,7 +30,7 @@ public class IdentityServiceTests : BaseTest
     [TestMethod]
     public void GetProprietaireIdTest()
     {
-        var proprietaireId = _identityService!.GetProprietaireId();
+        var proprietaireId = _identityService.GetProprietaireId();
 
         Check.That(proprietaireId).IsEqualTo(ProprietaireId);
     }
@@ -36,7 +38,7 @@ public class IdentityServiceTests : BaseTest
     [TestMethod]
     public void GetRoleIsInterneTest()
     {
-        var roleIsInterne = _identityService!.GetRoleIsInterne();
+        var roleIsInterne = _identityService.GetRoleIsInterne();
 
         Check.That(roleIsInterne).IsTrue();
     }

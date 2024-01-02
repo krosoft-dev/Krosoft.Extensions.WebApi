@@ -4,8 +4,6 @@ using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Samples.Library.Factories;
 using Krosoft.Extensions.Samples.Library.Models;
 using Krosoft.Extensions.Testing.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Testing.Tests.Extensions;
 

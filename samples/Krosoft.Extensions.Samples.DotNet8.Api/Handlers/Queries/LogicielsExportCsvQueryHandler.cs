@@ -29,7 +29,7 @@ public class LogicielsExportCsvQueryHandler : IRequestHandler<LogicielsExportCsv
 
         await Task.Delay(2000, cancellationToken);
 
-        var logiciels = LogicielFactory.GetRandom(10)
+        var logiciels = LogicielFactory.GetRandom(10, null)
                                        .AsQueryable()
                                        .ProjectTo<LogicielCsvDto>(_mapper.ConfigurationProvider)
                                        .ToList();

@@ -1,6 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Krosoft.Extensions.Core.Interfaces;
 using Krosoft.Extensions.Core.Models.Exceptions;
+using Krosoft.Extensions.Core.Tools;
 using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Identity.Abstractions.Models;
 using Krosoft.Extensions.Identity.Helpers;
@@ -11,21 +13,26 @@ namespace Krosoft.Extensions.Identity.Services;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
+    private readonly IDateTimeService _dateTimeService;
     private readonly JwtSettings _jwtSettings;
 
-    public JwtTokenGenerator(IOptions<JwtSettings> jwtOptions)
+    public JwtTokenGenerator(IOptions<JwtSettings> jwtOptions, IDateTimeService dateTimeService)
     {
+        _dateTimeService = dateTimeService;
         _jwtSettings = jwtOptions.Value;
     }
 
     public string CreateToken(string identifier,
                               IEnumerable<Claim> claims)
     {
+        Guard.IsNotNullOrWhiteSpace(nameof(identifier), identifier);
+        Guard.IsNotNull(nameof(claims), claims);
+
         // "nbf" (Not Before) Claim - The "nbf" (not before) claim identifies the time before which the JWT MUST NOT be accepted for processing.
-        var notBefore = DateTime.Now;
+        var notBefore = _dateTimeService.Now;
 
         // "iat" (Issued At) Claim - The "iat" (issued at) claim identifies the time at which the JWT was issued.
-        var issuedAt = DateTime.Now;
+        var issuedAt = notBefore.AddTicks(1);
 
         //Set the timespan the token will be valid for.
         var validFor = TimeSpan.FromMinutes(_jwtSettings.JwtTokenLifespan);

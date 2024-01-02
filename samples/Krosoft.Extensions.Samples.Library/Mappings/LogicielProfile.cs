@@ -15,14 +15,14 @@ public class LogicielProfile : Profile
         CreateMap<Logiciel, LogicielDto>()
             .ForMember(dest => dest.Id, o => o.MapFrom(src => src.Id))
             .ForMember(dest => dest.Nom, o => o.MapFrom(src => src.Nom))
-            .ForMember(dest => dest.Categorie, o => o.MapFrom(src => src.Categorie))
+            .ForMember(dest => dest.Description, o => o.MapFrom(src => src.Description))
             .ForMember(dest => dest.StatutCode, o => o.MapFrom(src => src.StatutCode))
             .ForMember(dest => dest.DateCreation, o => o.MapFrom(src => src.DateCreation))
             .ForAllOtherMembers(m => m.Ignore());
 
         CreateMap<Logiciel, LogicielCsvDto>()
             .ForMember(dest => dest.Nom, o => o.MapFrom(src => src.Nom))
-            .ForMember(dest => dest.Categorie, o => o.MapFrom(src => src.Categorie))
+            .ForMember(dest => dest.Description, o => o.MapFrom(src => src.Description))
             .ForAllOtherMembers(m => m.Ignore());
     }
 }

@@ -16,7 +16,7 @@ public class TenantAuditableEntityTests
     }
 
     [TestMethod]
-    public void TenantAuditableEntity_SetCreateurDate ()
+    public void TenantAuditableEntity_SetCreateurDate()
     {
         var entity = new Utilisateur();
         var createurDate = DateTime.Now.AddDays(-1);
@@ -27,7 +27,7 @@ public class TenantAuditableEntityTests
     }
 
     [TestMethod]
-    public void TenantAuditableEntity_SetCreateurId ()
+    public void TenantAuditableEntity_SetCreateurId()
     {
         var entity = new Utilisateur();
         var createurId = "user123";
@@ -38,7 +38,7 @@ public class TenantAuditableEntityTests
     }
 
     [TestMethod]
-    public void TenantAuditableEntity_SetModificateurDate ()
+    public void TenantAuditableEntity_SetModificateurDate()
     {
         var entity = new Utilisateur();
         var modificateurDate = DateTime.Now.AddDays(-1);
@@ -49,7 +49,7 @@ public class TenantAuditableEntityTests
     }
 
     [TestMethod]
-    public void TenantAuditableEntity_SetModificateurId ()
+    public void TenantAuditableEntity_SetModificateurId()
     {
         var entity = new Utilisateur();
         var modificateurId = "user456";
@@ -59,10 +59,8 @@ public class TenantAuditableEntityTests
         Check.That(entity.ModificateurId).IsEqualTo(modificateurId);
     }
 
-
-
     [TestMethod]
-    public void TenantAuditableEntity_SetTenantId ()
+    public void TenantAuditableEntity_SetTenantId()
     {
         var entity = new Utilisateur();
         var tenantId = "user456";

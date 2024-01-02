@@ -27,8 +27,9 @@ public class CustomWebApplicationFactory<TStartup, TKrosoftContext> : WebApplica
 //where TKrosoftContext : KrosoftContext
 {
     private readonly Action<KrosoftToken>? _actionConfigureClaims;
+
     private readonly Action<IServiceCollection>? _actionConfigureServices;
-    private readonly bool _useFakeAuth;
+    //private readonly bool _useFakeAuth;
 
     public CustomWebApplicationFactory(Action<IServiceCollection> actionConfigureServices,
                                        Action<KrosoftToken>? actionConfigureClaims,
@@ -36,7 +37,7 @@ public class CustomWebApplicationFactory<TStartup, TKrosoftContext> : WebApplica
     {
         _actionConfigureServices = actionConfigureServices;
         _actionConfigureClaims = actionConfigureClaims;
-        _useFakeAuth = useFakeAuth;
+        //_useFakeAuth = useFakeAuth;
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)

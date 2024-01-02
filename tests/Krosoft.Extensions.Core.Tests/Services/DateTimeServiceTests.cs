@@ -2,9 +2,7 @@
 using Krosoft.Extensions.Core.Interfaces;
 using Krosoft.Extensions.Testing.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NFluent;
 
 namespace Krosoft.Extensions.Core.Tests.Services;
 

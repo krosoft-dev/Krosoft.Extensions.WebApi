@@ -9,8 +9,6 @@ using Krosoft.Extensions.Samples.Library.Factories;
 using Krosoft.Extensions.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Pdf.Tests.Services;
 

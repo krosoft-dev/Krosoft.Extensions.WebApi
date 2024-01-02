@@ -5,9 +5,9 @@ namespace Krosoft.Extensions.Data.Abstractions.Interfaces;
 
 public interface IWriteRepository<TEntity> : IDisposable where TEntity : class
 {
-    TEntity Get(params object[] key);
+    TEntity? Get(params object[] key);
 
-    ValueTask<TEntity> GetAsync(params object[] key);
+    ValueTask<TEntity?> GetAsync(params object[] key);
     IQueryable<TEntity> Query();
 
     void Insert(TEntity entity);
@@ -16,11 +16,11 @@ public interface IWriteRepository<TEntity> : IDisposable where TEntity : class
 
     void Update(TEntity entityToUpdate);
 
-    void Update(TEntity entityToUpdate, params Expression<Func<TEntity, object>>[] propertyExpression);
+    void Update(TEntity entityToUpdate, params Expression<Func<TEntity, object>>[] propertiesExpression);
 
     void UpdateRange(IEnumerable<TEntity> entities);
 
-    void UpdateRange(IEnumerable<TEntity> entities, params Expression<Func<TEntity, object>>[] propertyExpression);
+    void UpdateRange(IEnumerable<TEntity> entities, params Expression<Func<TEntity, object>>[] propertiesExpression);
 
     void Delete(TEntity entity);
 

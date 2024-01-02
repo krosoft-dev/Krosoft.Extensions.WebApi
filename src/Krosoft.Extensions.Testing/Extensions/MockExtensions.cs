@@ -39,4 +39,14 @@ public static class MockExtensions
 
         return executeCheck.And;
     }
+
+    public static void VerifyWasCalled<T>(this Mock<ILogger<T>> fakeLogger, LogLevel logLevel, string message, Times times)
+    {
+        fakeLogger.Verify(x => x.Log(logLevel,
+                                     It.IsAny<EventId>(),
+                                     It.Is<It.IsAnyType>((o, t) => !string.IsNullOrEmpty(o.ToString()) && o.ToString()!.StartsWith(message)),
+                                     It.IsAny<Exception>(),
+                                     It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+                          times);
+    }
 }

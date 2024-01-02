@@ -1,6 +1,4 @@
 ﻿using Krosoft.Extensions.Core.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Core.Tests.Extensions;
 
@@ -15,10 +13,8 @@ public class IntegerExtensionsTests
     [DataRow(11, 1, 10, false, false)]
     public void IsBetween_ShouldReturnCorrectResult(int num, int lower, int upper, bool inclusive, bool expectedResult)
     {
-        
         var result = num.IsBetween(lower, upper, inclusive);
 
-        
         Check.That(result).IsEqualTo(expectedResult);
     }
 
@@ -28,10 +24,8 @@ public class IntegerExtensionsTests
     [DataRow(999999999999, "00000000-0000-0000-0000-999999999999")]
     public void ToGuid_ShouldReturnCorrectGuid(long num, string expectedGuid)
     {
-        
         var result = num.ToGuid();
 
-        
         Check.That(result).IsEqualTo(new Guid(expectedGuid));
     }
 }

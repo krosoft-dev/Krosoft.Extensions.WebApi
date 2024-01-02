@@ -1,6 +1,5 @@
 ﻿using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Testing;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Krosoft.Extensions.Core.Tests.Helpers;
 

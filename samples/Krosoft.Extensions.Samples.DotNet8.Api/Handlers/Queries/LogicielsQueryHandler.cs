@@ -25,7 +25,7 @@ public class LogicielsQueryHandler : IRequestHandler<LogicielsQuery, IEnumerable
 
         await Task.Delay(2000, cancellationToken);
 
-        var logiciels = LogicielFactory.GetRandom(10)
+        var logiciels = LogicielFactory.GetRandom(10, null)
                                        .AsQueryable()
                                        .ProjectTo<LogicielDto>(_mapper.ConfigurationProvider)
                                        .ToList();

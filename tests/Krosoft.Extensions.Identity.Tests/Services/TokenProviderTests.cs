@@ -1,17 +1,16 @@
-﻿using Krosoft.Extensions.Core.Interfaces;
+﻿using JetBrains.Annotations;
+using Krosoft.Extensions.Core.Interfaces;
 using Krosoft.Extensions.Core.Services;
 using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Identity.Abstractions.Models;
 using Krosoft.Extensions.Identity.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using NFluent;
 
 namespace Krosoft.Extensions.Identity.Tests.Services;
 
 [TestClass]
+[TestSubject(typeof(TokenProvider))]
 public class TokenProviderTests
 {
     [TestMethod]

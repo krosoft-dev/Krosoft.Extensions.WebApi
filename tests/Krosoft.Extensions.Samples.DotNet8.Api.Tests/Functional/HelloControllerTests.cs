@@ -1,7 +1,4 @@
 using System.Net;
-using Krosoft.Extensions.Samples.DotNet8.Api.Tests.Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Samples.DotNet8.Api.Tests.Functional;
 

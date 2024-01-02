@@ -1,8 +1,6 @@
 ﻿using Krosoft.Extensions.Samples.Library.Models;
 using Krosoft.Extensions.Testing.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using NFluent;
 
 namespace Krosoft.Extensions.Testing.Tests.Extensions;
 

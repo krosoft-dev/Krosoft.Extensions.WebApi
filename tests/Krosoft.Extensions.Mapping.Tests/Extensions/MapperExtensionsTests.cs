@@ -9,8 +9,6 @@ using Krosoft.Extensions.Testing;
 using Krosoft.Extensions.WebApi.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Mapping.Tests.Extensions;
 

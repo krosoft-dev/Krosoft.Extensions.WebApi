@@ -1,9 +1,7 @@
 ﻿using System.Net;
 using Krosoft.Extensions.Core.Converters;
 using Krosoft.Extensions.Core.Models.Exceptions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using NFluent;
 
 namespace Krosoft.Extensions.Core.Tests.Converters;
 

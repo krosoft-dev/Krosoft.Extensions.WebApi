@@ -16,7 +16,6 @@ public class LogicielsExportZipQueryHandler : IRequestHandler<LogicielsExportZip
     public LogicielsExportZipQueryHandler(ILogger<LogicielsExportZipQueryHandler> logger, IZipService zipService)
     {
         _logger = logger;
-
         _zipService = zipService;
     }
 
@@ -27,7 +26,7 @@ public class LogicielsExportZipQueryHandler : IRequestHandler<LogicielsExportZip
 
         await Task.Delay(2000, cancellationToken);
 
-        var logiciels = LogicielFactory.GetRandom(10)
+        var logiciels = LogicielFactory.GetRandom(10, null)
                                        .AsQueryable()
                                        .ToList();
 
