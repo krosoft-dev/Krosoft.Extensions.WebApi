@@ -9,5 +9,4 @@
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
 	</ItemGroup>
-	
 </Project>

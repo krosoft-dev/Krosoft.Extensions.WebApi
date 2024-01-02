@@ -1,0 +1,19 @@
+name: Nuget 'Krosoft.Extensions.Data.EntityFramework.InMemory' - $(Date:yyyy.MM.dd).$(BuildID)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Data.EntityFramework.InMemory/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.Data.EntityFramework.InMemory"
+     - "Krosoft.Extensions.Data.EntityFramework"
+

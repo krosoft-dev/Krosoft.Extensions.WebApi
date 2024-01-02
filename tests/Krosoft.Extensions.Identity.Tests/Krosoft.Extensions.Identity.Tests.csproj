@@ -8,5 +8,8 @@
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Identity\Krosoft.Extensions.Identity.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  
+	</ItemGroup>
   
 </Project>

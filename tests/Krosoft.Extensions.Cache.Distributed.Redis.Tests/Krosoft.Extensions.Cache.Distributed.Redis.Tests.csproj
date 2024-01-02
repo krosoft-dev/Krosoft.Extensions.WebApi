@@ -5,7 +5,7 @@
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cache.Distributed.Redis\Krosoft.Extensions.Cache.Distributed.Redis.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
 	</ItemGroup>
-
+	<ItemGroup>
 	  
-	 
+	</ItemGroup>
 </Project>
