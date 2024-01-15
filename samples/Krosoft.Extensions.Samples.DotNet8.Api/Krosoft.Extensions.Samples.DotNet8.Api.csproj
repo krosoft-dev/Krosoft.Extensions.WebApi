@@ -17,9 +17,9 @@
 		</AssemblyAttribute>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />	
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" /> 
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />	
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.1" /> 
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks\Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.csproj" />

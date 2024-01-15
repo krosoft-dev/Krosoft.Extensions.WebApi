@@ -14,7 +14,7 @@
 		</AssemblyAttribute>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
