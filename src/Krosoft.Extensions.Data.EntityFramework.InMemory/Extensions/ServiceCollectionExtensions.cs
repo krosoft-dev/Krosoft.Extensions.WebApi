@@ -23,7 +23,6 @@ public static class ServiceCollectionExtensions
         services.AddDbContext<TDbContext>(options => options.UseLoggerFactory(LoggerFactoryHelper.MyLoggerFactory)
                                                             .UseInMemoryDatabase(databaseName)
                                                             .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
-        //services.AddDbContextSettings();
         return services;
     }
 }
