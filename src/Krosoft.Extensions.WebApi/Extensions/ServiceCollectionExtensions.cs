@@ -32,6 +32,21 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddLoggingExt(this IServiceCollection services)
+    {
+        services.AddLogging(opt =>
+        {
+            opt.AddSimpleConsole(options =>
+            {
+                options.IncludeScopes = true;
+                options.SingleLine = true;
+                options.TimestampFormat = "dd-MM-yyyy hh:mm:ss ";
+            });
+        });
+
+        return services;
+    }
+
     public static IServiceCollection AddWebApi(this IServiceCollection services,
                                                IConfiguration configuration,
                                                params Assembly[] assemblies)
@@ -56,15 +71,7 @@ public static class ServiceCollectionExtensions
         services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy());
 
-        services.AddLogging(opt =>
-        {
-            opt.AddSimpleConsole(options =>
-            {
-                options.IncludeScopes = true;
-                options.SingleLine = true;
-                options.TimestampFormat = "dd-MM-yyyy hh:mm:ss ";
-            });
-        });
+        services.AddLoggingExt();
 
         var all = new List<Assembly> { typeof(ServiceCollectionExtensions).Assembly };
         all.AddRange(assemblies);

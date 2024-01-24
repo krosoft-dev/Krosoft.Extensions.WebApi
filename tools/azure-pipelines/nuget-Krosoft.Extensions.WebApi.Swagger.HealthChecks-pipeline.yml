@@ -14,7 +14,8 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     - "Krosoft.Extensions.WebApi.Swagger.HealthChecks"
+     - "Krosoft.Extensions.Core"
      - "Krosoft.Extensions.WebApi.HealthChecks"
      - "Krosoft.Extensions.WebApi.Swagger"
+     - "Krosoft.Extensions.WebApi.Swagger.HealthChecks"
 

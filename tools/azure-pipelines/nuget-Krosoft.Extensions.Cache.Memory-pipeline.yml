@@ -15,4 +15,5 @@ extends:
   parameters:
     packages:
      - "Krosoft.Extensions.Cache.Memory"
+     - "Krosoft.Extensions.Core"
 

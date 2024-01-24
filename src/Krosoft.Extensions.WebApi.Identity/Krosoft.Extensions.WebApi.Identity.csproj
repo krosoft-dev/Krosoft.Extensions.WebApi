@@ -7,7 +7,18 @@
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11" /> 
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.3" /> 
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" /> 
+	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
+	  <ProjectReference Include="..\Krosoft.Extensions.Identity.Abstractions\Krosoft.Extensions.Identity.Abstractions.csproj" />
+	  <ProjectReference Include="..\Krosoft.Extensions.Identity\Krosoft.Extensions.Identity.csproj" />
 	</ItemGroup>
 </Project>

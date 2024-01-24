@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Reflection;
 using Krosoft.Extensions.Cache.Memory.Interfaces;
+using Krosoft.Extensions.Core.Models.Exceptions;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Krosoft.Extensions.Cache.Memory.Services;
@@ -90,38 +91,59 @@ public class MemoryCacheProvider : ICacheProvider
     /// <returns>Liste des clés des objets en cache.</returns>
     public IEnumerable<string> GetKeys()
     {
+#if !NET7_0_OR_GREATER
         var items = new List<string>();
 
         var field = typeof(MemoryCache).GetProperty("EntriesCollection",
                                                     BindingFlags.NonPublic | BindingFlags.Instance);
-        if (field == null)
+        if (field != null)
         {
-            return items;
-        }
-
-        if (field.GetValue(_memoryCache) is not ICollection collection)
-        {
-            return items;
-        }
-
-        foreach (var item in collection)
-        {
-            var methodInfo = item.GetType().GetProperty("Key");
-            if (methodInfo != null)
+            if (field.GetValue(_memoryCache) is ICollection collection)
             {
-                var val = methodInfo.GetValue(item);
-                if (val != null)
+                foreach (var item in collection)
                 {
-                    var key = val.ToString();
-                    if (key != null)
+                    var methodInfo = item.GetType().GetProperty("Key");
+                    if (methodInfo != null)
                     {
-                        items.Add(key);
+                        var val = methodInfo.GetValue(item);
+                        if (val != null)
+                        {
+                            var key = val.ToString();
+                            if (key != null)
+                            {
+                                items.Add(key);
+                            }
+                        }
                     }
+                }
+
+                return items;
+            }
+        }
+
+#endif
+
+#if NET7_0_OR_GREATER
+        var fieldInfo = typeof(MemoryCache).GetField("_coherentState", BindingFlags.Instance | BindingFlags.NonPublic);
+        if (fieldInfo != null)
+        {
+            var propertyInfo = fieldInfo.FieldType.GetProperty("EntriesCollection", BindingFlags.Instance | BindingFlags.NonPublic);
+            var value = fieldInfo.GetValue(_memoryCache);
+            if (propertyInfo != null)
+            {
+                var dict = propertyInfo.GetValue(value);
+                if (dict is IDictionary cacheEntries)
+                {
+                    return cacheEntries.Keys
+                                       .OfType<string>()
+                                       .Select(d => d)
+                                       .ToList();
                 }
             }
         }
 
-        return items;
+#endif
+        throw new KrosoftTechniqueException("Impossible de récupérer les clés du cache mémoire.");
     }
 
     /// <summary>

@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../Test.target" />
+	<ItemGroup>
+	  <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Blocking.Memory\Krosoft.Extensions.Blocking.Memory.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Blocking\Krosoft.Extensions.Blocking.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.Blocking\Krosoft.Extensions.WebApi.Blocking.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
+	</ItemGroup>
+</Project>

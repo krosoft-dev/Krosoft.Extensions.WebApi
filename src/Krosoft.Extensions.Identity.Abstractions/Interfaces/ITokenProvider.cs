@@ -2,6 +2,12 @@
 
 public interface ITokenProvider
 {
-    string GenerateToken(string purpose, string securityStamp, string identifier);
-    bool Validate(string purpose, string securityStamp, string identifier, string token);
+    string GenerateToken(string purpose,
+                         string securityStamp,
+                         string identifier);
+
+    bool Validate(string purpose,
+                  string securityStamp,
+                  string identifier,
+                  string token);
 }

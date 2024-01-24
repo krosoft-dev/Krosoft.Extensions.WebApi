@@ -1,0 +1,21 @@
+name: Nuget 'Krosoft.Extensions.Blocking.Redis' - $(Date:yyyy.MM.dd).$(BuildID)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Blocking.Redis/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.Blocking.Abstractions"
+     - "Krosoft.Extensions.Blocking.Redis"
+     - "Krosoft.Extensions.Cache.Distributed.Redis"
+     - "Krosoft.Extensions.Core"
+

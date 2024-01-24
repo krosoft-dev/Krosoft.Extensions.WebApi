@@ -14,7 +14,8 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     - "Krosoft.Extensions.Data.EntityFramework.Sqlite"
-     - "Krosoft.Extensions.Data.EntityFramework"
-     - "Krosoft.Extensions.Data.Abstractions"
      - "Krosoft.Extensions.Core"
+     - "Krosoft.Extensions.Data.Abstractions"
+     - "Krosoft.Extensions.Data.EntityFramework"
+     - "Krosoft.Extensions.Data.EntityFramework.Sqlite"
+

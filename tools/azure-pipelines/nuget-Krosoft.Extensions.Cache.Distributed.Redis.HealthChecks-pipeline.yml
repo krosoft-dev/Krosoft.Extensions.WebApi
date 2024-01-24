@@ -14,7 +14,7 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     - "Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks"
      - "Krosoft.Extensions.Cache.Distributed.Redis"
+     - "Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks"
      - "Krosoft.Extensions.Core"
 
