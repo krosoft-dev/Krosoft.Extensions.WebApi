@@ -50,7 +50,7 @@ public class ValidatorExtensionsTests : BaseTest
     }
 
     [TestMethod]
-    public void ValidateWithErrorMessageAsync_Ok()
+    public void ValidateAndThrowAsync_Ok()
     {
         Check.ThatCode(() => _validators.ValidateAndThrowAsync(new SampleEntity(), CancellationToken.None))
              .Throws<KrosoftMetierException>()

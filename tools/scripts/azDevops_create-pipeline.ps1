@@ -74,10 +74,7 @@ AzDevOpsInitCli $global:url $global:projet
 AzDevOpsPipelinesList
 AzDevOpsPipelinesInitQueueId
 AzDevOpsPipelinesInitServiceConnectionId
-AzDevOpsPipelinesCreate "Krosoft.Extensions.Blocking"
-AzDevOpsPipelinesCreate "Krosoft.Extensions.Blocking.Abstractions"
-AzDevOpsPipelinesCreate "Krosoft.Extensions.Blocking.Memory"
-AzDevOpsPipelinesCreate "Krosoft.Extensions.Blocking.Redis"
+AzDevOpsPipelinesCreate "Krosoft.Extensions.Testing.Data.EntityFramework" 
 
  
 

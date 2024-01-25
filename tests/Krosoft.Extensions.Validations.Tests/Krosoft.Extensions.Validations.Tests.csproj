@@ -6,7 +6,5 @@
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Validations\Krosoft.Extensions.Validations.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  
-	</ItemGroup>
+
 </Project>

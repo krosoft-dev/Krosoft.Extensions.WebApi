@@ -15,6 +15,14 @@ public static class BaseTestExtensions
         await mediator.Send(command, CancellationToken.None);
     }
 
+    public static async Task<T> SendCommandAsync<T>(this BaseTest baseTest,
+                                                    IServiceProvider serviceProvider,
+                                                    ICommand<T> command)
+    {
+        var mediator = serviceProvider.GetRequiredService<IMediator>();
+        return await mediator.Send(command, CancellationToken.None);
+    }
+
     public static async Task<TResponse> SendQueryAsync<TResponse>(this BaseTest baseTest,
                                                                   IServiceProvider serviceProvider,
                                                                   IQuery<TResponse> query)

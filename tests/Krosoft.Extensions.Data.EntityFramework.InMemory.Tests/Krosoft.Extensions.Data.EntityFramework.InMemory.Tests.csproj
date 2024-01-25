@@ -8,4 +8,5 @@
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.EntityFramework.InMemory\Krosoft.Extensions.Data.EntityFramework.InMemory.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
 	</ItemGroup>
+
 </Project>
