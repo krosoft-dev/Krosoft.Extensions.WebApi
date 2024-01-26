@@ -20,8 +20,8 @@ services:
   #   image: ${DOCKER_REGISTRY-}krosoft-extensions.samples.dotnet7.api:${TAG_VERSION}
 
 
-  krosoft-extensions.samples.dotnet8.api:
-     image: ${DOCKER_REGISTRY-}krosoft-extensions.samples.dotnet8.api:${TAG_VERSION}
+  # krosoft-extensions.samples.dotnet8.api:
+  #    image: ${DOCKER_REGISTRY-}krosoft-extensions.samples.dotnet8.api:${TAG_VERSION}
 
   krosoft-extensions.samples.dotnet8.blazorapp:
      image: ${DOCKER_REGISTRY-}krosoft-extensions.samples.dotnet8.blazorapp:${TAG_VERSION}

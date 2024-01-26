@@ -1,7 +1,9 @@
 ﻿using System.IO.Compression;
 using System.Reflection;
 using FluentValidation;
+using Krosoft.Extensions.WebApi.Interfaces;
 using Krosoft.Extensions.WebApi.Models;
+using Krosoft.Extensions.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -67,6 +69,12 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddCorsPolicyAccessor(this IServiceCollection services)
+    {
+        services.AddTransient<ICorsPolicyAccessor, CorsPolicyAccessor>();
+        return services;
+    }
+
     public static IServiceCollection AddLoggingExt(this IServiceCollection services)
     {
         services.AddLogging(opt =>
@@ -87,9 +95,11 @@ public static class ServiceCollectionExtensions
                                                params Assembly[] assemblies)
     {
         services.AddAuthorization();
+        services.AddOptions();
 
         var webApiSettings = new WebApiSettings();
         configuration.GetSection(nameof(WebApiSettings)).Bind(webApiSettings);
+        services.Configure<WebApiSettings>(configuration.GetSection(nameof(WebApiSettings)));
 
         services.AddCors(webApiSettings);
         services.AddControllers();

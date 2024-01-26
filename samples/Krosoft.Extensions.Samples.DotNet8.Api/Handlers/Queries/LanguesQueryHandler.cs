@@ -12,8 +12,8 @@ namespace Krosoft.Extensions.Samples.DotNet8.Api.Handlers.Queries;
 public class LanguesQueryHandler : IRequestHandler<LanguesQuery, IEnumerable<LangueDto>>
 {
     private readonly ILogger<LanguesQueryHandler> _logger;
-    private readonly IReadRepository<Langue> _repository;
     private readonly IMapper _mapper;
+    private readonly IReadRepository<Langue> _repository;
 
     public LanguesQueryHandler(ILogger<LanguesQueryHandler> logger, IReadRepository<Langue> repository, IMapper mapper)
     {
@@ -27,7 +27,9 @@ public class LanguesQueryHandler : IRequestHandler<LanguesQuery, IEnumerable<Lan
     {
         _logger.LogInformation("Récupération des langues...");
 
-        var langues = await _repository.Query().ProjectTo<LangueDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+        var langues = await _repository.Query()
+                                       .ProjectTo<LangueDto>(_mapper.ConfigurationProvider)
+                                       .ToListAsync(cancellationToken);
         return langues;
     }
 }

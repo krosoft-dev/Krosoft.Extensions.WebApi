@@ -1,0 +1,19 @@
+name: Nuget 'Krosoft.Extensions.Events' - $(Date:yyyy.MM.dd).$(BuildID)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Events/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.Events"
+     - "Krosoft.Extensions.Jobs"
+

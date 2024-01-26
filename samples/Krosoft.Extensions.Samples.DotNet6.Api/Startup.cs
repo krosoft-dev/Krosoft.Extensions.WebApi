@@ -21,10 +21,23 @@
 //using Krosoft.Extensions.WebApi.Extensions;
 
 using System.Reflection;
+using Krosoft.Extensions.Cqrs.Behaviors.Extensions;
+using Krosoft.Extensions.Cqrs.Behaviors.Identity.Extensions;
+using Krosoft.Extensions.Cqrs.Behaviors.Validations.Extensions;
+using Krosoft.Extensions.Data.EntityFramework.Extensions;
+using Krosoft.Extensions.Data.EntityFramework.InMemory.Extensions;
+using Krosoft.Extensions.Identity.Extensions;
+using Krosoft.Extensions.Pdf.Extensions;
+using Krosoft.Extensions.Samples.DotNet6.Api.Controllers;
+using Krosoft.Extensions.Samples.DotNet6.Api.Data;
+using Krosoft.Extensions.Samples.Library.Mappings;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.HealthChecks.Extensions;
+using Krosoft.Extensions.WebApi.Identity.Extensions;
 using Krosoft.Extensions.WebApi.Swagger.Extensions;
 using Krosoft.Extensions.WebApi.Swagger.HealthChecks.Extensions;
+using Krosoft.Extensions.Zip.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Krosoft.Extensions.Samples.DotNet6.Api;
@@ -52,7 +65,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         var currentAssembly = Assembly.GetExecutingAssembly();
-        services.AddWebApi(_configuration, currentAssembly)
+        services.AddWebApi(_configuration, currentAssembly, typeof(CompteProfile).Assembly)
                 .AddSwagger(currentAssembly, options => options.AddHealthChecks().AddSecurityBearer().AddSecurityApiKey());
 
         //
@@ -66,11 +79,24 @@ public class Startup
             //        .AddDbContextCheck<KrosoftExtensionTenantContext>("KrosoftExtensionTenantContext")
             ;
 
-        ////Data.
-        //services.AddRepositories();
+        services.AddZip();
+        services.AddPdf();
+        services.AddIdentityEx().AddWebApiIdentityEx();
+
+
+        //Data.
+        services.AddRepositories();
         //services.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(_configuration);
 
-        ////Cache. 
+        services.AddDbContextInMemory<SampleKrosoftContext>(true);
+        services.AddSeedService<SampleKrosoftContext, SampleKrosoftContextSeedService>();
+
+        services.AddCorsPolicyAccessor();
+
+        services.AddBehaviors(options => options.AddLogging()
+                                                .AddValidations()
+                                                .AddIdentity());
+        //Cache. 
         //services.AddDistributedCacheExt();
         //services.AddCacheHandlers();
         //services.AddCacheRefreshHostedService(_configuration);

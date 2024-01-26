@@ -18,8 +18,11 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />	
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.1" /> 
+		<PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.1" /> 
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Blocking.Memory\Krosoft.Extensions.Blocking.Memory.csproj" />
@@ -27,6 +30,7 @@
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks\Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.EntityFramework.InMemory\Krosoft.Extensions.Data.EntityFramework.InMemory.csproj" />
+	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.EntityFramework.Sqlite\Krosoft.Extensions.Data.EntityFramework.Sqlite.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Pdf\Krosoft.Extensions.Pdf.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Reporting.Csv\Krosoft.Extensions.Reporting.Csv.csproj" />
 	  <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.Blocking\Krosoft.Extensions.WebApi.Blocking.csproj" />

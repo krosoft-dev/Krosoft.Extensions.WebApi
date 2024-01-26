@@ -27,6 +27,7 @@ using Krosoft.Extensions.Cache.Distributed.Redis.Extensions;
 using Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.Extensions;
 using Krosoft.Extensions.Data.EntityFramework.Extensions;
 using Krosoft.Extensions.Data.EntityFramework.InMemory.Extensions;
+using Krosoft.Extensions.Data.EntityFramework.Sqlite.Extensions;
 using Krosoft.Extensions.Pdf.Extensions;
 using Krosoft.Extensions.Samples.DotNet8.Api.Data;
 using Krosoft.Extensions.Samples.Library.Mappings;
@@ -75,18 +76,25 @@ public class Startup
         services.AddHealthChecks()
                 .AddCheck("Test_Endpoint", () => HealthCheckResult.Healthy())
                 .AddRedisCheck()
-            //        .AddDbContextCheck<KrosoftExtensionTenantContext>("KrosoftExtensionTenantContext")
+                .AddDbContextCheck<SampleKrosoftContext>("SampleKrosoftContext")
             ;
+
+
 
         services.AddZip();
         services.AddPdf();
         services.AddBlocking().AddWepApiBlocking().AddMemoryBlockingStorage();
 
         //Data.
-        services.AddRepositories();
-        services.AddDbContextInMemory<SampleKrosoftContext>(true);
-        services.AddSeedService<SampleKrosoftContext, SampleSeedService<SampleKrosoftContext>>();
+        services.AddRepositories(); 
+        //services.AddSeedService<SampleKrosoftContext, SampleSeedService<SampleKrosoftContext>>();
         //services.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(_configuration);
+ 
+        services.AddDbContextSqlite<SampleKrosoftContext>(_configuration);
+        services.AddSeedService<SampleKrosoftContext, SampleKrosoftContextSeedService>();
+
+        //services.AddDbContextInMemoryTodo<SampleKrosoftContext>(false);
+
 
         //Cache. 
         services.AddDistributedCacheExt();

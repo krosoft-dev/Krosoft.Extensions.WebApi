@@ -11,6 +11,11 @@ public readonly struct Urls
             var param = new Dictionary<string, string?> { { "text", text } };
 
             return UrlHelper.GetUrl("/Logiciels", param);
+        }  internal static string CreateLogiciel( )
+        {
+            
+
+            return "/Logiciels";
         }
     }
 

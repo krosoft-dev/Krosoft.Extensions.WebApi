@@ -1,0 +1,22 @@
+name: Nuget 'Krosoft.Extensions.Cqrs.Behaviors.Identity' - $(Date:yyyy.MM.dd).$(BuildID)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Cqrs.Behaviors.Identity/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.Core"
+     - "Krosoft.Extensions.Cqrs"
+     - "Krosoft.Extensions.Cqrs.Behaviors"
+     - "Krosoft.Extensions.Cqrs.Behaviors.Identity"
+     - "Krosoft.Extensions.Identity.Abstractions"
+

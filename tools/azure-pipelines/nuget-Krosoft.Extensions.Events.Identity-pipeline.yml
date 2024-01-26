@@ -1,0 +1,22 @@
+name: Nuget 'Krosoft.Extensions.Events.Identity' - $(Date:yyyy.MM.dd).$(BuildID)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Events.Identity/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.Core"
+     - "Krosoft.Extensions.Events"
+     - "Krosoft.Extensions.Events.Identity"
+     - "Krosoft.Extensions.Identity.Abstractions"
+     - "Krosoft.Extensions.Jobs"
+

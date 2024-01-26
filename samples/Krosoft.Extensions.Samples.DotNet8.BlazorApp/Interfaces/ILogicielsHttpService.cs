@@ -7,4 +7,6 @@ public interface ILogicielsHttpService
 {
     Task<Result<IEnumerable<Logiciel>?>> GetLogicielsAsync(string text,
                                                            CancellationToken cancellationToken);
+
+    Task<Result<Guid>> CreateAsync(Logiciel logiciel, CancellationToken cancellationToken);
 }

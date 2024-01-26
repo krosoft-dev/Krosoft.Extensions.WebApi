@@ -102,7 +102,7 @@ public sealed class WriteRepository<TEntity> : IWriteRepository<TEntity>
         _dbSet.Update(entityToUpdate);
     }
 
-    public void Update(TEntity entityToUpdate, params Expression<Func<TEntity, object>>[] propertiesExpression)
+    public void Update(TEntity entityToUpdate, params Expression<Func<TEntity, object?>>[] propertiesExpression)
     {
         Guard.IsNotNull(nameof(entityToUpdate), entityToUpdate);
         _dbSet.Attach(entityToUpdate);
@@ -119,7 +119,7 @@ public sealed class WriteRepository<TEntity> : IWriteRepository<TEntity>
         _dbSet.UpdateRange(entities);
     }
 
-    public void UpdateRange(IEnumerable<TEntity> entities, params Expression<Func<TEntity, object>>[] propertiesExpression)
+    public void UpdateRange(IEnumerable<TEntity> entities, params Expression<Func<TEntity, object?>>[] propertiesExpression)
     {
         foreach (var entity in entities)
         {

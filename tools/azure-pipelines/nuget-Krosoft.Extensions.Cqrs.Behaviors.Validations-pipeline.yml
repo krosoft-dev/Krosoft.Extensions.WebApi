@@ -1,0 +1,21 @@
+name: Nuget 'Krosoft.Extensions.Cqrs.Behaviors.Validations' - $(Date:yyyy.MM.dd).$(BuildID)
+
+pr: none
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "**/Krosoft.Extensions.Cqrs.Behaviors.Validations/*"
+
+extends:
+  template: ./templates/pipelines/nuget-template.yml
+  parameters:
+    packages:
+     - "Krosoft.Extensions.Core"
+     - "Krosoft.Extensions.Cqrs.Behaviors"
+     - "Krosoft.Extensions.Cqrs.Behaviors.Validations"
+     - "Krosoft.Extensions.Validations"
+

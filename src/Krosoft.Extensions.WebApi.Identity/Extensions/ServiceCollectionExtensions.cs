@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Identity.Abstractions.Constantes;
 using Krosoft.Extensions.Identity.Abstractions.Interfaces;
@@ -71,6 +72,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddOptions();
         services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+        services.AddDateTimeService();
         services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddTransient<IJwtTokenValidator, JwtTokenValidator>();
         services.AddRefreshTokenGenerator();

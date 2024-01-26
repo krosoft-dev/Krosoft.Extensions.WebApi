@@ -1,4 +1,5 @@
-﻿using Krosoft.Extensions.Identity.Abstractions.Interfaces;
+﻿using Krosoft.Extensions.Core.Extensions;
+using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Identity.Abstractions.Models;
 using Krosoft.Extensions.Identity.Services;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +40,7 @@ public static class ServiceCollectionExtensions
         services.AddOptions();
         services.Configure<TokenSettings>(configuration.GetSection(nameof(TokenSettings)));
         services.AddDataProtection();
+        services.AddDateTimeService();
         services.AddTransient<ITokenProvider, TokenProvider>();
 
         return services;
