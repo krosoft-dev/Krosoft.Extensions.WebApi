@@ -12,40 +12,6 @@ namespace Krosoft.Extensions.WebApi.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder UseCors(this IApplicationBuilder builder, WebApiSettings? webApiSettings)
-    {
-        if (webApiSettings != null)
-        {
-            if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
-            {
-                builder.UseCors(policy =>
-                {
-                    policy.AllowAnyMethod();
-
-                    if (webApiSettings.AllowedOrigins.Any())
-                    {
-                        policy.WithOrigins(webApiSettings.AllowedOrigins);
-                    }
-                    else
-                    {
-                        policy.AllowAnyOrigin();
-                    }
-
-                    if (webApiSettings.ExposedHeaders.Any())
-                    {
-                        policy.WithExposedHeaders(webApiSettings.ExposedHeaders);
-                    }
-                    else
-                    {
-                        policy.AllowAnyHeader();
-                    }
-                });
-            }
-        }
-
-        return builder;
-    }
-
     public static IApplicationBuilder UseCultures(this IApplicationBuilder builder, WebApiSettings? webApiSettings)
     {
         if (webApiSettings != null)
@@ -73,17 +39,10 @@ public static class ApplicationBuilderExtensions
         return builder;
     }
 
-    public static IApplicationBuilder UseMiddlewares(this IApplicationBuilder builder, bool useTenant)
-    {
-        if (useTenant)
-        {
-            //builder.UseMiddleware<MissingTenantMiddleware>();
-        }
-
-        return builder
-               .UseMiddleware<CustomExceptionHandlerMiddleware>()
-               .UseMiddleware<RequestLoggingMiddleware>();
-    }
+    public static IApplicationBuilder UseMiddlewares(this IApplicationBuilder builder) =>
+        builder
+            .UseMiddleware<CustomExceptionHandlerMiddleware>()
+            .UseMiddleware<RequestLoggingMiddleware>();
 
     public static IApplicationBuilder UseWebApi(this IApplicationBuilder builder,
                                                 IWebHostEnvironment env,
@@ -96,15 +55,19 @@ public static class ApplicationBuilderExtensions
             builder.UseDeveloperExceptionPage();
         }
 
-        builder.UseRouting();
-
         var webApiSettings = new WebApiSettings();
         configuration.GetSection(nameof(WebApiSettings)).Bind(webApiSettings);
 
-        builder.UseCors(webApiSettings);
+        builder.UseRouting();
+
+        if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
+        {
+            builder.UseCors();
+        }
+
         builder.UseAuthentication();
         builder.UseAuthorization();
-        builder.UseMiddlewares(true);
+        builder.UseMiddlewares();
 
         if (actionBuilder != null)
         {

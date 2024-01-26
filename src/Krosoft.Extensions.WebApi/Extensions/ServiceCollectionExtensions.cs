@@ -32,6 +32,43 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddCors(this IServiceCollection services, WebApiSettings? webApiSettings)
+    {
+        if (webApiSettings != null)
+        {
+            if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
+            {
+                services.AddCors(options =>
+                {
+                    options.AddDefaultPolicy(policy =>
+                    {
+                        policy.AllowAnyMethod();
+
+                        if (webApiSettings.AllowedOrigins.Any())
+                        {
+                            policy.WithOrigins(webApiSettings.AllowedOrigins);
+                        }
+                        else
+                        {
+                            policy.AllowAnyOrigin();
+                        }
+
+                        if (webApiSettings.ExposedHeaders.Any())
+                        {
+                            policy.WithExposedHeaders(webApiSettings.ExposedHeaders);
+                        }
+                        else
+                        {
+                            policy.AllowAnyHeader();
+                        }
+                    });
+                });
+            }
+        }
+
+        return services;
+    }
+
     public static IServiceCollection AddLoggingExt(this IServiceCollection services)
     {
         services.AddLogging(opt =>
@@ -56,11 +93,7 @@ public static class ServiceCollectionExtensions
         var webApiSettings = new WebApiSettings();
         configuration.GetSection(nameof(WebApiSettings)).Bind(webApiSettings);
 
-        if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
-        {
-            services.AddCors();
-        }
-
+        services.AddCors(webApiSettings);
         services.AddControllers();
         services.AddCompression();
 
