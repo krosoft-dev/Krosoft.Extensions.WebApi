@@ -53,13 +53,11 @@ public static class ServiceCollectionExtensions
                             policy.AllowAnyOrigin();
                         }
 
+                        policy.AllowAnyHeader();
+
                         if (webApiSettings.ExposedHeaders.Any())
                         {
                             policy.WithExposedHeaders(webApiSettings.ExposedHeaders);
-                        }
-                        else
-                        {
-                            policy.AllowAnyHeader();
                         }
                     });
                 });
