@@ -75,6 +75,9 @@ AzDevOpsPipelinesList
 AzDevOpsPipelinesInitQueueId
 AzDevOpsPipelinesInitServiceConnectionId
 AzDevOpsPipelinesCreate "Krosoft.Extensions.Testing.Data.EntityFramework" 
-
- 
-
+AzDevOpsPipelinesCreate "Krosoft.Extensions.Cqrs.Behaviors"
+AzDevOpsPipelinesCreate "Krosoft.Extensions.Cqrs.Behaviors.Identity"
+AzDevOpsPipelinesCreate "Krosoft.Extensions.Cqrs.Behaviors.Validations"
+AzDevOpsPipelinesCreate "Krosoft.Extensions.Events"
+AzDevOpsPipelinesCreate "Krosoft.Extensions.Events.Identity" 
+AzDevOpsPipelinesCreate "Krosoft.Extensions.Jobs"
