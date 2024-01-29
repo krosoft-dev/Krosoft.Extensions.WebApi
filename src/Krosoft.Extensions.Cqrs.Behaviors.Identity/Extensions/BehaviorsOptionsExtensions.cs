@@ -8,8 +8,7 @@ public static class BehaviorsOptionsExtensions
 {
     public static BehaviorsOptions AddIdentity(this BehaviorsOptions options)
     {
-        options.Add(
-                     typeof(AuthorizationPipelineBehavior<,>));
+        options.Add(typeof(AuthorizationPipelineBehavior<,>));
 
         return options;
     }

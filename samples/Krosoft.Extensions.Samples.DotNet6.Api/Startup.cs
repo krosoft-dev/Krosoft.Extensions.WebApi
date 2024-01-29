@@ -1,26 +1,8 @@
-//using System.Reflection;
-//using Microsoft.Extensions.Diagnostics.HealthChecks;
-//using Krosoft.Extensions.Application.Cache.Distributed.Redis.Extensions;
-//using Krosoft.Extensions.Application.Extensions;
-//using Krosoft.Extensions.Application.Interfaces;
-//using Krosoft.Extensions.AspNetCore.Extensions;
-//using Krosoft.Extensions.Cache.Distributed.Redis.Extensions;
-//using Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.Extensions;
-//using Krosoft.Extensions.Data.EntityFramework.PostgreSql.Extensions;
-//using Krosoft.Extensions.Identity.Cache.Distributed.Extensions;
-//using Krosoft.Extensions.Identity.Extensions;
-//using Krosoft.Extensions.Infrastructure.Extensions;
-//using Krosoft.Extensions.Mail.Mailjet.Extensions;
-//using Krosoft.Extensions.Messaging.Redis.Extensions;
-//using Krosoft.Extensions.Reporting.Csv.Interfaces;
-//using Krosoft.Extensions.Reporting.Csv.Services;
-//using Krosoft.Extensions.Samples.DotNet6.Api.Data;
-//using Krosoft.Extensions.Samples.DotNet6.Api.Interfaces;
-//using Krosoft.Extensions.Samples.DotNet6.Api.Services;
-//using Krosoft.Extensions.Samples.DotNet6.Api.Strategies;
-//using Krosoft.Extensions.WebApi.Extensions;
-
 using System.Reflection;
+using Krosoft.Extensions.Blocking.Extensions;
+using Krosoft.Extensions.Blocking.Memory.Extensions;
+using Krosoft.Extensions.Cache.Distributed.Redis.Extensions;
+using Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks.Extensions;
 using Krosoft.Extensions.Cqrs.Behaviors.Extensions;
 using Krosoft.Extensions.Cqrs.Behaviors.Identity.Extensions;
 using Krosoft.Extensions.Cqrs.Behaviors.Validations.Extensions;
@@ -28,16 +10,15 @@ using Krosoft.Extensions.Data.EntityFramework.Extensions;
 using Krosoft.Extensions.Data.EntityFramework.InMemory.Extensions;
 using Krosoft.Extensions.Identity.Extensions;
 using Krosoft.Extensions.Pdf.Extensions;
-using Krosoft.Extensions.Samples.DotNet6.Api.Controllers;
 using Krosoft.Extensions.Samples.DotNet6.Api.Data;
 using Krosoft.Extensions.Samples.Library.Mappings;
+using Krosoft.Extensions.WebApi.Blocking.Extensions;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.HealthChecks.Extensions;
 using Krosoft.Extensions.WebApi.Identity.Extensions;
 using Krosoft.Extensions.WebApi.Swagger.Extensions;
 using Krosoft.Extensions.WebApi.Swagger.HealthChecks.Extensions;
 using Krosoft.Extensions.Zip.Extensions;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Krosoft.Extensions.Samples.DotNet6.Api;
@@ -58,69 +39,55 @@ public class Startup
         app.UseWebApi(env, _configuration,
                       builder => builder.UseHealthChecksExt(env),
                       endpoints => endpoints.MapHealthChecksExt())
-           .UseSwaggerExt();
+           .UseSwaggerExt()
+           .UseBlocking();
     }
 
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        var currentAssembly = Assembly.GetExecutingAssembly();
-        services.AddWebApi(_configuration, currentAssembly, typeof(CompteProfile).Assembly)
-                .AddSwagger(currentAssembly, options => options.AddHealthChecks().AddSecurityBearer().AddSecurityApiKey());
-
-        //
-        //services.AddApplication(Assembly.GetExecutingAssembly());
-        //services.AddInfrastructure(_configuration);
-        //services.AddJwtAuthentication(_configuration).AddBlocking(_configuration);
-
         services.AddHealthChecks()
                 .AddCheck("Test_Endpoint", () => HealthCheckResult.Healthy())
-            //        .AddRedisCheck()
-            //        .AddDbContextCheck<KrosoftExtensionTenantContext>("KrosoftExtensionTenantContext")
+                .AddRedisCheck()
+                .AddDbContextCheck<SampleKrosoftContext>("SampleKrosoftContext")
             ;
 
-        services.AddZip();
-        services.AddPdf();
-        services.AddIdentityEx().AddWebApiIdentityEx();
+        var currentAssembly = Assembly.GetExecutingAssembly();
 
+        //Web API.
+        services.AddWebApi(_configuration, currentAssembly, typeof(CompteProfile).Assembly);
 
-        //Data.
-        services.AddRepositories();
-        //services.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(_configuration);
-
-        services.AddDbContextInMemory<SampleKrosoftContext>(true);
-        services.AddSeedService<SampleKrosoftContext, SampleKrosoftContextSeedService>();
-
-        services.AddCorsPolicyAccessor();
-
+        //CQRS.
         services.AddBehaviors(options => options.AddLogging()
                                                 .AddValidations()
                                                 .AddIdentity());
+
+        //Swagger.
+        services.AddSwagger(currentAssembly, options => options.AddHealthChecks()
+                                                               .AddSecurityBearer()
+                                                               .AddSecurityApiKey());
+
+        //Blocking.
+        services.AddBlocking()
+                .AddWepApiBlocking()
+                .AddMemoryBlockingStorage();
+
+        //Identity.
+        services.AddIdentityEx().AddWebApiIdentityEx();
+
+        //Data.
+        services.AddRepositories();
+        services.AddDbContextInMemory<SampleKrosoftContext>(false);
+        //services.AddDbContextSqlite<SampleKrosoftContext>(_configuration); 
+        //services.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(_configuration);
+        services.AddSeedService<SampleKrosoftContext, SampleKrosoftContextSeedService>();
+
         //Cache. 
-        //services.AddDistributedCacheExt();
-        //services.AddCacheHandlers();
-        //services.AddCacheRefreshHostedService(_configuration);
-        //services.AddScoped<ICategorieCacheService, CategorieCacheService>();
-        //services.AddScoped<ILangueCacheService, LangueCacheService>();
+        services.AddDistributedCacheExt();
 
-        ////Messaging. 
-        //services.AddRedisMessaging();
-
-        ////Mail. 
-        ////services.AddMailSmtp(_configuration);
-        //services.AddMailMailjet(_configuration);
-
-        ////Strategies
-        //services.AddScoped<ICrudStrategy, LangueStrategy>();
-        //services.AddScoped<ICrudStrategy, CategorieStrategy>();
-
-        ////Business
-        //services.AddHostedService<SampleBackgroundService>();
-        //services.AddScoped<ILogicielCsvService, LogicielCsvService>();
-        //services.AddScoped<ILogicielCsvDataService, LogicielCsvDataService>();
-        //services.AddScoped<ICsvReadService, CsvReadService>();
-
-        ////Auth
-        //services.AddScoped<IAuthService, AuthService>();
+        //Autres
+        services.AddZip();
+        services.AddPdf();
+        services.AddCorsPolicyAccessor();
     }
 }
