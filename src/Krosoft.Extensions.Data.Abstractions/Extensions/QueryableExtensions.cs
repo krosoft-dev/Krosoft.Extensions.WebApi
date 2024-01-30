@@ -2,6 +2,7 @@
 using System.Reflection;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Core.Tools;
+using Krosoft.Extensions.Data.Abstractions.Helpers;
 using LinqKit;
 
 namespace Krosoft.Extensions.Data.Abstractions.Extensions;
@@ -11,25 +12,35 @@ public static class QueryableExtensions
     private static readonly MethodInfo? ContainsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
     private static readonly MethodInfo? ToLowerMethod = typeof(string).GetMethod("ToLower", Type.EmptyTypes);
 
+    public static IQueryable<T> Filter<T>(this IQueryable<T> query,
+                                          params ExpressionStarter<T>[] predicates)
+    {
+        var predicate = PredicateBuilder.New<T>();
+        foreach (var item in predicates)
+        {
+            predicate = predicate.Or(item);
+        }
+
+        query = query.Where(predicate);
+
+        return query;
+    }
+
     public static IQueryable<T> Filter<T, TItem>(this IQueryable<T> query,
-                                                 IEnumerable<TItem>? items,
-                                                 Func<TItem, Expression<Func<T, bool>>>? func,
+                                                 IEnumerable<TItem> items,
+                                                 Func<TItem, Expression<Func<T, bool>>> func,
                                                  bool isMandatory = false)
     {
         Guard.IsNotNull(nameof(items), items);
         Guard.IsNotNull(nameof(func), func);
 
-        var uniqueItems = items!.ToHashSet();
+        var uniqueItems = items.ToHashSet();
         if (!isMandatory && uniqueItems.Count <= 0)
         {
             return query;
         }
 
-        var predicate = PredicateBuilder.New<T>();
-        foreach (var item in uniqueItems)
-        {
-            predicate = predicate.Or(func!(item));
-        }
+        var predicate = PredicateHelper.Or(uniqueItems, func);
 
         query = query.Where(predicate);
 

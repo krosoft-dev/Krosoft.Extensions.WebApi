@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Data.Abstractions.Extensions;
+using Krosoft.Extensions.Data.Abstractions.Helpers;
 using Krosoft.Extensions.Samples.Library.Models.Entities;
 using NFluent;
 
@@ -84,7 +85,7 @@ public class QueryableExtensionsTests
     {
         var data = GetQueryable();
 
-        Check.ThatCode(() => data.Filter<SampleEntity, int>(null, null, true))
+        Check.ThatCode(() => data.Filter<SampleEntity, int>(null!, null!, true))
              .Throws<KrosoftTechniqueException>()
              .WithMessage("La variable 'items' n'est pas renseignée.");
     }
@@ -94,7 +95,7 @@ public class QueryableExtensionsTests
     {
         var data = GetQueryable();
 
-        Check.ThatCode(() => data.Filter(new List<int>(), null, true))
+        Check.ThatCode(() => data.Filter(new List<int>(), null!, true))
              .Throws<KrosoftTechniqueException>()
              .WithMessage("La variable 'func' n'est pas renseignée.");
     }
@@ -121,6 +122,33 @@ public class QueryableExtensionsTests
         Check.That(query).HasSize(4);
         Check.That(query.Select(x => x.Id)).ContainsExactly(1, 2, 3, 4);
         Check.That(query.Select(x => x.Name)).ContainsExactly("Item1", "Item2", "Item3", "Item4");
+    }
+
+    [TestMethod]
+    public void Filter_Predciates_And_Ok()
+    {
+        var data = GetQueryable();
+
+        var query = data.Filter(PredicateHelper.Or<SampleEntity, int>(new List<int> { 2 }, id => c => c.Id == id))
+                        .Filter(PredicateHelper.Or<SampleEntity, int>(new List<int> { 3 }, id => c => c.Id == id))
+            ;
+
+        //On veut id 2 et 3 => impossible.
+        Check.That(query).IsEmpty();
+    }
+
+    [TestMethod]
+    public void Filter_Predciates_Or_Ok()
+    {
+        var data = GetQueryable();
+
+        var query = data.Filter(PredicateHelper.Or<SampleEntity, int>(new List<int> { 2 }, id => c => c.Id == id),
+                                PredicateHelper.Or<SampleEntity, int>(new List<int> { 3 }, id => c => c.Id == id))
+            ;
+
+        Check.That(query).HasSize(2);
+        Check.That(query.Select(x => x.Id)).ContainsExactly( 2, 3);
+        Check.That(query.Select(x => x.Name)).ContainsExactly( "Item2", "Item3");
     }
 
     [TestMethod]
