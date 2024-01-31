@@ -3,7 +3,7 @@ using Krosoft.Extensions.Samples.Library.Models.Dto;
 
 namespace Krosoft.Extensions.Samples.Library.Models.Queries;
 
-public class LogicielDetailQuery : AuthBaseQuery<LogicielDetailDto>
+public class LogicielDetailQuery : BaseQuery<LogicielDetailDto>
 {
     public LogicielDetailQuery(Guid id)
     {

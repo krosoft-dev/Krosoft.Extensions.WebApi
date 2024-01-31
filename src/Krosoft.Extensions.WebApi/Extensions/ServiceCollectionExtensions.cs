@@ -36,34 +36,31 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddCors(this IServiceCollection services, WebApiSettings? webApiSettings)
     {
-        if (webApiSettings != null)
+        if (webApiSettings != null && (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any()))
         {
-            if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
+            services.AddCors(options =>
             {
-                services.AddCors(options =>
+                options.AddDefaultPolicy(policy =>
                 {
-                    options.AddDefaultPolicy(policy =>
+                    policy.AllowAnyMethod();
+
+                    if (webApiSettings.AllowedOrigins.Length > 0)
                     {
-                        policy.AllowAnyMethod();
+                        policy.WithOrigins(webApiSettings.AllowedOrigins);
+                    }
+                    else
+                    {
+                        policy.AllowAnyOrigin();
+                    }
 
-                        if (webApiSettings.AllowedOrigins.Any())
-                        {
-                            policy.WithOrigins(webApiSettings.AllowedOrigins);
-                        }
-                        else
-                        {
-                            policy.AllowAnyOrigin();
-                        }
+                    policy.AllowAnyHeader();
 
-                        policy.AllowAnyHeader();
-
-                        if (webApiSettings.ExposedHeaders.Any())
-                        {
-                            policy.WithExposedHeaders(webApiSettings.ExposedHeaders);
-                        }
-                    });
+                    if (webApiSettings.ExposedHeaders.Length > 0)
+                    {
+                        policy.WithExposedHeaders(webApiSettings.ExposedHeaders);
+                    }
                 });
-            }
+            });
         }
 
         return services;

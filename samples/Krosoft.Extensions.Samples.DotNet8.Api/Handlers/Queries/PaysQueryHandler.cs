@@ -27,7 +27,9 @@ public class PaysQueryHandler : IRequestHandler<PaysQuery, IEnumerable<PaysDto>>
     {
         _logger.LogInformation("Récupération des pays...");
 
-        var pays = await _repository.Query().ProjectTo<PaysDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+        var pays = await _repository.Query()
+                                    .ProjectTo<PaysDto>(_mapper.ConfigurationProvider)
+                                    .ToListAsync(cancellationToken);
         return pays;
     }
 }

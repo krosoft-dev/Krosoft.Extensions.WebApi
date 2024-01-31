@@ -12,10 +12,10 @@ public class SampleKrosoftContext : KrosoftContext
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
 
-        modelBuilder.HasDataJson<Langue>();
+        builder.HasDataJson<Langue>();
     }
 }

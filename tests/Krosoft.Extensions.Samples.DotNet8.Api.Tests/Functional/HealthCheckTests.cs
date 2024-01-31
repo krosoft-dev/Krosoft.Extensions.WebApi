@@ -21,15 +21,12 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
         Check.That(model!.Status).IsEqualTo("Healthy");
         Check.That(model.Duration).IsNotEmpty();
         Check.That(model.Checks).IsNotNull();
+
         var checks = model.Checks.OrderBy(c => c.Key).ToList();
-        Check.That(checks).HasSize(3);
-        Check.That(checks.Select(c => c.Key)).ContainsExactly("Redis", "self", "Test_Endpoint");
-        Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy", "Healthy");
-        Check.That(checks.Select(c => c.Description)).ContainsExactly("Ping Redis en 5s", null, null);
-        //Check.That(checks).HasSize(4);
-        //Check.That(checks.Select(c => c.Key)).ContainsExactly("KrosoftExtensionTenantContext", "Redis", "self", "test");
-        //Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy", "Healthy", "Healthy");
-        //Check.That(checks.Select(c => c.Description)).ContainsExactly(null, "Ping Redis en 0ms", null, null);
+        Check.That(checks).HasSize(4);
+        Check.That(checks.Select(c => c.Key)).ContainsExactly("Redis", "SampleKrosoftContext", "self", "Test_Endpoint");
+        Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy", "Healthy", "Healthy");
+        Check.That(checks.Select(c => c.Description)).ContainsExactly("Ping Redis en 42s", null, null, null);
     }
 
     [TestMethod]
@@ -67,11 +64,8 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
 
         Check.That(model.Entries).IsNotNull();
         var entries = model.Entries.OrderBy(c => c.Key).ToList();
-        Check.That(entries).HasSize(3);
-        Check.That(entries.Select(c => c.Key)).ContainsExactly("Redis", "self", "Test_Endpoint");
-        Check.That(entries.Select(c => c.Value.Status)).ContainsExactly(UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy);
-        //Check.That(entries).HasSize(4);
-        //Check.That(entries.Select(c => c.Key)).ContainsExactly("KrosoftExtensionTenantContext", "Redis", "self", "test");
-        //Check.That(entries.Select(c => c.Value.Status)).ContainsExactly(UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy);
+        Check.That(entries).HasSize(4);
+        Check.That(entries.Select(c => c.Key)).ContainsExactly("Redis", "SampleKrosoftContext", "self", "Test_Endpoint");
+        Check.That(entries.Select(c => c.Value.Status)).ContainsExactly(UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy, UIHealthStatus.Healthy);
     }
 }

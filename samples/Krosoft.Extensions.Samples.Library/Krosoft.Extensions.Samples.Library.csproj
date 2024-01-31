@@ -10,8 +10,10 @@
     <None Remove="Files\Pays.json" />
     <None Remove="Files\sample1.pdf" />
     <None Remove="Files\sample2.pdf" />
+    <None Remove="Files\Statistique.json" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Files\Statistique.json" />
     <EmbeddedResource Include="Files\Categorie.json" />
     <EmbeddedResource Include="Files\Logiciel.json" />
     <EmbeddedResource Include="Files\Pays.json" />

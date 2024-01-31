@@ -78,7 +78,7 @@ public class UpdateStatLogicielCommandHandlerTests : SampleBaseTest<Startup>
         var statistique = statistiques.First();
         Check.That(statistique).IsNotNull();
         Check.That(statistique.Nom).IsEqualTo("my_tenant");
-        Check.That(statistique.Nombre).IsEqualTo(0);
+        Check.That(statistique.Nombre).IsEqualTo(5);
     }
 
     [TestMethod]

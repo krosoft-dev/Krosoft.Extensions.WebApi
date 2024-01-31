@@ -3,6 +3,7 @@ using Krosoft.Extensions.Blocking.Abstractions.Interfaces;
 using Krosoft.Extensions.Blocking.Extensions;
 using Krosoft.Extensions.Blocking.Memory.Extensions;
 using Krosoft.Extensions.Blocking.Services;
+using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Identity.Abstractions.Fakes;
 using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Testing;
@@ -94,7 +95,7 @@ public class AccessTokenBlockingServiceTests : BaseTest
             Check.That(isBlocked).IsTrue();
         }
 
-        var blockedKeys = await _accessTokenBlockingService.GetBlockedAsync(CancellationToken.None);
+        var blockedKeys = await _accessTokenBlockingService.GetBlockedAsync(CancellationToken.None)!.ToList();
         Check.That(blockedKeys).HasSize(3);
         Check.That(blockedKeys).IsOnlyMadeOf(keys);
     }

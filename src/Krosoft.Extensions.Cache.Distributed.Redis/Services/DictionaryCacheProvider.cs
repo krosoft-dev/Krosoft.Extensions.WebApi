@@ -69,7 +69,7 @@ public class DictionaryCacheProvider : IDistributedCacheProvider
         return await Task.FromResult(containsKey);
     }
 
-    public async Task<TimeSpan> PingAsync(CancellationToken cancellationToken = default) => await Task.FromResult(new TimeSpan(0, 0, 5));
+    public async Task<TimeSpan> PingAsync(CancellationToken cancellationToken = default) => await Task.FromResult(new TimeSpan(0, 0, 42));
 
     public async Task<T?> ReadRowAsync<T>(string collectionKey, string entryKey, CancellationToken cancellationToken = default)
     {

@@ -20,8 +20,7 @@ public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, TEntry> wh
         //services.AddDbContextInMemory<KrosoftExtensionTenantContext>(true);
         //services.AddSeedService<KrosoftExtensionTenantContext, SampleSeedService>();
 
-        //// Remove Redis registration.
-        //services.MockRedis();
+        // Remove Redis registration.
         services.AddTransient<IDistributedCacheProvider, DictionaryCacheProvider>();
 
         //// Remove IHostedService registration.

@@ -1,4 +1,6 @@
-﻿using Krosoft.Extensions.Data.EntityFramework.Helpers;
+﻿using Krosoft.Extensions.Core.Models.Exceptions;
+using Krosoft.Extensions.Core.Tools;
+using Krosoft.Extensions.Data.EntityFramework.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +14,14 @@ public static class ServiceCollectionExtensions
                                                                     string dbContextName) where TDbContext : DbContext
 
     {
-        services.AddDbContextSqlite<TDbContext>(configuration.GetConnectionString(dbContextName));
+        Guard.IsNotNull(nameof(dbContextName), dbContextName);
+        var connectionString = configuration.GetConnectionString(dbContextName);
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            throw new KrosoftTechniqueException($"La ConnectionString basé sur '{dbContextName}' n'est pas définie.");
+        }
+
+        services.AddDbContextSqlite<TDbContext>(connectionString);
 
         return services;
     }
@@ -21,6 +30,8 @@ public static class ServiceCollectionExtensions
                                                                     string connectionString) where TDbContext : DbContext
 
     {
+        Guard.IsNotNull(nameof(connectionString), connectionString);
+
         services.AddScoped<DbContext, TDbContext>();
         services.AddDbContext<TDbContext>(options =>
                                               options.UseLoggerFactory(LoggerFactoryHelper.MyLoggerFactory)
@@ -35,8 +46,13 @@ public static class ServiceCollectionExtensions
 
     {
         var dbContextName = typeof(TDbContext).Name;
+        var connectionString = configuration.GetConnectionString(dbContextName);
+        if (string.IsNullOrEmpty(connectionString))
+        {
+            throw new KrosoftTechniqueException($"La ConnectionString basé sur '{dbContextName}' n'est pas définie.");
+        }
 
-        services.AddDbContextSqlite<TDbContext>(configuration.GetConnectionString(dbContextName));
+        services.AddDbContextSqlite<TDbContext>(connectionString);
 
         return services;
     }

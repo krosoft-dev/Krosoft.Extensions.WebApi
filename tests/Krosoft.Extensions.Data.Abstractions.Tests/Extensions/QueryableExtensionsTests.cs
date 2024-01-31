@@ -147,8 +147,8 @@ public class QueryableExtensionsTests
             ;
 
         Check.That(query).HasSize(2);
-        Check.That(query.Select(x => x.Id)).ContainsExactly( 2, 3);
-        Check.That(query.Select(x => x.Name)).ContainsExactly( "Item2", "Item3");
+        Check.That(query.Select(x => x.Id)).ContainsExactly(2, 3);
+        Check.That(query.Select(x => x.Name)).ContainsExactly("Item2", "Item3");
     }
 
     [TestMethod]

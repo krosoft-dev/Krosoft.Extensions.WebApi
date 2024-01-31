@@ -1,18 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../Nuget.target" />
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-		<Nullable>warnings</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<PackageTags>Krosoft Extension Data ef entity framework orm Sqlite</PackageTags>
-		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-		<Authors>Krosoft Thinking Company</Authors>
 		<Description>Package pour faciliter l'accès aux données avec Entity Framework via Sqlite.</Description>
-		<Copyright>Copyright © 2023</Copyright>
-		<IsPackable>true</IsPackable>
-		<LangVersion>default</LangVersion>
 	</PropertyGroup>
- 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.26" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.26" />
