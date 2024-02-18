@@ -32,6 +32,14 @@ public static class EnumerableExtensions
             }
         }
     }
+
+    /// <summary>
+    /// Méthode d'extension pour générer un hashSet à partir d'un IEnumerable
+    /// </summary>
+    /// <typeparam name="T">Type d'objet</typeparam>
+    /// <param name="source">Liste à convertir</param>
+    /// <returns>Un HashSet</returns>
+    public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source) => new HashSet<T>(source);
 #endif
 
     /// <summary>
@@ -137,14 +145,6 @@ public static class EnumerableExtensions
                                                                                                        Func<TSource, TKey> keySelector,
                                                                                                        Func<TSource, TElement> elementSelector) where TKey : notnull =>
         new ConcurrentDictionary<TKey, TElement>(source.ToDictionary(keySelector, elementSelector));
-
-    /// <summary>
-    /// Méthode d'extension pour générer un hashSet à partir d'un IEnumerable
-    /// </summary>
-    /// <typeparam name="T">Type d'objet</typeparam>
-    /// <param name="source">Liste à convertir</param>
-    /// <returns>Un HashSet</returns>
-    public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source) => new HashSet<T>(source);
 
     /// <summary>
     /// Execute un foreach en parallèle et en asynchrone.
