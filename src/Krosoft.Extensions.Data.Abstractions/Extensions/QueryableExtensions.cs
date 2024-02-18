@@ -66,12 +66,12 @@ public static class QueryableExtensions
     {
         if (ToLowerMethod == null)
         {
-            throw new KrosoftTechniqueException("Method 'ToLower' is not defined.");
+            throw new KrosoftTechnicalException("Method 'ToLower' is not defined.");
         }
 
         if (ContainsMethod == null)
         {
-            throw new KrosoftTechniqueException("Method 'Contains' is not defined.");
+            throw new KrosoftTechnicalException("Method 'Contains' is not defined.");
         }
 
         if (string.IsNullOrEmpty(searchTerm))

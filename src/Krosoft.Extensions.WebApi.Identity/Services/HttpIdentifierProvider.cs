@@ -19,7 +19,7 @@ public class HttpIdentifierProvider : IIdentifierProvider
         var accessToken = await _accessTokenProvider.GetAccessTokenAsync(cancellationToken);
         if (string.IsNullOrEmpty(accessToken))
         {
-            throw new KrosoftTechniqueException("Impossible d'obtenir le token d'accès !");
+            throw new KrosoftTechnicalException("Impossible d'obtenir le token d'accès !");
         }
 
         var identifier = _jwtTokenValidator.GetIdentifierFromToken(accessToken);

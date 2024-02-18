@@ -29,7 +29,7 @@ public class HttpClaimsService : IClaimsService
             }
         }
 
-        throw new KrosoftTechniqueException($"Le claim {claimName} n'existe pas.");
+        throw new KrosoftTechnicalException($"Le claim {claimName} n'existe pas.");
     }
 
     public T CheckClaims<T>(string claimName, Func<IEnumerable<string>, T> funcSucess)
@@ -43,6 +43,6 @@ public class HttpClaimsService : IClaimsService
             }
         }
 
-        throw new KrosoftTechniqueException($"Le claim {claimName} n'existe pas.");
+        throw new KrosoftTechnicalException($"Le claim {claimName} n'existe pas.");
     }
 }

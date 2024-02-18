@@ -1,6 +1,6 @@
-﻿namespace Krosoft.Extensions.Core.Models;
+﻿namespace Krosoft.Extensions.Core.Models.Dto;
 
-public class ErrorApi
+public class ErrorApiDto
 {
     public string? StatusCode { get; set; }
     public string? Message { get; set; }

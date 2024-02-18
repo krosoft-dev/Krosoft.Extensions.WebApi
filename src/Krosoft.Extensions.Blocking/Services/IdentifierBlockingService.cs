@@ -36,7 +36,7 @@ public class IdentifierBlockingService : BlockingService, IIdentifierBlockingSer
         var identifier = await _identifierProvider.GetIdentifierAsync(cancellationToken);
         if (string.IsNullOrEmpty(identifier))
         {
-            throw new KrosoftTechniqueException("Impossible d'obtenir l'identifiant !");
+            throw new KrosoftTechnicalException("Impossible d'obtenir l'identifiant !");
         }
 
         return identifier;

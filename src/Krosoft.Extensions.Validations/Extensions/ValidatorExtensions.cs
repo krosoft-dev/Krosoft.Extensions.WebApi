@@ -10,7 +10,7 @@ public static class ValidatorExtensions
         var failures = await validators.ValidateAsync(item, cancellationToken);
         if (failures.Any())
         {
-            throw new KrosoftMetierException(failures);
+            throw new KrosoftFunctionalException(failures);
         }
     }
 

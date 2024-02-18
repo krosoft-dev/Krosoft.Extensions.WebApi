@@ -17,7 +17,7 @@ public static class FileHelper
         var directoryPath = Path.GetDirectoryName(filePath);
         if (string.IsNullOrEmpty(directoryPath))
         {
-            throw new KrosoftTechniqueException($"Le chemin {filePath} ne permet pas de déterminer le nom du répertoire.");
+            throw new KrosoftTechnicalException($"Le chemin {filePath} ne permet pas de déterminer le nom du répertoire.");
         }
 
         var exists = Directory.Exists(directoryPath);

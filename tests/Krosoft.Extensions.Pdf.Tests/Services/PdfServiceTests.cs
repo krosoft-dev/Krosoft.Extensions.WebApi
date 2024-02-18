@@ -32,7 +32,7 @@ public class PdfServiceTests : BaseTest
     public void MergeByteNull_Ok()
     {
         Check.ThatCode(() => { _pdfService.Merge((byte[][])null!); })
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'files' n'est pas renseignée.");
     }
 
@@ -62,7 +62,7 @@ public class PdfServiceTests : BaseTest
     public void MergeStreamNull_Ok()
     {
         Check.ThatCode(() => { _pdfService.Merge((Stream[])null!); })
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'streams' n'est pas renseignée.");
     }
 

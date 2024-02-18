@@ -24,7 +24,7 @@ public class IdentitTokenHelperTests
     public void JwtSettings_Null()
     {
         Check.ThatCode(() => IdentitTokenHelper.GetTokenValidationParameters(SigningCredentialsHelper.GetSigningCredentials("test"), null!, false))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'jwtSettings' n'est pas renseignée.");
     }
 
@@ -32,7 +32,7 @@ public class IdentitTokenHelperTests
     public void SigningCredentials_Null()
     {
         Check.ThatCode(() => IdentitTokenHelper.GetTokenValidationParameters(null!, null!, false))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'signingCredentials' n'est pas renseignée.");
     }
 }

@@ -41,7 +41,7 @@ public class ZipServiceTests : BaseTest
     public void Zip_Null()
     {
         Check.ThatCode(() => _zipService.Zip(null!))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'streams' n'est pas renseignée.");
     }
 

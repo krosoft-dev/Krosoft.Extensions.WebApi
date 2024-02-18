@@ -52,7 +52,7 @@ public class ResultTests
         var result = CheckFaulted();
 
         Check.ThatCode(() => result.Validate())
-             .Throws<KrosoftMetierException>()
+             .Throws<KrosoftFunctionalException>()
              .WithMessage("Test");
     }
 

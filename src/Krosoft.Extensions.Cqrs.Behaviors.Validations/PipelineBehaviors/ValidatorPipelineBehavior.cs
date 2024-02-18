@@ -30,7 +30,7 @@ public class ValidatorPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<
         var failures = await _validators.ValidateAsync(request, cancellationToken);
         if (failures.Any())
         {
-            throw new KrosoftMetierException(failures);
+            throw new KrosoftFunctionalException(failures);
         }
 
         var response = await next();

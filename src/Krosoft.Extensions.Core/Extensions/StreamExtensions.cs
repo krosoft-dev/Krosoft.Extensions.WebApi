@@ -52,7 +52,7 @@ public static class StreamExtensions
             }
         }
 
-        throw new KrosoftTechniqueException($"Le type {typeof(T)} n'est pas géré.");
+        throw new KrosoftTechnicalException($"Le type {typeof(T)} n'est pas géré.");
     }
 
     public static string ToBase64(this Stream stream)

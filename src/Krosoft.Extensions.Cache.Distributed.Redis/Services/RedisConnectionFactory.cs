@@ -30,7 +30,7 @@ internal class RedisConnectionFactory : IRedisConnectionFactory
                 return _connection.Value;
             }
 
-            throw new KrosoftTechniqueException("Connection non disponible !");
+            throw new KrosoftTechnicalException("Connection non disponible !");
         }
     }
 }

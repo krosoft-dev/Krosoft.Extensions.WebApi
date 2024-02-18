@@ -4,9 +4,9 @@ using Newtonsoft.Json.Linq;
 
 namespace Krosoft.Extensions.Core.Converters;
 
-public class KrosoftMetierExceptionConverter : JsonConverter
+public class KrosoftFunctionalExceptionConverter : JsonConverter
 {
-    public override bool CanConvert(Type objectType) => objectType == typeof(KrosoftMetierException);
+    public override bool CanConvert(Type objectType) => objectType == typeof(KrosoftFunctionalException);
 
     public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
     {
@@ -14,7 +14,7 @@ public class KrosoftMetierExceptionConverter : JsonConverter
         {
             var properties = new Dictionary<string, object>();
             serializer.Populate(reader, properties);
-            var array = properties.GetValueOrDefault(nameof(KrosoftMetierException.Erreurs)) as JArray;
+            var array = properties.GetValueOrDefault(nameof(KrosoftFunctionalException.Erreurs)) as JArray;
             var erreurs = new HashSet<string>();
             if (array != null)
             {
@@ -27,7 +27,7 @@ public class KrosoftMetierExceptionConverter : JsonConverter
                 erreurs = o.ToHashSet();
             }
 
-            return new KrosoftMetierException(erreurs);
+            return new KrosoftFunctionalException(erreurs);
         }
 
         return null;

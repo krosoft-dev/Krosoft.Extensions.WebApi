@@ -16,7 +16,7 @@ public static class ImageHelper
         var base64Data = match.Groups["data"].Value;
         if (string.IsNullOrEmpty(base64Data))
         {
-            throw new KrosoftTechniqueException($"Impossible de récupérer l'image à partir de l'url Base64 pour l'image '{name!}'.");
+            throw new KrosoftTechnicalException($"Impossible de récupérer l'image à partir de l'url Base64 pour l'image '{name!}'.");
         }
 
         return true;

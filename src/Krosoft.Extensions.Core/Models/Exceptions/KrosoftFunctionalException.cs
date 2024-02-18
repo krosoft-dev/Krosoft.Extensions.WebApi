@@ -6,14 +6,14 @@ namespace Krosoft.Extensions.Core.Models.Exceptions;
 /// <summary>
 /// Exception à retourner en cas d'erreur technique soulevé par le code de l'application.
 /// </summary>
-public class KrosoftTechniqueException : HttpException
+public class KrosoftFunctionalException : HttpException
 {
-    public KrosoftTechniqueException(HashSet<string> erreurs) : base(HttpStatusCode.InternalServerError, erreurs.FirstOrDefault())
+    public KrosoftFunctionalException(ISet<string> erreurs) : base(HttpStatusCode.BadRequest, erreurs.FirstOrDefault())
     {
         Erreurs = erreurs;
     }
 
-    public KrosoftTechniqueException(string erreur) : this(new HashSet<string> { erreur })
+    public KrosoftFunctionalException(string erreur) : this(new HashSet<string> { erreur })
     {
     }
 

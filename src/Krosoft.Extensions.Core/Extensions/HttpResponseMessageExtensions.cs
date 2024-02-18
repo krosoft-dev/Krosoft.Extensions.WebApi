@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Krosoft.Extensions.Core.Converters;
 using Krosoft.Extensions.Core.Helpers;
-using Krosoft.Extensions.Core.Models;
+using Krosoft.Extensions.Core.Models.Dto;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Core.Models.Exceptions.Http;
 using Newtonsoft.Json;
@@ -37,7 +37,7 @@ public static class HttpResponseMessageExtensions
             var isValid = JsonHelper.IsValid(json);
             if (isValid && httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
             {
-                var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(json, new KrosoftMetierExceptionConverter());
+                var obj = JsonConvert.DeserializeObject<KrosoftFunctionalException>(json, new KrosoftFunctionalExceptionConverter());
                 if (obj != null)
                 {
                     throw obj;
@@ -56,7 +56,7 @@ public static class HttpResponseMessageExtensions
         var isValid = JsonHelper.IsValid(json);
         if (isValid)
         {
-            var obj = JsonConvert.DeserializeObject<ErrorApi>(json);
+            var obj = JsonConvert.DeserializeObject<ErrorApiDto>(json);
             if (obj != null)
             {
                 if (Enum.TryParse(obj.StatusCode, out HttpStatusCode value) && Enum.IsDefined(typeof(HttpStatusCode), value))

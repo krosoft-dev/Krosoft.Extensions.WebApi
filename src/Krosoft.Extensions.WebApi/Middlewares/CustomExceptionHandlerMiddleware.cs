@@ -37,11 +37,11 @@ public class CustomExceptionHandlerMiddleware
 
         switch (ex)
         {
-            case KrosoftMetierException validationException:
+            case KrosoftFunctionalException validationException:
                 error.Status = validationException.Code;
                 error.Errors.AddRange(validationException.Erreurs);
                 break;
-            case KrosoftTechniqueException techniqueException:
+            case KrosoftTechnicalException techniqueException:
                 error.Status = techniqueException.Code;
                 error.Errors.AddRange(techniqueException.Erreurs);
                 break;

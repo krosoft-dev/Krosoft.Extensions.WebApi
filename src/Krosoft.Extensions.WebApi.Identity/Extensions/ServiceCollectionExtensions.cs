@@ -43,7 +43,7 @@ public static class ServiceCollectionExtensions
         var jwtSettings = configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
         if (jwtSettings == null)
         {
-            throw new KrosoftTechniqueException($"Impossible d'instancier l'objet de type '{nameof(JwtSettings)}'.");
+            throw new KrosoftTechnicalException($"Impossible d'instancier l'objet de type '{nameof(JwtSettings)}'.");
         }
 
         var signingCredentials = SigningCredentialsHelper.GetSigningCredentials(jwtSettings.SecurityKey);

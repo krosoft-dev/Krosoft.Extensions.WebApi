@@ -53,7 +53,7 @@ public class ValidatorExtensionsTests : BaseTest
     public void ValidateAndThrowAsync_Ok()
     {
         Check.ThatCode(() => _validators.ValidateAndThrowAsync(new SampleEntity(), CancellationToken.None))
-             .Throws<KrosoftMetierException>()
+             .Throws<KrosoftFunctionalException>()
              .WithMessage("'Id' ne doit pas être vide.");
     }
 }

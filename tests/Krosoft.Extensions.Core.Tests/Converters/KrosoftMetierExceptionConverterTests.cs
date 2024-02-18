@@ -6,12 +6,12 @@ using Newtonsoft.Json;
 namespace Krosoft.Extensions.Core.Tests.Converters;
 
 [TestClass]
-public class KrosoftMetierExceptionConverterTests
+public class KrosoftFunctionalExceptionConverterTests
 {
     [TestMethod]
     public void ConvertEmptyTest()
     {
-        var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(string.Empty, new KrosoftMetierExceptionConverter());
+        var obj = JsonConvert.DeserializeObject<KrosoftFunctionalException>(string.Empty, new KrosoftFunctionalExceptionConverter());
         Check.That(obj).IsNull();
     }
 
@@ -19,7 +19,7 @@ public class KrosoftMetierExceptionConverterTests
     public void ConvertJsonArrayEmptyTest()
     {
         var json = "[]";
-        var obj = JsonConvert.DeserializeObject<IEnumerable<KrosoftMetierException>>(json, new KrosoftMetierExceptionConverter());
+        var obj = JsonConvert.DeserializeObject<IEnumerable<KrosoftFunctionalException>>(json, new KrosoftFunctionalExceptionConverter());
         Check.That(obj).IsEmpty();
     }
 
@@ -31,7 +31,7 @@ public class KrosoftMetierExceptionConverterTests
             ""Message"": ""BadRequest"",
             ""Erreurs"": []
         }";
-        var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(json, new KrosoftMetierExceptionConverter());
+        var obj = JsonConvert.DeserializeObject<KrosoftFunctionalException>(json, new KrosoftFunctionalExceptionConverter());
         Check.That(obj).IsNotNull();
         Check.That(obj!.Code).IsEqualTo(HttpStatusCode.BadRequest);
         Check.That(obj.Erreurs).IsEmpty();
@@ -41,8 +41,8 @@ public class KrosoftMetierExceptionConverterTests
     public void ConvertJsonEmptyTest()
     {
         var json = "{}";
-        var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(json, new KrosoftMetierExceptionConverter());
-        Check.That(obj!.GetType()).IsEqualTo(typeof(KrosoftMetierException));
+        var obj = JsonConvert.DeserializeObject<KrosoftFunctionalException>(json, new KrosoftFunctionalExceptionConverter());
+        Check.That(obj!.GetType()).IsEqualTo(typeof(KrosoftFunctionalException));
         Check.That(obj).IsNotNull();
     }
 
@@ -58,7 +58,7 @@ public class KrosoftMetierExceptionConverterTests
                 ]
 
              }";
-        var obj = JsonConvert.DeserializeObject<KrosoftMetierException>(json, new KrosoftMetierExceptionConverter());
+        var obj = JsonConvert.DeserializeObject<KrosoftFunctionalException>(json, new KrosoftFunctionalExceptionConverter());
         Check.That(obj).IsNotNull();
         Check.That(obj!.Code).IsEqualTo(HttpStatusCode.BadRequest);
         Check.That(obj.Message).IsEqualTo("An ean13 must contain 13 digits.");

@@ -50,7 +50,7 @@ public class JsonDataServiceTests : BaseTest
     public void Init_Ko()
     {
         Check.ThatCode(() => new JsonDataService<Shortcut>(Options.Create(new JsonDataSettings())).Query())
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("DataFileName non renseigné.");
     }
 

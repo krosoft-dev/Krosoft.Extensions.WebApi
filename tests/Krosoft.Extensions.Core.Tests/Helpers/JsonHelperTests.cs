@@ -35,7 +35,7 @@ public class JsonHelperTests
     public void ToBase64NullTest()
     {
         Check.ThatCode(() => JsonHelper.ToBase64(null))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'obj' n'est pas renseignée.");
     }
 

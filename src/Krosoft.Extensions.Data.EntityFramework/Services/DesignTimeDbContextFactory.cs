@@ -30,7 +30,7 @@ public abstract class DesignTimeDbContextFactory<TDbContext> : IDesignTimeDbCont
         Console.WriteLine($"ConnectionString :  {connectionString}");
         if (string.IsNullOrEmpty(connectionString))
         {
-            throw new KrosoftTechniqueException($"Impossible de définir la connectionString à partir du nom du DbContext '{dbContextName}'.");
+            throw new KrosoftTechnicalException($"Impossible de définir la connectionString à partir du nom du DbContext '{dbContextName}'.");
         }
 
         var services = new ServiceCollection();

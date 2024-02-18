@@ -10,7 +10,7 @@ public class ImageHelperTests
     public void CheckImage_Base64_Error()
     {
         Check.ThatCode(() => ImageHelper.CheckImage("invalid_base64_data", "name.fr"))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("Impossible de récupérer l'image à partir de l'url Base64 pour l'image 'name.fr'.");
     }
 
@@ -18,7 +18,7 @@ public class ImageHelperTests
     public void CheckImage_Base64Empty()
     {
         Check.ThatCode(() => ImageHelper.CheckImage(string.Empty, string.Empty))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'base64' est vide ou non renseignée.");
     }
 
@@ -26,7 +26,7 @@ public class ImageHelperTests
     public void CheckImage_NameEmpty()
     {
         Check.ThatCode(() => ImageHelper.CheckImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9h", string.Empty))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'name' est vide ou non renseignée.");
     }
 
@@ -34,7 +34,7 @@ public class ImageHelperTests
     public void CheckImage_NoBase64()
     {
         Check.ThatCode(() => ImageHelper.CheckImage(null, null))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'base64' est vide ou non renseignée.");
     }
 
@@ -42,7 +42,7 @@ public class ImageHelperTests
     public void CheckImage_NoName()
     {
         Check.ThatCode(() => ImageHelper.CheckImage("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9h", null))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'name' est vide ou non renseignée.");
     }
 

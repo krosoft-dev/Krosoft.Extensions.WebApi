@@ -23,7 +23,7 @@ public readonly struct Result<T>
     {
         if (IsFaulted)
         {
-            throw new KrosoftMetierException(Exception!.Message);
+            throw new KrosoftFunctionalException(Exception!.Message);
         }
 
         return Value!;

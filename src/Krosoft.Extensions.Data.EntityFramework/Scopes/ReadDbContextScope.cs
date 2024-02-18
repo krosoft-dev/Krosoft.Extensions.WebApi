@@ -48,7 +48,7 @@ internal class ReadDbContextScope<T> : IReadDbContextScope where T : KrosoftCont
 
             if (krosoftContext == null)
             {
-                throw new KrosoftTechniqueException($"Impossible d'instancer le dbcontext de type {typeof(T).Name} avec un settings de type {typeof(IAuditableDbContextSettings<T>).Name}");
+                throw new KrosoftTechnicalException($"Impossible d'instancer le dbcontext de type {typeof(T).Name} avec un settings de type {typeof(IAuditableDbContextSettings<T>).Name}");
             }
 
             return krosoftContext;
@@ -64,7 +64,7 @@ internal class ReadDbContextScope<T> : IReadDbContextScope where T : KrosoftCont
 
             if (krosoftContext == null)
             {
-                throw new KrosoftTechniqueException($"Impossible d'instancer le dbcontext de type {typeof(T).Name} avec un settings de type {typeof(ITenantDbContextSettings<T>).Name}");
+                throw new KrosoftTechnicalException($"Impossible d'instancer le dbcontext de type {typeof(T).Name} avec un settings de type {typeof(ITenantDbContextSettings<T>).Name}");
             }
 
             return krosoftContext;
@@ -84,7 +84,7 @@ internal class ReadDbContextScope<T> : IReadDbContextScope where T : KrosoftCont
 
             if (krosoftContext == null)
             {
-                throw new KrosoftTechniqueException($"Impossible d'instancer le dbcontext de type {typeof(T).Name} avec un settings de type {typeof(ITenantAuditableDbContextSettings<T>).Name}");
+                throw new KrosoftTechnicalException($"Impossible d'instancer le dbcontext de type {typeof(T).Name} avec un settings de type {typeof(ITenantAuditableDbContextSettings<T>).Name}");
             }
 
             return krosoftContext;
@@ -98,13 +98,13 @@ internal class ReadDbContextScope<T> : IReadDbContextScope where T : KrosoftCont
 
             if (krosoftContext == null)
             {
-                throw new KrosoftTechniqueException($"Impossible d'instancer le dbcontext de type {typeof(T).Name} avec un settings de type {typeof(IDbContextSettings<T>).Name}");
+                throw new KrosoftTechnicalException($"Impossible d'instancer le dbcontext de type {typeof(T).Name} avec un settings de type {typeof(IDbContextSettings<T>).Name}");
             }
 
             return krosoftContext;
         }
 
-        throw new KrosoftTechniqueException($"Impossible d'instancer le dbcontext de type {typeof(T).Name}");
+        throw new KrosoftTechnicalException($"Impossible d'instancer le dbcontext de type {typeof(T).Name}");
     }
 
     public IReadRepository<TEntity> GetReadRepository<TEntity>()

@@ -86,7 +86,7 @@ public class QueryableExtensionsTests
         var data = GetQueryable();
 
         Check.ThatCode(() => data.Filter<SampleEntity, int>(null!, null!, true))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'items' n'est pas renseignée.");
     }
 
@@ -96,7 +96,7 @@ public class QueryableExtensionsTests
         var data = GetQueryable();
 
         Check.ThatCode(() => data.Filter(new List<int>(), null!, true))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'func' n'est pas renseignée.");
     }
 

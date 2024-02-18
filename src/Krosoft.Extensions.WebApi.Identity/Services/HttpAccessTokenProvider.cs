@@ -33,6 +33,6 @@ public class HttpAccessTokenProvider : IAccessTokenProvider
             return string.Empty;
         }
 
-        throw new KrosoftTechniqueException("HttpContext non défini.");
+        throw new KrosoftTechnicalException("HttpContext non défini.");
     }
 }

@@ -43,7 +43,7 @@ internal class JsonDataService<T> : IJsonDataService<T> where T : class
     {
         if (string.IsNullOrEmpty(_jsonDataSettings.DataFileName))
         {
-            throw new KrosoftTechniqueException($"{nameof(_jsonDataSettings.DataFileName)} non renseigné.");
+            throw new KrosoftTechnicalException($"{nameof(_jsonDataSettings.DataFileName)} non renseigné.");
         }
 
         var store = new DataStore(_jsonDataSettings.DataFileName);

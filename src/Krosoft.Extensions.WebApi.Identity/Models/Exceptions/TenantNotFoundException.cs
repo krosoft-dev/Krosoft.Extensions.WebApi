@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.WebApi.Identity.Models.Exceptions;
 
-public class TenantNotFoundException : KrosoftTechniqueException
+public class TenantNotFoundException : KrosoftTechnicalException
 {
     public TenantNotFoundException() : base("Tenant introuvable.")
     {

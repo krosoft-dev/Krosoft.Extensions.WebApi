@@ -51,7 +51,7 @@ public class AuthorizationPipelineBehavior<TRequest, TResponse> : IPipelineBehav
                 break;
 
             default:
-                throw new KrosoftTechniqueException($"Le type {typeof(TRequest)} n'est pas pris en compte pour cet appel.");
+                throw new KrosoftTechnicalException($"Le type {typeof(TRequest)} n'est pas pris en compte pour cet appel.");
         }
 
         _logger.LogInformation($"Handled AuthorizationPipelineBehavior <{typeof(TRequest).Name},{typeof(TResponse).Name}> in {sw.Elapsed.ToShortString()}");

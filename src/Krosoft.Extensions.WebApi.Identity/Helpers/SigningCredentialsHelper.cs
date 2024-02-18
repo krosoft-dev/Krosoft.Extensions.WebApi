@@ -26,7 +26,7 @@ public static class SigningCredentialsHelper
     {
         if (string.IsNullOrEmpty(securityKey))
         {
-            throw new KrosoftTechniqueException($"'{nameof(securityKey)}' non définie.");
+            throw new KrosoftTechnicalException($"'{nameof(securityKey)}' non définie.");
         }
 
         Guard.IsNotNullOrWhiteSpace(nameof(securityKey), securityKey);

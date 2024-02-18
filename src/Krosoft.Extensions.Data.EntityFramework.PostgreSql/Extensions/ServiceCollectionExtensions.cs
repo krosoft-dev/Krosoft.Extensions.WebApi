@@ -19,7 +19,7 @@ public static class ServiceCollectionExtensions
         var connectionString = configuration.GetConnectionString(dbContextName);
         if (string.IsNullOrEmpty(connectionString))
         {
-            throw new KrosoftTechniqueException($"La ConnectionString basé sur '{dbContextName}' n'est pas définie.");
+            throw new KrosoftTechnicalException($"La ConnectionString basé sur '{dbContextName}' n'est pas définie.");
         }
 
         services.AddDbContextPostgreSql<TDbContext>(connectionString);
@@ -51,7 +51,7 @@ public static class ServiceCollectionExtensions
         var connectionString = configuration.GetConnectionString(dbContextName);
         if (string.IsNullOrEmpty(connectionString))
         {
-            throw new KrosoftTechniqueException($"La ConnectionString basé sur '{dbContextName}' n'est pas définie.");
+            throw new KrosoftTechnicalException($"La ConnectionString basé sur '{dbContextName}' n'est pas définie.");
         }
 
         services.AddDbContextPostgreSql<TDbContext>(connectionString);

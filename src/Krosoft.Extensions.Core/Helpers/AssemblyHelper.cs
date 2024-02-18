@@ -15,7 +15,7 @@ public static class AssemblyHelper
                                     .ToList();
         if (resourcesName.Count > 1)
         {
-            throw new KrosoftTechniqueException($"Plusieurs fichiers correspondent au fichier {filename} dans {assembly.GetName().Name}");
+            throw new KrosoftTechnicalException($"Plusieurs fichiers correspondent au fichier {filename} dans {assembly.GetName().Name}");
         }
 
         var resourceName = resourcesName.FirstOrDefault();
@@ -31,13 +31,13 @@ public static class AssemblyHelper
         var resourceName = GetResourceName(assembly, filename);
         if (string.IsNullOrEmpty(resourceName))
         {
-            throw new KrosoftTechniqueException($"{filename} introuvable dans {assembly.GetName().Name}");
+            throw new KrosoftTechnicalException($"{filename} introuvable dans {assembly.GetName().Name}");
         }
 
         var stream = assembly.GetManifestResourceStream(resourceName);
         if (stream == null)
         {
-            throw new KrosoftTechniqueException($"{resourceName} introuvable dans {assembly.GetName().Name}");
+            throw new KrosoftTechnicalException($"{resourceName} introuvable dans {assembly.GetName().Name}");
         }
 
         return stream;
@@ -64,14 +64,14 @@ public static class AssemblyHelper
         var resourceName = GetResourceName(assembly, filename);
         if (string.IsNullOrEmpty(resourceName))
         {
-            throw new KrosoftTechniqueException($"{filename} introuvable dans {assembly.GetName().Name}");
+            throw new KrosoftTechnicalException($"{filename} introuvable dans {assembly.GetName().Name}");
         }
 
         using (var stream = assembly.GetManifestResourceStream(resourceName))
         {
             if (stream == null)
             {
-                throw new KrosoftTechniqueException($"{resourceName} introuvable dans {assembly.GetName().Name}");
+                throw new KrosoftTechnicalException($"{resourceName} introuvable dans {assembly.GetName().Name}");
             }
 
             using (var streamReader = new StreamReader(stream, encoding, true))
@@ -105,7 +105,7 @@ public static class AssemblyHelper
         {
             if (stream == null)
             {
-                throw new KrosoftTechniqueException($"{resourceName} introuvable dans {assembly.GetName().Name}");
+                throw new KrosoftTechnicalException($"{resourceName} introuvable dans {assembly.GetName().Name}");
             }
 
             using (var streamReader = new StreamReader(stream, encoding, true))

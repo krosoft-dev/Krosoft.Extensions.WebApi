@@ -12,7 +12,7 @@ public static class Guard
     {
         if (value == null)
         {
-            throw new KrosoftTechniqueException($"La variable '{argumentName}' n'est pas renseignée.");
+            throw new KrosoftTechnicalException($"La variable '{argumentName}' n'est pas renseignée.");
         }
     }
 
@@ -21,7 +21,7 @@ public static class Guard
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new KrosoftTechniqueException($"La variable '{argumentName}' est vide ou non renseignée.");
+            throw new KrosoftTechnicalException($"La variable '{argumentName}' est vide ou non renseignée.");
         }
     }
 }

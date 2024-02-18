@@ -61,7 +61,7 @@ public class JwtTokenGeneratorTests : BaseTest
     public void CreateToken_Null()
     {
         Check.ThatCode(() => _claimsBuilderService.CreateToken(null!, null!))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'identifier' est vide ou non renseignée.");
     }
 
@@ -69,7 +69,7 @@ public class JwtTokenGeneratorTests : BaseTest
     public void CreateToken_NullClaims()
     {
         Check.ThatCode(() => _claimsBuilderService.CreateToken(_identifier, null!))
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'claims' n'est pas renseignée.");
     }
 

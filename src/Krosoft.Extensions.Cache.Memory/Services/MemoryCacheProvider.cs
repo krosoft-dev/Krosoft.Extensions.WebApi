@@ -143,7 +143,7 @@ public class MemoryCacheProvider : ICacheProvider
         }
 
 #endif
-        throw new KrosoftTechniqueException("Impossible de récupérer les clés du cache mémoire.");
+        throw new KrosoftTechnicalException("Impossible de récupérer les clés du cache mémoire.");
     }
 
     /// <summary>

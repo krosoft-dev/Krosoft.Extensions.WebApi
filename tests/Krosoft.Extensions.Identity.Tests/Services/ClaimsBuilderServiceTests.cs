@@ -59,7 +59,7 @@ public class ClaimsBuilderServiceTests : BaseTest
         };
 
         Check.ThatCode(() => { _claimsBuilderService.Build(krosoftToken); })
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'LangueId' est vide ou non renseignée.");
     }
 
@@ -77,7 +77,7 @@ public class ClaimsBuilderServiceTests : BaseTest
         };
 
         Check.ThatCode(() => { _claimsBuilderService.Build(krosoftToken); })
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'RoleId' est vide ou non renseignée.");
     }
 
@@ -107,7 +107,7 @@ public class ClaimsBuilderServiceTests : BaseTest
     public void BuildNullTest()
     {
         Check.ThatCode(() => { _claimsBuilderService.Build(null); })
-             .Throws<KrosoftTechniqueException>()
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'krosoftToken' n'est pas renseignée.");
     }
 

@@ -40,7 +40,7 @@ public class MapperExtensionsTests : BaseTest
         var source = new Compte { Name = "Test" };
         var destination = new CompteDto();
 
-        _mapper.MapIfExist(source, destination, () => throw new KrosoftTechniqueException("Test"));
+        _mapper.MapIfExist(source, destination, () => throw new KrosoftTechnicalException("Test"));
 
         Check.That(destination.Name).IsEqualTo("Test");
     }
@@ -51,8 +51,8 @@ public class MapperExtensionsTests : BaseTest
         Compte? source = null;
         var destination = new CompteDto();
 
-        Check.ThatCode(() => _mapper.MapIfExist(source, destination, () => throw new KrosoftTechniqueException("Test")))
-             .Throws<KrosoftTechniqueException>()
+        Check.ThatCode(() => _mapper.MapIfExist(source, destination, () => throw new KrosoftTechnicalException("Test")))
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("Test");
     }
 
@@ -127,7 +127,7 @@ public class MapperExtensionsTests : BaseTest
     {
         var source = new Compte { Name = "Test" };
 
-        var destination = _mapper.MapIfExist<CompteDto>(source, () => throw new KrosoftTechniqueException("Test"));
+        var destination = _mapper.MapIfExist<CompteDto>(source, () => throw new KrosoftTechnicalException("Test"));
 
         Check.That(destination.Name).IsEqualTo("Test");
     }
@@ -137,8 +137,8 @@ public class MapperExtensionsTests : BaseTest
     {
         Compte? source = null;
 
-        Check.ThatCode(() => _mapper.MapIfExist<CompteDto>(source, () => throw new KrosoftTechniqueException("Test")))
-             .Throws<KrosoftTechniqueException>()
+        Check.ThatCode(() => _mapper.MapIfExist<CompteDto>(source, () => throw new KrosoftTechnicalException("Test")))
+             .Throws<KrosoftTechnicalException>()
              .WithMessage("Test");
     }
 
