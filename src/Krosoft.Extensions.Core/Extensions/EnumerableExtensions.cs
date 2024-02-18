@@ -12,6 +12,7 @@ namespace Krosoft.Extensions.Core.Extensions;
 /// </summary>
 public static class EnumerableExtensions
 {
+#if !NET7_0_OR_GREATER
     /// <summary>
     /// Effectue un distinct sur la collection sur le critère choisi.
     /// </summary>
@@ -31,6 +32,7 @@ public static class EnumerableExtensions
             }
         }
     }
+#endif
 
     /// <summary>
     /// Extrait depuis une collection toutes les valeurs à partir du nom d'une propriété et renvoie ces valeurs formatées
