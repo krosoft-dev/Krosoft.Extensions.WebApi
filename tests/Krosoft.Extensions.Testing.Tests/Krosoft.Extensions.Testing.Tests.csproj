@@ -14,7 +14,9 @@
     <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
   </ItemGroup>
   <ItemGroup>
-    
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Update="MSTest.TestAdapter" Version="3.2.1" />
+    <PackageReference Update="MSTest.TestFramework" Version="3.2.1" />
   </ItemGroup>
  
 </Project>
