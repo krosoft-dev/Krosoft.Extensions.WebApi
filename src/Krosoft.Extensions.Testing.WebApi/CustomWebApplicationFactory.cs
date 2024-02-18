@@ -120,6 +120,18 @@ public class CustomWebApplicationFactory<TStartup, TKrosoftContext> : WebApplica
     //    }
     //}
 
+    public void WithService<T>(Action<T> action) where T : notnull
+    {
+        var scopeFactory = Services.GetRequiredService<IServiceScopeFactory>();
+
+        using (var scope = scopeFactory.CreateScope())
+        {
+            var service = scope.ServiceProvider.GetRequiredService<T>();
+
+            action(service);
+        }
+    }
+
     //public List<T> Get<T>() where T : class
     //{
     //    var scopeFactory = Services.GetService<IServiceScopeFactory>();
