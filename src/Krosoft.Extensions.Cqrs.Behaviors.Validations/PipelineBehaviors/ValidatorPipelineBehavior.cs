@@ -27,7 +27,7 @@ public class ValidatorPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<
         var sw = Stopwatch.StartNew();
         _logger.LogInformation($"Handling ValidatorPipelineBehavior <{typeof(TRequest).Name},{typeof(TResponse).Name}>");
 
-        var failures = await _validators.ValidateAsync(request, cancellationToken);
+        var failures = await _validators.ValidateMoreAsync(request, cancellationToken);
         if (failures.Any())
         {
             throw new KrosoftFunctionalException(failures);

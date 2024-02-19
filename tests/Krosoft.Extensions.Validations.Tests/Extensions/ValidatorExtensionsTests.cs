@@ -12,7 +12,7 @@ namespace Krosoft.Extensions.Validations.Tests.Extensions;
 [TestClass]
 public class ValidatorExtensionsTests : BaseTest
 {
-    private IEnumerable<IValidator<SampleEntity>> _validators = null!;
+    private IValidator<SampleEntity> _validator = null!;
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
@@ -23,37 +23,39 @@ public class ValidatorExtensionsTests : BaseTest
     public void SetUp()
     {
         var serviceProvider = CreateServiceCollection();
-        _validators = serviceProvider.GetRequiredService<IEnumerable<IValidator<SampleEntity>>>();
+        _validator = serviceProvider.GetRequiredService<IValidator<SampleEntity>>();
 
-        Check.That(_validators).HasSize(1);
-    }
-
-    [TestMethod]
-    public async Task ValidateAsync_Empty()
-    {
-        var failures = await _validators.ValidateAsync(new SampleEntity
-        {
-            Id = 1,
-            Name = "Herllo"
-        }, CancellationToken.None);
-
-        Check.That(failures).IsEmpty();
-    }
-
-    [TestMethod]
-    public async Task ValidateAsync_Ok()
-    {
-        var failures = await _validators.ValidateAsync(new SampleEntity(), CancellationToken.None);
-
-        Check.That(failures).HasSize(3);
-        Check.That(failures).ContainsExactly("'Id' ne doit pas être vide.", "'Name' ne doit pas être vide.", "'Name' ne doit pas avoir la valeur null.");
+        Check.That(_validator).IsNotNull();
     }
 
     [TestMethod]
     public void ValidateAndThrowAsync_Ok()
     {
-        Check.ThatCode(() => _validators.ValidateAndThrowAsync(new SampleEntity(), CancellationToken.None))
+        Check.ThatCode(() => _validator.ValidateMoreAndThrowAsync(new SampleEntity(), CancellationToken.None))
              .Throws<KrosoftFunctionalException>()
              .WithMessage("'Id' ne doit pas être vide.");
+    }
+
+    [TestMethod]
+    public async Task ValidateMoreAsync_Empty()
+    {
+        IEnumerable<string>? f = null;
+        await _validator.ValidateMoreAsync(new SampleEntity
+        {
+            Id = 1,
+            Name = "Herllo"
+        }, failures => { f = failures; }, CancellationToken.None);
+
+        Check.That(f).IsEmpty();
+    }
+
+    [TestMethod]
+    public async Task ValidateMoreAsync_Ok()
+    {
+        IEnumerable<string>? f = null;
+        await _validator.ValidateMoreAsync(new SampleEntity(), failures => { f = failures; }, CancellationToken.None);
+
+        Check.That(f).HasSize(3);
+        Check.That(f).ContainsExactly("'Id' ne doit pas être vide.", "'Name' ne doit pas être vide.", "'Name' ne doit pas avoir la valeur null.");
     }
 }
