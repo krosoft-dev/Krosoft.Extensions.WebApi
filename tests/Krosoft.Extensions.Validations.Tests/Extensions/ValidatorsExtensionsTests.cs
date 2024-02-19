@@ -29,7 +29,15 @@ public class ValidatorsExtensionsTests : BaseTest
     }
 
     [TestMethod]
-    public async Task ValidateAsync_Empty()
+    public void ValidateAndThrowAsync_Ok()
+    {
+        Check.ThatCode(() => _validators.ValidateMoreAndThrowAsync(new SampleEntity(), CancellationToken.None))
+             .Throws<KrosoftFunctionalException>()
+             .WithMessage("'Id' ne doit pas être vide.");
+    }
+
+    [TestMethod]
+    public async Task ValidateMoreAsync_Empty()
     {
         var failures = await _validators.ValidateMoreAsync(new SampleEntity
         {
@@ -41,7 +49,7 @@ public class ValidatorsExtensionsTests : BaseTest
     }
 
     [TestMethod]
-    public async Task ValidateAsync_Ok()
+    public async Task ValidateMoreAsync_Ok()
     {
         var failures = await _validators.ValidateMoreAsync(new SampleEntity(), CancellationToken.None);
 
@@ -50,10 +58,25 @@ public class ValidatorsExtensionsTests : BaseTest
     }
 
     [TestMethod]
-    public void ValidateAndThrowAsync_Ok()
+    public async Task ValidateMoreAsync_WithAction_Empty()
     {
-        Check.ThatCode(() => _validators.ValidateMoreAndThrowAsync(new SampleEntity(), CancellationToken.None))
-             .Throws<KrosoftFunctionalException>()
-             .WithMessage("'Id' ne doit pas être vide.");
+        IEnumerable<string>? f = null;
+        await _validators.ValidateMoreAsync(new SampleEntity
+        {
+            Id = 1,
+            Name = "Herllo"
+        }, failures => { f = failures; }, CancellationToken.None);
+
+        Check.That(f).IsEmpty();
+    }
+
+    [TestMethod]
+    public async Task ValidateMoreAsync_WithAction_Ok()
+    {
+        IEnumerable<string>? f = null;
+        await _validators.ValidateMoreAsync(new SampleEntity(), failures => { f = failures; }, CancellationToken.None);
+
+        Check.That(f).HasSize(3);
+        Check.That(f).ContainsExactly("'Id' ne doit pas être vide.", "'Name' ne doit pas être vide.", "'Name' ne doit pas avoir la valeur null.");
     }
 }
