@@ -18,14 +18,14 @@ public class HealthCheckTests : SampleBaseApiTest<Startup>
         var client = Factory.CreateClient();
         var response = await client.GetAsync("/Health/Check");
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        var model = await response.Content.ReadAsJsonAsync<HealthCheckStatusModel>(CancellationToken.None);
+        var healthCheckStatus = await response.Content.ReadAsJsonAsync<HealthCheckStatusDto>(CancellationToken.None);
 
-        Check.That(model).IsNotNull();
-        Check.That(model!.Status).IsEqualTo("Healthy");
-        Check.That(model.Duration).IsNotEmpty();
-        Check.That(model.Checks).IsNotNull();
+        Check.That(healthCheckStatus).IsNotNull();
+        Check.That(healthCheckStatus!.Status).IsEqualTo("Healthy");
+        Check.That(healthCheckStatus.Duration).IsNotEmpty();
+        Check.That(healthCheckStatus.Checks).IsNotNull();
 
-        var checks = model.Checks.OrderBy(c => c.Key).ToList();
+        var checks = healthCheckStatus.Checks.OrderBy(c => c.Key).ToList();
         Check.That(checks).HasSize(4);
         Check.That(checks.Select(c => c.Key)).ContainsExactly("Redis", "SampleKrosoftContext", "self", "Test_Endpoint");
         Check.That(checks.Select(c => c.Status)).ContainsExactly("Healthy", "Healthy", "Healthy", "Healthy");

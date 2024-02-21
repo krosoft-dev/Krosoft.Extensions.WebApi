@@ -28,10 +28,10 @@ public static class ApplicationBuilderExtensions
             {
                 context.Response.ContentType = MediaTypeNames.Application.Json;
 
-                var response = new HealthCheckStatusModel
+                var response = new HealthCheckStatusDto
                 {
                     Status = report.Status.ToString(),
-                    Checks = report.Entries.Select(x => new HealthCheckModel
+                    Checks = report.Entries.Select(x => new HealthCheckDto
                     {
                         Key = x.Key,
                         Status = x.Value.Status.ToString(),

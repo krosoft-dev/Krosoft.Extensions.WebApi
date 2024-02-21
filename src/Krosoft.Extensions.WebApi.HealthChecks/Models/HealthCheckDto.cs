@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.WebApi.HealthChecks.Models;
 
-public class HealthCheckModel
+public class HealthCheckDto
 {
     public string? Status { get; set; }
     public string? Key { get; set; }
