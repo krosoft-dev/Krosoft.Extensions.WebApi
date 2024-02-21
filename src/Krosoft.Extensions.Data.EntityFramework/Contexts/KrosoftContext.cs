@@ -15,6 +15,36 @@ public abstract class KrosoftContext : DbContext
     {
     }
 
+    private static IEnumerable<Type> GetDefinedTypes(ISet<Type> types)
+    {
+        var definedTypes = new List<Type>();
+        if (DependencyContext.Default != null)
+        {
+            var dependencies = DependencyContext.Default.RuntimeLibraries;
+
+            foreach (var library in dependencies)
+            {
+                try
+                {
+                    var assembly = Assembly.Load(new AssemblyName(library.Name));
+                    definedTypes.AddRange(assembly.DefinedTypes
+                                                  .Where(t => !t.IsAbstract && t.GetInterfaces().Any(types.Contains))
+                                                  .Select(t => t)
+                                                  .DistinctBy(x => x.FullName)
+                                                  .ToHashSet());
+                }
+                catch (FileNotFoundException)
+                {
+                }
+                catch (ReflectionTypeLoadException)
+                {
+                }
+            }
+        }
+
+        return definedTypes;
+    }
+
     protected IEnumerable<Type> GetEntityTypes()
     {
         if (_entityTypeCache != null)
@@ -22,46 +52,15 @@ public abstract class KrosoftContext : DbContext
             return _entityTypeCache.ToList();
         }
 
-        var types = GetTypes().ToList();
-
+        var types = GetTypes().ToHashSet();
         if (types.Any())
         {
-            _entityTypeCache = (from a in GetReferencingAssemblies()
-                                from t in a.DefinedTypes
-                                where !t.IsAbstract && t.GetInterfaces().Any(types.Contains)
-                                select t.AsType())
-                               .DistinctBy(x => x.FullName)
-                               .ToList();
+            _entityTypeCache = GetDefinedTypes(types);
 
             return _entityTypeCache;
         }
 
         return new List<Type>();
-    }
-
-    private static List<Assembly> GetReferencingAssemblies()
-    {
-        var assemblies = new List<Assembly>();
-        if (DependencyContext.Default != null)
-        {
-
-            //TODO : gestion tenant 
-            //var dependencies = DependencyContext.Default.RuntimeLibraries;
-
-            //foreach (var library in dependencies)
-            //{
-            //    try
-            //    {
-            //        //var assembly = Assembly.Load(new AssemblyName(library.Name));
-            //        //assemblies.Add(assembly);
-            //    }
-            //    catch (FileNotFoundException)
-            //    {
-            //    }
-            //}
-        }
-
-        return assemblies;
     }
 
     protected virtual IEnumerable<Type> GetTypes() => new List<Type>();

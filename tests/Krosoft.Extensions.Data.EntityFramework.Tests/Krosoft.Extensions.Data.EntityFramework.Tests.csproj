@@ -1,6 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="../../Test.target" />
 	<ItemGroup>
+	  <None Remove="appsettings.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	</ItemGroup>
+	<ItemGroup>
 	  <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
 	</ItemGroup>
 	<ItemGroup>
