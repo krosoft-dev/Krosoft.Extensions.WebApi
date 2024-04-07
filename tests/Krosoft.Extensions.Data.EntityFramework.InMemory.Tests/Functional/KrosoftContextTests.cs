@@ -6,6 +6,7 @@ using Krosoft.Extensions.Data.EntityFramework.InMemory.Extensions;
 using Krosoft.Extensions.Samples.DotNet8.Api.Data;
 using Krosoft.Extensions.Samples.Library.Models.Entities;
 using Krosoft.Extensions.Testing;
+using Krosoft.Extensions.WebApi.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ public class KrosoftContextTests : BaseTest
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddLoggingExt();
         services.AddRepositories();
         services.AddDbContextInMemory<SampleKrosoftContext>(true);
         services.AddSeedService<SampleKrosoftContext, SampleSeedService<SampleKrosoftContext>>();

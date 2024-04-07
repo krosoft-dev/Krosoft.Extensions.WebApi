@@ -8,6 +8,7 @@ using Krosoft.Extensions.Data.EntityFramework.Services;
 using Krosoft.Extensions.Samples.DotNet8.Api.Data;
 using Krosoft.Extensions.Samples.Library.Models.Entities;
 using Krosoft.Extensions.Testing;
+using Krosoft.Extensions.WebApi.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,7 @@ public class KrosoftAuditableContextTests : BaseTest
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
+        services.AddLoggingExt();
         services.AddRepositories();
         services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
         services.AddDbContextInMemory<SampleKrosoftAuditableContext>(true);
@@ -33,7 +35,7 @@ public class KrosoftAuditableContextTests : BaseTest
 
     [TestMethod]
     public async Task Query_Ok()
-    {
+    { 
         var pays = await _repository!.Query()
                                     .ToListAsync(CancellationToken.None);
 

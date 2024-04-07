@@ -6,6 +6,7 @@ using Krosoft.Extensions.Data.EntityFramework.Services;
 using Krosoft.Extensions.Samples.DotNet8.Api.Data;
 using Krosoft.Extensions.Samples.Library.Models.Entities;
 using Krosoft.Extensions.Testing;
+using Krosoft.Extensions.WebApi.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +20,7 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-            services.AddRepositories(); 
+             services.AddLoggingExt();services.AddRepositories(); 
             services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
             services.AddDbContextInMemory<SampleKrosoftAuditableContext>(true);
             services.AddSeedService<SampleKrosoftAuditableContext, SampleSeedService<SampleKrosoftAuditableContext>>();
@@ -43,7 +44,7 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-            services.AddRepositories();
+             services.AddLoggingExt();services.AddRepositories();
             services.AddDbContextInMemory<SampleKrosoftContext>(true);
             services.AddSeedService<SampleKrosoftContext, SampleSeedService<SampleKrosoftContext>>();
         }
@@ -66,7 +67,7 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-            services.AddRepositories();
+             services.AddLoggingExt();services.AddRepositories();
             services.AddScoped<ITenantDbContextProvider, FakeTenantDbContextProvider>();
             services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
             services.AddDbContextInMemory<SampleKrosoftTenantAuditableContext>(true);
@@ -91,7 +92,7 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-            services.AddRepositories(); 
+             services.AddLoggingExt();services.AddRepositories(); 
             services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
             services.AddDbContextInMemory<SampleKrosoftAuditableContext>(true);
             services.AddSeedService<SampleKrosoftAuditableContext, SampleSeedService<SampleKrosoftAuditableContext>>();
@@ -115,7 +116,7 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-            services.AddRepositories();
+             services.AddLoggingExt();services.AddRepositories();
             services.AddDbContextInMemory<SampleKrosoftContext>(true);
             services.AddSeedService<SampleKrosoftContext, SampleSeedService<SampleKrosoftContext>>();
         }
@@ -138,7 +139,7 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-            services.AddRepositories();
+             services.AddLoggingExt();services.AddRepositories();
             services.AddScoped<ITenantDbContextProvider, FakeTenantDbContextProvider>();
             services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
             services.AddDbContextInMemory<SampleKrosoftTenantAuditableContext>(true);
