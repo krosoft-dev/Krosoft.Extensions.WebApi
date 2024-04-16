@@ -9,7 +9,11 @@ public class NullableDecimalConverter : JsonConverter<decimal?>
     private readonly CultureInfo _culture;
     private readonly char[] _separators = { ',', '.' };
 
-    public NullableDecimalConverter(CultureInfo? culture = null)
+    public NullableDecimalConverter() : this(null)
+    {
+    }
+
+    public NullableDecimalConverter(CultureInfo? culture)
     {
         if (culture == null)
         {

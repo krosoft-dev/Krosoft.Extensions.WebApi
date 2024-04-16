@@ -7,7 +7,11 @@ public class NullableIntegerConverter : JsonConverter<int?>
 {
     private readonly CultureInfo _culture;
 
-    public NullableIntegerConverter(CultureInfo? culture = null)
+    public NullableIntegerConverter() : this(null)
+    {
+    }
+
+    public NullableIntegerConverter(CultureInfo? culture)
     {
         if (culture == null)
         {
