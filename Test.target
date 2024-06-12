@@ -1,15 +1,15 @@
 <Project>
-    <Import Project="Common.target" />
+	<Import Project="Common.target" />
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-      	<IsPackable>false</IsPackable>
+		<IsPackable>false</IsPackable>
 		<IsPublishable>false</IsPublishable>
 		<IsTestProject>true</IsTestProject>
 		<IsTransformWebConfigDisabled>true</IsTransformWebConfigDisabled>
 		<NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
 	</PropertyGroup>
-  <ItemGroup>
-    	<PackageReference Include="coverlet.msbuild" Version="6.0.0">
+	<ItemGroup>
+		<PackageReference Include="coverlet.msbuild" Version="6.0.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
@@ -17,12 +17,10 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-	    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-		<PackageReference Include="MSTest.TestFramework" Version="3.2.0" /> 
-		<PackageReference Include="MSTest.TestAdapter" Version="3.2.0" />
-		<PackageReference Include="NFluent" Version="3.0.3" />
-		<PackageReference Include="Moq" Version="4.18.4" /> 
-  </ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.4.3" />
+		<PackageReference Include="MSTest.TestAdapter" Version="3.4.3" />
+		<PackageReference Include="NFluent" Version="3.0.4" />
+		<PackageReference Include="Moq" Version="4.18.4" />
+	</ItemGroup>
 </Project>
- 
- 

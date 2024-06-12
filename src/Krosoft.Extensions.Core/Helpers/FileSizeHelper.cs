@@ -8,7 +8,7 @@ public static class FileSizeHelper
 
     private static string TransformFileSize(double size, int unit = 0)
     {
-        string[] units = { "o", "Ko", "Mo", "Go", "To", "Po", "Eo", "Zo", "Yo" };
+        string[] units = ["o", "Ko", "Mo", "Go", "To", "Po", "Eo", "Zo", "Yo"];
 
         while (size >= 1024)
         {

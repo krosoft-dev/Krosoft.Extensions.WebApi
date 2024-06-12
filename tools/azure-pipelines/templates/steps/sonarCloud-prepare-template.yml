@@ -12,7 +12,7 @@ parameters:
     default: $(Build.BuildNumber)
 
 steps:
-  - task: SonarCloudPrepare@1
+  - task: SonarCloudPrepare@2
     displayName: "Prepare SonarCloud"
     inputs:
       SonarCloud: ${{ parameters.endpoint }}

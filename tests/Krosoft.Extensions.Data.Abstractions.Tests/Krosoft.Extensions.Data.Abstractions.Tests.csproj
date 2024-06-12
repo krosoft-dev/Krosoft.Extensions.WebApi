@@ -1,27 +1,13 @@
- <Project Sdk="Microsoft.NET.Sdk">
-	 <Import Project="../../Test.target" />
-	 <ItemGroup>
-	   <ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.Library\Krosoft.Extensions.Samples.Library.csproj" />
-	   <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.Abstractions\Krosoft.Extensions.Data.Abstractions.csproj" />
-	   <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
-	 </ItemGroup>
-	 <ItemGroup>
-	  <None Update="appsettings.json">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	 </ItemGroup>
-	 <ItemGroup>
-	   <PackageReference Update="coverlet.collector" Version="6.0.2">
-	     <PrivateAssets>all</PrivateAssets>
-	     <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	   </PackageReference>
-	   <PackageReference Update="coverlet.msbuild" Version="6.0.2">
-	     <PrivateAssets>all</PrivateAssets>
-	     <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	   </PackageReference>
-	   <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-	   <PackageReference Update="MSTest.TestAdapter" Version="3.3.1" />
-	   <PackageReference Update="MSTest.TestFramework" Version="3.3.1" />
-	   <PackageReference Update="NFluent" Version="3.0.4" />
-	 </ItemGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../Test.target" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.Library\Krosoft.Extensions.Samples.Library.csproj" />
+		<ProjectReference Include="..\..\src\Krosoft.Extensions.Data.Abstractions\Krosoft.Extensions.Data.Abstractions.csproj" />
+		<ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 </Project>
