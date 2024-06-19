@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
- 
-	<Import Project="../../Test.target" />
- 
+  <Import Project="../../Test.target" />
   <ItemGroup>
     <None Remove="Files\ExportUsers.csv" />
   </ItemGroup>
@@ -13,6 +11,4 @@
     <ProjectReference Include="..\..\src\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
     <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
   </ItemGroup>
- 
- 
 </Project>

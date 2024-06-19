@@ -60,7 +60,7 @@ public class UpdateStatLogicielCommandHandlerTests : SampleBaseTest<Startup>
 
         var message = new UpdateStatLogicielMessage
         {
-            TenantId = "my_tenant",
+            TenantId = "Fake_Tenant_Id",
             UtilisateurId = "utilisateur_1"
         };
 
@@ -77,7 +77,7 @@ public class UpdateStatLogicielCommandHandlerTests : SampleBaseTest<Startup>
 
         var statistique = statistiques.First();
         Check.That(statistique).IsNotNull();
-        Check.That(statistique.Nom).IsEqualTo("my_tenant");
+        Check.That(statistique.Nom).IsEqualTo("Fake_Tenant_Id");
         Check.That(statistique.Nombre).IsEqualTo(5);
     }
 

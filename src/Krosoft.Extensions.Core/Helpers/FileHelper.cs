@@ -217,6 +217,27 @@ public static class FileHelper
 #endif
     }
 
+    public static async Task<byte[]> ReadAsBytesAsync(string filePath,
+                                                      CancellationToken cancellationToken)
+    {
+        Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
+
+        await using var stream = new FileStream(filePath, FileMode.Open);
+        using var ms = new MemoryStream();
+        await stream.CopyToAsync(ms, cancellationToken);
+        return ms.ToArray();
+    }
+
+    public static byte[] ReadAsBytes(string filePath)
+    {
+        Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
+
+        using var stream = new FileStream(filePath, FileMode.Open);
+        using var ms = new MemoryStream();
+        stream.CopyTo(ms);
+        return ms.ToArray();
+    }
+
     /// <summary>
     /// Ecrit un stream dans un fichier.
     /// </summary>
