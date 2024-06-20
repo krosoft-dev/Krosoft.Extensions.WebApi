@@ -34,7 +34,7 @@ public class KrosoftFunctionalExceptionConverterTests
         var obj = JsonConvert.DeserializeObject<KrosoftFunctionalException>(json, new KrosoftFunctionalExceptionConverter());
         Check.That(obj).IsNotNull();
         Check.That(obj!.Code).IsEqualTo(HttpStatusCode.BadRequest);
-        Check.That(obj.Erreurs).IsEmpty();
+        Check.That(obj.Errors).IsEmpty();
     }
 
     [TestMethod]
@@ -52,7 +52,7 @@ public class KrosoftFunctionalExceptionConverterTests
         const string json = @"{
             ""Code"": 400,
             ""Message"": ""BadRequest"",
-            ""Erreurs"": [
+            ""Errors"": [
                 ""An ean13 must contain 13 digits."",
                 ""Un message là.""
                 ]
@@ -62,8 +62,8 @@ public class KrosoftFunctionalExceptionConverterTests
         Check.That(obj).IsNotNull();
         Check.That(obj!.Code).IsEqualTo(HttpStatusCode.BadRequest);
         Check.That(obj.Message).IsEqualTo("An ean13 must contain 13 digits.");
-        Check.That(obj.Erreurs).HasSize(2);
-        Check.That(obj.Erreurs.First()).IsEqualTo("An ean13 must contain 13 digits.");
-        Check.That(obj.Erreurs.Last()).IsEqualTo("Un message là.");
+        Check.That(obj.Errors).HasSize(2);
+        Check.That(obj.Errors.First()).IsEqualTo("An ean13 must contain 13 digits.");
+        Check.That(obj.Errors.Last()).IsEqualTo("Un message là.");
     }
 }

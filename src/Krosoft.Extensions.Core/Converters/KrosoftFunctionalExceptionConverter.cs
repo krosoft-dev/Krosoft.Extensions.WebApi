@@ -14,8 +14,8 @@ public class KrosoftFunctionalExceptionConverter : JsonConverter
         {
             var properties = new Dictionary<string, object>();
             serializer.Populate(reader, properties);
-            var array = properties.GetValueOrDefault(nameof(KrosoftFunctionalException.Erreurs)) as JArray;
-            var erreurs = new HashSet<string>();
+            var array = properties.GetValueOrDefault(nameof(KrosoftFunctionalException.Errors)) as JArray;
+            var errors = new HashSet<string>();
             if (array != null)
             {
                 var o = array.ToObject<List<string>>();
@@ -24,10 +24,10 @@ public class KrosoftFunctionalExceptionConverter : JsonConverter
                     throw new InvalidOperationException();
                 }
 
-                erreurs = o.ToHashSet();
+                errors = o.ToHashSet();
             }
 
-            return new KrosoftFunctionalException(erreurs);
+            return new KrosoftFunctionalException(errors);
         }
 
         return null;

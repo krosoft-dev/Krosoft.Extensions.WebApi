@@ -1,14 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="../../Test.target" />
 	<ItemGroup>
-	  <ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.DotNet6.Api\Krosoft.Extensions.Samples.DotNet6.Api.csproj" />
-	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cache.Distributed.Redis\Krosoft.Extensions.Cache.Distributed.Redis.csproj" />
-	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing.Cqrs\Krosoft.Extensions.Testing.Cqrs.csproj" />
-	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing.WebApi\Krosoft.Extensions.Testing.WebApi.csproj" />
+		<ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.DotNet6.Api\Krosoft.Extensions.Samples.DotNet6.Api.csproj" />
+		<ProjectReference Include="..\..\src\Krosoft.Extensions.Cache.Distributed.Redis\Krosoft.Extensions.Cache.Distributed.Redis.csproj" />
+		<ProjectReference Include="..\..\src\Krosoft.Extensions.Testing.Cqrs\Krosoft.Extensions.Testing.Cqrs.csproj" />
+		<ProjectReference Include="..\..\src\Krosoft.Extensions.Testing.WebApi\Krosoft.Extensions.Testing.WebApi.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Unit\Handlers\Commands\" />
-	</ItemGroup>
-
-
 </Project>

@@ -2,7 +2,6 @@
 using Krosoft.Extensions.Core.Interfaces;
 using Krosoft.Extensions.Testing.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Moq;
 
 namespace Krosoft.Extensions.Core.Tests.Services;
 

@@ -20,14 +20,15 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-             services.AddLoggingExt();services.AddRepositories(); 
+            services.AddLoggingExt();
+            services.AddRepositories();
             services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
             services.AddDbContextInMemory<SampleKrosoftAuditableContext>(true);
             services.AddSeedService<SampleKrosoftAuditableContext, SampleSeedService<SampleKrosoftAuditableContext>>();
         }
 
         await using var serviceProvider = CreateServiceCollection(GetServices);
-        using var contextScope = serviceProvider.CreateDbContextScope(new AuditableDbContextSettings<SampleKrosoftAuditableContext>(  DateTime.Now, ""));
+        using var contextScope = serviceProvider.CreateDbContextScope(new AuditableDbContextSettings<SampleKrosoftAuditableContext>(DateTime.Now, ""));
 
         var repository = contextScope.GetWriteRepository<Logiciel>();
 
@@ -44,7 +45,8 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-             services.AddLoggingExt();services.AddRepositories();
+            services.AddLoggingExt();
+            services.AddRepositories();
             services.AddDbContextInMemory<SampleKrosoftContext>(true);
             services.AddSeedService<SampleKrosoftContext, SampleSeedService<SampleKrosoftContext>>();
         }
@@ -67,7 +69,8 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-             services.AddLoggingExt();services.AddRepositories();
+            services.AddLoggingExt();
+            services.AddRepositories();
             services.AddScoped<ITenantDbContextProvider, FakeTenantDbContextProvider>();
             services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
             services.AddDbContextInMemory<SampleKrosoftTenantAuditableContext>(true);
@@ -75,7 +78,7 @@ public class ServiceProviderExtensionsTests : BaseTest
         }
 
         await using var serviceProvider = CreateServiceCollection(GetServices);
-        using var contextScope = serviceProvider.CreateDbContextScope(new TenantAuditableDbContextSettings<SampleKrosoftTenantAuditableContext>(new FakeTenantDbContextProvider().GetTenantId(),DateTime.Now, ""));
+        using var contextScope = serviceProvider.CreateDbContextScope(new TenantAuditableDbContextSettings<SampleKrosoftTenantAuditableContext>(new FakeTenantDbContextProvider().GetTenantId(), DateTime.Now, ""));
 
         var repository = contextScope.GetWriteRepository<Logiciel>();
 
@@ -92,7 +95,8 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-             services.AddLoggingExt();services.AddRepositories(); 
+            services.AddLoggingExt();
+            services.AddRepositories();
             services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
             services.AddDbContextInMemory<SampleKrosoftAuditableContext>(true);
             services.AddSeedService<SampleKrosoftAuditableContext, SampleSeedService<SampleKrosoftAuditableContext>>();
@@ -116,7 +120,8 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-             services.AddLoggingExt();services.AddRepositories();
+            services.AddLoggingExt();
+            services.AddRepositories();
             services.AddDbContextInMemory<SampleKrosoftContext>(true);
             services.AddSeedService<SampleKrosoftContext, SampleSeedService<SampleKrosoftContext>>();
         }
@@ -139,7 +144,8 @@ public class ServiceProviderExtensionsTests : BaseTest
     {
         void GetServices(IServiceCollection services)
         {
-             services.AddLoggingExt();services.AddRepositories();
+            services.AddLoggingExt();
+            services.AddRepositories();
             services.AddScoped<ITenantDbContextProvider, FakeTenantDbContextProvider>();
             services.AddScoped<IAuditableDbContextProvider, FakeAuditableDbContextProvider>();
             services.AddDbContextInMemory<SampleKrosoftTenantAuditableContext>(true);
@@ -147,7 +153,7 @@ public class ServiceProviderExtensionsTests : BaseTest
         }
 
         await using var serviceProvider = CreateServiceCollection(GetServices);
-        using var contextScope = serviceProvider.CreateReadDbContextScope(new TenantAuditableDbContextSettings<SampleKrosoftTenantAuditableContext>(new FakeTenantDbContextProvider().GetTenantId(),DateTime.Now, ""));
+        using var contextScope = serviceProvider.CreateReadDbContextScope(new TenantAuditableDbContextSettings<SampleKrosoftTenantAuditableContext>(new FakeTenantDbContextProvider().GetTenantId(), DateTime.Now, ""));
 
         var repository = contextScope.GetReadRepository<Logiciel>();
 

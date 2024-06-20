@@ -65,15 +65,15 @@ public abstract class KrosoftContext : DbContext
 
     protected virtual IEnumerable<Type> GetTypes() => new List<Type>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
-        foreach (var relationship in builder.Model.GetEntityTypes()
-                                            .Where(e => !e.IsOwned())
-                                            .SelectMany(e => e.GetForeignKeys()))
+        foreach (var relationship in modelBuilder.Model.GetEntityTypes()
+                                                 .Where(e => !e.IsOwned())
+                                                 .SelectMany(e => e.GetForeignKeys()))
         {
             if (relationship.DeleteBehavior == DeleteBehavior.Cascade)
             {

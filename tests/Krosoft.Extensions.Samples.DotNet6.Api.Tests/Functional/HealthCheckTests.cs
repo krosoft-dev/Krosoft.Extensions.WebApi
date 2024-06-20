@@ -3,8 +3,6 @@ using HealthChecks.UI.Core;
 using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Samples.DotNet6.Api.Tests.Core;
 using Krosoft.Extensions.WebApi.HealthChecks.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Samples.DotNet6.Api.Tests.Functional;
 

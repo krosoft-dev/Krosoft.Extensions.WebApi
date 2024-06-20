@@ -39,11 +39,11 @@ public class CustomExceptionHandlerMiddleware
         {
             case KrosoftFunctionalException validationException:
                 error.Status = validationException.Code;
-                error.Errors.AddRange(validationException.Erreurs);
+                error.Errors.AddRange(validationException.Errors);
                 break;
             case KrosoftTechnicalException techniqueException:
                 error.Status = techniqueException.Code;
-                error.Errors.AddRange(techniqueException.Erreurs);
+                error.Errors.AddRange(techniqueException.Errors);
                 break;
             case HttpException re:
                 error.Status = re.Code;

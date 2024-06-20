@@ -42,9 +42,9 @@ public abstract class KrosoftTenantContext : KrosoftContext
 
     protected override IEnumerable<Type> GetTypes() => [typeof(ITenant)];
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
         // Set BaseEntity rules to all loaded entity types
         foreach (var type in GetEntityTypes())
@@ -54,7 +54,7 @@ public abstract class KrosoftTenantContext : KrosoftContext
             if (type.GetInterfaces().Contains(typeof(ITenant)))
             {
                 var method = ConfigureTenantMethod.MakeGenericMethod(type);
-                method.Invoke(this, new object[] { builder });
+                method.Invoke(this, new object[] { modelBuilder });
             }
         }
     }

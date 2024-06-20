@@ -38,9 +38,9 @@ public abstract class KrosoftAuditableContext : KrosoftContext
 
     protected override IEnumerable<Type> GetTypes() => [typeof(IAuditable)];
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
         // Set BaseEntity rules to all loaded entity types
         foreach (var type in GetEntityTypes())
@@ -50,7 +50,7 @@ public abstract class KrosoftAuditableContext : KrosoftContext
             if (type.GetInterfaces().Contains(typeof(IAuditable)))
             {
                 var method = ConfigureAuditableMethod.MakeGenericMethod(type);
-                method.Invoke(this, new object[] { builder });
+                method.Invoke(this, new object[] { modelBuilder });
             }
         }
     }

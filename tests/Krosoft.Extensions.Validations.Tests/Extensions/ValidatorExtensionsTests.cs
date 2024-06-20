@@ -52,7 +52,7 @@ public class ValidatorExtensionsTests : BaseTest
     [TestMethod]
     public async Task ValidateMoreAsync_WithAction_Ok()
     {
-        IEnumerable<string>? f = null;
+        ISet<string>? f = null;
         await _validator.ValidateMoreAsync(new SampleEntity(), failures => { f = failures; }, CancellationToken.None);
 
         Check.That(f).HasSize(3);

@@ -19,7 +19,7 @@ namespace Krosoft.Extensions.Data.EntityFramework.InMemory.Tests.Functional;
 [TestSubject(typeof(KrosoftAuditableContext))]
 public class KrosoftAuditableContextTests : BaseTest
 {
-    private IReadRepository<Pays>? _repository = null;
+    private IReadRepository<Pays>? _repository;
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
@@ -35,9 +35,9 @@ public class KrosoftAuditableContextTests : BaseTest
 
     [TestMethod]
     public async Task Query_Ok()
-    { 
+    {
         var pays = await _repository!.Query()
-                                    .ToListAsync(CancellationToken.None);
+                                     .ToListAsync(CancellationToken.None);
 
         Check.That(pays).IsNotNull();
         Check.That(pays).HasSize(5);

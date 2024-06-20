@@ -1,6 +1,5 @@
 ﻿using Krosoft.Extensions.Data.Abstractions.Models;
 using Krosoft.Extensions.Samples.Library.Models;
-using NFluent;
 
 namespace Krosoft.Extensions.Data.Abstractions.Tests.Models;
 

@@ -10,12 +10,7 @@ public class KrosoftException : Exception
     {
     }
 
-    public KrosoftException(string message)
-        : base(message)
-    {
-    }
-
-    public KrosoftException(string message, Exception innerException)
+    public KrosoftException(string? message, Exception? innerException = null)
         : base(message, innerException)
     {
     }

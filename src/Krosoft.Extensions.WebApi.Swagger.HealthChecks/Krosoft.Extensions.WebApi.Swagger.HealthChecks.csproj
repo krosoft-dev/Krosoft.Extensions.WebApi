@@ -3,13 +3,12 @@
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Web Api AspNetCore swagger health checks</PackageTags>
 		<Description>Package pour faciliter l'utilisation de Swagger et HealthChecks avec ASP.NET Core.</Description>
-	</PropertyGroup> 	
+	</PropertyGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup> 	
+	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Krosoft.Extensions.WebApi.HealthChecks\Krosoft.Extensions.WebApi.HealthChecks.csproj" />
-	  <ProjectReference Include="..\Krosoft.Extensions.WebApi.Swagger\Krosoft.Extensions.WebApi.Swagger.csproj" />
-	</ItemGroup> 	
- 
+		<ProjectReference Include="..\Krosoft.Extensions.WebApi.HealthChecks\Krosoft.Extensions.WebApi.HealthChecks.csproj" />
+		<ProjectReference Include="..\Krosoft.Extensions.WebApi.Swagger\Krosoft.Extensions.WebApi.Swagger.csproj" />
+	</ItemGroup>
 </Project>

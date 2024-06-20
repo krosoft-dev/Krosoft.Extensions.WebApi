@@ -3,7 +3,6 @@ using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Data.Abstractions.Extensions;
 using Krosoft.Extensions.Data.Abstractions.Helpers;
 using Krosoft.Extensions.Samples.Library.Models.Entities;
-using NFluent;
 
 namespace Krosoft.Extensions.Data.Abstractions.Tests.Extensions;
 

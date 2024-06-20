@@ -14,13 +14,13 @@ public class SampleKrosoftAuditableContext : KrosoftAuditableContext
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
 
-        builder.HasDataJson<Statistique>();
-        builder.HasDataJson<Logiciel>();
-        builder.HasDataJson<Langue>();
-        builder.HasDataJson<Pays>();
+        modelBuilder.HasDataJson<Statistique>();
+        modelBuilder.HasDataJson<Logiciel>();
+        modelBuilder.HasDataJson<Langue>();
+        modelBuilder.HasDataJson<Pays>();
     }
 }

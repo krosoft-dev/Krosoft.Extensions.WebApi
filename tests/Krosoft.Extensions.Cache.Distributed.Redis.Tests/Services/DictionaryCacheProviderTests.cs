@@ -4,8 +4,6 @@ using Krosoft.Extensions.Samples.Library.Models.Cache;
 using Krosoft.Extensions.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NFluent;
 
 namespace Krosoft.Extensions.Cache.Distributed.Redis.Tests.Services;
 
