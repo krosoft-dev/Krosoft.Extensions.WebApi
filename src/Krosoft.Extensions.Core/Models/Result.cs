@@ -31,4 +31,8 @@ public readonly struct Result<T>
 
     public bool IsSuccess => Exception == null;
     public bool IsFaulted => !IsSuccess;
+
+    public static Result<T> Success(T value) => new Result<T>(value);
+
+    public static Result<T> Failure(Exception e) => new Result<T>(e);
 }
