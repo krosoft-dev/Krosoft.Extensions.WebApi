@@ -8,7 +8,9 @@ namespace Krosoft.Extensions.WebApi.Swagger.Extensions;
 
 public static class SwaggerGenOptionsExtensions
 {
-    public static SwaggerGenOptions AddSecurityApiKey(this SwaggerGenOptions options)
+    public static SwaggerGenOptions AddSecurityApiKey(this SwaggerGenOptions options) => options.AddSecurityApiKey(HeaderNames.Authorization);
+
+    public static SwaggerGenOptions AddSecurityApiKey(this SwaggerGenOptions options, string headerName)
     {
         const string openApiReferenceId = "ApiKey-Token";
 
@@ -16,7 +18,7 @@ public static class SwaggerGenOptionsExtensions
         {
             In = ParameterLocation.Header,
             Description = "Please provide a valid token",
-            Name = HeaderNames.Authorization,
+            Name = headerName,
             Type = SecuritySchemeType.ApiKey
         });
 
