@@ -41,9 +41,7 @@ public static class ServiceCollectionExtensions
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
-                {
-                    policy.AllowAnyMethod();
-
+                {                
                     if (webApiSettings.AllowedOrigins.Length > 0)
                     {
                         policy.WithOrigins(webApiSettings.AllowedOrigins);
@@ -53,7 +51,9 @@ public static class ServiceCollectionExtensions
                         policy.AllowAnyOrigin();
                     }
 
+                    policy.AllowAnyMethod();
                     policy.AllowAnyHeader();
+                    policy.AllowCredentials();
 
                     if (webApiSettings.ExposedHeaders.Length > 0)
                     {
