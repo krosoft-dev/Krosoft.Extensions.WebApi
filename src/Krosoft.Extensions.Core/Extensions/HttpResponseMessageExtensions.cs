@@ -72,4 +72,44 @@ public static class HttpResponseMessageExtensions
         throw new HttpException(httpResponseMessage.StatusCode,
                                 httpResponseMessage.ReasonPhrase);
     }
+
+    public static async Task<T?> EnsureAsync<T>(this HttpResponseMessage httpResponseMessage,
+                                                Func<HttpStatusCode, string, Exception> onError,
+                                                CancellationToken cancellationToken = default)
+    {
+        if (httpResponseMessage.IsSuccessStatusCode)
+        {
+            var json = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+            var obj = JsonConvert.DeserializeObject<T>(json);
+            return obj;
+        }
+
+        await httpResponseMessage.EnsureAsync(onError, cancellationToken);
+        return default;
+    }
+
+    public static async Task EnsureAsync(this HttpResponseMessage httpResponseMessage,
+                                         Func<HttpStatusCode, string, Exception> onError,
+                                         CancellationToken cancellationToken = default)
+    {
+        if (httpResponseMessage.IsSuccessStatusCode)
+        {
+        }
+        else
+        {
+            var json = await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken);
+            var isValid = JsonHelper.IsValid(json);
+            if (isValid)
+            {
+                var ex = onError(httpResponseMessage.StatusCode, json);
+                if (ex != null)
+                {
+                    throw ex;
+                }
+            }
+
+            throw new HttpException(httpResponseMessage.StatusCode,
+                                    httpResponseMessage.ReasonPhrase);
+        }
+    }
 }

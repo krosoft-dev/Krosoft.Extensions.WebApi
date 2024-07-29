@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -55,6 +56,15 @@ public static class HttpClientExtensions
 
         await httpResponseMessage.ManageErrorAsync(cancellationToken);
         return null;
+    }
+
+    public static async Task<T?> EnsureAsync<T>(this Task<HttpResponseMessage> task,
+                                                Func<HttpStatusCode, string, Exception> onError,
+                                                CancellationToken cancellationToken = default)
+    {
+        var httpResponseMessage = await task;
+
+        return await httpResponseMessage.EnsureAsync<T?>(onError, cancellationToken);
     }
 
     public static async Task<string?> EnsureStringAsync(this Task<HttpResponseMessage> task,
