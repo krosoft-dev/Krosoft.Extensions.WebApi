@@ -13,6 +13,5 @@ public class GenericFileStream : IFileStream
 
     public string ContentType { get; }
     public string FileName { get; }
-
     public Stream Stream { get; }
 }
