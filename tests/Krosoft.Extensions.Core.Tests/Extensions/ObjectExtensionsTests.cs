@@ -8,6 +8,21 @@ namespace Krosoft.Extensions.Core.Tests.Extensions;
 public class ObjectExtensionsTests
 {
     [TestMethod]
+    public void DeepCopyTest()
+    {
+        var compte = new Compte
+        {
+            Id = "001",
+            Name = "Test 001"
+        };
+
+        var cloned = compte.DeepCopy();
+        Check.That(cloned).IsNotNull();
+        Check.That(cloned!.Id).IsEqualTo("001");
+        Check.That(cloned.Name).IsEqualTo("Test 001");
+    }
+
+    [TestMethod]
     public void SetPropertyValueTest()
     {
         var compte = new Compte

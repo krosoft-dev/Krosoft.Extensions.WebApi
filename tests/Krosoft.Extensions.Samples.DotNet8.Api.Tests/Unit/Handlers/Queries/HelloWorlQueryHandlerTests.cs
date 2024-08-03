@@ -1,4 +1,5 @@
-﻿using Krosoft.Extensions.Samples.Library.Models.Queries;
+﻿using Krosoft.Extensions.Samples.DotNet8.Api.Tests.Core;
+using Krosoft.Extensions.Samples.Library.Models.Queries;
 using Krosoft.Extensions.Testing.Cqrs.Extensions;
 
 namespace Krosoft.Extensions.Samples.DotNet8.Api.Tests.Unit.Handlers.Queries;

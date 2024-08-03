@@ -1,4 +1,5 @@
 using System.Net;
+using Krosoft.Extensions.Samples.DotNet8.Api.Tests.Core;
 
 namespace Krosoft.Extensions.Samples.DotNet8.Api.Tests.Functional;
 

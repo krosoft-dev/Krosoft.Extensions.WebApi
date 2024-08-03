@@ -1,6 +1,7 @@
 using System.Net;
 using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Helpers;
+using Krosoft.Extensions.Samples.DotNet8.Api.Tests.Core;
 using Krosoft.Extensions.Samples.Library.Models.Dto;
 
 namespace Krosoft.Extensions.Samples.DotNet8.Api.Tests.Functional;

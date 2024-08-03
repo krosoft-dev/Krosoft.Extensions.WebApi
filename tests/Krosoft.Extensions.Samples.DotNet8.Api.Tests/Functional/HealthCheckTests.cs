@@ -1,6 +1,7 @@
 using System.Net;
 using HealthChecks.UI.Core;
 using Krosoft.Extensions.Core.Extensions;
+using Krosoft.Extensions.Samples.DotNet8.Api.Tests.Core;
 using Krosoft.Extensions.WebApi.HealthChecks.Models;
 
 namespace Krosoft.Extensions.Samples.DotNet8.Api.Tests.Functional;

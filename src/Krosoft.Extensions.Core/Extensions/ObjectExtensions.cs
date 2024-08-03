@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using Krosoft.Extensions.Core.Helpers;
+using Newtonsoft.Json;
 
 namespace Krosoft.Extensions.Core.Extensions;
 
@@ -12,6 +13,12 @@ namespace Krosoft.Extensions.Core.Extensions;
 /// </summary>
 public static class ObjectExtensions
 {
+    public static T? DeepCopy<T>(this T self)
+    {
+        var serialized = JsonConvert.SerializeObject(self);
+        return JsonConvert.DeserializeObject<T>(serialized);
+    }
+
     private static List<string> GetPropertiesExclusions<T>(Expression<Func<T, object>>[]? expressionsPropertiesExclusions)
     {
         var propertiesExclusions = new List<string>();

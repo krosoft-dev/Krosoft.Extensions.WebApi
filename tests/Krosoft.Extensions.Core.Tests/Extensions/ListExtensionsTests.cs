@@ -77,4 +77,13 @@ public class ListExtensionsTests
 
         Check.That(result).IsEqualTo(new ReadOnlyDictionary<int, string>(new Dictionary<int, string> { { 5, "apple" }, { 6, "orange" } }));
     }
+
+    [TestMethod]
+    public void ToReadOnlyDictionary_WithDistinctKeys_ReturnsCorrectDictionary()
+    {
+        var result = _data.ToList().ToReadOnlyDictionary(x => x.Length, true);
+
+        Check.That(result).IsEqualTo(new ReadOnlyDictionary<int, string>(new Dictionary<int, string> { { 5, "apple" }, { 6, "orange" } }));
+    }
 }
+ 
