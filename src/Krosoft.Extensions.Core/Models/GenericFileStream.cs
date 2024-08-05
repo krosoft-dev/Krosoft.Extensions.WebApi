@@ -7,7 +7,7 @@ public class GenericFileStream : IFileStream
     public GenericFileStream(Stream stream, string fileName, string contentType)
     {
         Stream = stream;
-        FileName = fileName.Sanitize();
+        FileName = fileName.Sanitize() ?? fileName;
         ContentType = contentType;
     }
 

@@ -7,38 +7,38 @@ namespace Krosoft.Extensions.Core.Helpers;
 /// </summary>
 public static class StringHelper
 {
-    public static string? ClearFilePath(string? text) =>
-        text?.Replace(" ", "-")
-            .Replace("/", "-");
+    public static string? ClearFilePath(string? source) =>
+        source?.Replace(" ", "-")
+              .Replace("/", "-");
 
     public static string FormatCurrency(decimal montant, string currencyIsoCode) => $"{currencyIsoCode} {FormatNumber(montant)}";
 
-    public static string FormatDate(string dateString)
+    public static string FormatDate(string? source)
     {
-        DateTime.TryParse(dateString, out var date);
+        DateTime.TryParse(source, out var date);
         return date.ToString("d");
     }
 
     public static string FormatNumber(decimal montant) => $"{montant:# ##0.00}".Replace('.', ',');
 
-    public static Stream GenerateStreamFromString(string? s)
+    public static Stream GenerateStreamFromString(string? source)
     {
         var stream = new MemoryStream();
         var writer = new StreamWriter(stream);
-        writer.Write(s);
+        writer.Write(source);
         writer.Flush();
         stream.Position = 0;
         return stream;
     }
 
-    public static string GetAbbreviation(string? data)
+    public static string GetAbbreviation(string? source)
     {
-        if (string.IsNullOrWhiteSpace(data))
+        if (string.IsNullOrWhiteSpace(source))
         {
             return string.Empty;
         }
 
-        var trimedData = data.Trim();
+        var trimedData = source.Trim();
         if (trimedData.Length <= 2)
         {
             return trimedData.ToUpper();
@@ -67,11 +67,11 @@ public static class StringHelper
     }
 
     /// <summary>Concatène plusieurs chaines et enlève les espaces superflus ou renvoie null si la chaine est vide</summary>
-    /// <param name="chaines">Les chaines a formater</param>
+    /// <param name="source">Les chaines a formater</param>
     /// <returns>La chaine formatée </returns>
-    public static string? Join(params object?[] chaines)
+    public static string? Join(params object?[] source)
     {
-        var chainesTemp = chaines.ToList().Where(s => s != null).Select(s => s!.ToString()!.Trim()).ToList();
+        var chainesTemp = source.ToList().Where(s => s != null).Select(s => s!.ToString()!.Trim()).ToList();
 
         if (!chainesTemp.Any())
         {
@@ -88,14 +88,14 @@ public static class StringHelper
         return chaine.Trim();
     }
 
-    public static string? KeepDigitsOnly(string? value)
+    public static string? KeepDigitsOnly(string? source)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(source))
         {
-            return value;
+            return source;
         }
 
-        return new string(value.Where(char.IsDigit).ToArray());
+        return new string(source.Where(char.IsDigit).ToArray());
     }
 
     public static string RandomString(int length)
@@ -110,11 +110,11 @@ public static class StringHelper
     /// <summary>
     /// Essaye de convertir en int, si echec on retourne 0
     /// </summary>
-    /// <param name="value">la chaine de caractère à convertir</param>
+    /// <param name="source">la chaine de caractère à convertir</param>
     /// <returns>la chaine convertie, zero si echec</returns>
-    public static int ToInteger(string? value)
+    public static int ToInteger(string? source)
     {
-        var result = int.TryParse(value, out var number);
+        var result = int.TryParse(source, out var number);
         if (result)
         {
             return number;
@@ -126,11 +126,11 @@ public static class StringHelper
     /// <summary>
     /// Essaye de convertir en int, si echec on retourne 0
     /// </summary>
-    /// <param name="value">la chaine de caractère à convertir</param>
+    /// <param name="source">la chaine de caractère à convertir</param>
     /// <returns>la chaine convertie, zero si echec</returns>
-    public static long ToLong(string? value)
+    public static long ToLong(string? source)
     {
-        var result = long.TryParse(value, out var number);
+        var result = long.TryParse(source, out var number);
         if (result)
         {
             return number;
@@ -142,38 +142,38 @@ public static class StringHelper
     /// <summary>
     /// Supprime, de l'objet System.String actuel, tous les espaces blancs en début ou en fin de chaîne.
     /// </summary>
-    /// <param name="value">la chaine de caractère</param>
+    /// <param name="source">la chaine de caractère</param>
     /// <param name="allWhiteSpace">
     /// Si allWhiteSpace est vrai, on supprime aussi tous les espaces blancs à l'intérieur de la
     /// chaine de caractères
     /// </param>
     /// <returns>une chaine de caractères sans espaces blancs</returns>
-    public static string Trim(string? value, bool allWhiteSpace = false)
+    public static string Trim(string? source, bool allWhiteSpace = false)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(source))
         {
             return string.Empty;
         }
 
         if (allWhiteSpace)
         {
-            return Regex.Replace(value, @"\s+", string.Empty, RegexOptions.None, RegexHelper.MatchTimeout);
+            return Regex.Replace(source, @"\s+", string.Empty, RegexOptions.None, RegexHelper.MatchTimeout);
         }
 
-        return value.Trim();
+        return source.Trim();
     }
 
     /// <summary>Enleve les espaces superflus d'une chaine uniquement ou renvoie null si la chaine est vide</summary>
-    /// <param name="chaine">La chaine a formater</param>
+    /// <param name="source">La chaine a formater</param>
     /// <returns>La chaine formatée </returns>
-    public static string? Trim(object? chaine)
+    public static string? Trim(object? source)
     {
-        if (chaine == null)
+        if (source == null)
         {
             return null;
         }
 
-        var value = chaine.ToString();
+        var value = source.ToString();
         if (string.IsNullOrWhiteSpace(value))
         {
             return null;
@@ -185,16 +185,16 @@ public static class StringHelper
     /// <summary>
     /// Enleve les espaces superflus d'une chaine uniquement ou renvoie string.Empty si la chaine est vide.
     /// </summary>
-    /// <param name="chaine">La chaine à formater.</param>
+    /// <param name="source">La chaine à formater.</param>
     /// <returns>La chaine formatée.</returns>
-    public static string TrimIfNotNull(object? chaine)
+    public static string TrimIfNotNull(object? source)
     {
-        if (chaine == null)
+        if (source == null)
         {
             return string.Empty;
         }
 
-        var value = chaine.ToString();
+        var value = source.ToString();
         if (string.IsNullOrEmpty(value))
         {
             return string.Empty;
@@ -203,21 +203,21 @@ public static class StringHelper
         return value.Trim();
     }
 
-    public static string? Truncate(string? value, int maxLength)
+    public static string? Truncate(string? source, int maxLength)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(source))
         {
-            return value;
+            return source;
         }
 
-        return value.Length <= maxLength
-            ? value
-            : value.Substring(0, maxLength) + "...";
+        return source.Length <= maxLength
+            ? source
+            : source.Substring(0, maxLength) + "...";
     }
 
-    public static bool TryParseToBoolean(string? value)
+    public static bool TryParseToBoolean(string? source)
     {
-        var result = bool.TryParse(value, out var boolValue);
+        var result = bool.TryParse(source, out var boolValue);
         if (result)
         {
             return boolValue;

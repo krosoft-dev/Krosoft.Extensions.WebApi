@@ -1,8 +1,8 @@
-Write-Host "=========================================="
-Write-Host "Clean branch of Repository"
-Write-Host "=========================================="
+Write-Host -fore green "=========================================="
+Write-Host -fore green "Clean branch of Repository"
+Write-Host -fore green "=========================================="
 $path = Get-Location
-Write-Host "Path : " $path
-Write-Host "=========================================="
+Write-Host -fore green "Path : " $path
+Write-Host -fore green "=========================================="
 git pull
-Write-Host      
+Write-Host -fore green       

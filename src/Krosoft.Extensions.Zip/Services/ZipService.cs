@@ -62,7 +62,7 @@ public class ZipService : IZipService
 
         using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
         {
-            var entry = archive.CreateEntry(fileName.Sanitize());
+            var entry = archive.CreateEntry(fileName.Sanitize() ?? fileName);
             using (var entryStream = entry.Open())
             {
                 stream.CopyTo(entryStream);
@@ -102,7 +102,7 @@ public class ZipService : IZipService
 
         var ms = await ZipAsync(dictionary, cancellationToken);
 
-        return new ZipFileStream(ms, fileName.Sanitize());
+        return new ZipFileStream(ms, fileName.Sanitize() ?? string.Empty);
     }
 
     public async Task<Stream> ZipAsync(IReadOnlyDictionary<string, string> dictionary,
@@ -141,7 +141,7 @@ public class ZipService : IZipService
 
         var ms = await ZipAsync(dictionary, cancellationToken);
 
-        return new ZipFileStream(ms, fileName.Sanitize());
+        return new ZipFileStream(ms, fileName.Sanitize() ?? fileName);
     }
 
     public async Task<Stream> ZipAsync(IReadOnlyDictionary<string, Stream> dictionary,

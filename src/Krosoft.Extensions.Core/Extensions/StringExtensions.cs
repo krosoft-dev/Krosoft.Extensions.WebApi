@@ -16,15 +16,15 @@ public static class StringExtensions
 
     public static string? ClearFilePath(this string? text) => StringHelper.ClearFilePath(text);
 
-    public static string FromUtf8ToAscii(this string? text)
+    public static string? FromUtf8ToAscii(this string? source)
     {
-        if (string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
-            return string.Empty;
+            return source;
         }
 
         var utf8 = Encoding.UTF8;
-        var encodedBytes = utf8.GetBytes(text);
+        var encodedBytes = utf8.GetBytes(source);
         var targetEncoding = Encoding.GetEncoding(1252);
         var convertedBytes = Encoding.Convert(Encoding.UTF8, targetEncoding, encodedBytes);
         return targetEncoding.GetString(convertedBytes);
@@ -42,14 +42,14 @@ public static class StringExtensions
     /// <summary>
     /// Renvoie les n caractères de gauche
     /// </summary>
-    /// <param name="text">la chaine</param>
+    /// <param name="source">la chaine</param>
     /// <param name="length">le nombre de caractères</param>
     /// <returns>une sous chaine</returns>
-    public static string Left(this string? text, int length)
+    public static string? Left(this string? source, int length)
     {
-        if (string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
-            return string.Empty;
+            return source;
         }
 
         if (length < 0)
@@ -57,49 +57,62 @@ public static class StringExtensions
             return string.Empty;
         }
 
-        return text.Substring(0, Math.Min(length, text.Length));
+        return source.Substring(0, Math.Min(length, source.Length));
     }
 
-    public static bool Match(this string? searchText,
+    public static bool Match(this string? source,
                              string? text)
     {
-        if (string.IsNullOrEmpty(searchText) || string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
             return false;
         }
 
-        return searchText.RemoveSpecials().Contains(text.RemoveSpecials(), StringComparison.InvariantCultureIgnoreCase) ||
-               text.RemoveSpecials().Contains(searchText.RemoveSpecials(), StringComparison.InvariantCultureIgnoreCase);
+        if (string.IsNullOrEmpty(text))
+        {
+            return false;
+        }
+
+        var removeSpecials = source.RemoveSpecials();
+        var specials = text.RemoveSpecials();
+
+        if (removeSpecials == null || specials == null)
+        {
+            return false;
+        }
+
+        return removeSpecials.Contains(specials, StringComparison.InvariantCultureIgnoreCase) ||
+               specials.Contains(removeSpecials, StringComparison.InvariantCultureIgnoreCase);
     }
 
     /// <summary>
     /// Enlève tous les espaces d'une chaîne.
     /// </summary>
-    /// <param name="text">Texte source.</param>
+    /// <param name="source">Texte source.</param>
     /// <returns>Chaîne sans les espaces.</returns>
-    public static string? RemoveAllSpaces(this string? text)
+    public static string? RemoveAllSpaces(this string? source)
     {
-        if (string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
-            return text;
+            return source;
         }
 
-        return Regex.Replace(text, @"\s+", string.Empty, RegexOptions.None, RegexHelper.MatchTimeout);
+        return Regex.Replace(source, @"\s+", string.Empty, RegexOptions.None, RegexHelper.MatchTimeout);
     }
 
     /// <summary>
     /// Remplace tous les caractères avec accent par leurs version sans accent
     /// </summary>
-    /// <param name="text">valeur à transformer</param>
+    /// <param name="source">valeur à transformer</param>
     /// <returns>la valeur sans accent</returns>
-    public static string RemoveDiacritics(this string? text)
+    public static string? RemoveDiacritics(this string? source)
     {
-        if (string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
-            return string.Empty;
+            return source;
         }
 
-        var normalizedString = text.Normalize(NormalizationForm.FormD);
+        var normalizedString = source.Normalize(NormalizationForm.FormD);
         var stringBuilder = new StringBuilder();
 
         foreach (var c in normalizedString)
@@ -114,32 +127,62 @@ public static class StringExtensions
         return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
     }
 
-    public static string RemoveSpecials(this string? text)
-    {
-        if (string.IsNullOrEmpty(text))
-        {
-            return string.Empty;
-        }
-
-        return Regex.Replace(text, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled, RegexHelper.MatchTimeout);
-    }
-
-    public static string Replace(this string? text, char[] separators, string input)
-    {
-        if (string.IsNullOrEmpty(text))
-        {
-            return string.Empty;
-        }
-
-        var temp = text.Split(separators, StringSplitOptions.RemoveEmptyEntries);
-        return string.Join(input, temp);
-    }
-
-    public static string ReplaceFirstOccurrence(this string? source, string find, string replace)
+    public static string? RemovePrefix(this string? source, string? prefix)
     {
         if (string.IsNullOrEmpty(source))
         {
-            return string.Empty;
+            return source;
+        }
+
+        if (string.IsNullOrEmpty(prefix) || prefix.Length > source.Length)
+        {
+            return source;
+        }
+
+        if (source.StartsWith(prefix))
+        {
+            return source.Substring(prefix.Length);
+        }
+
+        return source;
+    }
+
+    public static string? RemoveSpecials(this string? source)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return source;
+        }
+
+        return Regex.Replace(source, "[^a-zA-Z0-9_.]+", "", RegexOptions.Compiled, RegexHelper.MatchTimeout);
+    }
+
+    public static string? RemoveTrailingSlash(this string? source)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return source;
+        }
+
+        return source.EndsWith("/") ? source.Remove(source.Length - 1) : source;
+    }
+
+    public static string? Replace(this string? source, char[] separators, string input)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return source;
+        }
+
+        var temp = source.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+        return string.Join(input, temp);
+    }
+
+    public static string? ReplaceFirstOccurrence(this string? source, string find, string replace)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return source;
         }
 
         var place = source.IndexOf(find, StringComparison.Ordinal);
@@ -152,11 +195,11 @@ public static class StringExtensions
         return source;
     }
 
-    public static string ReplaceLastOccurrence(this string? source, string find, string replace)
+    public static string? ReplaceLastOccurrence(this string? source, string find, string replace)
     {
         if (string.IsNullOrEmpty(source))
         {
-            return string.Empty;
+            return source;
         }
 
         var place = source.LastIndexOf(find, StringComparison.Ordinal);
@@ -172,14 +215,14 @@ public static class StringExtensions
     /// <summary>
     /// Renvoie les n caractères de droite
     /// </summary>
-    /// <param name="text">la chaine</param>
+    /// <param name="source">la chaine</param>
     /// <param name="length">le nombre de caractères</param>
     /// <returns>une sous chaine</returns>
-    public static string Right(this string? text, int length)
+    public static string? Right(this string? source, int length)
     {
-        if (string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
-            return string.Empty;
+            return source;
         }
 
         if (length < 0)
@@ -187,15 +230,15 @@ public static class StringExtensions
             return string.Empty;
         }
 
-        return text.Substring(Math.Max(0, text.Length - length), Math.Min(length, text.Length));
+        return source.Substring(Math.Max(0, source.Length - length), Math.Min(length, source.Length));
     }
 
-    public static string Sanitize(this string? text,
-                                  string? replacement = "_")
+    public static string? Sanitize(this string? source,
+                                   string? replacement = "_")
     {
-        if (string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
-            return string.Empty;
+            return source;
         }
 
         if (string.IsNullOrEmpty(replacement))
@@ -203,26 +246,26 @@ public static class StringExtensions
             replacement = "_";
         }
 
-        return RemoveInvalidChars.Replace(text, replacement).RemoveSpecials();
+        return RemoveInvalidChars.Replace(source, replacement).RemoveSpecials();
     }
 
     /// <summary>
     /// Découpe une chaîne et nettoie les résultats.
     /// </summary>
-    /// <param name="text">Chaîne à découper.</param>
+    /// <param name="source">Chaîne à découper.</param>
     /// <param name="splitString">Chaîne de découpe.</param>
     /// <returns>Tableau des éléments trimmés après découpe, les éléments vides étant enlevés.</returns>
-    public static string[] SplitAndClean(this string? text, char splitString)
+    public static string[] SplitAndClean(this string? source, char splitString)
     {
-        if (string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
             return Array.Empty<string>();
         }
 
-        var split = text.Split(splitString)
-                        .Select(piece => new { piece, trimmed = piece.Trim() })
-                        .Where(t => !string.IsNullOrEmpty(t.trimmed))
-                        .Select(t => t.trimmed);
+        var split = source.Split(splitString)
+                          .Select(piece => new { piece, trimmed = piece.Trim() })
+                          .Where(t => !string.IsNullOrEmpty(t.trimmed))
+                          .Select(t => t.trimmed);
 
         return split.ToArray();
     }
@@ -230,46 +273,46 @@ public static class StringExtensions
     /// <summary>
     /// Extrait les caractères alpha-numériques de la valeur en paramètre.
     /// </summary>
-    /// <param name="value">Valeur à extraire.</param>
+    /// <param name="source">Valeur à extraire.</param>
     /// <returns>Valeur extraite.</returns>
-    public static string ToAlphaNumeric(this string? value)
+    public static string? ToAlphaNumeric(this string? source)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(source))
         {
-            return string.Empty;
+            return source;
         }
 
         var rgx = new Regex("[^a-zA-Z0-9]", RegexOptions.None, RegexHelper.MatchTimeout);
-        return rgx.Replace(value, string.Empty);
+        return rgx.Replace(source, string.Empty);
     }
 
-    public static string? ToCamelCase(this string? value)
+    public static string? ToCamelCase(this string? source)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(source))
         {
-            return value;
+            return source;
         }
 
-        return char.ToLowerInvariant(value[0]) + value.Substring(1);
+        return char.ToLowerInvariant(source[0]) + source.Substring(1);
     }
 
-    public static int ToInteger(this string? value) => NumberHelper.ToInteger(value);
+    public static int ToInteger(this string? source) => NumberHelper.ToInteger(source);
 
     /// <summary>
     /// Convertie le premier caractère de la chaîne en majuscule, puis le reste en minuscule.
     /// </summary>
-    /// <param name="text">Texte source.</param>
+    /// <param name="source">Texte source.</param>
     /// <returns>Premier caractère de la chaîne en majuscule, puis le reste en minuscule.</returns>
-    public static string? ToUpperFirst(this string? text)
+    public static string? ToUpperFirst(this string? source)
     {
-        if (string.IsNullOrEmpty(text))
+        if (string.IsNullOrEmpty(source))
         {
-            return text;
+            return source;
         }
 
-        return char.ToUpper(text[0]) +
-               (text.Length > 1
-                   ? text.Substring(1).ToLower()
+        return char.ToUpper(source[0]) +
+               (source.Length > 1
+                   ? source.Substring(1).ToLower()
                    : string.Empty);
     }
 
@@ -277,21 +320,21 @@ public static class StringExtensions
     /// Tronque une chaine si sa longueur est plus grande que maxLenght
     /// Sinon, renvoie la même référence
     /// </summary>
-    /// <param name="value">La chaine à tronquer</param>
+    /// <param name="source">La chaine à tronquer</param>
     /// <param name="length">longueur maximale</param>
     /// <returns>La chaine tronquée</returns>
-    public static string? Truncate(this string? value, int length)
+    public static string? Truncate(this string? source, int length)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(source))
         {
-            return value;
+            return source;
         }
 
-        if (length < 0 || value.Length <= length)
+        if (length < 0 || source.Length <= length)
         {
-            return value;
+            return source;
         }
 
-        return value.Substring(0, length);
+        return source.Substring(0, length);
     }
 }

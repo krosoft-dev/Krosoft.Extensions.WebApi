@@ -7,7 +7,7 @@ public class StringExtensionsTests
 {
     [DataTestMethod]
     [DataRow("", 5, "")]
-    [DataRow(null, 5, "")]
+    [DataRow(null, 5, null)]
     [DataRow("", 5, "")]
     [DataRow("abcdefgh", 3, "abc")]
     [DataRow("xyz", 10, "xyz")]
@@ -61,7 +61,25 @@ public class StringExtensionsTests
     }
 
     [DataTestMethod]
-    [DataRow(null, "")]
+    [DataRow(null, "", null)]
+    [DataRow("", "", "")]
+    [DataRow("test", null, "test")]
+    [DataRow("TestString", "", "TestString")]
+    [DataRow("TestString", "Test", "String")]
+    [DataRow("TestString", null, "TestString")]
+    [DataRow("TestString", "TestString", "")]
+    [DataRow("TestString", "TestLongerPrefix", "TestString")] // prefix longer than input
+    [DataRow("TestString", "String", "TestString")] // prefix not at the beginning
+    [DataRow("Test String", "Test", " String")] // prefix with space in input
+    [DataRow("Test@String!", "Test@", "String!")] // prefix with special characters
+    [DataRow("testString", "Test", "testString")] // case sensitivity test
+    public void RemovePrefix_Ok(string input, string prefix, string expectedOutput)
+    {
+        Check.That(input.RemovePrefix(prefix)).IsEqualTo(expectedOutput);
+    }
+
+    [DataTestMethod]
+    [DataRow(null, null)]
     [DataRow("", "")]
     [DataRow("text", "text")]
     [DataRow("ét€", "t")]
@@ -76,6 +94,15 @@ public class StringExtensionsTests
         Check.That(result).IsEqualTo(expectedOutput);
     }
 
+    [DataTestMethod]
+    [DataRow(null, null)]
+    [DataRow("", "")]
+    [DataRow("http://example.com/", "http://example.com")]
+    public void RemoveTrailingSlash_Ok(string input, string expectedOutput)
+    {
+        Check.That(input.RemoveTrailingSlash()).IsEqualTo(expectedOutput);
+    }
+
     [TestMethod]
     public void Replace_Ok()
     {
@@ -85,7 +112,7 @@ public class StringExtensionsTests
     }
 
     [DataTestMethod]
-    [DataRow(null, "find", "replace", "")]
+    [DataRow(null, "find", "replace", null)]
     [DataRow("", "find", "replace", "")]
     [DataRow("find and replace", "find", "new", "new and replace")]
     [DataRow("no match", "find", "replace", "no match")]
@@ -98,7 +125,7 @@ public class StringExtensionsTests
     }
 
     [DataTestMethod]
-    [DataRow(null, "find", "replace", "")]
+    [DataRow(null, "find", "replace", null)]
     [DataRow("", "find", "replace", "")]
     [DataRow("find and replace", "find", "new", "new and replace")]
     [DataRow("no match", "find", "replace", "no match")]
@@ -111,7 +138,7 @@ public class StringExtensionsTests
     }
 
     [DataTestMethod]
-    [DataRow(null, 5, "")]
+    [DataRow(null, 5, null)]
     [DataRow("", 5, "")]
     [DataRow("abcdefgh", 3, "fgh")]
     [DataRow("xyz", 10, "xyz")]
@@ -151,7 +178,7 @@ public class StringExtensionsTests
     }
 
     [DataTestMethod]
-    [DataRow(null, "")]
+    [DataRow(null, null)]
     [DataRow("", "")]
     [DataRow("abc123", "abc123")]
     [DataRow("special!@#$characters", "specialcharacters")]
