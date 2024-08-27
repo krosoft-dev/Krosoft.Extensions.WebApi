@@ -18,14 +18,30 @@ public class EnumerableExtensionsTests
     }
 
     [TestMethod]
-    public void ChunkByTest()
+    public void ChunkBy_MoreData()
+    {
+        var chunks = LogicielFactory.GetRandom(100000, null).ChunkBy(9999);
+        Check.That(chunks).HasSize(11);
+        Check.That(chunks.Select(a => a.Count())).ContainsExactly(9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 10);
+    }
+
+    [TestMethod]
+    public void ChunkBy_Ok()
     {
         var adresses = AddresseFactory.GetAdresses().ToList();
-        Check.That(adresses.Extracting(a => a.CodePostal)).ContainsExactly("zipcode3", "zipcode4", "zipcode5", "zipcode1", "zipcode2", "zipcode6");
+        Check.That(adresses.Select(a => a.CodePostal)).ContainsExactly("zipcode3", "zipcode4", "zipcode5", "zipcode1", "zipcode2", "zipcode6");
 
         var chunks = adresses.ChunkBy(2);
         Check.That(chunks).HasSize(3);
-        Check.That(chunks.Select(a => a.Count)).ContainsExactly(2, 2, 2);
+        Check.That(chunks.Select(a => a.Count())).ContainsExactly(2, 2, 2);
+
+        Check.That(chunks.Select(a => a.Select(x => x.CodePostal)))
+             .ContainsExactly(new List<IEnumerable<string>>
+             {
+                 new List<string> { "zipcode3", "zipcode4" },
+                 new List<string> { "zipcode5", "zipcode1" },
+                 new List<string> { "zipcode2", "zipcode6" }
+             });
     }
 
     [TestMethod]

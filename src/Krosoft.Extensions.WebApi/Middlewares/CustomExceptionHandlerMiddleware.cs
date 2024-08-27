@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Net.Mime;
 using Krosoft.Extensions.Core.Extensions;
+using Krosoft.Extensions.Core.Models.Dto;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Core.Models.Exceptions.Http;
-using Krosoft.Extensions.WebApi.Models.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

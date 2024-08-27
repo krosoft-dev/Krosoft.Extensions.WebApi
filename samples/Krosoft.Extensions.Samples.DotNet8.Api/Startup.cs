@@ -64,6 +64,7 @@ public class Startup
 
         //Swagger.
         services.AddSwagger(currentAssembly, options => options.AddHealthChecks()
+                                                               .AddGlobalResponses()
                                                                .AddSecurityBearer()
                                                                .AddSecurityApiKey());
 

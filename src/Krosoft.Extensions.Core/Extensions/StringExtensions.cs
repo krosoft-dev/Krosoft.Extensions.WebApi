@@ -14,6 +14,21 @@ public static class StringExtensions
                                                                  RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.CultureInvariant
                                                                  , RegexHelper.MatchTimeout);
 
+    /// <summary>
+    /// Insère des espaces avant chaque lettre majuscule dans une chaîne de caractères.
+    /// </summary>
+    /// <param name="source">La chaîne de caractères à formater.</param>
+    /// <returns>Une nouvelle chaîne de caractères avec des espaces avant les majuscules.</returns>
+    public static string AddSpacesBeforeCapitals(this string? source)
+    {
+        if (string.IsNullOrEmpty(source))
+        {
+            return string.Empty;
+        }
+
+        return Regex.Replace(source, "([a-z])([A-Z])", "$1 $2");
+    }
+
     public static string? ClearFilePath(this string? text) => StringHelper.ClearFilePath(text);
 
     public static string? FromUtf8ToAscii(this string? source)

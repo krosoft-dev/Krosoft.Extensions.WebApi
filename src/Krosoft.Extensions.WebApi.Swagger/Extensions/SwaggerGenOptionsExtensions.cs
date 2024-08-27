@@ -8,6 +8,13 @@ namespace Krosoft.Extensions.WebApi.Swagger.Extensions;
 
 public static class SwaggerGenOptionsExtensions
 {
+    public static SwaggerGenOptions AddGlobalResponses(this SwaggerGenOptions options)
+    {
+        options.OperationFilter<GlobalResponsesOperationFilter>();
+
+        return options;
+    }
+
     public static SwaggerGenOptions AddSecurityApiKey(this SwaggerGenOptions options) => options.AddSecurityApiKey(HeaderNames.Authorization);
 
     public static SwaggerGenOptions AddSecurityApiKey(this SwaggerGenOptions options, string headerName)

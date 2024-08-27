@@ -6,6 +6,22 @@ namespace Krosoft.Extensions.Core.Tests.Extensions;
 public class StringExtensionsTests
 {
     [DataTestMethod]
+    [DataRow("word", "word")] // Aucun changement attendu
+    [DataRow("ThisIsAString", "This Is A String")] // Ajout d'espaces avant les majuscules
+    [DataRow("CapitalStart", "Capital Start")] // Ajout d'espace après la première majuscule
+    [DataRow("URLIsShortForUniformResourceLocator", "URL Is Short For Uniform Resource Locator")] // Gestion de plusieurs majuscules consécutives
+    [DataRow("", "")] // Chaîne vide
+    [DataRow(null, null)] // Chaîne nulle
+    [DataRow("alllowercase", "alllowercase")] // Aucun changement pour une chaîne sans majuscule
+    [DataRow("One", "One")] // Pas de modification pour une seule majuscule
+    [DataRow("Capital", "Capital")] // Pas d'espace avant la première majuscule
+    public void AddSpacesBeforeCapitals(string input, string expected)
+    {
+        var result = input.AddSpacesBeforeCapitals();
+        Check.That(result).IsEqualTo(expected);
+    }
+
+    [DataTestMethod]
     [DataRow("", 5, "")]
     [DataRow(null, 5, null)]
     [DataRow("", 5, "")]
@@ -232,3 +248,4 @@ public class StringExtensionsTests
         Check.That(result).IsEqualTo(expectedOutput);
     }
 }
+

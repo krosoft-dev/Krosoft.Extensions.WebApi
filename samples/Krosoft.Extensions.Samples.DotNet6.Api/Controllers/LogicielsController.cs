@@ -4,7 +4,6 @@ using Krosoft.Extensions.Samples.Library.Models.Dto;
 using Krosoft.Extensions.Samples.Library.Models.Queries;
 using Krosoft.Extensions.WebApi.Controllers;
 using Krosoft.Extensions.WebApi.Extensions;
-using Krosoft.Extensions.WebApi.Models.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

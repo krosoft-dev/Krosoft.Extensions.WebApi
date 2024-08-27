@@ -1,4 +1,5 @@
 ﻿using Krosoft.Extensions.Core.Models;
+using Krosoft.Extensions.Core.Models.Exceptions.Http;
 using Krosoft.Extensions.Samples.DotNet8.BlazorApp.Interfaces;
 using Krosoft.Extensions.Samples.DotNet8.BlazorApp.Models;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -30,7 +31,7 @@ public class LogicielsHttpService : ILogicielsHttpService
 
             var responseJson = await responseMessage.Content.ReadAsStringAsync(cancellationToken);
 
-            return new Result<Guid>(new Exception(responseMessage.StatusCode.ToString()));
+            return new Result<Guid>(new HttpException(responseMessage.StatusCode, responseJson));
         }
         catch (Exception e)
         {
@@ -54,7 +55,7 @@ public class LogicielsHttpService : ILogicielsHttpService
 
             var responseJson = await responseMessage.Content.ReadAsStringAsync(cancellationToken);
 
-            return new Result<IEnumerable<Logiciel>?>(new Exception(responseMessage.StatusCode.ToString()));
+            return Result<IEnumerable<Logiciel>?>.Failure(new HttpException(responseMessage.StatusCode, responseJson));
         }
         catch (Exception e)
         {
