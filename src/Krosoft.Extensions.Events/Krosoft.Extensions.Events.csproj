@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="../../Nuget.target" />
-	<PropertyGroup> 
+	<PropertyGroup>
 		<PackageTags>Krosoft Extension Event Publish </PackageTags>
 		<Description>Package pour faciliter l'utilisation d'events.</Description>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="MediatR" Version="12.1.1" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="MediatR" Version="12.1.1" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+		<PackageReference Include="MediatR" Version="12.4.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="MediatR" Version="12.1.1" />
+		<ProjectReference Include="..\Krosoft.Extensions.Jobs\Krosoft.Extensions.Jobs.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\Krosoft.Extensions.Jobs\Krosoft.Extensions.Jobs.csproj" />
-	</ItemGroup>  
 </Project>

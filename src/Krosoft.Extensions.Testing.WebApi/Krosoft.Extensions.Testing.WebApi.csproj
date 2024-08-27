@@ -4,24 +4,24 @@
 		<PackageTags>Krosoft Extension Testing Tests Unit NFluent nfluent moq asp net core WebApplicationFactory</PackageTags>
 		<Description>Package pour faciliter la mise en place de tests pour AspNetCore.</Description>
 	</PropertyGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">  
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.11" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.27" /> 
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.27" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.16" /> 
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.16" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.6" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="MediatR" Version="12.3.0" />
-	  <PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
+		<PackageReference Include="MediatR" Version="12.4.0" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.3.1" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
-	  <ProjectReference Include="..\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
+		<ProjectReference Include="..\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
+		<ProjectReference Include="..\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
 	</ItemGroup>
 </Project>

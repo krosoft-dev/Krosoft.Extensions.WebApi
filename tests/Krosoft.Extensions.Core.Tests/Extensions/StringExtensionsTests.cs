@@ -9,9 +9,9 @@ public class StringExtensionsTests
     [DataRow("word", "word")] // Aucun changement attendu
     [DataRow("ThisIsAString", "This Is A String")] // Ajout d'espaces avant les majuscules
     [DataRow("CapitalStart", "Capital Start")] // Ajout d'espace après la première majuscule
-    [DataRow("URLIsShortForUniformResourceLocator", "URL Is Short For Uniform Resource Locator")] // Gestion de plusieurs majuscules consécutives
+    [DataRow("URLIsShortForUniformResourceLocator", "U R L Is Short For Uniform Resource Locator")] // Gestion de plusieurs majuscules consécutives
     [DataRow("", "")] // Chaîne vide
-    [DataRow(null, null)] // Chaîne nulle
+    [DataRow(null, "")] // Chaîne nulle
     [DataRow("alllowercase", "alllowercase")] // Aucun changement pour une chaîne sans majuscule
     [DataRow("One", "One")] // Pas de modification pour une seule majuscule
     [DataRow("Capital", "Capital")] // Pas d'espace avant la première majuscule

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Sample.target" />
+  <Import Project="../../Sample.target" />
   <PropertyGroup>
-	  <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Files\Categorie.json" />
@@ -25,18 +25,16 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="12.0.1" />
-		<PackageReference Include="Bogus" Version="35.5.1" />
-		<PackageReference Include="FluentValidation" Version="11.9.0" />
-		<PackageReference Include="JetBrains.Annotations" Version="2023.3.0" /> 
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	</ItemGroup>
-	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
-	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.Abstractions\Krosoft.Extensions.Data.Abstractions.csproj" />
-	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Mapping\Krosoft.Extensions.Mapping.csproj" />
-	</ItemGroup>
-
-
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Bogus" Version="35.6.0" />
+    <PackageReference Include="FluentValidation" Version="11.9.2" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
+    <ProjectReference Include="..\..\src\Krosoft.Extensions.Data.Abstractions\Krosoft.Extensions.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\Krosoft.Extensions.Mapping\Krosoft.Extensions.Mapping.csproj" />
+  </ItemGroup>
 </Project>

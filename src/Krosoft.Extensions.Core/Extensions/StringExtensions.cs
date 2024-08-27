@@ -26,7 +26,7 @@ public static class StringExtensions
             return string.Empty;
         }
 
-        return Regex.Replace(source, "([a-z])([A-Z])", "$1 $2");
+        return Regex.Replace(source, @"\B[A-Z]", " $0");
     }
 
     public static string? ClearFilePath(this string? text) => StringHelper.ClearFilePath(text);
