@@ -17,7 +17,7 @@ function ExtractReferences($rootSrc, $context) {
 
 (Get-ChildItem $rootSrc -Filter *.csproj -Recurse) | ForEach-Object {  
 
-  $fileName = "./tools/azure-pipelines/nuget-$($_.BaseName)-pipeline.yml"
+  $fileName = "./tools/devops/nuget-$($_.BaseName)-pipeline.yml"
   New-Item $fileName -Force  
        
   $global:array = @($_.BaseName) 

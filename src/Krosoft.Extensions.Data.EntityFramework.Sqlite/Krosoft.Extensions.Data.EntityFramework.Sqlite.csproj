@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Data ef entity framework orm Sqlite</PackageTags>
 		<Description>Package pour faciliter l'accès aux données avec Entity Framework via Sqlite.</Description>

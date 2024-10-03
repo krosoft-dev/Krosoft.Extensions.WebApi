@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Data abstractions</PackageTags>
 		<Description>Package pour faciliter l'accès aux données avec un ORM.</Description>

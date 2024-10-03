@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Core Helper Extensions</PackageTags>
 		<Description>Classes de base, extensions et helpers pour simplifier le développement d'application.</Description>

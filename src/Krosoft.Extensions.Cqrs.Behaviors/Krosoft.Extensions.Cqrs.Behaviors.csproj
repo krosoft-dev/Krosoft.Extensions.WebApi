@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
-	<PropertyGroup>
+
+	<PropertyGroup> 
 		<PackageTags>Krosoft Extension CQRS Pipeline Behavior</PackageTags>
 		<Description>Package pour partager les IPipelineBehavior communes.</Description>
 	</PropertyGroup>

@@ -56,7 +56,7 @@ function AzDevOpsPipelinesCreate(
         --service-connection $global:serviceConnectionId    `
         --repository $global:repository  `
         --repository-type "GitHub" `
-        --yaml-path "tools/azure-pipelines/nuget-$name-pipeline.yml" `
+        --yaml-path "tools/devops/nuget-$name-pipeline.yml" `
         -o table  
 
     Write-Host 
@@ -81,3 +81,4 @@ AzDevOpsPipelinesCreate "Krosoft.Extensions.Cqrs.Behaviors.Validations"
 AzDevOpsPipelinesCreate "Krosoft.Extensions.Events"
 AzDevOpsPipelinesCreate "Krosoft.Extensions.Events.Identity" 
 AzDevOpsPipelinesCreate "Krosoft.Extensions.Jobs"
+AzDevOpsPipelinesCreate "Krosoft.Extensions.Polly"

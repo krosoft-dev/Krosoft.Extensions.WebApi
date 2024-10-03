@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Blocking abstraction</PackageTags>
 		<Description>Package d'abstraction pour faciliter le blocage de connexion.</Description>

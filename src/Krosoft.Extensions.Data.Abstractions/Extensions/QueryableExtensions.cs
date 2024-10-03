@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
+using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Core.Tools;
 using Krosoft.Extensions.Data.Abstractions.Helpers;
@@ -111,6 +112,44 @@ public static class QueryableExtensions
             foreach (var part in parts)
             {
                 query = query.Search(part, selector);
+            }
+        }
+
+        return query;
+    }
+
+    public static IQueryable<T> SortBy<T>(this IQueryable<T> query,
+                                          IPaginationRequest request)
+    {
+        if (request.SortBy != null)
+        {
+            var sort = request.SortBy.ToArray();
+
+            if (sort.Length > 0)
+            {
+                foreach (var sortOption in sort)
+                {
+                    var parts = sortOption.Split(':');
+                    if (parts.Length == 2)
+                    {
+                        var key = parts[0];
+                        var order = parts[1].ToLower();
+                        var prop = typeof(T).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                        if (prop is null)
+                        {
+                            throw new KrosoftTechnicalException($"Impossible de déterminer la colonne à partir de la clé suivante : {key}");
+                        }
+
+                        // Créer une expression pour le tri.
+                        var parameter = Expression.Parameter(typeof(T), "x");
+                        var propertyAccess = Expression.MakeMemberAccess(parameter, prop);
+                        var orderByExp = Expression.Lambda(propertyAccess, parameter);
+                        // Appliquer le tri.
+                        var methodName = order == "asc" ? nameof(Queryable.OrderBy) : nameof(Queryable.OrderByDescending);
+                        var resultExp = Expression.Call(typeof(Queryable), methodName, new[] { typeof(T), prop.PropertyType }, query.Expression, orderByExp);
+                        query = query.Provider.CreateQuery<T>(resultExp);
+                    }
+                }
             }
         }
 

@@ -120,4 +120,14 @@ public static class ServiceCollectionExtensions
         services.AddValidatorsFromAssemblies(all, includeInternalTypes: true);
         return services;
     }
+
+
+    public static IServiceCollection AddHttpContextService(this IServiceCollection services)
+    {
+        services.AddTransient<IHttpContextService, HttpContextService>();
+
+        return services;
+    }
+
+
 }

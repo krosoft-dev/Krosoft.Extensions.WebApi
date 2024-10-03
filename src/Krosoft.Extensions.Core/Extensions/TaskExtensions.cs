@@ -78,6 +78,22 @@ public static class TaskExtensions
         return await task;
     }
 
+    public static async Task<IDictionary<TKey, TElement>> ToDictionary<TSource, TKey, TElement>(this Task<IEnumerable<TSource>?> task,
+                                                                                                Func<TSource, TKey> keySelector,
+                                                                                                Func<TSource, TElement> elementSelector,
+                                                                                                bool useDistinct) where TKey : notnull
+    {
+        Guard.IsNotNull(nameof(task), task);
+        var items = await task;
+        if (items != null)
+        {
+            var itemsPar = items.ToDictionary(keySelector, elementSelector, useDistinct);
+            return itemsPar;
+        }
+
+        return new Dictionary<TKey, TElement>();
+    }
+
     public static async Task<Dictionary<TKey, TSource>> ToDictionary<TKey, TSource>(this Task<IEnumerable<TSource>?> task,
                                                                                     Func<TSource, TKey> func) where TKey : notnull
     {

@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup> 
 		<PackageTags>Krosoft Extension CQRS Pipeline Behavior Identity</PackageTags>
 		<Description>Package pour partager les IPipelineBehavior communes liées à Identity.</Description>

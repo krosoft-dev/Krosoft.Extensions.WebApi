@@ -1,3 +1,4 @@
+using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Core.Models.Dto;
 using Krosoft.Extensions.Samples.Library.Models.Commands;
 using Krosoft.Extensions.Samples.Library.Models.Dto;
@@ -18,9 +19,6 @@ public class LogicielsController : ApiControllerBase
         => Mediator.Send(command, cancellationToken);
 
     [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
     [HttpDelete]
     public Task DeleteAsync([FromBody] LogicielsDeleteCommand command,
                             CancellationToken cancellationToken)
@@ -42,25 +40,19 @@ public class LogicielsController : ApiControllerBase
         => Mediator.Send(new LogicielsExportZipQuery(), cancellationToken)
                    .ToFileStreamResult();
 
-    [ProducesResponseType(typeof(IEnumerable<LogicielDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
     [HttpGet]
-    public Task<IEnumerable<LogicielDto>> GetAsync([FromQuery] LogicielsQuery query,
-                                                   CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(PaginationResult<LogicielDto>), StatusCodes.Status200OK)]
+    public Task<PaginationResult<LogicielDto>> GetAsync([FromQuery] LogicielsQuery query,
+                                                        CancellationToken cancellationToken)
         => Mediator.Send(query, cancellationToken);
 
-    [ProducesResponseType(typeof(LogicielDetailDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(LogicielDetailDto), StatusCodes.Status200OK)]
     public Task<LogicielDetailDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         => Mediator.Send(new LogicielDetailQuery(id), cancellationToken);
 
-    [ProducesResponseType(typeof(IEnumerable<PickListDto>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
     [HttpGet("PickList")]
+    [ProducesResponseType(typeof(IEnumerable<PickListDto>), StatusCodes.Status200OK)]
     public Task<IEnumerable<PickListDto>> GetPickListAsync(CancellationToken cancellationToken)
         => Mediator.Send(new LogicielsPickListQuery(), cancellationToken);
 

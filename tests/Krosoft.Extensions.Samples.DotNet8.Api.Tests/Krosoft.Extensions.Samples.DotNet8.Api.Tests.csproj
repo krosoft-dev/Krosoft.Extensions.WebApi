@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Test.target" />
+
 	<ItemGroup>
 		<ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.DotNet8.Api\Krosoft.Extensions.Samples.DotNet8.Api.csproj" />
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.Testing.Cqrs\Krosoft.Extensions.Testing.Cqrs.csproj" />

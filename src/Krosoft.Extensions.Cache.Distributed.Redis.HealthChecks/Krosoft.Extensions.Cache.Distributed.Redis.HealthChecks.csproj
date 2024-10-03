@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Cache Memory Redis Extension Health Checks</PackageTags>
 		<Description>Package pour effectuer des vérifications de l'état de santé du cache Redis.</Description>

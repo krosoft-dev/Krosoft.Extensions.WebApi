@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
 		<PackageTags>Krosoft Extension Web Api AspNetCore swagger</PackageTags>

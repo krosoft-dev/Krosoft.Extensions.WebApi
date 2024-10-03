@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup> 
 		<PackageTags>Krosoft Extensions Zip Archive</PackageTags>
 		<Description>Package pour faciliter l'utilisation d'archives Zip.</Description>

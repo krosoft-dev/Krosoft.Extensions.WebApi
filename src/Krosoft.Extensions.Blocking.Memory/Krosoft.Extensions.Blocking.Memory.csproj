@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Blocking abstraction memory cache</PackageTags>
 		<Description>Package pour faciliter le blocage de connexion basé sur le cache mémoire.</Description>

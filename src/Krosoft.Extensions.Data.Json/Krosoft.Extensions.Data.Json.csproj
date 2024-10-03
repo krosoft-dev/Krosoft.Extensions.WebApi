@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Data Json</PackageTags>
 		<Description>Package pour faciliter l'utilisation de fichiers JSON comme source de données.</Description>

@@ -15,14 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "08.Testing", "08.Testing", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Samples.Library", "samples\Krosoft.Extensions.Samples.Library\Krosoft.Extensions.Samples.Library.csproj", "{BB91CCD2-81AE-4996-AC88-D14E20D151BA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{F3FA9F67-63BE-4314-98AB-A4F62C133DB2}"
-	ProjectSection(SolutionItems) = preProject
-		Common.target = Common.target
-		Nuget.target = Nuget.target
-		Sample.target = Sample.target
-		Test.target = Test.target
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Testing.Tests", "tests\Krosoft.Extensions.Testing.Tests\Krosoft.Extensions.Testing.Tests.csproj", "{BE6AF83E-BCF2-4EEB-A409-9F2E94F88780}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Core.Tests", "tests\Krosoft.Extensions.Core.Tests\Krosoft.Extensions.Core.Tests.csproj", "{C8DDBDD4-E7CD-4DA5-914B-1C8B8F25DFD5}"
@@ -151,17 +143,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.WebApi.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Jobs", "src\Krosoft.Extensions.Jobs\Krosoft.Extensions.Jobs.csproj", "{A103AE75-41BC-4CBB-98F4-C1CB6723F454}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krosoft.Extensions.Cqrs.Behaviors", "src\Krosoft.Extensions.Cqrs.Behaviors\Krosoft.Extensions.Cqrs.Behaviors.csproj", "{8228898F-4E4E-4E57-8D67-F45321D4A9B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Cqrs.Behaviors", "src\Krosoft.Extensions.Cqrs.Behaviors\Krosoft.Extensions.Cqrs.Behaviors.csproj", "{8228898F-4E4E-4E57-8D67-F45321D4A9B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krosoft.Extensions.Cqrs.Behaviors.Identity", "src\Krosoft.Extensions.Cqrs.Behaviors.Identity\Krosoft.Extensions.Cqrs.Behaviors.Identity.csproj", "{11346FE6-723B-4C68-8FD0-8A63A45C4F88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Cqrs.Behaviors.Identity", "src\Krosoft.Extensions.Cqrs.Behaviors.Identity\Krosoft.Extensions.Cqrs.Behaviors.Identity.csproj", "{11346FE6-723B-4C68-8FD0-8A63A45C4F88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krosoft.Extensions.Cqrs.Behaviors.Validations", "src\Krosoft.Extensions.Cqrs.Behaviors.Validations\Krosoft.Extensions.Cqrs.Behaviors.Validations.csproj", "{3F256B36-B613-4BEE-B20B-7A602A4FB5A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Cqrs.Behaviors.Validations", "src\Krosoft.Extensions.Cqrs.Behaviors.Validations\Krosoft.Extensions.Cqrs.Behaviors.Validations.csproj", "{3F256B36-B613-4BEE-B20B-7A602A4FB5A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krosoft.Extensions.Events", "src\Krosoft.Extensions.Events\Krosoft.Extensions.Events.csproj", "{2882077B-E501-471D-9C29-2DF890EAA59D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Events", "src\Krosoft.Extensions.Events\Krosoft.Extensions.Events.csproj", "{2882077B-E501-471D-9C29-2DF890EAA59D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Krosoft.Extensions.Events.Identity", "src\Krosoft.Extensions.Events.Identity\Krosoft.Extensions.Events.Identity.csproj", "{397E2A78-1B08-4B07-9F4C-21CEEF4C9C07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Events.Identity", "src\Krosoft.Extensions.Events.Identity\Krosoft.Extensions.Events.Identity.csproj", "{397E2A78-1B08-4B07-9F4C-21CEEF4C9C07}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "16.Jobs", "16.Jobs", "{FB255A45-0B9C-40AA-81FA-242244DCF7E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Polly.Tests", "tests\Krosoft.Extensions.Polly.Tests\Krosoft.Extensions.Polly.Tests.csproj", "{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Polly", "src\Krosoft.Extensions.Polly\Krosoft.Extensions.Polly.csproj", "{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1167,6 +1163,38 @@ Global
 		{397E2A78-1B08-4B07-9F4C-21CEEF4C9C07}.Release|x64.Build.0 = Release|Any CPU
 		{397E2A78-1B08-4B07-9F4C-21CEEF4C9C07}.Release|x86.ActiveCfg = Release|Any CPU
 		{397E2A78-1B08-4B07-9F4C-21CEEF4C9C07}.Release|x86.Build.0 = Release|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Debug|ARM.Build.0 = Debug|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Debug|x64.Build.0 = Debug|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Debug|x86.Build.0 = Debug|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Release|ARM.ActiveCfg = Release|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Release|ARM.Build.0 = Release|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Release|x64.ActiveCfg = Release|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Release|x64.Build.0 = Release|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Release|x86.ActiveCfg = Release|Any CPU
+		{492B2F95-FC2D-4AC3-9AE7-DA62C6C60648}.Release|x86.Build.0 = Release|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Debug|x64.Build.0 = Debug|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Debug|x86.Build.0 = Debug|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|ARM.Build.0 = Release|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|x64.ActiveCfg = Release|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|x64.Build.0 = Release|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|x86.ActiveCfg = Release|Any CPU
+		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

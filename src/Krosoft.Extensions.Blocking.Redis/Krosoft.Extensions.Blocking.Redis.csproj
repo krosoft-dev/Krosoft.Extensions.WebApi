@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Blocking abstraction redis cache</PackageTags>
 		<Description>Package pour faciliter le blocage de connexion basé sur le cache Redis.</Description>

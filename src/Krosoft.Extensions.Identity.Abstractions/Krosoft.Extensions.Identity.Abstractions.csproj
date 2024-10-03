@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Identity JWT abstraction</PackageTags>
 		<Description>Package d'abstraction pour faciliter la gestion de l'authentification.</Description>

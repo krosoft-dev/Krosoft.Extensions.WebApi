@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
   <PropertyGroup> 
     <PackageTags>Krosoft Extension Reporting CSV</PackageTags> 
     <Description>Package pour faciliter le reporting CSV.</Description>

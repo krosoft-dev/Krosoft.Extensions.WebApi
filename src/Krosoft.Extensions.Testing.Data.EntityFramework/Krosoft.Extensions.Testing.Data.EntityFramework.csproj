@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Testing Tests Unit data entity framework ef </PackageTags>
 		<Description>Package pour faciliter la mise en place de tests avec Entity Framework.</Description>

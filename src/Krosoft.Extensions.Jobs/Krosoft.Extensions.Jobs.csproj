@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup> 
 		<PackageTags>Krosoft Extension Jobs background processing Fire-and-Forget   </PackageTags>
 		<Description>Package pour faciliter l'utilisation de jobs en arrière-plan.</Description>

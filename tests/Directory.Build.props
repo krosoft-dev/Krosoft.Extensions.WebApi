@@ -1,5 +1,5 @@
 <Project>
-	<Import Project="Common.target" />
+	<Import Project="$([MSBuild]::GetPathOfFileAbove($(MSBuildThisFile), '$(MSBuildThisFileDirectory)../'))" Condition="$([MSBuild]::GetPathOfFileAbove($(MSBuildThisFile), '$(MSBuildThisFileDirectory)../')) != ''"/>
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<IsPackable>false</IsPackable>
@@ -17,11 +17,11 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />
-		<PackageReference Include="MSTest.TestFramework" Version="3.5.2" />
-		<PackageReference Include="MSTest.TestAdapter" Version="3.5.2" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.6.0" />
+		<PackageReference Include="MSTest.TestAdapter" Version="3.6.0" />
 		<PackageReference Include="NFluent" Version="3.0.4" />
-		<PackageReference Include="Moq" Version="4.20.70" />
+		<PackageReference Include="Moq" Version="4.20.72" />
 	</ItemGroup>
 	<ItemGroup>
 		<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>

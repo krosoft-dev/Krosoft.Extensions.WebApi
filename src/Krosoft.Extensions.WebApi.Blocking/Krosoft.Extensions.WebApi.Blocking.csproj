@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../../Nuget.target" />
+
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Web Api AspNetCore blocking ip access token </PackageTags>
 		<Description>Package pour faciliter l'utilisation des blocages de connexion avec ASP.NET Core.</Description>

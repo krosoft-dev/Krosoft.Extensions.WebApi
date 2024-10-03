@@ -297,4 +297,23 @@ public static class EnumerableExtensions
     }
 
 #endif
+
+    public static IDictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(this IEnumerable<TSource> source,
+                                                                                    Func<TSource, TKey> keySelector,
+                                                                                    Func<TSource, TElement> elementSelector,
+                                                                                    bool useDistinct) where TKey : notnull
+    {
+        Guard.IsNotNull(nameof(source), source);
+        Guard.IsNotNull(nameof(keySelector), keySelector);
+        Guard.IsNotNull(nameof(elementSelector), elementSelector);
+
+        var enumerable = source;
+
+        if (useDistinct)
+        {
+            enumerable = enumerable.DistinctBy(keySelector);
+        }
+
+        return enumerable.ToDictionary(keySelector, elementSelector);
+    }
 }
