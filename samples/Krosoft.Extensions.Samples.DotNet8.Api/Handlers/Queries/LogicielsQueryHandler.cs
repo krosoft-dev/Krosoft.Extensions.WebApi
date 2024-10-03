@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Krosoft.Extensions.Core.Models;
+using Krosoft.Extensions.Data.Abstractions.Interfaces;
 using Krosoft.Extensions.Data.EntityFramework.Extensions;
-using Krosoft.Extensions.Samples.Library.Factories;
 using Krosoft.Extensions.Samples.Library.Models.Dto;
 using Krosoft.Extensions.Samples.Library.Models.Entities;
 using Krosoft.Extensions.Samples.Library.Models.Queries;
@@ -13,11 +13,14 @@ public class LogicielsQueryHandler : IRequestHandler<LogicielsQuery, PaginationR
 {
     private readonly ILogger<LogicielsQueryHandler> _logger;
     private readonly IMapper _mapper;
+    private readonly IReadRepository<Logiciel> _repository;
 
-    public LogicielsQueryHandler(ILogger<LogicielsQueryHandler> logger, IMapper mapper)
+    public LogicielsQueryHandler(ILogger<LogicielsQueryHandler> logger,
+                                 IMapper mapper, IReadRepository<Logiciel> repository)
     {
         _logger = logger;
         _mapper = mapper;
+        _repository = repository;
     }
 
     public async Task<PaginationResult<LogicielDto>> Handle(LogicielsQuery request,
@@ -27,11 +30,11 @@ public class LogicielsQueryHandler : IRequestHandler<LogicielsQuery, PaginationR
 
         await Task.Delay(2000, cancellationToken);
 
-        var result = await LogicielFactory.GetRandom(10, null)
-                                          .AsQueryable()
-                                          .ToPaginationAsync<Logiciel, LogicielDto>(request,
-                                                                                    _mapper.ConfigurationProvider,
-                                                                                    cancellationToken);
+        var result = await _repository.Query()
+                                      .AsQueryable()
+                                      .ToPaginationAsync<Logiciel, LogicielDto>(request,
+                                                                                _mapper.ConfigurationProvider,
+                                                                                cancellationToken);
 
         return result;
     }

@@ -41,7 +41,7 @@ public static class ServiceCollectionExtensions
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
-                {                
+                {
                     if (webApiSettings.AllowedOrigins.Length > 0)
                     {
                         policy.WithOrigins(webApiSettings.AllowedOrigins);
@@ -69,6 +69,13 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddCorsPolicyAccessor(this IServiceCollection services)
     {
         services.AddTransient<ICorsPolicyAccessor, CorsPolicyAccessor>();
+        return services;
+    }
+
+    public static IServiceCollection AddHttpContextService(this IServiceCollection services)
+    {
+        services.AddTransient<IHttpContextService, HttpContextService>();
+
         return services;
     }
 
@@ -120,14 +127,4 @@ public static class ServiceCollectionExtensions
         services.AddValidatorsFromAssemblies(all, includeInternalTypes: true);
         return services;
     }
-
-
-    public static IServiceCollection AddHttpContextService(this IServiceCollection services)
-    {
-        services.AddTransient<IHttpContextService, HttpContextService>();
-
-        return services;
-    }
-
-
 }

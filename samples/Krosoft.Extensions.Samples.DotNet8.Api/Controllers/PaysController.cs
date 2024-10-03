@@ -1,4 +1,3 @@
-using Krosoft.Extensions.Core.Models.Dto;
 using Krosoft.Extensions.Samples.Library.Models.Dto;
 using Krosoft.Extensions.Samples.Library.Models.Queries;
 using Krosoft.Extensions.WebApi.Controllers;

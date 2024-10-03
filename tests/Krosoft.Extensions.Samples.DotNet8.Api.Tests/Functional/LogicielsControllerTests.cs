@@ -1,6 +1,7 @@
 using System.Net;
 using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Helpers;
+using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Samples.DotNet8.Api.Tests.Core;
 using Krosoft.Extensions.Samples.Library.Models.Dto;
 
@@ -44,9 +45,15 @@ public class LogicielsControllerTests : SampleBaseApiTest<Startup>
         var response = await httpClient.GetAsync("/Logiciels");
 
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        var logiciels = await response.Content.ReadAsJsonAsync<IEnumerable<LogicielDto>>(CancellationToken.None).ToList();
-        Check.That(logiciels).IsNotNull();
-        Check.That(logiciels).HasSize(10);
+        var result = await response.Content.ReadAsJsonAsync<PaginationResult<LogicielDto>>(CancellationToken.None);
+        Check.That(result).IsNotNull();
+        Check.That(result?.Items).HasSize(5);
+        Check.That(result?.Items.Select(x => x.Id.ToString()))
+             .IsOnlyMadeOf("1f39c60d-4f92-4f17-aa45-99e8f86a3b3a",
+                           "3e8f94fd-03ea-47b0-b8c5-20b14c361fce",
+                           "6c8a012b-cc8a-4da0-85a5-c9a87bb1a20a",
+                           "9b5ccfd1-8c3e-4a0c-b4af-543a6f87042d",
+                           "c40e3ff1-4f3a-4a3a-8b0c-c52a45e6e7b6");
     }
 
     [TestMethod]
@@ -58,9 +65,15 @@ public class LogicielsControllerTests : SampleBaseApiTest<Startup>
         var response = await httpClient.GetAsync($"/Logiciels?Nom={nom}");
 
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
-        var logiciels = await response.Content.ReadAsJsonAsync<IEnumerable<LogicielDto>>(CancellationToken.None).ToList();
-        Check.That(logiciels).IsNotNull();
-        Check.That(logiciels).HasSize(10);
+        var result = await response.Content.ReadAsJsonAsync<PaginationResult<LogicielDto>>(CancellationToken.None);
+        Check.That(result).IsNotNull();
+        Check.That(result?.Items).HasSize(5);
+        Check.That(result?.Items.Select(x => x.Id.ToString()))
+             .IsOnlyMadeOf("1f39c60d-4f92-4f17-aa45-99e8f86a3b3a",
+                           "3e8f94fd-03ea-47b0-b8c5-20b14c361fce",
+                           "6c8a012b-cc8a-4da0-85a5-c9a87bb1a20a",
+                           "9b5ccfd1-8c3e-4a0c-b4af-543a6f87042d",
+                           "c40e3ff1-4f3a-4a3a-8b0c-c52a45e6e7b6");
     }
 
     [TestMethod]
