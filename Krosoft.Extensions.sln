@@ -159,6 +159,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Polly.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Polly", "src\Krosoft.Extensions.Polly\Krosoft.Extensions.Polly.csproj", "{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Krosoft.Extensions.Hosting", "src\Krosoft.Extensions.Hosting\Krosoft.Extensions.Hosting.csproj", "{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1195,6 +1197,22 @@ Global
 		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|x64.Build.0 = Release|Any CPU
 		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|x86.ActiveCfg = Release|Any CPU
 		{7EF1C980-155E-4CE0-8D85-E826A7BD6AB7}.Release|x86.Build.0 = Release|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Debug|x64.Build.0 = Debug|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Debug|x86.Build.0 = Debug|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Release|ARM.Build.0 = Release|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Release|x64.ActiveCfg = Release|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Release|x64.Build.0 = Release|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Release|x86.ActiveCfg = Release|Any CPU
+		{9D7174A0-04B5-4741-B6B8-0CBA4E45DF25}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
