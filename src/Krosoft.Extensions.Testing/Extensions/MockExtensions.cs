@@ -12,45 +12,19 @@ namespace Krosoft.Extensions.Testing.Extensions;
 
 public static class MockExtensions
 {
-    public static void Verify<T>(this Mock<ILogger<T>> mock, LogLevel level, string message, Times times)
+    private static IEnumerable<KeyValuePair<string, object?>> GetRow<T>(T item,
+                                                                        PropertyInfo[] properties)
     {
-        mock.Verify(x => x.Log(level,
-                               It.IsAny<EventId>(),
-                               It.Is<It.IsAnyType>((o, t) => o.ToString()!.Contains(message)),
-                               It.IsAny<Exception>(),
-                               ((Func<It.IsAnyType, Exception, string>)It.IsAny<object>())!),
-                    times);
-    }
-
-    public static ICheck<Mock<T>> Verify<T>(this ICheck<Mock<T>> check, Expression<Action<T>> expression, Func<Times> times, string? failMessage = null)
-        where T : class
-    {
-        var runnableCheck = ExtensibilityHelper.ExtractChecker(check);
-
-        var value = runnableCheck.Value;
-        var executeCheck = runnableCheck.ExecuteCheck(() =>
+        var row = new List<KeyValuePair<string, object?>>();
+        foreach (var propertyInfo in properties)
         {
-            try
-            {
-                value.Verify(expression, times, failMessage);
-            }
-            catch (MockException e)
-            {
-                throw new FluentCheckException(e.Message);
-            }
-        }, string.Empty);
+            var value = Convert.ChangeType(propertyInfo.GetValue(item), typeof(object));
 
-        return executeCheck.And;
-    }
+            var keyValuePair = new KeyValuePair<string, object?>(propertyInfo.Name, value);
+            row.Add(keyValuePair);
+        }
 
-    public static void VerifyWasCalled<T>(this Mock<ILogger<T>> fakeLogger, LogLevel logLevel, string message, Times times)
-    {
-        fakeLogger.Verify(x => x.Log(logLevel,
-                                     It.IsAny<EventId>(),
-                                     It.Is<It.IsAnyType>((o, t) => !string.IsNullOrEmpty(o.ToString()) && o.ToString()!.StartsWith(message)),
-                                     It.IsAny<Exception>(),
-                                     It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
-                          times);
+        return row;
     }
 
     public static Mock<IDbCommand> SetupWithData<T>(this Mock<IDbCommand> mock,
@@ -99,36 +73,6 @@ public static class MockExtensions
         mock.SetupWithData(dataReaderDescriptor);
 
         return mock;
-    }
-
-    private static IEnumerable<IEnumerable<KeyValuePair<string, object?>>> ToData<T>(IEnumerable<T> collection)
-    {
-        var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-        var data = new List<IEnumerable<KeyValuePair<string, object?>>>();
-
-        foreach (var item in collection)
-        {
-            var row = GetRow(item, properties);
-            data.Add(row);
-        }
-
-        return data;
-    }
-
-    private static IEnumerable<KeyValuePair<string, object?>> GetRow<T>(T item,
-                                                                        PropertyInfo[] properties)
-    {
-        var row = new List<KeyValuePair<string, object?>>();
-        foreach (var propertyInfo in properties)
-        {
-            var value = Convert.ChangeType(propertyInfo.GetValue(item), typeof(object));
-
-            var keyValuePair = new KeyValuePair<string, object?>(propertyInfo.Name, value);
-            row.Add(keyValuePair);
-        }
-
-        return row;
     }
 
     private static void SetupWithData(this Mock<IDataReader> mock,
@@ -185,5 +129,71 @@ public static class MockExtensions
         mock.Setup(r => r.GetInt32(It.Is(outOfRange))).Throws<IndexOutOfRangeException>();
         mock.Setup(r => r.GetInt64(It.Is(outOfRange))).Throws<IndexOutOfRangeException>();
         mock.Setup(r => r.GetString(It.Is(outOfRange))).Throws<IndexOutOfRangeException>();
+    }
+
+    private static IEnumerable<IEnumerable<KeyValuePair<string, object?>>> ToData<T>(IEnumerable<T> collection)
+    {
+        var properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        var data = new List<IEnumerable<KeyValuePair<string, object?>>>();
+
+        foreach (var item in collection)
+        {
+            var row = GetRow(item, properties);
+            data.Add(row);
+        }
+
+        return data;
+    }
+
+    public static void Verify<T>(this Mock<ILogger<T>> mock, LogLevel level, string message, Times times)
+    {
+        mock.Verify(x => x.Log(level,
+                               It.IsAny<EventId>(),
+                               It.Is<It.IsAnyType>((o, t) => o.ToString()!.Contains(message)),
+                               It.IsAny<Exception>(),
+                               ((Func<It.IsAnyType, Exception, string>)It.IsAny<object>())!),
+                    times);
+    }
+
+    public static ICheck<Mock<T>> Verify<T>(this ICheck<Mock<T>> check,
+                                            Expression<Action<T>> expression,
+                                            Func<Times> times,
+                                            string? failMessage = null)
+        where T : class
+    {
+        var runnableCheck = ExtensibilityHelper.ExtractChecker(check);
+
+        var value = runnableCheck.Value;
+        var executeCheck = runnableCheck.ExecuteCheck(() =>
+        {
+            try
+            {
+                if (failMessage != null)
+                {
+                    value.Verify(expression, times, failMessage);
+                }
+                else
+                {
+                    value.Verify(expression, times);
+                }
+            }
+            catch (MockException e)
+            {
+                throw new FluentCheckException(e.Message);
+            }
+        }, string.Empty);
+
+        return executeCheck.And;
+    }
+
+    public static void VerifyWasCalled<T>(this Mock<ILogger<T>> fakeLogger, LogLevel logLevel, string message, Times times)
+    {
+        fakeLogger.Verify(x => x.Log(logLevel,
+                                     It.IsAny<EventId>(),
+                                     It.Is<It.IsAnyType>((o, t) => !string.IsNullOrEmpty(o.ToString()) && o.ToString()!.StartsWith(message)),
+                                     It.IsAny<Exception>(),
+                                     It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+                          times);
     }
 }

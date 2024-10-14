@@ -6,6 +6,11 @@ public class TenantDbContextProvider : ITenantDbContextProvider
 {
     private readonly string _tenantId;
 
+    public TenantDbContextProvider()
+    {
+        _tenantId = "";
+    }
+
     public TenantDbContextProvider(string tenantId)
     {
         _tenantId = tenantId;

@@ -16,7 +16,8 @@
         private readonly IReadRepository<Logiciel> _repository;
 
         public LogicielsQueryHandler(ILogger<LogicielsQueryHandler> logger,
-                                     IMapper mapper, IReadRepository<Logiciel> repository)
+                                     IMapper mapper, 
+                                     IReadRepository<Logiciel> repository)
         {
             _logger = logger;
             _mapper = mapper;
