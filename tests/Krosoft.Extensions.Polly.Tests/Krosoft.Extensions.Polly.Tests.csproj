@@ -1,21 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
- 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-	  <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+	 
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+	 
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
 	</ItemGroup>
-
- 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Polly\Krosoft.Extensions.Polly.csproj" />
-	  <ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
+		<ProjectReference Include="..\..\src\Krosoft.Extensions.Polly\Krosoft.Extensions.Polly.csproj" />
+		<ProjectReference Include="..\..\src\Krosoft.Extensions.Testing\Krosoft.Extensions.Testing.csproj" />
 	</ItemGroup>
-
- 
 	<ItemGroup>
-	  <None Update="appsettings.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 </Project>
