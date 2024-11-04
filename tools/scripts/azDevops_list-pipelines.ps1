@@ -35,4 +35,3 @@ AzDevOpsLogin
 AzDevOpsInitCli $global:url $global:projet
 AzDevOpsPipelinesList 
 
-nuget -

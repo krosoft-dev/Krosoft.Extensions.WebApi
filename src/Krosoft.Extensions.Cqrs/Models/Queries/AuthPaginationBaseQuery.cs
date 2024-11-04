@@ -6,6 +6,5 @@ public abstract class AuthPaginationBaseQuery<T> : AuthBaseQuery<PaginationResul
 {
     public int PageNumber { get; set; } = 1;
     public int PageSize { get; set; } = 10;
-
-    public IEnumerable<string> SortBy { get; set; } = new List<string>();
+    public ISet<string> SortBy { get; set; } = new HashSet<string>();
 }
