@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Data abstractions</PackageTags>
 		<Description>Package pour faciliter l'accès aux données avec un ORM.</Description>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="LinqKit.Core" Version="1.2.5" />
+		<PackageReference Include="LinqKit.Core" Version="1.2.7" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
+		<ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
 	</ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Core.Tools;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -38,8 +39,8 @@ public static class JsonHelper
 
         var json = input.Trim();
 
-        if ((json.StartsWith("{") && json.EndsWith("}")) || //For object
-            (json.StartsWith("[") && json.EndsWith("]"))) //For array
+        if ((json.StartsWith('{') && json.EndsWith('}')) || //For object
+            (json.StartsWith('[') && json.EndsWith(']'))) //For array
         {
             try
             {
@@ -55,30 +56,35 @@ public static class JsonHelper
         return false;
     }
 
-    public static JObject ReplacePath<T>(this JToken root, string path, T newValue)
+    public static JObject ReplacePath<T>(this JToken root, string path, T? newValue)
     {
         Guard.IsNotNull(nameof(root), root);
         Guard.IsNotNullOrWhiteSpace(nameof(path), path);
 
+        if (newValue == null)
+        {
+            return (JObject)root;
+        }
+
+        var jNewValue = JToken.FromObject(newValue);
         foreach (var value in root.SelectTokens(path).ToList())
         {
             if (value == root)
             {
-                if (newValue != null)
-                {
-                    root = JToken.FromObject(newValue);
-                }
+                root = jNewValue;
             }
             else
             {
-                if (newValue != null)
-                {
-                    value.Replace(JToken.FromObject(newValue));
-                }
+                value.Replace(jNewValue);
             }
         }
 
-        return (JObject)root;
+        if (root is not JObject jObject)
+        {
+            throw new KrosoftTechnicalException("Impossible de convertir en JObject.");
+        }
+
+        return jObject;
     }
 
     public static string? ToBase64(object? obj)

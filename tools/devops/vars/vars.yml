@@ -3,7 +3,7 @@ variables:
   vmImage: "ubuntu-latest"
 
   # .net
-  dotNetVersion: "8.0.x"
+  dotNetVersion: "9.0.x"
   buildConfiguration: "Release"
   buildPlatform: "AnyCPU"
   buildProjects: "**/*.csproj"

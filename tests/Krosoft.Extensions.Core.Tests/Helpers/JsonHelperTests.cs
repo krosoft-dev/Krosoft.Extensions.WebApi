@@ -1,6 +1,7 @@
 ﻿using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Samples.Library.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Krosoft.Extensions.Core.Tests.Helpers;
 
@@ -22,6 +23,89 @@ public class JsonHelperTests
         var json = AssemblyHelper.ReadAsString(typeof(JsonHelperTests).Assembly, $"{nameof(Item)}.json", EncodingHelper.GetEuropeOccidentale());
 
         Check.That(JsonHelper.IsValid(json)).IsEqualTo(true);
+    }
+
+    [TestMethod]
+    public void ReplacePath_WhenNewValueIsNull_ShouldReturnOriginalObject()
+    {
+        var root = JObject.Parse("{ 'name': 'test' }");
+
+        var result = root.ReplacePath<object>("$.name", null);
+
+        Check.That(result).IsEqualTo(root);
+    }
+
+    [TestMethod]
+    public void ReplacePath_WhenPathDoesNotExist_ShouldReturnUnmodifiedObject()
+    {
+        var root = JObject.Parse("{ 'name': 'test' }");
+        var original = root.ToString();
+
+        var result = root.ReplacePath("$.nonexistent", "newValue");
+
+        Check.That(result.ToString()).IsEqualTo(original);
+    }
+
+    [TestMethod]
+    public void ReplacePath_WhenPathExists_ShouldReplaceValue()
+    {
+        var root = JObject.Parse("{ 'name': 'test', 'age': 25 }");
+
+        var result = root.ReplacePath("$.name", "newTest");
+
+        Check.That(result["name"]!.Value<string>()).IsEqualTo("newTest");
+        Check.That(result["age"]!.Value<int>()).IsEqualTo(25);
+    }
+
+    [TestMethod]
+    public void ReplacePath_WhenPathIsNull_ShouldThrowArgumentException()
+    {
+        var root = JObject.Parse("{ 'name': 'test' }");
+
+        Check.ThatCode(() => root.ReplacePath(null!, "newValue"))
+             .Throws<KrosoftTechnicalException>()
+             .WithMessage("La variable 'path' est vide ou non renseignée.");
+    }
+
+    [TestMethod]
+    public void ReplacePath_WhenReplacingArrayElement_ShouldReplaceCorrectly()
+    {
+        var root = JObject.Parse("{ 'users': [{ 'name': 'test1' }, { 'name': 'test2' }] }");
+
+        var result = root.ReplacePath("$.users[0].name", "newTest");
+
+        Check.That(result["users"]?[0]?["name"]?.Value<string>()).IsEqualTo("newTest");
+        Check.That(result["users"]?[1]?["name"]?.Value<string>()).IsEqualTo("test2");
+    }
+
+    [TestMethod]
+    public void ReplacePath_WhenReplacingNestedProperty_ShouldReplaceCorrectly()
+    {
+        var root = JObject.Parse("{ 'user': { 'name': 'test', 'age': 25 } }");
+
+        var result = root.ReplacePath("$.user.name", "newTest");
+
+        Check.That(result["user"]!["name"]!.Value<string>()).IsEqualTo("newTest");
+        Check.That(result["user"]!["age"]!.Value<int>()).IsEqualTo(25);
+    }
+
+    [TestMethod]
+    public void ReplacePath_WhenRootIsNotJObject_ShouldThrowInvalidOperationException()
+    {
+        var root = JArray.Parse("[1, 2, 3]");
+
+        Check.ThatCode(() => root.ReplacePath("$[0]", 4))
+             .Throws<KrosoftTechnicalException>()
+             .WithMessage("Impossible de convertir en JObject.");
+    }
+
+    [TestMethod]
+    public void ReplacePath_WhenRootIsNull_ShouldThrowArgumentNullException()
+    {
+        JToken? root = null;
+        Check.ThatCode(() => root!.ReplacePath("$.path", "newValue"))
+             .Throws<KrosoftTechnicalException>()
+             .WithMessage("La variable 'root' n'est pas renseignée.");
     }
 
     [TestMethod]
