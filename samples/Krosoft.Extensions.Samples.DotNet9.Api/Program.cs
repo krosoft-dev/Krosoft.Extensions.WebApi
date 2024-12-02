@@ -64,22 +64,7 @@ builder.Services
        .AddCheck("Test_Endpoint", () => HealthCheckResult.Healthy())
        .AddRedisCheck()
        .AddDbContextCheck<SampleKrosoftContext>("SampleKrosoftContext")
-    ;
-
-//builder.Services
-//       .AddVigilantus(builder.Configuration)
-//       .AddWebApi(builder.Configuration, typeof(ServiceCollectionExtensions).Assembly)
-//       .AddSwagger(currentAssembly, options => options.AddHealthChecks()
-//                                                      .AddSecurityBearer()
-//                                                      .AddGlobalResponses())
-//       .AddBehaviors(options => options.AddLogging()
-//                                       .AddValidations()
-//                    )
-
-//       //Data.
-//       .AddRepositories()
-//       .AddDbContextSqlServer<EdiCoreContext>(builder.Configuration)
-//       .AddHealthChecks();
+    ; 
 
 var app = builder.Build();
 app.UseWebApi(builder.Environment, builder.Configuration,

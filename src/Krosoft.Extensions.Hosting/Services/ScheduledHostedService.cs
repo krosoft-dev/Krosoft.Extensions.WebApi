@@ -10,6 +10,7 @@ public abstract class ScheduledHostedService : IHostedService, IDisposable
     private readonly TimeSpan _interval;
     protected readonly ILogger<ScheduledHostedService> Logger;
     private CancellationToken _cancellationToken;
+    private bool _disposed;
     private Timer? _timer;
 
     protected ScheduledHostedService(ILogger<ScheduledHostedService> logger, ScheduleConfig config)
@@ -18,9 +19,10 @@ public abstract class ScheduledHostedService : IHostedService, IDisposable
         _interval = config.Interval;
     }
 
-    public virtual void Dispose()
+    public void Dispose()
     {
-        _timer?.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
     }
 
     public virtual Task StartAsync(CancellationToken cancellationToken)
@@ -37,6 +39,21 @@ public abstract class ScheduledHostedService : IHostedService, IDisposable
         Logger.LogDebug($"{ServiceName} is stopping.");
         _timer?.Change(Timeout.Infinite, 0);
         return Task.CompletedTask;
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (_disposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            _timer?.Dispose();
+        }
+
+        _disposed = true;
     }
 
     protected abstract Task DoWork(CancellationToken cancellationToken);

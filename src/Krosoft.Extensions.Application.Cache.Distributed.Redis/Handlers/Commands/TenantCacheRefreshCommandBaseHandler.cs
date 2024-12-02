@@ -43,7 +43,7 @@ public abstract class TenantCacheRefreshCommandBaseHandler : IRequestHandler<Ten
             //On récupére tous les tenants.
             var tenantsId = await GetTenantsIdAsync(cancellationToken)!.ToList();
 
-            _logger.LogInformation($"Récupération de {tenantsId.Count()} tenants.");
+            _logger.LogInformation($"Récupération de {tenantsId.Count} tenants.");
             foreach (var tenantId in tenantsId)
             {
                 await HandleRefreshAsync(tenantId, cancellationToken);

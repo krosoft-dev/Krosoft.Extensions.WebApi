@@ -61,12 +61,12 @@ public static class JsonHelper
         Guard.IsNotNull(nameof(root), root);
         Guard.IsNotNullOrWhiteSpace(nameof(path), path);
 
-        if (newValue == null)
+        if (EqualityComparer<T>.Default.Equals(newValue, default))
         {
             return (JObject)root;
         }
 
-        var jNewValue = JToken.FromObject(newValue);
+        var jNewValue = JToken.FromObject(newValue!);
         foreach (var value in root.SelectTokens(path).ToList())
         {
             if (value == root)

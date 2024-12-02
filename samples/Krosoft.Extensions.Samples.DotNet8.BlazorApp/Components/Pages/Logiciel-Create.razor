@@ -1,7 +1,7 @@
 ﻿@page "/Logiciels/Create" 
+@inject ILogicielsHttpService LogicielsStore
 @using Krosoft.Extensions.Samples.DotNet8.BlazorApp.Models
 @using Krosoft.Extensions.Samples.DotNet8.BlazorApp.Interfaces
-@inject ILogicielsHttpService LogicielsStore
 @implements IDisposable
 
 
@@ -31,6 +31,7 @@
         _cts.Cancel();
         _cts.Dispose();
     }
+
     string? _lastSubmitResult;
 
     async Task FormSubmitted(EditContext editContext)
@@ -41,8 +42,8 @@
                 ? "Success - form was valid"
                 : "Failure - form was invalid";
 
-        
         var result = await LogicielsStore.CreateAsync(_logiciel, _cts.Token);
-    }
 
+        Console.WriteLine(result);
+    }
 }
