@@ -119,6 +119,15 @@ public static class FileHelper
         return encodedData;
     }
 
+    public static async Task<string> ReadAsBase64Async(string filePath, CancellationToken cancellationToken)
+    {
+        Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
+
+        var bytes = await File.ReadAllBytesAsync(filePath, cancellationToken);
+        var encodedData = Convert.ToBase64String(bytes);
+        return encodedData;
+    }
+
     public static string ReadAsHash(string filePath)
     {
         Guard.IsNotNullOrWhiteSpace(nameof(filePath), filePath);
