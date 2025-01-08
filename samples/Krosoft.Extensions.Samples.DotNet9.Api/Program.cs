@@ -11,6 +11,7 @@ using Krosoft.Extensions.Data.EntityFramework.InMemory.Extensions;
 using Krosoft.Extensions.Identity.Extensions;
 using Krosoft.Extensions.Pdf.Extensions;
 using Krosoft.Extensions.Samples.DotNet9.Api.Data;
+using Krosoft.Extensions.Samples.DotNet9.Api.Extensions;
 using Krosoft.Extensions.Samples.Library.Mappings;
 using Krosoft.Extensions.WebApi.Blocking.Extensions;
 using Krosoft.Extensions.WebApi.Extensions;
@@ -73,7 +74,7 @@ app.UseWebApi(builder.Environment, builder.Configuration,
    .UseSwaggerExt()
    .UseBlocking();
 
-await app.RunAsync();
+await app.AddEndpoints().RunAsync();
 
 namespace Krosoft.Extensions.Samples.DotNet9.Api
 {

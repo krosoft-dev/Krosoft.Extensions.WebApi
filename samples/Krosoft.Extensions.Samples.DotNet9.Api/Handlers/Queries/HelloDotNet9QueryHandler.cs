@@ -15,8 +15,8 @@ public class HelloDotNet9QueryHandler : IRequestHandler<HelloDotNet9Query, strin
     public Task<string> Handle(HelloDotNet9Query request,
                                CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Hello DotNet8...");
+        _logger.LogInformation("Hello DotNet9...");
 
-        return Task.FromResult("Hello DotNet8");
+        return Task.FromResult("Hello DotNet9");
     }
 }

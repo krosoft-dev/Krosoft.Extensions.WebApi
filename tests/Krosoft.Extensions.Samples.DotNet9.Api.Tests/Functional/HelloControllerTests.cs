@@ -17,6 +17,6 @@ public class HelloControllerTests : SampleBaseApiTest<Program>
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
 
         var result = await response.Content.ReadAsStringAsync(CancellationToken.None);
-        Check.That(result).IsEqualTo("Hello DotNet8");
+        Check.That(result).IsEqualTo("Hello DotNet9");
     }
 }

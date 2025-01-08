@@ -14,6 +14,6 @@ public class HelloWorlQueryHandlerTests : SampleBaseTest<Program>
 
         var result = await this.SendQueryAsync(serviceProvider, new HelloDotNet9Query());
         Check.That(result).IsNotNull();
-        Check.That(result).IsEqualTo("Hello DotNet8");
+        Check.That(result).IsEqualTo("Hello DotNet9");
     }
 }
