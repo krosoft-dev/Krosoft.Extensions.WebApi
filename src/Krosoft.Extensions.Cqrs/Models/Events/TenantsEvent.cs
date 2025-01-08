@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Cqrs.Models.Events;
 
-public abstract class TenantsEvent : INotification
+public abstract record TenantsEvent : INotification
 {
     protected TenantsEvent(ISet<string> tenantsId)
     {

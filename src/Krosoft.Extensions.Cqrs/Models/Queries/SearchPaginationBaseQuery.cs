@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Cqrs.Models.Queries;
 
-public abstract class SearchPaginationBaseQuery<T> : PaginationBaseQuery<T>, ISearchPaginationRequest
+public abstract record SearchPaginationBaseQuery<T> : PaginationBaseQuery<T>, ISearchPaginationRequest
 {
     public string? Text { get; set; }
 }

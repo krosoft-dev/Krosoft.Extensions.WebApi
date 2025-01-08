@@ -5,7 +5,7 @@ using Krosoft.Extensions.Data.Abstractions.Models;
 namespace Krosoft.Extensions.Samples.Library.Models.Entities;
 
 [NoReorder]
-public class Langue : Entity, IId
+public record Langue : Entity, IId
 {
     public Guid Id { get; set; }
     public string? Code { get; set; }

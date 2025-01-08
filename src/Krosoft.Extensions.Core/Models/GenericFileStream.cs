@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Core.Models;
 
-public class GenericFileStream : IFileStream
+public record GenericFileStream : IFileStream
 {
     public GenericFileStream(Stream stream, string fileName, string contentType)
     {

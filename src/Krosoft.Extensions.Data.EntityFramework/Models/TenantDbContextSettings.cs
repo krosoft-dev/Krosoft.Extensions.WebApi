@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Data.EntityFramework.Models;
 
-public class TenantDbContextSettings<T> : ITenantDbContextSettings<T> where T : KrosoftTenantContext
+public record TenantDbContextSettings<T> : ITenantDbContextSettings<T> where T : KrosoftTenantContext
 {
     public TenantDbContextSettings(string tenantId)
     {

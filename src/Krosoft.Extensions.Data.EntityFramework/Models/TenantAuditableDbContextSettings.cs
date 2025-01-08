@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Data.EntityFramework.Models;
 
-public class TenantAuditableDbContextSettings<T> : ITenantAuditableDbContextSettings<T>
+public record TenantAuditableDbContextSettings<T> : ITenantAuditableDbContextSettings<T>
     where T : KrosoftTenantAuditableContext
 {
     public TenantAuditableDbContextSettings(string tenantId, DateTime now, string utilisateurId)

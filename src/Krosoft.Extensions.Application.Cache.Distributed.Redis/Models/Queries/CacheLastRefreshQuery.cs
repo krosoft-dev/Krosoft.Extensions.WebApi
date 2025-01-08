@@ -2,4 +2,4 @@
 
 namespace Krosoft.Extensions.Application.Cache.Distributed.Redis.Models.Queries;
 
-public class CacheLastRefreshQuery : BaseQuery<DateTime>;
+public record CacheLastRefreshQuery : BaseQuery<DateTime>;

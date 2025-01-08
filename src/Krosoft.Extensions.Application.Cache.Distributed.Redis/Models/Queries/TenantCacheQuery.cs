@@ -2,4 +2,4 @@
 
 namespace Krosoft.Extensions.Application.Cache.Distributed.Redis.Models.Queries;
 
-public class TenantCacheQuery : AuthBaseQuery<IDictionary<string, long>>;
+public record TenantCacheQuery : AuthBaseQuery<IDictionary<string, long>>;

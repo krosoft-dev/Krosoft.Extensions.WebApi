@@ -2,4 +2,4 @@
 
 namespace Krosoft.Extensions.Application.Cache.Distributed.Redis.Models.Queries;
 
-public class TenantCacheLastRefreshQuery : AuthBaseQuery<DateTime>;
+public record TenantCacheLastRefreshQuery : AuthBaseQuery<DateTime>;

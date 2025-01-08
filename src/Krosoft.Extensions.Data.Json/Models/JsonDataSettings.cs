@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Data.Json.Models;
 
-public class JsonDataSettings
+public record JsonDataSettings
 {
     public string? DataFileName { get; set; }
 }

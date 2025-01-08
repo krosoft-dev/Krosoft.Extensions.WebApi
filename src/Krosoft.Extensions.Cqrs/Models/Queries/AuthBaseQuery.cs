@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Cqrs.Models.Queries;
 
-public class AuthBaseQuery<TResponse> : BaseQuery<TResponse>, IAuthQuery<TResponse>
+public record AuthBaseQuery<TResponse> : BaseQuery<TResponse>, IAuthQuery<TResponse>
 {
     public virtual bool IsTenantRequired => true;
 

@@ -2,4 +2,4 @@
 
 namespace Krosoft.Extensions.Application.Cache.Distributed.Redis.Models.Events;
 
-public class GlobalRefreshCacheEvent : INotification;
+public record GlobalRefreshCacheEvent : INotification;

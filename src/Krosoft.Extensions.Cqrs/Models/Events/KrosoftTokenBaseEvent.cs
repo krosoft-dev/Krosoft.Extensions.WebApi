@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Krosoft.Extensions.Cqrs.Models.Events;
 
-public abstract class KrosoftTokenBaseEvent : INotification
+public abstract record KrosoftTokenBaseEvent : INotification
 {
     protected KrosoftTokenBaseEvent(KrosoftToken krosoftToken)
     {

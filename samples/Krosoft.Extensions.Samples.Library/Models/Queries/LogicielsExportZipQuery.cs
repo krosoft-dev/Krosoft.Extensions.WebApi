@@ -3,4 +3,4 @@ using Krosoft.Extensions.Cqrs.Models.Queries;
 
 namespace Krosoft.Extensions.Samples.Library.Models.Queries;
 
-public class LogicielsExportZipQuery : BaseQuery<IFileStream>;
+public record LogicielsExportZipQuery : BaseQuery<IFileStream>;

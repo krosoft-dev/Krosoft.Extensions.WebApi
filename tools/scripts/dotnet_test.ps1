@@ -1,34 +1,38 @@
-$sourcesDirectory = "C:\Dev\Krosoft.Extensions\"
-$path = "C:\Dev\Krosoft.Extensions\tests\Krosoft.Extensions.Validations.Tests\Krosoft.Extensions.Validations.Tests.csproj"
-$resultPath = "temp"
-$configuration = "Release"
+# Installer le générateur de rapports
+dotnet tool install -g dotnet-reportgenerator-globaltool
 
+# Définir le chemin absolu pour les résultats
+$testResults = Join-Path $PSScriptRoot "../../TestResults" 
+$testsPath = Join-Path $PSScriptRoot "../../tests"
 
-# dotnet new console -n testt -f net8.0
-# cd ./testt
-# dotnet add package ReportGenerator --version 5.2.0
+# Nettoyer le répertoire des résultats
+if (Test-Path $testResults) {
+    Remove-Item -Path $testResults\* -Recurse -Force
+} 
+
+# Nettoyer les dossiers bin et obj
+Get-ChildItem -Path $rootPath -Include bin, obj -Directory -Recurse | 
+    ForEach-Object { Remove-Item $_.FullName -Recurse -Force }
  
+# Rechercher tous les projets de test
+$testProjects = Get-ChildItem -Path $testsPath -Filter "*Tests.csproj" -Recurse
 
+# Exécuter les tests pour chaque projet
+foreach ($project in $testProjects) {
+    Write-Host "Execution des tests pour $($project.Name)"
+    dotnet test $project.FullName `
+        --results-directory:"$testResults" `
+        /p:CollectCoverage=true `
+        /p:CoverletOutputFormat=cobertura `
+        /p:CoverletOutput="$testResults/$($project.BaseName).coverage.cobertura.xml" `
+        /p:MergeWith="$testResults/coverage.json"
+}
 
-# dotnet build $path --configuration $configuration
+# Générer le rapport HTML combiné
+reportgenerator `
+    -reports:"$testResults/*.coverage.cobertura.xml" `
+    -targetdir:"$testResults/coveragereport" `
+    -reporttypes:Html
 
-# dotnet test $path  `
-#     --logger trx `
-#     --results-directory $resultPath  `
-#     --no-build  `
-#     --configuration $configuration  `
-#     -p:CollectCoverage=true  `
-#     -p:Platform=AnyCPU  `
-#     -p:CoverletOutputFormat="cobertura"
-
-# dotnet $(UserProfile)\.nuget\packages\reportgenerator\5.2.0\tools\net6.0\ReportGenerator.dll `
-#     -reports:$sourcesDirectory/**/coverage.cobertura.xml  `
-#     -targetdir:$sourcesDirectory/CodeCoverage `
-#     "-reporttypes:HtmlInline_AzurePipelines;Cobertura" `
-#     -filefilters: "-$sourcesDirectory/**/Migrations/*.cs;-$sourcesDirectory/samples/*.*" `
-#     -title:"Hello" 
- 
-
- 
- 
- 
+# Ouvrir le rapport dans le navigateur par défaut
+Start-Process "$testResults/coveragereport/index.html"

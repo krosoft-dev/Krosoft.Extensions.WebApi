@@ -1,3 +1,3 @@
 ﻿namespace Krosoft.Extensions.Cqrs.Models.Queries;
 
-public class BaseQuery<TResponse> : IQuery<TResponse>;
+public record BaseQuery<TResponse> : IQuery<TResponse>;

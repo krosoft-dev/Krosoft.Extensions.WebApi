@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Core.Models;
 
-public class PdfFileStream : GenericFileStream
+public record PdfFileStream : GenericFileStream
 {
     public PdfFileStream(Stream stream,
                          string fileName)

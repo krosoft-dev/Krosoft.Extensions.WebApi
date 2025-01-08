@@ -3,7 +3,7 @@ using Krosoft.Extensions.Samples.Library.Models.Enums;
 
 namespace Krosoft.Extensions.Samples.Library.Models.Entities;
 
-public class Logiciel : TenantAuditableEntity
+public record Logiciel : TenantAuditableEntity
 {
     public Guid Id { get; set; }
     public string? Nom { get; set; }

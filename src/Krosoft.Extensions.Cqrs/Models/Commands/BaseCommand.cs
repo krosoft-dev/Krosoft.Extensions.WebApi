@@ -1,5 +1,5 @@
 ﻿namespace Krosoft.Extensions.Cqrs.Models.Commands;
 
-public abstract class BaseCommand : ICommand;
+public abstract record BaseCommand : ICommand;
 
-public abstract class BaseCommand<T> : ICommand<T>;
+public abstract record BaseCommand<T> : ICommand<T>;

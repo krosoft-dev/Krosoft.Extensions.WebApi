@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Krosoft.Extensions.Application.Cache.Distributed.Redis.Models.Commands;
 
-public class GlobalCacheRefreshCommand : BaseCommand<Unit>;
+public record GlobalCacheRefreshCommand : BaseCommand<Unit>;

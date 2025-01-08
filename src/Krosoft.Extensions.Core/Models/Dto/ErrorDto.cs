@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Krosoft.Extensions.Core.Models.Dto;
 
-public class ErrorDto
+public record ErrorDto
 {
     /// <summary>
     /// Code de l'erreur.

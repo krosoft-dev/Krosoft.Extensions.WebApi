@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Samples.Library.Models.Commands;
 
-public class LogicielImportCommand : AuthBaseCommand<int>
+public record LogicielImportCommand : AuthBaseCommand<int>
 {
     public LogicielImportCommand(IEnumerable<string> files)
     {

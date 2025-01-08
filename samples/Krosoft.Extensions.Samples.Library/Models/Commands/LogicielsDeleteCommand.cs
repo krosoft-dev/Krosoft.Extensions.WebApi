@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Samples.Library.Models.Commands;
 
-public class LogicielsDeleteCommand : AuthBaseCommand
+public record LogicielsDeleteCommand : AuthBaseCommand
 {
     public LogicielsDeleteCommand()
     {

@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Application.Cache.Distributed.Redis.Models;
 
-public class CacheScheduleConfig<TCommand> : ScheduleConfig
+public record CacheScheduleConfig<TCommand> : ScheduleConfig
 {
     public TCommand? Command { get; set; }
 }

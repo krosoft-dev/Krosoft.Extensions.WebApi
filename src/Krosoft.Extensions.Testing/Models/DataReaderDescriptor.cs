@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Testing.Models;
 
-internal class DataReaderDescriptor
+internal record DataReaderDescriptor
 {
     private readonly string[] _properties;
 

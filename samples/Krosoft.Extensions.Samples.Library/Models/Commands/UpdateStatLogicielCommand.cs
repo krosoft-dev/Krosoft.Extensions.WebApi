@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Samples.Library.Models.Commands;
 
-public class UpdateStatLogicielCommand : PayloadBaseCommand
+public record UpdateStatLogicielCommand : PayloadBaseCommand
 {
     public UpdateStatLogicielCommand(string payload) : base(payload)
     {

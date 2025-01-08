@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Cqrs.Models.Commands;
 
-public abstract class PayloadBaseCommand : BaseCommand
+public abstract record PayloadBaseCommand : BaseCommand
 {
     protected PayloadBaseCommand(string payload)
     {

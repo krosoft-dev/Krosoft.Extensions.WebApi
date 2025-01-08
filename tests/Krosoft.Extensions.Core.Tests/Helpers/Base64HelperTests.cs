@@ -17,6 +17,18 @@ public class Base64HelperTests
     }
 
     [DataTestMethod]
+    [DataRow("and0VG9rZW4=", true)]
+    [DataRow("aaa", false)]
+    [DataRow("", false)]
+    [DataRow(null, false)]
+    public void IsBase64String(string base64EncodedData, bool expected)
+    {
+        var result = Base64Helper.IsBase64String(base64EncodedData);
+
+        Check.That(result).IsEqualTo(expected);
+    }
+
+    [DataTestMethod]
     [DataRow("jwtToken", "and0VG9rZW4=")]
     [DataRow("", "")]
     [DataRow(null, null)]

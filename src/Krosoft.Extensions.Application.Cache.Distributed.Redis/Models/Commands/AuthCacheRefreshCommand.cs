@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Krosoft.Extensions.Application.Cache.Distributed.Redis.Models.Commands;
 
-public class AuthCacheRefreshCommand : AuthBaseCommand<Unit>
+public record AuthCacheRefreshCommand : AuthBaseCommand<Unit>
 {
     public AuthCacheRefreshCommand(bool isAuthenticationRequired, bool isTenantRequired)
     {

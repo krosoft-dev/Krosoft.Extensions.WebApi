@@ -6,7 +6,7 @@ using Krosoft.Extensions.Samples.Library.Models.Enums;
 namespace Krosoft.Extensions.Samples.Library.Models.Entities;
 
 [NoReorder]
-public class Categorie : AuditableEntity, IId
+public record Categorie : AuditableEntity, IId
 {
     public Guid Id { get; set; }
     public string? Libelle { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Core.Models;
 
-public class KrosoftFile
+public record KrosoftFile
 {
     public KrosoftFile(string name, byte[] content)
     {

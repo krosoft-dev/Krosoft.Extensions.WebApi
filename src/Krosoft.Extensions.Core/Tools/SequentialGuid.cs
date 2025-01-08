@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Core.Tools;
 
-public class SequentialGuid
+public record SequentialGuid
 {
     private const int NumberOfBytes = 6;
     private const int PermutationsOfAByte = 256;

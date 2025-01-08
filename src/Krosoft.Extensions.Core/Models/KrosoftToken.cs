@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Core.Models;
 
-public class KrosoftToken
+public record KrosoftToken
 {
     public KrosoftToken()
     {

@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Data.Abstractions.Models;
 
-public abstract class AuditableEntity : Entity, IAuditable
+public abstract record AuditableEntity : Entity, IAuditable
 {
     public string? ModificateurId { get; set; }
     public DateTime ModificateurDate { get; set; }

@@ -3,4 +3,4 @@
 /// <summary>
 /// Classe abstraite représentant une entité.
 /// </summary>
-public abstract class Entity;
+public abstract record Entity;

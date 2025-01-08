@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Cqrs.Behaviors.Models;
 
-public sealed class BehaviorsOptions
+public sealed record BehaviorsOptions
 {
     public BehaviorsOptions(IServiceCollection services)
     {

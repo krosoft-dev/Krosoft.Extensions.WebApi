@@ -3,4 +3,4 @@ using Krosoft.Extensions.Samples.Library.Models.Dto;
 
 namespace Krosoft.Extensions.Samples.Library.Models.Queries;
 
-public class LanguesQuery : BaseQuery<IEnumerable<LangueDto>>;
+public record LanguesQuery : BaseQuery<IEnumerable<LangueDto>>;

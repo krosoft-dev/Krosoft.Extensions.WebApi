@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Application.Cache.Distributed.Redis.Models.Events;
 
-public class TenantRefreshCacheEvent : TenantEvent
+public record TenantRefreshCacheEvent : TenantEvent
 {
     public TenantRefreshCacheEvent(string tenantId) : base(tenantId)
     {
