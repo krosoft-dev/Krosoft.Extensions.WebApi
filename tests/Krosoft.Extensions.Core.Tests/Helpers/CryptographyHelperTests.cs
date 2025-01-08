@@ -19,7 +19,7 @@ public class CryptographyHelperTests
     [TestMethod]
     public void HashMd5_WithEmptyInput_ShouldReturnExpectedHash()
     {
-        var input = new byte[] { };
+        var input = Array.Empty<byte>();
 
         var result = CryptographyHelper.HashMd5(input);
 
@@ -56,7 +56,7 @@ public class CryptographyHelperTests
     [TestMethod]
     public void HashSha1_WithEmptyInput_ShouldReturnExpectedHash()
     {
-        var input = new byte[] { };
+        var input = Array.Empty<byte>();
 
         var result = CryptographyHelper.HashSha1(input);
 
