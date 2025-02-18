@@ -1,4 +1,5 @@
-﻿using Krosoft.Extensions.Core.Helpers;
+﻿using System.Reflection;
+using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Data.Abstractions.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,12 @@ public static class DbContextExtensions
 {
     public static void Import<T>(this DbContext db) where T : Entity
     {
-        var entities = JsonHelper.Get<T>(typeof(T).Assembly);
+        db.Import<T>(typeof(T).Assembly);
+    }
+
+    public static void Import<T>(this DbContext db, Assembly assembly) where T : Entity
+    {
+        var entities = JsonHelper.Get<T>(assembly);
         db.Set<T>().AddRange(entities);
     }
 }

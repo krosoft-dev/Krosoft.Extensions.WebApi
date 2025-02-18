@@ -13,7 +13,7 @@
 		<PackageReference Include="AspNetCore.HealthChecks.Uris" Version="8.0.1" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
-		<PackageReference Include="AspNetCore.HealthChecks.Uris" Version="8.0.1" />
+		<PackageReference Include="AspNetCore.HealthChecks.Uris" Version="9.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Yarp.ReverseProxy" Version="2.2.0" />

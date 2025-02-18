@@ -20,9 +20,13 @@ public abstract class BaseApiTest<TStartup, TKrosoftContext> : BaseTest
     protected CustomWebApplicationFactory<TStartup, TKrosoftContext> Factory = null!;
     protected virtual bool UseFakeAuth => true;
 
-    protected abstract void ConfigureClaims(KrosoftToken krosoftToken);
+    protected virtual void ConfigureClaims(KrosoftToken krosoftToken)
+    {
+    }
 
-    protected abstract void ConfigureServices(IServiceCollection services);
+    protected virtual void ConfigureServices(IServiceCollection services)
+    {
+    }
 
     protected CustomWebApplicationFactory<TStartup, TKrosoftContext> GetFactory()
     {
