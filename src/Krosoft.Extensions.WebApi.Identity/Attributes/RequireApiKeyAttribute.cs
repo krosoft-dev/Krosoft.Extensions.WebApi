@@ -1,5 +1,4 @@
 ﻿namespace Krosoft.Extensions.WebApi.Identity.Attributes;
 
-public class RequireApiKeyAttribute : Attribute
-{
-}
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class RequireApiKeyAttribute : Attribute;
