@@ -6,6 +6,8 @@ using Krosoft.Extensions.Identity.Abstractions.Interfaces;
 using Krosoft.Extensions.Identity.Abstractions.Models;
 using Krosoft.Extensions.Identity.Extensions;
 using Krosoft.Extensions.WebApi.Identity.Helpers;
+using Krosoft.Extensions.WebApi.Identity.Interface;
+using Krosoft.Extensions.WebApi.Identity.Models;
 using Krosoft.Extensions.WebApi.Identity.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -26,6 +28,11 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddApiKey(this IServiceCollection services,
+                                               IConfiguration configuration) =>
+        services.Configure<WebApiIdentySettings>(configuration.GetSection(nameof(WebApiIdentySettings)))
+                .AddTransient<IApiKeyValidator, ApiKeySettingsValidator>();
 
     public static IServiceCollection AddIdentifierProvider(this IServiceCollection services)
     {

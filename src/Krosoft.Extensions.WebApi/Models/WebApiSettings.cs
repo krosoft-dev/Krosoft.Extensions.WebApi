@@ -2,7 +2,7 @@
 
 public record WebApiSettings
 {
-    public string[] AllowedOrigins { get; set; } = Array.Empty<string>();
-    public string[] ExposedHeaders { get; set; } = Array.Empty<string>();
-    public string[] Cultures { get; set; } = Array.Empty<string>();
+    public string[] AllowedOrigins { get; set; } = [];
+    public string[] ExposedHeaders { get; set; } = [];
+    public string[] Cultures { get; set; } = [];
 }

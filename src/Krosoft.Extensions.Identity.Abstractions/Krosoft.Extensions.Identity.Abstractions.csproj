@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<PackageTags>Krosoft Extension Identity JWT abstraction</PackageTags>
+		<PackageTags>Krosoft Extension Identity JWT Abstraction</PackageTags>
 		<Description>Package d'abstraction pour faciliter la gestion de l'authentification.</Description>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">

@@ -46,12 +46,13 @@ builder.Services
 //Identity.
        .AddIdentityEx()
        .AddWebApiIdentityEx()
+       .AddApiKey(builder.Configuration)
 
 //Data.
        .AddRepositories()
        .AddDbContextInMemory<SampleKrosoftContext>(false)
-//services.AddDbContextSqlite<SampleKrosoftContext>(_configuration); 
-//services.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(_configuration);
+//.AddDbContextSqlite<SampleKrosoftContext>(builder.Configuration); 
+//.AddDbContextPostgreSql<KrosoftExtensionTenantContext>(builder.Configuration);
        .AddSeedService<SampleKrosoftContext, SampleKrosoftContextSeedService>()
 
 //Cache. 
@@ -65,11 +66,12 @@ builder.Services
        .AddCheck("Test_Endpoint", () => HealthCheckResult.Healthy())
        .AddRedisCheck()
        .AddDbContextCheck<SampleKrosoftContext>("SampleKrosoftContext")
-    ; 
+    ;
 
 var app = builder.Build();
 app.UseWebApi(builder.Environment, builder.Configuration,
-              x => x.UseHealthChecksExt(builder.Environment),
+              x => x.UseApiKey()
+                    .UseHealthChecksExt(builder.Environment),
               endpoints => endpoints.MapHealthChecksExt())
    .UseSwaggerExt()
    .UseBlocking();

@@ -26,5 +26,6 @@
 		<ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
 		<ProjectReference Include="..\Krosoft.Extensions.Identity.Abstractions\Krosoft.Extensions.Identity.Abstractions.csproj" />
 		<ProjectReference Include="..\Krosoft.Extensions.Identity\Krosoft.Extensions.Identity.csproj" />
+		<ProjectReference Include="..\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
 	</ItemGroup>
 </Project>
