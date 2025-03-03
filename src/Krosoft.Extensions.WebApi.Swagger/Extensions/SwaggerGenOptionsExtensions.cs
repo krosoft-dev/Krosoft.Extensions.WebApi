@@ -20,11 +20,10 @@ public static class SwaggerGenOptionsExtensions
     public static SwaggerGenOptions AddSecurityApiKey(this SwaggerGenOptions options, string headerName)
     {
         const string openApiReferenceId = "ApiKey-Token";
-
         options.AddSecurityDefinition(openApiReferenceId, new OpenApiSecurityScheme
         {
             In = ParameterLocation.Header,
-            Description = "Please provide a valid token",
+            Description = "Please provide a valid api key",
             Name = headerName,
             Type = SecuritySchemeType.ApiKey
         });

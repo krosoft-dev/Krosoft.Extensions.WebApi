@@ -30,15 +30,15 @@ public static class HttpClientExtensions
 
     private static HttpContent Serialize(object? data) => new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, MediaTypeJson);
 
-    public static HttpClient SetBearerToken(this HttpClient client,
+    public static HttpClient SetBearerToken(this HttpClient httpClient,
                                             string token) =>
-        client.SetToken(JwtAuthenticationScheme, token);
+        httpClient.SetToken(JwtAuthenticationScheme, token);
 
-    public static HttpClient SetToken(this HttpClient client,
+    public static HttpClient SetToken(this HttpClient httpClient,
                                       string scheme,
                                       string token)
     {
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme, token);
-        return client;
+        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme, token);
+        return httpClient;
     }
 }

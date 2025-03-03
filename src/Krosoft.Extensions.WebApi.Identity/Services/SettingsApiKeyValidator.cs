@@ -4,11 +4,11 @@ using Microsoft.Extensions.Options;
 
 namespace Krosoft.Extensions.WebApi.Identity.Services;
 
-internal class ApiKeySettingsValidator : IApiKeyValidator
+internal class SettingsApiKeyValidator : IApiKeyValidator
 {
     private readonly IOptions<WebApiIdentySettings> _options;
 
-    public ApiKeySettingsValidator(IOptions<WebApiIdentySettings> options)
+    public SettingsApiKeyValidator(IOptions<WebApiIdentySettings> options)
     {
         _options = options;
     }

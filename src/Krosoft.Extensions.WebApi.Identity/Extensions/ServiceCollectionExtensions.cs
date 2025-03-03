@@ -32,7 +32,23 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApiKey(this IServiceCollection services,
                                                IConfiguration configuration) =>
         services.Configure<WebApiIdentySettings>(configuration.GetSection(nameof(WebApiIdentySettings)))
-                .AddTransient<IApiKeyValidator, ApiKeySettingsValidator>();
+                .AddTransient<IApiKeyValidator, SettingsApiKeyValidator>()
+                .AddApiKeyProvider()
+                .AddApiKeyStorage();
+
+    public static IServiceCollection AddApiKeyProvider(this IServiceCollection services)
+    {
+        services.AddTransient<IApiKeyProvider, HttpApiKeyProvider>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddApiKeyStorage(this IServiceCollection services)
+    {
+        services.AddTransient<IApiKeyStorageProvider, SettingsApiKeyStorageProvider>();
+
+        return services;
+    }
 
     public static IServiceCollection AddIdentifierProvider(this IServiceCollection services)
     {

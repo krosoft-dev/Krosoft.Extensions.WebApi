@@ -12,4 +12,11 @@ public static class BehaviorsOptionsExtensions
 
         return options;
     }
+
+    public static BehaviorsOptions AddApiKey(this BehaviorsOptions options)
+    {
+        options.Add(typeof(ApiKeyPipelineBehavior<,>));
+
+        return options;
+    }
 }
