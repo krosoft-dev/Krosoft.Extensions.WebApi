@@ -17,5 +17,6 @@ extends:
      - "Krosoft.Extensions.Core"
      - "Krosoft.Extensions.Identity"
      - "Krosoft.Extensions.Identity.Abstractions"
+     - "Krosoft.Extensions.WebApi"
      - "Krosoft.Extensions.WebApi.Identity"
 

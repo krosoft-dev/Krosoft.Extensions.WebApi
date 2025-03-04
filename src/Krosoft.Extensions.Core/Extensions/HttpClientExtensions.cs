@@ -41,4 +41,12 @@ public static class HttpClientExtensions
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme, token);
         return httpClient;
     }
+
+    public static HttpClient SetHeader(this HttpClient httpClient,
+                                       string name,
+                                       string value)
+    {
+        httpClient.DefaultRequestHeaders.Add(name, value);
+        return httpClient;
+    }
 }

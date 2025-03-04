@@ -15,5 +15,6 @@ extends:
   parameters:
     packages:
      - "Krosoft.Extensions.Core"
+     - "Krosoft.Extensions.WebApi"
      - "Krosoft.Extensions.WebApi.Swagger"
 

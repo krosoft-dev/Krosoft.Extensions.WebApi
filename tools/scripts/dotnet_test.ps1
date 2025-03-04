@@ -32,7 +32,9 @@ foreach ($project in $testProjects) {
 reportgenerator `
     -reports:"$testResults/*.coverage.cobertura.xml" `
     -targetdir:"$testResults/coveragereport" `
-    -reporttypes:Html
+    -reporttypes:Html `
+    -assemblyfilters:"-*Tests*;-*Samples* " `
+    -filefilters:"-**/samples/**;-**/Migrations/**"
 
 # Ouvrir le rapport dans le navigateur par défaut
 Start-Process "$testResults/coveragereport/index.html"
