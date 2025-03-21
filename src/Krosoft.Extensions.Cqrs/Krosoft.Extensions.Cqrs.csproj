@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Cqrs</PackageTags>
 		<Description>Classes de base, extensions et helpers pour simplifier l'utilisation de CQRS.</Description>

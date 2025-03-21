@@ -23,17 +23,14 @@ public sealed class WriteRepository<TEntity> : IWriteRepository<TEntity>
 
     public void Dispose()
     {
-        _dbContext.Dispose(); 
+        _dbContext.Dispose();
     }
 
     public void Delete(TEntity entity)
     {
         Guard.IsNotNull(nameof(entity), entity);
 
-        if (_dbContext.Entry(entity).State == EntityState.Detached)
-        {
-            _dbSet.Attach(entity);
-        }
+        if (_dbContext.Entry(entity).State == EntityState.Detached) _dbSet.Attach(entity);
 
         _dbSet.Remove(entity);
     }
@@ -50,6 +47,12 @@ public sealed class WriteRepository<TEntity> : IWriteRepository<TEntity>
         Delete(entity!);
     }
 
+#if NET7_0_OR_GREATER
+    public Task DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        return _dbSet.Where(predicate).ExecuteDeleteAsync();
+    }
+#endif
     public void DeleteRange()
     {
         DeleteRange(_dbSet);
@@ -68,9 +71,15 @@ public sealed class WriteRepository<TEntity> : IWriteRepository<TEntity>
         _dbSet.RemoveRange(query);
     }
 
-    public TEntity? Get(params object[] key) => _dbSet.Find(key);
+    public TEntity? Get(params object[] key)
+    {
+        return _dbSet.Find(key);
+    }
 
-    public ValueTask<TEntity?> GetAsync(params object[] key) => _dbSet.FindAsync(key);
+    public ValueTask<TEntity?> GetAsync(params object[] key)
+    {
+        return _dbSet.FindAsync(key);
+    }
 
     public void Insert(TEntity entity)
     {
@@ -93,7 +102,10 @@ public sealed class WriteRepository<TEntity> : IWriteRepository<TEntity>
         DeleteRange(crudBusiness.ToDelete);
     }
 
-    public IQueryable<TEntity> Query() => _dbSet;
+    public IQueryable<TEntity> Query()
+    {
+        return _dbSet;
+    }
 
     public void Update(TEntity entityToUpdate)
     {
@@ -108,9 +120,7 @@ public sealed class WriteRepository<TEntity> : IWriteRepository<TEntity>
         _dbSet.Attach(entityToUpdate);
 
         foreach (var propertyExpression in propertiesExpression)
-        {
             _dbContext.Entry(entityToUpdate).Property(propertyExpression).IsModified = true;
-        }
     }
 
     public void UpdateRange(IEnumerable<TEntity> entities)
@@ -119,11 +129,9 @@ public sealed class WriteRepository<TEntity> : IWriteRepository<TEntity>
         _dbSet.UpdateRange(entities);
     }
 
-    public void UpdateRange(IEnumerable<TEntity> entities, params Expression<Func<TEntity, object?>>[] propertiesExpression)
+    public void UpdateRange(IEnumerable<TEntity> entities,
+        params Expression<Func<TEntity, object?>>[] propertiesExpression)
     {
-        foreach (var entity in entities)
-        {
-            Update(entity, propertiesExpression);
-        }
+        foreach (var entity in entities) Update(entity, propertiesExpression);
     }
 }
