@@ -44,8 +44,14 @@ public static class HttpClientExtensions
 
     public static HttpClient SetHeader(this HttpClient httpClient,
                                        string name,
-                                       string value)
+                                       string value,
+                                       bool clear = false)
     {
+        if (clear)
+        {
+            httpClient.DefaultRequestHeaders.Clear();
+        }
+
         httpClient.DefaultRequestHeaders.Add(name, value);
         return httpClient;
     }
