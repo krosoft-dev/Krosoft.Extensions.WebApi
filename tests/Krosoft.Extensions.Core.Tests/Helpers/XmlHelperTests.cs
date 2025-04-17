@@ -7,9 +7,15 @@ namespace Krosoft.Extensions.Core.Tests.Helpers;
 public class XmlHelperTests
 {
     [TestMethod]
-    public void Deserialize_Null()
+    public void Deserialize_Stream_Null()
     {
-        var obj = XmlHelper.Deserialize<DepotXml>(null);
+        var obj = XmlHelper.Deserialize<DepotXml>((Stream?)null);
+        Check.That(obj).IsNull();
+    }
+    [TestMethod]
+    public void Deserialize_String_Null()
+    {
+        var obj = XmlHelper.Deserialize<DepotXml>((string?)null);
         Check.That(obj).IsNull();
     }
 

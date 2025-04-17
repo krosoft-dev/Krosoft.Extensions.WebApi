@@ -20,9 +20,9 @@ public static class XmlHelper
 
     public static T? Deserialize<T>(Stream? reader)
     {
-        var serializer = new XmlSerializer(typeof(T));
         if (reader != null)
         {
+            var serializer = new XmlSerializer(typeof(T));
             return (T?)serializer.Deserialize(reader);
         }
 
