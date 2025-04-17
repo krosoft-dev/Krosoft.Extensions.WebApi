@@ -17,4 +17,15 @@ public static class XmlHelper
 
         return default;
     }
+
+    public static T? Deserialize<T>(Stream? reader)
+    {
+        var serializer = new XmlSerializer(typeof(T));
+        if (reader != null)
+        {
+            return (T?)serializer.Deserialize(reader);
+        }
+
+        return default;
+    }
 }
