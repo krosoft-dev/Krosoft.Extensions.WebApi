@@ -8,8 +8,15 @@ namespace Krosoft.Extensions.Core.Models.Exceptions;
 /// </summary>
 public class KrosoftFunctionalException : HttpException
 {
+    public KrosoftFunctionalException(string? erreur,
+                                      ISet<string> errors,
+                                      Exception? innerException = null) : base(HttpStatusCode.BadRequest, erreur, innerException)
+    {
+        Errors = errors;
+    }
+
     public KrosoftFunctionalException(ISet<string> errors,
-                                      Exception? innerException = null) : base(HttpStatusCode.BadRequest, errors.FirstOrDefault(), innerException)
+                                      Exception? innerException = null) : this(errors.FirstOrDefault(), errors, innerException)
     {
         Errors = errors;
     }
