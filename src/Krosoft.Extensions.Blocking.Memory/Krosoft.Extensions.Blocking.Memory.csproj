@@ -14,10 +14,12 @@
 	</ItemGroup>	
 	<ItemGroup Condition="'$(TargetFramework)' == 'net9.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
+	</ItemGroup>	
+	<ItemGroup>
+	  <PackageReference Include="Krosoft.Extensions.Cache.Memory" Version="2025.4.29.1343" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Krosoft.Extensions.Blocking.Abstractions\Krosoft.Extensions.Blocking.Abstractions.csproj" />
-		<ProjectReference Include="..\Krosoft.Extensions.Cache.Memory\Krosoft.Extensions.Cache.Memory.csproj" />
 		<ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
 	</ItemGroup>
 </Project>

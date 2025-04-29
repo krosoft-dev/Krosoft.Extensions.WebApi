@@ -14,8 +14,10 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
 	</ItemGroup>
 	<ItemGroup>
+	  <PackageReference Include="Krosoft.Extensions.Cache.Distributed.Redis" Version="2025.4.29.1357" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\Krosoft.Extensions.Blocking.Abstractions\Krosoft.Extensions.Blocking.Abstractions.csproj" />
-		<ProjectReference Include="..\Krosoft.Extensions.Cache.Distributed.Redis\Krosoft.Extensions.Cache.Distributed.Redis.csproj" />
 		<ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
 	</ItemGroup>
 </Project>

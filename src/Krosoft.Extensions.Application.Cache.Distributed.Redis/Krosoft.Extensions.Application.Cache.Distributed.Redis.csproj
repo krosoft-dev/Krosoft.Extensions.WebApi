@@ -20,10 +20,10 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Krosoft.Extensions.Cache.Distributed.Redis" Version="2025.4.29.1347" />
 		<PackageReference Include="MediatR" Version="12.4.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\Krosoft.Extensions.Cache.Distributed.Redis\Krosoft.Extensions.Cache.Distributed.Redis.csproj" />
 		<ProjectReference Include="..\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
 		<ProjectReference Include="..\Krosoft.Extensions.Hosting\Krosoft.Extensions.Hosting.csproj" />
 	</ItemGroup>
