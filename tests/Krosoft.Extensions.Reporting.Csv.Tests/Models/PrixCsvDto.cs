@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Reporting.Csv.Tests.Models;
 
-public class PrixCsvDto
+public record PrixCsvDto
 {
     public string? FournisseurNom { get; set; }
     public string? ProduitNom { get; set; }

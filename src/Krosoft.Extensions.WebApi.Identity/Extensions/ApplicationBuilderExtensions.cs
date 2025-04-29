@@ -10,4 +10,7 @@ public static class ApplicationBuilderExtensions
 
     public static IApplicationBuilder UseApiKey(this IApplicationBuilder app)
         => app.UseMiddleware<ApiKeyMiddleware>();
+ 
+    public static IApplicationBuilder UseAgentId(this IApplicationBuilder app)
+        => app.UseMiddleware<AgentIdMiddleware>();
 }

@@ -1,4 +1,5 @@
-﻿using Krosoft.Extensions.WebApi.HealthChecks.Models;
+﻿using Krosoft.Extensions.Core.Extensions;
+using Krosoft.Extensions.WebApi.HealthChecks.Models;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -22,7 +23,7 @@ public class HealthChecksFilter : IDocumentFilter
         {
             Description = "Success"
         };
-        response.Content.Add("application/json", new OpenApiMediaType
+        response.Content.Add(HttpClientExtensions.MediaTypeJson, new OpenApiMediaType
 
         {
             Schema = new OpenApiSchema

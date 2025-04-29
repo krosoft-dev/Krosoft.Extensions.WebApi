@@ -43,6 +43,13 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddAgentIdProvider(this IServiceCollection services)
+    {
+        services.AddTransient<IAgentIdProvider, HttpAgentIdProvider>();
+
+        return services;
+    }
+
     public static IServiceCollection AddApiKeyStorage(this IServiceCollection services)
     {
         services.AddTransient<IApiKeyStorageProvider, SettingsApiKeyStorageProvider>();

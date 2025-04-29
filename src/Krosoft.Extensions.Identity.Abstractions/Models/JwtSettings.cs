@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Identity.Abstractions.Models;
 
-public class JwtSettings
+public record JwtSettings
 {
     public string? SecurityKey { get; set; }
 

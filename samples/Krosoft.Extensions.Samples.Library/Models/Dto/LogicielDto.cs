@@ -2,7 +2,7 @@ using Krosoft.Extensions.Samples.Library.Models.Enums;
 
 namespace Krosoft.Extensions.Samples.Library.Models.Dto;
 
-public class LogicielDto
+public record LogicielDto
 {
     public Guid Id { get; set; }
     public string? Nom { get; set; }

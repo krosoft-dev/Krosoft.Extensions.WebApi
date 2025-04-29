@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Samples.Library.Models;
 
-public class Addresse
+public record Addresse
 {
     public Addresse(string ligne1, string ligne2, string ville, string codePostal)
     {

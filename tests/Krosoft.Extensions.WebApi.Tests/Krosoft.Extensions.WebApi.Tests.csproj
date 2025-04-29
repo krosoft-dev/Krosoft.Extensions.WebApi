@@ -1,0 +1,5 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
+  </ItemGroup>
+</Project>

@@ -10,4 +10,10 @@ public static class RouteHandlerBuilderExtensions
         builder.WithMetadata(new RequireApiKeyAttribute());
         return builder;
     }
+
+    public static RouteHandlerBuilder RequireAgentId(this RouteHandlerBuilder builder)
+    {
+        builder.WithMetadata(new RequireAgentIdAttribute());
+        return builder;
+    }
 }

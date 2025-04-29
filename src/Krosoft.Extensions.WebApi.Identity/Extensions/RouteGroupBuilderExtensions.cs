@@ -14,5 +14,12 @@ public static class RouteGroupBuilderExtensions
         builder.WithMetadata(new RequireApiKeyAttribute());
         return builder;
     }
+
+    public static RouteGroupBuilder RequireAgentId(this RouteGroupBuilder builder)
+    {
+        builder.WithMetadata(new RequireAgentIdAttribute());
+        return builder;
+    }
+
 #endif
 }

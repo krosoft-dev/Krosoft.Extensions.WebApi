@@ -16,17 +16,20 @@ internal class HttpApiKeyProvider : IApiKeyProvider
 
     public Task<string?> GetApiKeyAsync(CancellationToken cancellationToken)
     {
-        //On affecte le token que s'il n'y en pas déjà un.
         if (_httpContextAccessor.HttpContext != null)
         {
             var headers = _httpContextAccessor.HttpContext.Request.Headers;
-            if (headers.ContainsKey(ApiKeyMiddleware.ApiKeyHeaderName))
+            if (headers.TryGetValue(ApiKeyMiddleware.ApiKeyHeaderName, out var apiKeyValues))
             {
-                string? apiKey = headers[ApiKeyMiddleware.ApiKeyHeaderName];
-                return Task.FromResult<string?>(apiKey);
+                var apiKey = apiKeyValues.FirstOrDefault();
+                return Task.FromResult(apiKey);
             }
+
+            return Task.FromResult<string?>(null);
         }
 
         throw new KrosoftTechnicalException("HttpContext non défini.");
     }
 }
+
+ 

@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Samples.DotNet8.BlazorApp.Models;
 
-public class Logiciel
+public record Logiciel
 {
     [JsonPropertyName("id")]
     public string? Id { get; set; }

@@ -152,7 +152,7 @@ public class HttpClientExtensionsTests : BaseTest
     public async Task EnsureStreamAsync_Ok()
     {
         var content = "Test content";
-        var contentType = "application/json";
+        var contentType = HttpClientExtensions.MediaTypeJson;
         var fileName = "test.json";
 
         var cancellationToken = CancellationToken.None;
@@ -176,7 +176,7 @@ public class HttpClientExtensionsTests : BaseTest
     public async Task EnsureStreamAsync_Ok_OnError()
     {
         var content = "Test content";
-        var contentType = "application/json";
+        var contentType = HttpClientExtensions.MediaTypeJson;
         var fileName = "test.json";
 
         var cancellationToken = CancellationToken.None;
@@ -277,5 +277,31 @@ public class HttpClientExtensionsTests : BaseTest
         Check.That(authHeader).IsNotNull();
         Check.That(authHeader?.Scheme).IsEqualTo(scheme);
         Check.That(authHeader?.Parameter).IsEqualTo(token);
+    }
+
+    [TestMethod]
+    public void SetHeader_Ok()
+    {
+        var scheme = "api";
+        var token = "test-token";
+        var httpClient = new HttpClient().SetHeader(scheme, token).SetHeader(scheme, token);
+
+        var headers = httpClient.DefaultRequestHeaders.ToDictionary(x => x.Key, x => x.Value);
+        Check.That(headers).IsNotNull();
+        Check.That(headers).HasSize(1);
+        Check.That(headers[scheme]).IsEqualTo(new List<string> { token, token });
+    }
+
+    [TestMethod]
+    public void SetHeader_Multiple_Ok()
+    {
+        var scheme = "api";
+        var token = "test-token";
+        var httpClient = new HttpClient().SetHeader(scheme, token, true).SetHeader(scheme, token, true);
+
+        var headers = httpClient.DefaultRequestHeaders.ToDictionary(x => x.Key, x => x.Value);
+        Check.That(headers).IsNotNull();
+        Check.That(headers).HasSize(1);
+        Check.That(headers[scheme]).IsEqualTo(new List<string> { token });
     }
 }

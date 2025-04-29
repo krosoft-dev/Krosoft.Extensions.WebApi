@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Headers;
-using System.Text;
-using Newtonsoft.Json;
+using Krosoft.Extensions.Core.Helpers;
 
 namespace Krosoft.Extensions.Core.Extensions;
 
@@ -13,22 +12,36 @@ public static class HttpClientExtensions
     /// </summary>
     public const string JwtAuthenticationScheme = "Bearer";
 
+    public static async Task<HttpResponseMessage> PostAsJsonAsync<T>(this HttpClient client,
+                                                                     string requestUri,
+                                                                     T data)
+        => await client.PostAsync(requestUri, StringContentHelper.SerializeAsJson(data));
+
     public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, string requestUri, T data)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) });
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = StringContentHelper.SerializeAsJson(data) });
 
-    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, string requestUri, T data, CancellationToken cancellationToken)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) }, cancellationToken);
+    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient,
+                                                                 string requestUri,
+                                                                 T data,
+                                                                 CancellationToken cancellationToken)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = StringContentHelper.SerializeAsJson(data) }, cancellationToken);
 
-    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, Uri requestUri, T data)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) });
+    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient,
+                                                                 Uri requestUri,
+                                                                 T data)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = StringContentHelper.SerializeAsJson(data) });
 
-    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient, Uri requestUri, T data, CancellationToken cancellationToken)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = Serialize(data) }, cancellationToken);
+    public static Task<HttpResponseMessage> DeleteAsJsonAsync<T>(this HttpClient httpClient,
+                                                                 Uri requestUri,
+                                                                 T data,
+                                                                 CancellationToken cancellationToken)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Delete, requestUri) { Content = StringContentHelper.SerializeAsJson(data) }, cancellationToken);
 
-    public static Task<HttpResponseMessage> GetAsync<T>(this HttpClient httpClient, string requestUri, T data, CancellationToken cancellationToken)
-        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, requestUri) { Content = Serialize(data) }, cancellationToken);
-
-    private static HttpContent Serialize(object? data) => new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, MediaTypeJson);
+    public static Task<HttpResponseMessage> GetAsync<T>(this HttpClient httpClient,
+                                                        string requestUri,
+                                                        T data,
+                                                        CancellationToken cancellationToken)
+        => httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, requestUri) { Content = StringContentHelper.SerializeAsJson(data) }, cancellationToken);
 
     public static HttpClient SetBearerToken(this HttpClient httpClient,
                                             string token) =>

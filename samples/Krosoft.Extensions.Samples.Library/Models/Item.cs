@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Samples.Library.Models;
 
-public class Item
+public record Item
 {
     public Guid Id { get; set; }
     public string? Code { get; set; }

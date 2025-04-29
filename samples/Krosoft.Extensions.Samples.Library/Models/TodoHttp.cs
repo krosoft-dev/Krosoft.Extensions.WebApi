@@ -2,7 +2,7 @@
 
 namespace Krosoft.Extensions.Samples.Library.Models;
 
-public class TodoHttp
+public record TodoHttp
 {
     [JsonProperty("userId")]
     public int UserId { get; set; }

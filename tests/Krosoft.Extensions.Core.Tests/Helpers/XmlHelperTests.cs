@@ -12,6 +12,7 @@ public class XmlHelperTests
         var obj = XmlHelper.Deserialize<DepotXml>((Stream?)null);
         Check.That(obj).IsNull();
     }
+
     [TestMethod]
     public void Deserialize_String_Null()
     {

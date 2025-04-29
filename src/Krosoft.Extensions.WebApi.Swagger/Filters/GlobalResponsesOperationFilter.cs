@@ -30,7 +30,7 @@ public class GlobalResponsesOperationFilter : IOperationFilter
             Description = responseStatusCode.ToString().AddSpacesBeforeCapitals(),
             Content = new Dictionary<string, OpenApiMediaType>
             {
-                ["application/json"] = new OpenApiMediaType
+                [HttpClientExtensions.MediaTypeJson] = new OpenApiMediaType
                 {
                     Schema = context.SchemaGenerator.GenerateSchema(type, context.SchemaRepository)
                 }

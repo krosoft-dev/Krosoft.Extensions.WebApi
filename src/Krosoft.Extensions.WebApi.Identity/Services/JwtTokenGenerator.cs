@@ -43,7 +43,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             new Claim(ClaimTypes.Name, identifier),
             new Claim(JwtRegisteredClaimNames.Sub, identifier),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(issuedAt).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
+            new Claim(JwtRegisteredClaimNames.Iat, issuedAt.ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64)
         };
 
         tokenClaims.AddRange(claims);
@@ -53,8 +53,8 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         var jwt = new JwtSecurityToken(_jwtSettings.Issuer,
                                        _jwtSettings.Audience,
                                        tokenClaims,
-                                       notBefore,
-                                       expiration,
+                                       notBefore.DateTime,
+                                       expiration.DateTime,
                                        signingCredentials);
 
         return new JwtSecurityTokenHandler().WriteToken(jwt);

@@ -20,7 +20,7 @@ public class DateTimeServiceTests
         var buildServiceProvider = services.BuildServiceProvider();
         var service = buildServiceProvider.GetRequiredService<IDateTimeService>();
 
-        Check.That(service.Now).IsEqualTo(new DateTime(2012, 1, 3));
+        Check.That(service.Now.DateTime).IsEqualTo(new DateTime(2012, 1, 3));
     }
 
     [TestMethod]

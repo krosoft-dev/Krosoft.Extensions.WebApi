@@ -64,6 +64,16 @@ public class CryptographyHelperTests
     }
 
     [TestMethod]
+    public void HashSha256_WithEmptyInput_ShouldReturnExpectedHash()
+    {
+        var input = "Hello";
+
+        var result = CryptographyHelper.HashSha256(input, "secret", "salt");
+
+        Check.That(result).IsEqualTo("qaz6WBdkz6CqRmXoObOZvYmJrYBThR1WW/LZGNPV16Q=");
+    }
+
+    [TestMethod]
     public void HashSha1_WithNullByteArrayInput_ShouldThrowArgumentNullException()
     {
         Check.ThatCode(() => CryptographyHelper.HashSha1(null!))

@@ -85,6 +85,7 @@ public static class ApplicationBuilderExtensions
                 actionEndpoints(endpoints);
             }
         });
+         
         return builder;
     }
 }

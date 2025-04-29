@@ -1,6 +1,6 @@
 ﻿namespace Krosoft.Extensions.Identity.Abstractions.Models;
 
-public class TokenSettings
+public record TokenSettings
 {
     /// <summary>
     /// Durée de vie du jeton (en jours).
