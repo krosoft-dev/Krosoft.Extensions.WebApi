@@ -15,7 +15,6 @@ extends:
   parameters:
     packages:
      - "Krosoft.Extensions.Application.Cache.Distributed.Redis"
-     - "Krosoft.Extensions.Cache.Distributed.Redis"
      - "Krosoft.Extensions.Core"
      - "Krosoft.Extensions.Cqrs"
      - "Krosoft.Extensions.Hosting"
