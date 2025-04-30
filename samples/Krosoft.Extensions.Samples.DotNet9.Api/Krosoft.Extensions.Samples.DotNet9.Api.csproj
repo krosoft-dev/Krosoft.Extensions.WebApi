@@ -8,6 +8,7 @@
 		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Krosoft.Extensions.Options" Version="2025.4.30.1411" />
 		<PackageReference Include="LinqKit.Core" Version="1.2.8" />
 		<PackageReference Include="Krosoft.Extensions.Cache.Distributed.Redis" Version="2025.4.29.1347" />
 		<PackageReference Include="Krosoft.Extensions.Cache.Distributed.Redis.HealthChecks" Version="2025.4.29.1347" />
@@ -30,7 +31,6 @@
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.Cqrs\Krosoft.Extensions.Cqrs.csproj" />
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.Identity\Krosoft.Extensions.Identity.csproj" />
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.Jobs.Hangfire\Krosoft.Extensions.Jobs.Hangfire.csproj" />
-		<ProjectReference Include="..\..\src\Krosoft.Extensions.Options\Krosoft.Extensions.Options.csproj" />
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.Pdf\Krosoft.Extensions.Pdf.csproj" />
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.Reporting.Csv\Krosoft.Extensions.Reporting.Csv.csproj" />
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.Blocking\Krosoft.Extensions.WebApi.Blocking.csproj" />
