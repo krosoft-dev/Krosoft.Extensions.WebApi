@@ -15,5 +15,5 @@ extends:
   parameters:
     packages:
      - "Krosoft.Extensions.Blocking.Abstractions"
-     - "Krosoft.Extensions.Core"
+     
 

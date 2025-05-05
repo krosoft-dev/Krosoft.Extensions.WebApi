@@ -16,5 +16,5 @@ extends:
     packages:
      - "Krosoft.Extensions.Blocking.Abstractions"
      - "Krosoft.Extensions.Blocking.Redis"
-     - "Krosoft.Extensions.Core"
+     
 

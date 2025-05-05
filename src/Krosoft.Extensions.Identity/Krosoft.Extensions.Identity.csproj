@@ -35,6 +35,7 @@
 		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.4" />
 	</ItemGroup>
 	<ItemGroup>
+	  <PackageReference Include="Krosoft.Extensions.Core" Version="2025.5.5.1416" />
 	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.1" />
 	</ItemGroup>
 	<ItemGroup>

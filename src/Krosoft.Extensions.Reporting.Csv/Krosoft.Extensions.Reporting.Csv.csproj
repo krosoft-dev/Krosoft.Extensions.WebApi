@@ -17,6 +17,6 @@
     <PackageReference Include="CsvHelper" Version="33.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
+    <PackageReference Include="Krosoft.Extensions.Core" Version="2025.5.5.1416" />
   </ItemGroup>
 </Project>

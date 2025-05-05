@@ -14,8 +14,6 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     - "Krosoft.Extensions.Application.Cache.Distributed.Redis"
-     - "Krosoft.Extensions.Core"
-     - "Krosoft.Extensions.Cqrs"
-     - "Krosoft.Extensions.Hosting"
-
+      - "Krosoft.Extensions.Application.Cache.Distributed.Redis"
+      - "Krosoft.Extensions.Cqrs"
+      - "Krosoft.Extensions.Hosting"

@@ -14,7 +14,7 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     - "Krosoft.Extensions.Core"
+     
      - "Krosoft.Extensions.Cqrs"
      - "Krosoft.Extensions.Cqrs.Behaviors"
      - "Krosoft.Extensions.Cqrs.Behaviors.Identity"

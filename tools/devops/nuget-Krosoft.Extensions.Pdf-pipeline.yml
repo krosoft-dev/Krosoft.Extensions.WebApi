@@ -14,6 +14,6 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     - "Krosoft.Extensions.Core"
+     
      - "Krosoft.Extensions.Pdf"
 

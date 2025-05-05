@@ -16,7 +16,7 @@ extends:
     packages:
      - "Krosoft.Extensions.Blocking"
      - "Krosoft.Extensions.Blocking.Abstractions"
-     - "Krosoft.Extensions.Core"
+     
      - "Krosoft.Extensions.Identity"
      - "Krosoft.Extensions.Identity.Abstractions"
      - "Krosoft.Extensions.WebApi"

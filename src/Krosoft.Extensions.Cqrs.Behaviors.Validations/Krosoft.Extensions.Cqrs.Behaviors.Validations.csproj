@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup> 
+	<PropertyGroup>
 		<PackageTags>Krosoft Extension CQRS Pipeline Behavior Validation Validator Fluent</PackageTags>
 		<Description>Package pour partager les IPipelineBehavior communes liées à la validation.</Description>
 	</PropertyGroup>
@@ -14,14 +13,14 @@
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />	
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="FluentValidation" Version="11.11.0" />
+		<PackageReference Include="FluentValidation" Version="11.11.0" />
+		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.5.5.1416" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Krosoft.Extensions.Core\Krosoft.Extensions.Core.csproj" />
-	  <ProjectReference Include="..\Krosoft.Extensions.Cqrs.Behaviors\Krosoft.Extensions.Cqrs.Behaviors.csproj" />
-	  <ProjectReference Include="..\Krosoft.Extensions.Validations\Krosoft.Extensions.Validations.csproj" />
+		<ProjectReference Include="..\Krosoft.Extensions.Cqrs.Behaviors\Krosoft.Extensions.Cqrs.Behaviors.csproj" />
+		<ProjectReference Include="..\Krosoft.Extensions.Validations\Krosoft.Extensions.Validations.csproj" />
 	</ItemGroup>
 </Project>
