@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using FluentValidation;
-using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Validations.Extensions;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using TimeSpanExtensions = Krosoft.Extensions.Core.Extensions.TimeSpanExtensions;
 
 namespace Krosoft.Extensions.Cqrs.Behaviors.Validations.PipelineBehaviors;
 
@@ -27,14 +27,15 @@ public class ValidatorPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<
         var sw = Stopwatch.StartNew();
         _logger.LogInformation($"Handling ValidatorPipelineBehavior <{typeof(TRequest).Name},{typeof(TResponse).Name}>");
 
-        var failures = await _validators.ValidateMoreAsync(request, cancellationToken);
-        if (failures.Any())
+        var errorsDetail = await _validators.ValidateMoreAsync(request, cancellationToken);
+        if (errorsDetail.Any())
         {
-            throw new KrosoftFunctionalException(failures);
+            var errors = errorsDetail.SelectMany(x => x.Errors).ToHashSet();
+            throw new KrosoftFunctionalDetailedException(errors, errorsDetail);
         }
 
         var response = await next();
-        _logger.LogInformation($"Handled ValidatorPipelineBehavior <{typeof(TRequest).Name},{typeof(TResponse).Name}> in {sw.Elapsed.ToShortString()}");
+        _logger.LogInformation($"Handled ValidatorPipelineBehavior <{typeof(TRequest).Name},{typeof(TResponse).Name}> in {TimeSpanExtensions.ToShortString(sw.Elapsed)}");
 
         return response;
     }

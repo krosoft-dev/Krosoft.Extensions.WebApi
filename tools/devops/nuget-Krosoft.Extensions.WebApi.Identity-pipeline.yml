@@ -14,9 +14,7 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     
-     - "Krosoft.Extensions.Identity"
-     - "Krosoft.Extensions.Identity.Abstractions"
-     - "Krosoft.Extensions.WebApi"
-     - "Krosoft.Extensions.WebApi.Identity"
-
+      - "Krosoft.Extensions.Identity"
+      - "Krosoft.Extensions.Identity.Abstractions"
+      - "Krosoft.Extensions.WebApi"
+      - "Krosoft.Extensions.WebApi.Identity"

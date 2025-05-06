@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Krosoft.Extensions.WebApi.Identity.Middlewares;
 
-internal class AgentIdMiddleware
+public class AgentIdMiddleware
 {
     public const string AgentIdHeaderName = "x-agent-id";
 

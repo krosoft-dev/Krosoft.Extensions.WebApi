@@ -14,12 +14,10 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     - "Krosoft.Extensions.Blocking"
-     - "Krosoft.Extensions.Blocking.Abstractions"
-     
-     - "Krosoft.Extensions.Identity"
-     - "Krosoft.Extensions.Identity.Abstractions"
-     - "Krosoft.Extensions.WebApi"
-     - "Krosoft.Extensions.WebApi.Blocking"
-     - "Krosoft.Extensions.WebApi.Identity"
-
+      - "Krosoft.Extensions.Blocking"
+      - "Krosoft.Extensions.Blocking.Abstractions"
+      - "Krosoft.Extensions.Identity"
+      - "Krosoft.Extensions.Identity.Abstractions"
+      - "Krosoft.Extensions.WebApi"
+      - "Krosoft.Extensions.WebApi.Blocking"
+      - "Krosoft.Extensions.WebApi.Identity"

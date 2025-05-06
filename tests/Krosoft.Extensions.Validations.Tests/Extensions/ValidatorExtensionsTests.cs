@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Samples.Library.Models.Entities;
 using Krosoft.Extensions.Testing;
@@ -39,7 +40,7 @@ public class ValidatorExtensionsTests : BaseTest
     [TestMethod]
     public async Task ValidateMoreAsync_WithAction_Empty()
     {
-        IEnumerable<string>? f = null;
+        IEnumerable<ErrorDetail>? f = null;
         await _validator.ValidateMoreAsync(new SampleEntity
         {
             Id = 1,
@@ -52,10 +53,18 @@ public class ValidatorExtensionsTests : BaseTest
     [TestMethod]
     public async Task ValidateMoreAsync_WithAction_Ok()
     {
-        ISet<string>? f = null;
-        await _validator.ValidateMoreAsync(new SampleEntity(), failures => { f = failures; }, CancellationToken.None);
+        ISet<ErrorDetail>? errors = null;
+        await _validator.ValidateMoreAsync(new SampleEntity(), failures => { errors = failures; }, CancellationToken.None);
 
-        Check.That(f).HasSize(3);
-        Check.That(f).ContainsExactly("'Id' ne doit pas être vide.", "'Name' ne doit pas être vide.", "'Name' ne doit pas avoir la valeur null.");
+        Check.That(errors).IsNotNull();
+        Check.That(errors).HasSize(2);
+        var details = errors?.ToList()!;
+
+        Check.That(details[0].TypeName).IsEqualTo("SampleEntity");
+        Check.That(details[0].PropertyName).IsEqualTo("Id");
+        Check.That(details[0].Errors).ContainsExactly("'Id' ne doit pas être vide.");
+        Check.That(details[1].TypeName).IsEqualTo("SampleEntity");
+        Check.That(details[1].PropertyName).IsEqualTo("Name");
+        Check.That(details[1].Errors).ContainsExactly("'Name' ne doit pas être vide.", "'Name' ne doit pas avoir la valeur null.");
     }
 }

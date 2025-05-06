@@ -14,7 +14,5 @@ extends:
   template: ./templates/pipelines/nuget-template.yml
   parameters:
     packages:
-     
-     - "Krosoft.Extensions.WebApi"
-     - "Krosoft.Extensions.WebApi.Swagger"
-
+      - "Krosoft.Extensions.WebApi"
+      - "Krosoft.Extensions.WebApi.Swagger"

@@ -17,7 +17,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />	
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="Krosoft.Extensions.Core" Version="2025.5.5.1416" />
+	  <PackageReference Include="Krosoft.Extensions.Core" Version="2025.5.5.1450" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Krosoft.Extensions.Cqrs.Behaviors\Krosoft.Extensions.Cqrs.Behaviors.csproj" />

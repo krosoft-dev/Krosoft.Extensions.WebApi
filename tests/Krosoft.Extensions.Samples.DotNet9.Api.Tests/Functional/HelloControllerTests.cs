@@ -1,4 +1,4 @@
-using System.Net;
+﻿using System.Net;
 using Krosoft.Extensions.Core.Extensions;
 using Krosoft.Extensions.Core.Models.Dto;
 using Krosoft.Extensions.Samples.DotNet9.Api.Tests.Core;
@@ -20,6 +20,38 @@ public class HelloControllerTests : SampleBaseApiTest<Program>
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
         var result = await response.Content.ReadAsStringAsync(CancellationToken.None);
         Check.That(result).IsEqualTo("Hello DotNet9");
+    }
+
+    [TestMethod]
+    public async Task HelloName_Ok()
+    {
+        var url = "/Hello";
+        var obj = new { Name = "World of Tests" };
+
+        var httpClient = Factory.CreateClient();
+        var response = await httpClient.PostAsJsonAsync(url, obj);
+
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
+        var result = await response.Content.ReadAsStringAsync(CancellationToken.None);
+        Check.That(result).IsEqualTo("Hello World of Tests !");
+    }
+
+    [TestMethod]
+    public async Task HelloName_Null()
+    {
+        var url = "/Hello";
+        var obj = new { Name = (string?)null };
+
+        var httpClient = Factory.CreateClient();
+        var response = await httpClient.PostAsJsonAsync(url, obj);
+
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.BadRequest);
+        var error = await response.Content.ReadAsJsonAsync<ErrorDto>();
+        Check.That(error).IsNotNull();
+        Check.That(error!.Code).IsEqualTo(400);
+        Check.That(error.Errors)
+             .ContainsExactly("'Name' ne doit pas être vide.",
+                              "'Name' ne doit pas avoir la valeur null.");
     }
 
     [TestMethod]
