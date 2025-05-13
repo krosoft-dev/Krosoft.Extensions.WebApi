@@ -49,7 +49,7 @@ public class HttpContextExtensionsTests
         Check.That(errorDto).IsNotNull();
         Check.That(errorDto!.Code).IsEqualTo((int)HttpStatusCode.BadRequest);
         Check.That(errorDto.Message).IsEqualTo(nameof(HttpStatusCode.BadRequest));
-        Check.That(errorDto.Errors).ContainsExactly("Test","Error1","Error2");
+        Check.That(errorDto.Errors).ContainsExactly("Test", "Error1", "Error2");
     }
 
     [TestMethod]
@@ -106,7 +106,7 @@ public class HttpContextExtensionsTests
         Check.That(context.Response.ContentType).IsEqualTo(MediaTypeNames.Application.Json);
         Check.That(errorDto).IsNotNull();
         Check.That(errorDto!.Code).IsEqualTo((int)HttpStatusCode.InternalServerError);
-        Check.That(errorDto.Message).IsEqualTo(nameof(HttpStatusCode.InternalServerError)); 
+        Check.That(errorDto.Message).IsEqualTo(nameof(HttpStatusCode.InternalServerError));
         Check.That(errorDto.Errors).ContainsExactly("Exception of type 'System.Exception' was thrown.");
     }
 
