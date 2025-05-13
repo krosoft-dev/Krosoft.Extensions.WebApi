@@ -2,6 +2,13 @@ name: Nuget 'Krosoft.Extensions.Cqrs.Behaviors' - $(Date:yyyy.MM.dd).$(BuildID)
 
 pr: none
 
+resources:
+  repositories:
+    - repository: Krosoft.Extensions
+      type: github
+      name: krosoft-dev/Krosoft.Extensions
+      endpoint: krosoft-dev
+
 trigger:
   branches:
     include:
@@ -11,9 +18,7 @@ trigger:
       - "**/Krosoft.Extensions.Cqrs.Behaviors/*"
 
 extends:
-  template: ./templates/pipelines/nuget-template.yml
+  template: tools/devops/templates/pipelines/nuget-template.yml@Krosoft.Extensions
   parameters:
     packages:
-     
-     - "Krosoft.Extensions.Cqrs.Behaviors"
-
+      - "Krosoft.Extensions.Cqrs.Behaviors"

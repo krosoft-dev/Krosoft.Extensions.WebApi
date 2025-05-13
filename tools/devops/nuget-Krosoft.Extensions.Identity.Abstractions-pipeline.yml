@@ -2,6 +2,13 @@ name: Nuget 'Krosoft.Extensions.Identity.Abstractions' - $(Date:yyyy.MM.dd).$(Bu
 
 pr: none
 
+resources:
+  repositories:
+    - repository: Krosoft.Extensions
+      type: github
+      name: krosoft-dev/Krosoft.Extensions
+      endpoint: krosoft-dev
+
 trigger:
   branches:
     include:
@@ -11,7 +18,7 @@ trigger:
       - "**/Krosoft.Extensions.Identity.Abstractions/*"
 
 extends:
-  template: ./templates/pipelines/nuget-template.yml
+  template: tools/devops/templates/pipelines/nuget-template.yml@Krosoft.Extensions
   parameters:
     packages:
      

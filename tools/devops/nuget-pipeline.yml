@@ -1,6 +1,13 @@
 name: Nuget - $(Date:yyyy.MM.dd).$(BuildID)
 
 pr: none
+
+resources:
+  repositories:
+    - repository: Krosoft.Extensions
+      type: github
+      name: krosoft-dev/Krosoft.Extensions
+      endpoint: krosoft-dev
 trigger: none
 
 pool:
