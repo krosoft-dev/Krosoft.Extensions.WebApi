@@ -22,15 +22,14 @@ public static class FileStreamExtensions
         var file = await task;
         return file.ToFileStreamResult();
     }
- 
+
     public static IResult ToFileResult(this IFileStream file)
     {
         Guard.IsNotNull(nameof(file), file);
         Guard.IsNotNullOrWhiteSpace(nameof(file.FileName), file.FileName);
         Guard.IsNotNullOrWhiteSpace(nameof(file.ContentType), file.ContentType);
-         
 
-        return Results.File(file.Stream!, file.ContentType!, file.FileName!);
+        return Results.File(file.Stream, file.ContentType, file.FileName);
     }
 
     public static async Task<IResult> ToFileResult<T>(this Task<T> task) where T : IFileStream
