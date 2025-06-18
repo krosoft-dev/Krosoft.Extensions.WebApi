@@ -13,7 +13,11 @@ internal class SettingsApiKeyValidator : IApiKeyValidator
         _options = options;
     }
 
-    public bool IsValid(string? apiKey)
+    public Task<bool> IsValidAsync(string? apiKey,
+                                   CancellationToken cancellationToken)
+        => Task.FromResult(IsValid(apiKey));
+
+    private bool IsValid(string? apiKey)
     {
         if (string.IsNullOrEmpty(apiKey))
         {
@@ -28,8 +32,4 @@ internal class SettingsApiKeyValidator : IApiKeyValidator
 
         return true;
     }
-
-    public Task<bool> IsValidAsync(string? apiKey,
-                                   CancellationToken cancellationToken)
-        => Task.FromResult(IsValid(apiKey));
 }

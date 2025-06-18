@@ -37,7 +37,8 @@ public class ApiKeyMiddleware
             return;
         }
 
-        if (!_apiKeyValidator.IsValid(extractedApiKey))
+        var isValid = await _apiKeyValidator.IsValidAsync(extractedApiKey, CancellationToken.None);
+        if (!isValid)
         {
             await context.HandleExceptionAsync(new UnauthorizedException("Invalid Api Key provided."));
             return;
