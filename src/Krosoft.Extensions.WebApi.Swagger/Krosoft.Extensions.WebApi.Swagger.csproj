@@ -8,7 +8,7 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.7.9.1542" />
+		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.8.19.1582" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.7.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.7.3" />
