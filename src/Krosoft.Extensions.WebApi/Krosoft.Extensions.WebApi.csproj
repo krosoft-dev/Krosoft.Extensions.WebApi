@@ -27,6 +27,6 @@
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.8.19.1582" />
+		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.8.22.2201" />
 	</ItemGroup>
 </Project>
