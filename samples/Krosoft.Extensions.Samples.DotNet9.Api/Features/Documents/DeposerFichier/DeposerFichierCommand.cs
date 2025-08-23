@@ -3,7 +3,7 @@ using Krosoft.Extensions.Cqrs.Models.Commands;
 
 namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
 
-public record DeposerFichierCommand(
+public record DeposerFichierSansRetourCommand(
     long FichierId,
     KrosoftFile? File)
-    : BaseCommand<DepotDto>;
+    : BaseCommand;

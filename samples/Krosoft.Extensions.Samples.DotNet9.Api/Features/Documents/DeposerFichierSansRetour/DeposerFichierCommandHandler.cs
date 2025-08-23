@@ -1,24 +1,24 @@
 ﻿using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Core.Interfaces;
-using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
+using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
 using MediatR;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
+namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
 
-internal class DeposerFichierCommandHandler : IRequestHandler<DeposerFichierCommand, DepotDto>
+internal class DeposerFichierSansRetourCommandHandler : IRequestHandler<DeposerFichierSansRetourCommand>
 {
     private readonly IDateTimeService _dateTimeService;
-    private readonly ILogger<DeposerFichierCommandHandler> _logger;
+    private readonly ILogger<DeposerFichierSansRetourCommandHandler> _logger;
 
-    public DeposerFichierCommandHandler(ILogger<DeposerFichierCommandHandler> logger,
-                                        IDateTimeService dateTimeService)
+    public DeposerFichierSansRetourCommandHandler(ILogger<DeposerFichierSansRetourCommandHandler> logger,
+                                                  IDateTimeService dateTimeService)
     {
         _logger = logger;
         _dateTimeService = dateTimeService;
     }
 
-    public async Task<DepotDto> Handle(DeposerFichierCommand request,
-                                       CancellationToken cancellationToken)
+    public async Task Handle(DeposerFichierSansRetourCommand request,
+                             CancellationToken cancellationToken)
     {
         _logger.LogInformation($"Dépot du fichier '{request.File!.Name}' ({request.File.Content.Length}) avec l'identifiant '{request.FichierId}'...");
 
@@ -33,9 +33,6 @@ internal class DeposerFichierCommandHandler : IRequestHandler<DeposerFichierComm
         var filePath = Path.Join(tempPath, $"{now.Ticks}.txt");
         FileHelper.CreateFile(filePath, xmlStream);
 
-        return new DepotDto
-        {
-            Message = $"Fichier dispo sur {filePath}"
-        };
+        _logger.LogInformation("Fichier dispo");
     }
 }

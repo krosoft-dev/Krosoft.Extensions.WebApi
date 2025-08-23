@@ -2,6 +2,7 @@
 using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
+using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
 using Krosoft.Extensions.Samples.DotNet9.Api.Tests.Core;
 using Krosoft.Extensions.Testing.Cqrs.Extensions;
 using Krosoft.Extensions.Testing.Extensions;

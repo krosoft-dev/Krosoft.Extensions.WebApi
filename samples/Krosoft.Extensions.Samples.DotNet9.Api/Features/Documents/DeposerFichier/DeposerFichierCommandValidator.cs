@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
 
 namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
 

@@ -16,13 +16,13 @@ public static class MediatorExtensions
         return await mediator.Send(command, cancellationToken);
     }
 
-    //public static async Task  SendWithFileAsync(this IMediator mediator,
-    //                                                                 IFormFile formFile,
-    //                                                                 Func<KrosoftFile?, IRequest> func,
-    //                                                                 CancellationToken cancellationToken = default)
-    //{
-    //    var file = await formFile.ToFileAsync(cancellationToken);
-    //    var command = func(file);
-    //    return await mediator.Send(command, cancellationToken);
-    //}
+    public static async Task SendWithFileAsync(this IMediator mediator,
+                                               IFormFile formFile,
+                                               Func<KrosoftFile?, IRequest> func,
+                                               CancellationToken cancellationToken = default)
+    {
+        var file = await formFile.ToFileAsync(cancellationToken);
+        var command = func(file);
+        await mediator.Send(command, cancellationToken);
+    }
 }

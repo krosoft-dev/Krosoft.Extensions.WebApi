@@ -28,6 +28,21 @@ public class DocumentsEndpointTests : SampleBaseApiTest<Program>
     }
 
     [TestMethod]
+    public async Task DeposerSansRetour_Ok()
+    {
+        using var form = new MultipartFormDataContent();
+        form.Add(new StringContent("42"), "FichierId");
+        form.Add(new ByteArrayContent(ByteHelper.GetBytes("Hello")), "File", "test.txt");
+
+        var httpClient = Factory.CreateClient();
+        var response = await httpClient.PostAsync("/Documents/Deposer/Fichier/SansRetour", form);
+
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
+        var result = await response.Content.ReadAsStringAsync();
+        Check.That(result).IsEmpty();
+    }
+
+    [TestMethod]
     public async Task Deposer_Error()
     {
         var httpClient = Factory.CreateClient();

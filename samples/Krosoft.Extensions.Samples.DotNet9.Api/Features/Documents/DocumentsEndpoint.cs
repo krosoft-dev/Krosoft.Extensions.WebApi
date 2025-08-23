@@ -1,4 +1,5 @@
 ﻿using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
+using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.Interfaces;
 using MediatR;
@@ -19,6 +20,13 @@ internal class DocumentsEndpoint : IEndpoint
                                            CancellationToken cancellationToken)
                           => mediator.SendWithFileAsync(dto.File,
                                                         file => new DeposerFichierCommand(dto.FichierId, file),
+                                                        cancellationToken));
+
+        group.MapPost("/Deposer/Fichier/SansRetour", ([AsParameters] DeposerFichierDto dto,
+                                                      IMediator mediator,
+                                                      CancellationToken cancellationToken)
+                          => mediator.SendWithFileAsync(dto.File,
+                                                        file => new DeposerFichierSansRetourCommand(dto.FichierId, file),
                                                         cancellationToken));
     }
 }
