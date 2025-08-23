@@ -140,10 +140,10 @@ public static class ServiceCollectionExtensions
         var claims = new List<Claim>();
         if (context.Principal != null)
         {
-            var claimsDroits = context.Principal.Claims
-                                      .Where(claim => claim.Type == KrosoftClaimNames.Droits)
-                                      .Select(claim => new Claim(ClaimTypes.Role, claim.Value));
-            claims.AddRange(claimsDroits);
+            var claimsPermissions = context.Principal.Claims
+                                           .Where(claim => claim.Type == KrosoftClaimNames.Permissions)
+                                           .Select(claim => new Claim(ClaimTypes.Role, claim.Value));
+            claims.AddRange(claimsPermissions);
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             context.Principal.AddIdentity(claimsIdentity);

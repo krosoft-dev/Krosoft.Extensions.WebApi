@@ -13,7 +13,7 @@ public class HttpClaimsService : IClaimsService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public T? CheckClaim<T>(string claimName, Func<string, T> funcSucess, bool isRequired)
+    public T? CheckClaim<T>(string claimName, Func<string, T?> funcSucess, bool isRequired)
     {
         if (_httpContextAccessor.HttpContext != null)
         {
@@ -32,7 +32,9 @@ public class HttpClaimsService : IClaimsService
         throw new KrosoftTechnicalException($"Le claim {claimName} n'existe pas.");
     }
 
-    public T CheckClaims<T>(string claimName, Func<IEnumerable<string>, T> funcSucess)
+    public string? CheckClaim(string claimName) => CheckClaim<string>(claimName, x => x, true);
+
+    public T? CheckClaims<T>(string claimName, Func<IEnumerable<string>, T?> funcSucess, bool isRequired)
     {
         if (_httpContextAccessor.HttpContext != null)
         {
@@ -40,6 +42,11 @@ public class HttpClaimsService : IClaimsService
             if (claims.Count > 0)
             {
                 return funcSucess(claims.Select(c => c.Value));
+            }
+
+            if (!isRequired)
+            {
+                return default;
             }
         }
 

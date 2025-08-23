@@ -24,7 +24,7 @@ public class JwtTokenGeneratorTests : BaseTest
     private readonly DateTime _now = new DateTime(2005, 05, 24);
 
     //TestInitialize
-    private IJwtTokenGenerator _claimsBuilderService = null!;
+    private IJwtTokenGenerator _jwtTokenGenerator = null!;
 
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
@@ -51,7 +51,7 @@ public class JwtTokenGeneratorTests : BaseTest
         {
             new Claim("test", "unitaire")
         };
-        var token = _claimsBuilderService.CreateToken(_identifier, claims);
+        var token = _jwtTokenGenerator.CreateToken(_identifier, claims);
 
         Check.That(token).IsNotNull();
         Check.ThatCode(() => ValidateJwtToken(token, claims)).DoesNotThrow();
@@ -60,7 +60,7 @@ public class JwtTokenGeneratorTests : BaseTest
     [TestMethod]
     public void CreateToken_Null()
     {
-        Check.ThatCode(() => _claimsBuilderService.CreateToken(null!, null!))
+        Check.ThatCode(() => _jwtTokenGenerator.CreateToken(null!, null!))
              .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'identifier' est vide ou non renseignée.");
     }
@@ -68,7 +68,7 @@ public class JwtTokenGeneratorTests : BaseTest
     [TestMethod]
     public void CreateToken_NullClaims()
     {
-        Check.ThatCode(() => _claimsBuilderService.CreateToken(_identifier, null!))
+        Check.ThatCode(() => _jwtTokenGenerator.CreateToken(_identifier, null!))
              .Throws<KrosoftTechnicalException>()
              .WithMessage("La variable 'claims' n'est pas renseignée.");
     }
@@ -81,7 +81,7 @@ public class JwtTokenGeneratorTests : BaseTest
             new Claim("test", "unitaire")
         };
 
-        var token = _claimsBuilderService.CreateToken(_identifier, claims);
+        var token = _jwtTokenGenerator.CreateToken(_identifier, claims);
 
         Check.That(token).IsNotNull();
         Check.ThatCode(() => ValidateJwtToken(token, claims)).DoesNotThrow();
@@ -91,7 +91,7 @@ public class JwtTokenGeneratorTests : BaseTest
     public void SetUp()
     {
         var serviceProvider = CreateServiceCollection();
-        _claimsBuilderService = serviceProvider.GetRequiredService<IJwtTokenGenerator>();
+        _jwtTokenGenerator = serviceProvider.GetRequiredService<IJwtTokenGenerator>();
     }
 
     private void ValidateJwtToken(string token, IEnumerable<Claim> claims)

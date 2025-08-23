@@ -20,7 +20,7 @@ public class MissingTenantMiddleware
         if (httpContext.User.Identity != null && httpContext.User.Identity.IsAuthenticated)
         {
             //Si on est connecté, on cherck le tenant.
-            var tenantId = _identityService.GetTenantId();
+            var tenantId = _identityService.GetUniqueTenantId();
             if (string.IsNullOrEmpty(tenantId))
             {
                 throw new TenantNotFoundException();
