@@ -37,7 +37,7 @@ public class DocumentsEndpointTests : SampleBaseApiTest<Program>
         var errorDto = await response.Content.ReadAsNewtonsoftJsonAsync<ErrorDto>(CancellationToken.None);
         Check.That(errorDto).IsNotNull();
         Check.That(errorDto!.Message).StartsWith("InternalServerError");
-        Check.That(errorDto!.Errors).ContainsExactly("Unexpected request without body, failed to bind parameter \"long FichierId\" from the request body as form.");
+        Check.That(errorDto.Errors).ContainsExactly("Unexpected request without body, failed to bind parameter \"long FichierId\" from the request body as form.");
     }
 
     [TestMethod]
@@ -53,6 +53,6 @@ public class DocumentsEndpointTests : SampleBaseApiTest<Program>
         var errorDto = await response.Content.ReadAsNewtonsoftJsonAsync<ErrorDto>(CancellationToken.None);
         Check.That(errorDto).IsNotNull();
         Check.That(errorDto!.Message).StartsWith("BadRequest");
-        Check.That(errorDto!.Errors).ContainsExactly("'Fichier Id' ne doit pas être vide.");
+        Check.That(errorDto.Errors).ContainsExactly("'Fichier Id' ne doit pas être vide.");
     }
 }

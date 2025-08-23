@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Http;
 
 namespace Krosoft.Extensions.WebApi.Extensions;
 
-internal static class MediatorExtensions
+public static class MediatorExtensions
 {
     public static async Task<TResponse> SendWithFileAsync<TResponse>(this IMediator mediator,
-                                                                IFormFile formFile,
-                                                                Func<KrosoftFile?, IRequest<TResponse>> func,
-                                                                CancellationToken cancellationToken)
+                                                                     IFormFile formFile,
+                                                                     Func<KrosoftFile?, IRequest<TResponse>> func,
+                                                                     CancellationToken cancellationToken)
     {
         var file = await formFile.ToFileAsync(cancellationToken);
         var command = func(file);
