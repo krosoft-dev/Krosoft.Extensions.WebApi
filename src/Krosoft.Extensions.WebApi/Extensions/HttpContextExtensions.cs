@@ -27,7 +27,7 @@ public static class HttpContextExtensions
             case KrosoftFunctionalException validationException:
                 status = validationException.Code;
                 errors.AddRange(validationException.Errors);
-                
+
                 break;
             case KrosoftTechnicalException techniqueException:
                 status = techniqueException.Code;

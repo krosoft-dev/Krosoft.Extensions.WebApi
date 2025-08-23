@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<PackageReference Include="Krosoft.Extensions.Testing.Cqrs" Version="2025.8.23.2340" />
+		<PackageReference Include="Krosoft.Extensions.Testing.WebApi" Version="2025.8.23.2317" />
+		<PackageReference Include="Krosoft.Extensions.Testing" Version="2025.8.23.2340" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.DotNet9.Api\Krosoft.Extensions.Samples.DotNet9.Api.csproj" />
+		<ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.HealthChecks\Krosoft.Extensions.WebApi.HealthChecks.csproj" />
+	</ItemGroup>
+</Project>

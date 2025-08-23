@@ -13,7 +13,7 @@ public static class FormFileExtensions
         await formFile.CopyToAsync(reader.BaseStream);
         return memoryStream.ToArray();
     }
- 
+
     public static async Task<KrosoftFile?> ToFileAsync(this IFormFile? formFile, CancellationToken cancellationToken)
     {
         if (formFile == null)
