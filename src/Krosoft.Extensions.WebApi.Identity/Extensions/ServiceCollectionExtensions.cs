@@ -7,8 +7,10 @@ using Krosoft.Extensions.Identity.Abstractions.Models;
 using Krosoft.Extensions.Identity.Extensions;
 using Krosoft.Extensions.WebApi.Identity.Helpers;
 using Krosoft.Extensions.WebApi.Identity.Interface;
+using Krosoft.Extensions.WebApi.Identity.Middlewares;
 using Krosoft.Extensions.WebApi.Identity.Models;
 using Krosoft.Extensions.WebApi.Identity.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -61,6 +63,52 @@ public static class ServiceCollectionExtensions
     {
         services.AddTransient<IJwtTokenValidator, JwtTokenValidator>();
         services.AddTransient<IIdentifierProvider, HttpIdentifierProvider>();
+
+        return services;
+    }
+
+    public static IServiceCollection AddJwtWithApiKeyAuthentication<T>(this IServiceCollection services,
+                                                                       IConfiguration configuration)
+        where T : AuthenticationHandler<ApiKeyAuthenticationOptions>
+    {
+        services.AddOptions();
+        services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+        var jwtSettings = configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
+        if (jwtSettings == null)
+        {
+            throw new KrosoftTechnicalException($"Impossible d'instancier l'objet de type '{nameof(JwtSettings)}'.");
+        }
+
+        var signingCredentials = SigningCredentialsHelper.GetSigningCredentials(jwtSettings.SecurityKey);
+        services.AddAuthentication(authenticationOptions =>
+                {
+                    authenticationOptions.DefaultAuthenticateScheme = "Combined";
+                    authenticationOptions.DefaultChallengeScheme = "Combined";
+                })
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, jwtBearerOptions =>
+                {
+                    jwtBearerOptions.RequireHttpsMetadata = false;
+                    jwtBearerOptions.SaveToken = true;
+                    jwtBearerOptions.TokenValidationParameters = IdentitTokenHelper.GetTokenValidationParameters(signingCredentials, jwtSettings, true);
+                    jwtBearerOptions.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = OnAuthenticationFailed,
+                        OnTokenValidated = OnTokenValidated
+                    };
+                })
+                .AddScheme<ApiKeyAuthenticationOptions, T>("ApiKey", _ => { })
+                .AddPolicyScheme("Combined", "JWT or ApiKey", options =>
+                {
+                    options.ForwardDefaultSelector = context =>
+                    {
+                        if (context.Request.Headers.ContainsKey(ApiKeyMiddleware.ApiKeyHeaderName))
+                        {
+                            return "ApiKey";
+                        }
+
+                        return JwtBearerDefaults.AuthenticationScheme;
+                    };
+                });
 
         return services;
     }
