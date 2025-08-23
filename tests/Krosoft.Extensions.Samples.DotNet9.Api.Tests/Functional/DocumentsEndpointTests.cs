@@ -68,6 +68,6 @@ public class DocumentsEndpointTests : SampleBaseApiTest<Program>
         var errorDto = await response.Content.ReadAsNewtonsoftJsonAsync<ErrorDto>(CancellationToken.None);
         Check.That(errorDto).IsNotNull();
         Check.That(errorDto!.Message).StartsWith("BadRequest");
-        Check.That(errorDto.Errors).ContainsExactly("'Fichier Id' ne doit pas être vide.");
+        Check.That(errorDto.Errors).ContainsExactly("'Fichier Id' ne doit pas Ãªtre vide.");
     }
 }
