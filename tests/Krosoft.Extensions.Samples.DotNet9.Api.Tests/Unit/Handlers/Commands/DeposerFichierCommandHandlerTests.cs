@@ -1,4 +1,4 @@
-﻿using Krosoft.Extensions.Core.Helpers;
+using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Core.Models.Exceptions;
 using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
