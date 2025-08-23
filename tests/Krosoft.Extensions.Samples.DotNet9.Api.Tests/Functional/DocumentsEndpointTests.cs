@@ -24,7 +24,7 @@ public class DocumentsEndpointTests : SampleBaseApiTest<Program>
         var depotDto = await response.Content.ReadAsNewtonsoftJsonAsync<DepotDto>(CancellationToken.None);
         Check.That(depotDto).IsNotNull();
 
-        Check.That(depotDto!.Message).StartsWith("Fichier créé sur temp");
+        Check.That(depotDto!.Message).StartsWith("Fichier dispo sur temp");
     }
 
     [TestMethod]

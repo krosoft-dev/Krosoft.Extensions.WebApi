@@ -1,4 +1,5 @@
-﻿using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
+﻿using Krosoft.Extensions.Core.Models;
+using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.Interfaces;
 using MediatR;
@@ -14,13 +15,14 @@ internal class DocumentsEndpoint : IEndpoint
 
     public void Register(RouteGroupBuilder group)
     {
-        group.MapPost("/Deposer/Fichier", async ([AsParameters] DeposerFichierDto dto,
-                                                 IMediator mediator,
-                                                 CancellationToken cancellationToken) =>
-        {
-            var file = await dto.File.ToFileAsync(cancellationToken);
-            return await mediator.Send(new DeposerFichierCommand(dto.FichierId, file),
-                                       cancellationToken);
-        });
+        group.MapPost("/Deposer/Fichier", ([AsParameters] DeposerFichierDto dto,
+                                           IMediator mediator,
+                                           CancellationToken cancellationToken)
+                          //=> await mediator.Send(new DeposerFichierCommand(dto.FichierId, 
+                          //                                                 await dto.File.ToFileAsync(cancellationToken)), 
+                          //                       cancellationToken));  
+                          => mediator.SendWithFile(dto.File,
+                                                   file => new DeposerFichierCommand(dto.FichierId, file),
+                                                   cancellationToken));
     }
 }

@@ -34,7 +34,7 @@ internal class DeposerFichierCommandHandler : IRequestHandler<DeposerFichierComm
 
         return new DepotDto
         {
-            Message = $"Fichier créé sur {filePath}"
+            Message = $"Fichier dispo sur {filePath}"
         };
     }
 }

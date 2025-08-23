@@ -45,6 +45,6 @@ public class DeposerFichierCommandHandlerTests : SampleBaseTest<Program>
         var command = new DeposerFichierCommand(42, file);
         var depotDto = await this.SendCommandAsync(serviceProvider, command);
         Check.That(depotDto).IsNotNull();
-        Check.That(depotDto.Message).StartsWith("Fichier créé sur temp");
+        Check.That(depotDto.Message).StartsWith("Fichier dispo sur temp");
     }
 }
