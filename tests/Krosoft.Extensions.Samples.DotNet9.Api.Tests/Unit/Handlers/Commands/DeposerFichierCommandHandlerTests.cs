@@ -37,7 +37,7 @@ public class DeposerFichierCommandHandlerTests : SampleBaseTest<Program>
     }
 
     [TestMethod]
-    public async Task Handle_NoLogicielWithTenant_Ok()
+    public async Task Handle_Ok()
     {
         await using var serviceProvider = CreateServiceCollection();
 

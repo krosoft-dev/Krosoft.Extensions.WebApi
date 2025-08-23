@@ -31,5 +31,3 @@ internal class HttpApiKeyProvider : IApiKeyProvider
         throw new KrosoftTechnicalException("HttpContext non défini.");
     }
 }
-
- 

@@ -17,4 +17,3 @@ public record PaginationDto : IPaginationDto
     [FromQuery]
     public string? Text { get; set; }
 }
-

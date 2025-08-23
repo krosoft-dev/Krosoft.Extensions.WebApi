@@ -11,7 +11,7 @@ public static class HttpRequestExtensions
         var files = await formCollection.ToBase64StringAsync();
         return files;
     }
- 
+
     public static async Task<KrosoftFile?> ToFileAsync(this HttpRequest request, string fileName, CancellationToken cancellationToken)
     {
         using var memoryStream = new MemoryStream();

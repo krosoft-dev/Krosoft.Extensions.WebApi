@@ -25,8 +25,9 @@ public abstract class SampleBaseTest<TEntry> : BaseTest
         var executingAssembly = typeof(TEntry).Assembly;
 
         services.AddWebApi(configuration, executingAssembly)
-                .AddDateTimeService()  .AddBehaviors(options => options.AddLogging()
-                                                                       .AddValidations());
+                .AddDateTimeService()
+                .AddBehaviors(options => options.AddLogging()
+                                                .AddValidations());
 
         base.AddServices(services, configuration);
     }

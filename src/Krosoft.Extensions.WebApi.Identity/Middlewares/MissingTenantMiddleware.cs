@@ -30,4 +30,3 @@ public class MissingTenantMiddleware
         await _next.Invoke(httpContext);
     }
 }
-
