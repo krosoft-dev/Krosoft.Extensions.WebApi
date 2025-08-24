@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />
-		<PackageReference Include="Krosoft.Extensions.Testing" Version="2025.8.23.2340" />
+		<PackageReference Include="Krosoft.Extensions.Testing" Version="2025.8.23.2367" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.Identity\Krosoft.Extensions.WebApi.Identity.csproj" />
