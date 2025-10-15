@@ -9,7 +9,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <PackageReference Include="Krosoft.Extensions.Cqrs" Version="2025.9.18.3227" />	
-	  	<PackageReference Include="Krosoft.Extensions.Cqrs.Behaviors" Version="2025.9.18.3292" />
+	  	<PackageReference Include="Krosoft.Extensions.Cqrs.Behaviors" Version="2025.10.15.3689" />
 		<PackageReference Include="Krosoft.Extensions.Cqrs.Behaviors.Validations" Version="2025.9.18.3292" />
 	</ItemGroup>
 	<ItemGroup>
