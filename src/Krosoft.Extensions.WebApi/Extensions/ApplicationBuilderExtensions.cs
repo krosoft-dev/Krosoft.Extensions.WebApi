@@ -3,6 +3,7 @@ using Krosoft.Extensions.WebApi.Middlewares;
 using Krosoft.Extensions.WebApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,8 @@ namespace Krosoft.Extensions.WebApi.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
+    private static readonly string FORWARDED_PREFIX_HEADER = "X-Forwarded-Prefix";
+
     public static IApplicationBuilder UseCultures(this IApplicationBuilder builder, WebApiSettings? webApiSettings)
     {
         if (webApiSettings != null)
@@ -54,6 +57,17 @@ public static class ApplicationBuilderExtensions
         {
             builder.UseDeveloperExceptionPage();
         }
+
+        builder.Use((context, next) =>
+        {
+            var pathBase = context.Request.Headers[FORWARDED_PREFIX_HEADER].FirstOrDefault();
+            if (!string.IsNullOrEmpty(pathBase))
+            {
+                context.Request.PathBase = new PathString(pathBase);
+            }
+
+            return next();
+        });
 
         var webApiSettings = new WebApiSettings();
         configuration.GetSection(nameof(WebApiSettings)).Bind(webApiSettings);
