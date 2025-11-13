@@ -2,11 +2,11 @@
 
 namespace Krosoft.Extensions.Samples.DotNet10.Api.Features.Hello.Create;
 
-public class HelloDotNet9CommandHandler : IRequestHandler<HelloCommand, string>
+public class HelloDotNet10CommandHandler : IRequestHandler<HelloCommand, string>
 {
-    private readonly ILogger<HelloDotNet9CommandHandler> _logger;
+    private readonly ILogger<HelloDotNet10CommandHandler> _logger;
 
-    public HelloDotNet9CommandHandler(ILogger<HelloDotNet9CommandHandler> logger)
+    public HelloDotNet10CommandHandler(ILogger<HelloDotNet10CommandHandler> logger)
     {
         _logger = logger;
     }

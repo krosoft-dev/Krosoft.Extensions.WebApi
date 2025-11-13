@@ -17,7 +17,7 @@ internal class HelloEndpoint : IEndpoint
                            CancellationToken cancellationToken)
                          => mediator.Send(new HelloQuery(), cancellationToken));
 
-        group.MapPost("/", (HelloDotNet9CommandDto dto,
+        group.MapPost("/", (HelloDotNet10CommandDto dto,
                             IMediator mediator,
                             CancellationToken cancellationToken)
                           => mediator.Send(new HelloCommand(dto.Name), cancellationToken));
