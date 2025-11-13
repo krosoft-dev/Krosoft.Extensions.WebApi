@@ -9,7 +9,15 @@ public static class ApplicationBuilderExtensions
     {
         if (useSwagger)
         {
+#if NET10_0_OR_GREATER
+   builder.UseSwagger(options =>
+            {
+                options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_1;
+            });
+#else
             builder.UseSwagger();
+#endif
+
             builder.UseSwaggerUI();
         }
 
