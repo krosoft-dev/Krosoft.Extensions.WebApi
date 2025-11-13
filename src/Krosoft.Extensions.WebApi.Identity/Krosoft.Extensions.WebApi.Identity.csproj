@@ -27,9 +27,9 @@
 		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.11" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.9.18.3152" />
-		<PackageReference Include="Krosoft.Extensions.Identity" Version="2025.10.15.3697" />
-		<PackageReference Include="Krosoft.Extensions.Identity.Abstractions" Version="2025.10.15.3697" />
+		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.11.13.4103" />
+		<PackageReference Include="Krosoft.Extensions.Identity" Version="2025.11.13.4174" />
+		<PackageReference Include="Krosoft.Extensions.Identity.Abstractions" Version="2025.11.13.4174" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
