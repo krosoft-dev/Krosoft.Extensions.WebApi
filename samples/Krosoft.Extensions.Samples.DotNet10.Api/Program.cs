@@ -42,7 +42,7 @@ await app
       .AddEndpoints(currentAssembly)
       .RunAsync();
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api
+namespace Krosoft.Extensions.Samples.DotNet10.Api
 {
     public class Program;
 }

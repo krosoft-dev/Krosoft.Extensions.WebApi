@@ -1,9 +1,9 @@
-﻿using Krosoft.Extensions.Samples.DotNet9.Api.Features.Hello.Create;
-using Krosoft.Extensions.Samples.DotNet9.Api.Features.Hello.Get;
+﻿using Krosoft.Extensions.Samples.DotNet10.Api.Features.Hello.Create;
+using Krosoft.Extensions.Samples.DotNet10.Api.Features.Hello.Get;
 using Krosoft.Extensions.WebApi.Interfaces;
 using MediatR;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Hello;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Features.Hello;
 
 internal class HelloEndpoint : IEndpoint
 {

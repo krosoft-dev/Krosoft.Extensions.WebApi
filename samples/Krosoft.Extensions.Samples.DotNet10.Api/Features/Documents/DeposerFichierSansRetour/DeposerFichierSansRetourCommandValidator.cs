@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
+using Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents.DeposerFichier;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents.DeposerFichierSansRetour;
 
 public class DeposerFichierSansRetourCommandValidator : AbstractValidator<DeposerFichierSansRetourCommand>
 {

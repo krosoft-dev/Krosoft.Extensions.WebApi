@@ -126,7 +126,9 @@ public class HelloEndpointTests : SampleBaseApiTest<Program>
                                 .SetBasePath(Directory.GetCurrentDirectory())
                                 .Build();
 
+#pragma warning disable ASPDEPR004
         var builder = new WebHostBuilder()
+#pragma warning restore ASPDEPR004
                       .ConfigureServices(services => { services.AddWebApi(configurationRoot); })
                       .Configure(app =>
                       {
@@ -139,6 +141,9 @@ public class HelloEndpointTests : SampleBaseApiTest<Program>
                               await next();
                           });
                       });
+
+
+
 
         var server = new TestServer(builder);
         var httpClient = server.CreateClient();

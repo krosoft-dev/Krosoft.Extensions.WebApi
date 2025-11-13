@@ -1,7 +1,7 @@
 using System.Net;
-using Krosoft.Extensions.Samples.DotNet9.Api.Tests.Core;
+using Krosoft.Extensions.Samples.DotNet10.Api.Tests.Core;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Tests.Functional;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Tests.Functional;
 
 [TestClass]
 public class EndpointsTests : SampleBaseApiTest<Program>

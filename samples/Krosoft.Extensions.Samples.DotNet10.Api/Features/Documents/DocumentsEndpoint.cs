@@ -1,10 +1,10 @@
-﻿using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
-using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
+﻿using Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents.DeposerFichier;
+using Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents.DeposerFichierSansRetour;
 using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.Interfaces;
 using MediatR;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents;
 
 internal class DocumentsEndpoint : IEndpoint
 {

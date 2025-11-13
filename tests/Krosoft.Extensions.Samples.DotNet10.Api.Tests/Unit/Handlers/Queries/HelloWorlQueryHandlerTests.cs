@@ -1,8 +1,8 @@
-﻿using Krosoft.Extensions.Samples.DotNet9.Api.Features.Hello.Get;
-using Krosoft.Extensions.Samples.DotNet9.Api.Tests.Core;
+﻿using Krosoft.Extensions.Samples.DotNet10.Api.Features.Hello.Get;
+using Krosoft.Extensions.Samples.DotNet10.Api.Tests.Core;
 using Krosoft.Extensions.Testing.Cqrs.Extensions;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Tests.Unit.Handlers.Queries;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Tests.Unit.Handlers.Queries;
 
 [TestClass]
 public class HelloWorlQueryHandlerTests : SampleBaseTest<Program>
@@ -14,6 +14,6 @@ public class HelloWorlQueryHandlerTests : SampleBaseTest<Program>
 
         var result = await this.SendQueryAsync(serviceProvider, new HelloQuery());
         Check.That(result).IsNotNull();
-        Check.That(result).IsEqualTo("Hello DotNet9");
+        Check.That(result).IsEqualTo("Hello DotNet10");
     }
 }

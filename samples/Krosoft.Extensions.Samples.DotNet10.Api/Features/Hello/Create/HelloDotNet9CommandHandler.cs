@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Hello.Create;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Features.Hello.Create;
 
 public class HelloDotNet9CommandHandler : IRequestHandler<HelloCommand, string>
 {

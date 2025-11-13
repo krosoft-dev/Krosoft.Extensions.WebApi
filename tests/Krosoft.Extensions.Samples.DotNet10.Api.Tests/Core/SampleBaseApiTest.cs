@@ -2,7 +2,7 @@
 using Krosoft.Extensions.Testing.WebApi;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Tests.Core;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Tests.Core;
 
 //public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, KrosoftExtensionTenantContext> where TEntry : class
 public abstract class SampleBaseApiTest<TEntry> : BaseApiTest<TEntry, TEntry> where TEntry : class

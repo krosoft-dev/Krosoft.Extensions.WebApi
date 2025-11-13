@@ -5,7 +5,7 @@
 		<PackageReference Include="Krosoft.Extensions.Testing" Version="2025.11.12.3959" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.DotNet9.Api\Krosoft.Extensions.Samples.DotNet9.Api.csproj" />
+		<ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.DotNet10.Api\Krosoft.Extensions.Samples.DotNet10.Api.csproj" />
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.HealthChecks\Krosoft.Extensions.WebApi.HealthChecks.csproj" />
 	</ItemGroup>
 </Project>

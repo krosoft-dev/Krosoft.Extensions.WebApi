@@ -1,16 +1,16 @@
 using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Core.Models;
 using Krosoft.Extensions.Core.Models.Exceptions;
-using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
-using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
-using Krosoft.Extensions.Samples.DotNet9.Api.Tests.Core;
+using Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents.DeposerFichier;
+using Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents.DeposerFichierSansRetour;
+using Krosoft.Extensions.Samples.DotNet10.Api.Tests.Core;
 using Krosoft.Extensions.Testing.Cqrs.Extensions;
 using Krosoft.Extensions.Testing.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Tests.Unit.Handlers.Commands;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Tests.Unit.Handlers.Commands;
 
 [TestClass]
 public class DeposerFichierCommandHandlerTests : SampleBaseTest<Program>

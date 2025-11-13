@@ -1,12 +1,13 @@
 using System.Net;
-using Krosoft.Extensions.Samples.DotNet9.Api.Tests.Core;
+using Krosoft.Extensions.Samples.DotNet10.Api.Tests.Core;
+using Krosoft.Extensions.Samples.DotNet9.Api;
 using Krosoft.Extensions.WebApi.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Tests.Functional;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Tests.Functional;
 
 //[TestClass]
 //public class HelloEndpointTests : SampleBaseApiTest<Program>

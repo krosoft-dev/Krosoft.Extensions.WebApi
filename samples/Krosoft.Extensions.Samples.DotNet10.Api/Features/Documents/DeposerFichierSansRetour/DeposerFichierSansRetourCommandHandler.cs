@@ -1,9 +1,9 @@
 ﻿using Krosoft.Extensions.Core.Helpers;
 using Krosoft.Extensions.Core.Interfaces;
-using Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichier;
+using Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents.DeposerFichier;
 using MediatR;
 
-namespace Krosoft.Extensions.Samples.DotNet9.Api.Features.Documents.DeposerFichierSansRetour;
+namespace Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents.DeposerFichierSansRetour;
 
 internal class DeposerFichierSansRetourCommandHandler : IRequestHandler<DeposerFichierSansRetourCommand>
 {
