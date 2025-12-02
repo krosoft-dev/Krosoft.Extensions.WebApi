@@ -24,12 +24,12 @@
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.11" />
-		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.11" />
+		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.11.17.4348" />
-		<PackageReference Include="Krosoft.Extensions.Identity" Version="2025.11.17.4375" />
-		<PackageReference Include="Krosoft.Extensions.Identity.Abstractions" Version="2025.11.17.4375" />
+		<PackageReference Include="Krosoft.Extensions.Identity" Version="2025.11.19.4494" />
+		<PackageReference Include="Krosoft.Extensions.Identity.Abstractions" Version="2025.11.19.4494" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
