@@ -28,8 +28,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.11.17.4348" />
-		<PackageReference Include="Krosoft.Extensions.Identity" Version="2025.12.4.4624" />
-		<PackageReference Include="Krosoft.Extensions.Identity.Abstractions" Version="2025.12.4.4624" />
+		<PackageReference Include="Krosoft.Extensions.Identity" Version="2025.12.10.4788" />
+		<PackageReference Include="Krosoft.Extensions.Identity.Abstractions" Version="2025.12.10.4788" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Krosoft.Extensions.WebApi\Krosoft.Extensions.WebApi.csproj" />
