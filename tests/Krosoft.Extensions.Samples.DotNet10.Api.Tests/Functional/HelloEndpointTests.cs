@@ -1,13 +1,16 @@
-using System.Net;
+using Krosoft.Extensions.Core.Extensions;
+using Krosoft.Extensions.Core.Models.Dto;
 using Krosoft.Extensions.Samples.DotNet10.Api.Tests.Core;
 using Krosoft.Extensions.WebApi.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
+using System.Net;
+using System.Net.Http.Json;
 
 namespace Krosoft.Extensions.Samples.DotNet10.Api.Tests.Functional;
- 
+
 [TestClass]
 public class HelloEndpointTests : SampleBaseApiTest<Program>
 {
@@ -20,6 +23,20 @@ public class HelloEndpointTests : SampleBaseApiTest<Program>
         Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
         var result = await response.Content.ReadAsStringAsync(CancellationToken.None);
         Check.That(result).IsEqualTo("Hello DotNet10");
+    }
+
+    [TestMethod]
+    public async Task Hello_Ok_BadRequest()
+    {
+        var httpClient = Factory.CreateClient();
+        var response = await httpClient.PostAsJsonAsync("/Hello", new object(), CancellationToken.None);
+
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.BadRequest);
+        var error = await response.Content.ReadAsNewtonsoftJsonAsync<ErrorDto>();
+        Check.That(error).IsNotNull();
+        Check.That(error!.Code).IsEqualTo(400);
+        Check.That(error.Errors)
+             .ContainsExactly("'Name' ne doit pas être vide.");
     }
 
     [TestMethod]

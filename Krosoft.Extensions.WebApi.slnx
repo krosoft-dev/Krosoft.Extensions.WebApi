@@ -1,0 +1,30 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/samples/">
+    <Project Path="samples/docker-compose/docker-compose.dcproj">
+      <Platform Project="AnyCPU" />
+      <Build />
+    </Project>
+    <Project Path="samples/Krosoft.Extensions.Samples.DotNet10.Api/Krosoft.Extensions.Samples.DotNet10.Api.csproj" />
+    <Project Path="samples/Krosoft.Extensions.Samples.DotNet9.Api/Krosoft.Extensions.Samples.DotNet9.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Krosoft.Extensions.WebApi.Blocking/Krosoft.Extensions.WebApi.Blocking.csproj" />
+    <Project Path="src/Krosoft.Extensions.WebApi.HealthChecks/Krosoft.Extensions.WebApi.HealthChecks.csproj" />
+    <Project Path="src/Krosoft.Extensions.WebApi.Identity/Krosoft.Extensions.WebApi.Identity.csproj" />
+    <Project Path="src/Krosoft.Extensions.WebApi.Swagger.HealthChecks/Krosoft.Extensions.WebApi.Swagger.HealthChecks.csproj" />
+    <Project Path="src/Krosoft.Extensions.WebApi.Swagger/Krosoft.Extensions.WebApi.Swagger.csproj" />
+    <Project Path="src/Krosoft.Extensions.WebApi/Krosoft.Extensions.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Krosoft.Extensions.Samples.DotNet10.Api.Tests/Krosoft.Extensions.Samples.DotNet10.Api.Tests.csproj" />
+    <Project Path="tests/Krosoft.Extensions.Samples.DotNet9.Api.Tests/Krosoft.Extensions.Samples.DotNet9.Api.Tests.csproj" />
+    <Project Path="tests/Krosoft.Extensions.WebApi.Identity.Tests/Krosoft.Extensions.WebApi.Identity.Tests.csproj" />
+    <Project Path="tests/Krosoft.Extensions.WebApi.Tests/Krosoft.Extensions.WebApi.Tests.csproj" />
+  </Folder>
+</Solution>
