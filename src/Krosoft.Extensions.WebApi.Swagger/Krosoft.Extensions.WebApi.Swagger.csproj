@@ -33,6 +33,6 @@
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.9.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Krosoft.Extensions.Core" Version="2025.11.17.4348" />
+		<PackageReference Include="Krosoft.Extensions.Core" Version="2026.1.14.4995" />
 	</ItemGroup>
 </Project>

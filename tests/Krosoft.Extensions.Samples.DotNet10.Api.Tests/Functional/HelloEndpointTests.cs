@@ -36,7 +36,7 @@ public class HelloEndpointTests : SampleBaseApiTest<Program>
         Check.That(error).IsNotNull();
         Check.That(error!.Code).IsEqualTo(400);
         Check.That(error.Errors)
-             .ContainsExactly("'Name' ne doit pas être vide.");
+             .ContainsExactly("'Name' ne doit pas Ãªtre vide.");
     }
 
     [TestMethod]
