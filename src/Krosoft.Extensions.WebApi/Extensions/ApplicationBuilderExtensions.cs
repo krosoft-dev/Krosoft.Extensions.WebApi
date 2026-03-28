@@ -76,6 +76,17 @@ public static class ApplicationBuilderExtensions
 
         if (webApiSettings.AllowedOrigins.Any() || webApiSettings.ExposedHeaders.Any())
         {
+            // Chrome Private Network Access: public origins calling localhost require this header in the preflight response.
+            builder.Use(async (context, next) =>
+            {
+                if (context.Request.Method == HttpMethods.Options)
+                {
+                    context.Response.Headers["Access-Control-Allow-Private-Network"] = "true";
+                }
+
+                await next();
+            });
+
             builder.UseCors();
         }
 
