@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-		<PackageReference Include="Krosoft.Extensions.Testing.Cqrs" Version="2026.3.18.6179" />
-		<PackageReference Include="Krosoft.Extensions.Testing.WebApi" Version="2026.3.18.6180" />
-		<PackageReference Include="Krosoft.Extensions.Testing" Version="2026.3.26.6216" />
+		<PackageReference Include="Krosoft.Extensions.Testing.Cqrs" Version="2026.4.2.6338" />
+		<PackageReference Include="Krosoft.Extensions.Testing.WebApi" Version="2026.4.7.6395" />
+		<PackageReference Include="Krosoft.Extensions.Testing" Version="2026.4.7.6395" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\samples\Krosoft.Extensions.Samples.DotNet10.Api\Krosoft.Extensions.Samples.DotNet10.Api.csproj" />
