@@ -29,9 +29,9 @@ public class DeposerFichierCommandHandlerTests : SampleBaseTest<Program>
     [TestMethod]
     public void Handle_Empty()
     {
-        Check.ThatCode(async () =>
+        Check.ThatCode(() =>
              {
-                 await using var serviceProvider = CreateServiceCollection();
+                 using var serviceProvider = CreateServiceCollection();
                  return this.SendCommandAsync(serviceProvider, new DeposerFichierCommand(0, null!));
              })
              .Throws<KrosoftFunctionalException>()
