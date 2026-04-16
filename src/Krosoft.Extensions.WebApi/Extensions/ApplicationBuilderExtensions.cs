@@ -13,7 +13,7 @@ namespace Krosoft.Extensions.WebApi.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    private static readonly string FORWARDED_PREFIX_HEADER = "X-Forwarded-Prefix";
+    private const string ForwardedPrefixHeader = "X-Forwarded-Prefix";
 
     public static IApplicationBuilder UseCultures(this IApplicationBuilder builder, WebApiSettings? webApiSettings)
     {
@@ -60,7 +60,7 @@ public static class ApplicationBuilderExtensions
 
         builder.Use((context, next) =>
         {
-            var pathBase = context.Request.Headers[FORWARDED_PREFIX_HEADER].FirstOrDefault();
+            var pathBase = context.Request.Headers[ForwardedPrefixHeader].FirstOrDefault();
             if (!string.IsNullOrEmpty(pathBase))
             {
                 context.Request.PathBase = new PathString(pathBase);
