@@ -19,7 +19,6 @@ public class EnumDescriptionFilter : IDocumentFilter
             }
         }
 
-
         // Add enum descriptions to input parameters.
         foreach (var pathItem in swaggerDoc.Paths.Values)
         {
