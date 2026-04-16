@@ -28,11 +28,13 @@ public class DeposerFichierCommandHandlerTests : SampleBaseTest<Program>
     }
 
     [TestMethod]
-    public async Task Handle_Empty()
+    public void Handle_Empty()
     {
-        await using var serviceProvider = CreateServiceCollection();
-
-        Check.ThatCode(() => this.SendCommandAsync(serviceProvider, new DeposerFichierCommand(0, null!)))
+        Check.ThatCode(async () =>
+             {
+                 await using var serviceProvider = CreateServiceCollection();
+                 return this.SendCommandAsync(serviceProvider, new DeposerFichierCommand(0, null!));
+             })
              .Throws<KrosoftFunctionalException>()
              .WithMessage("'Fichier Id' ne doit pas être vide.");
     }

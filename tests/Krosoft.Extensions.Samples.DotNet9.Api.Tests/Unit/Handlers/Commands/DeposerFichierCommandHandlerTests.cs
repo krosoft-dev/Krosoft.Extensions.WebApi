@@ -21,18 +21,19 @@ public class DeposerFichierCommandHandlerTests : SampleBaseTest<Program>
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
         _mockLogger = new Mock<ILogger<DeposerFichierCommandHandler>>();
-        services.SwapTransient(_ => _mockLogger.Object)
-            ;
+        services.SwapTransient(_ => _mockLogger.Object);
 
         base.AddServices(services, configuration);
     }
 
     [TestMethod]
-    public async Task Handle_Empty()
+    public void Handle_Empty()
     {
-        await using var serviceProvider = CreateServiceCollection();
-
-        Check.ThatCode(() => this.SendCommandAsync(serviceProvider, new DeposerFichierCommand(0, null!)))
+        Check.ThatCode(async () =>
+             {
+                 await using var serviceProvider = CreateServiceCollection();
+                 return this.SendCommandAsync(serviceProvider, new DeposerFichierCommand(0, null!));
+             })
              .Throws<KrosoftFunctionalException>()
              .WithMessage("'Fichier Id' ne doit pas être vide.");
     }

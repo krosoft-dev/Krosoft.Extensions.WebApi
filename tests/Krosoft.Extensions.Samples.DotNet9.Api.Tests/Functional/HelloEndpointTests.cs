@@ -142,9 +142,6 @@ public class HelloEndpointTests : SampleBaseApiTest<Program>
                           });
                       });
 
-
-
-
         var server = new TestServer(builder);
         var httpClient = server.CreateClient();
 
