@@ -16,7 +16,7 @@ public static class RouteGroupBuilderExtensions
                                                    string pattern,
                                                    string? tag = null)
     {
-        var derivedTag = tag ?? Regex.Replace(pattern.TrimStart('/'), @"/\{[^}]+\}", "");
+        var derivedTag = tag ?? Regex.Replace(pattern.TrimStart('/'), @"/\{[^}]+\}", "", TimeSpan.FromMilliseconds(100));
         return app.MapGroup(pattern).WithTags(derivedTag);
     }
 
