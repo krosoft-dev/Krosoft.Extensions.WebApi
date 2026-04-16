@@ -1,4 +1,4 @@
-﻿#if NET9_0_OR_GREATER
+#if NET9_0_OR_GREATER
 using Krosoft.Extensions.WebApi.Identity.Attributes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -16,7 +16,7 @@ public static class RouteGroupBuilderExtensions
                                                    string pattern,
                                                    string? tag = null)
     {
-        var derivedTag = tag ?? Regex.Replace(pattern.TrimStart('/'), @"/\{[^}]+\}", "");
+        var derivedTag = tag ?? Regex.Replace(pattern.TrimStart('/'), @"/\{[^}]+\}", "", RegexOptions.None, TimeSpan.FromMilliseconds(100));
         return app.MapGroup(pattern).WithTags(derivedTag);
     }
 
