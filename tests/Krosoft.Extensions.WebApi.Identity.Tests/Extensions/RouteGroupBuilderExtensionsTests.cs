@@ -1,3 +1,4 @@
+using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.Identity.Attributes;
 using Krosoft.Extensions.WebApi.Identity.Extensions;
 using Microsoft.AspNetCore.Authorization;

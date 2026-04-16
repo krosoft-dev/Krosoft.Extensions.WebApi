@@ -9,9 +9,8 @@ namespace Krosoft.Extensions.Samples.DotNet10.Api.Features.Documents;
 internal class DocumentsEndpoint : IEndpoint
 {
     public RouteGroupBuilder DefineGroup(WebApplication app) =>
-        app.MapGroup("/Documents")
-           .DisableAntiforgery()
-           .WithTags("Documents");
+        app.MapTaggedGroup("/Documents")
+           .DisableAntiforgery();
 
     public void Register(RouteGroupBuilder group)
     {
