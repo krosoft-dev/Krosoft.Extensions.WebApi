@@ -1,6 +1,10 @@
 ﻿using System.Reflection;
 using Krosoft.Extensions.Core.Attributes;
+#if NET10_0_OR_GREATER
+using Microsoft.OpenApi;
+#else
 using Microsoft.OpenApi.Models;
+#endif
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
