@@ -20,13 +20,15 @@ internal class DocumentsEndpoint : IEndpoint
                                            CancellationToken cancellationToken)
                           => mediator.SendWithFileAsync(dto.File,
                                                         file => new DeposerFichierCommand(dto.FichierId, file),
-                                                        cancellationToken));
+                                                        cancellationToken)
+                                     .ToCreatedResult());
 
         group.MapPost("/Deposer/Fichier/SansRetour", ([AsParameters] DeposerFichierDto dto,
                                                       IMediator mediator,
                                                       CancellationToken cancellationToken)
                           => mediator.SendWithFileAsync(dto.File,
                                                         file => new DeposerFichierSansRetourCommand(dto.FichierId, file),
-                                                        cancellationToken));
+                                                        cancellationToken)
+                                     .ToNoContentResult());
     }
 }

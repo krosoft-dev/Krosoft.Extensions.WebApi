@@ -20,7 +20,7 @@ public class DocumentsEndpointTests : SampleBaseApiTest<Program>
         var httpClient = Factory.CreateClient();
         var response = await httpClient.PostAsync("/Documents/Deposer/Fichier", form);
 
-        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.Created);
         var depotDto = await response.Content.ReadAsNewtonsoftJsonAsync<DepotDto>(CancellationToken.None);
         Check.That(depotDto).IsNotNull();
 
@@ -37,7 +37,7 @@ public class DocumentsEndpointTests : SampleBaseApiTest<Program>
         var httpClient = Factory.CreateClient();
         var response = await httpClient.PostAsync("/Documents/Deposer/Fichier/SansRetour", form);
 
-        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.OK);
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.NoContent);
         var result = await response.Content.ReadAsStringAsync();
         Check.That(result).IsEmpty();
     }

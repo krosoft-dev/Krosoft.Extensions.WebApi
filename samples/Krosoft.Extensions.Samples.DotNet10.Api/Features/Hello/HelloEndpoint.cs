@@ -1,5 +1,6 @@
 ﻿using Krosoft.Extensions.Samples.DotNet10.Api.Features.Hello.Create;
 using Krosoft.Extensions.Samples.DotNet10.Api.Features.Hello.Get;
+using Krosoft.Extensions.WebApi.Extensions;
 using Krosoft.Extensions.WebApi.Interfaces;
 using MediatR;
 
@@ -20,6 +21,6 @@ internal class HelloEndpoint : IEndpoint
         group.MapPost("/", (HelloDotNet10CommandDto dto,
                             IMediator mediator,
                             CancellationToken cancellationToken)
-                          => mediator.Send(new HelloCommand(dto.Name), cancellationToken));
+                          => mediator.Send(new HelloCommand(dto.Name), cancellationToken).ToCreatedResult());
     }
 }
