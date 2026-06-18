@@ -6,10 +6,27 @@ namespace Krosoft.Extensions.WebApi.Extensions;
 
 public static class HttpResultExtensions
 {
+    public static async Task<Ok> ToOkResult(this Task task)
+    {
+        await task;
+        return TypedResults.Ok();
+    }
+
     public static async Task<Ok<T>> ToOkResult<T>(this Task<T> task)
     {
         var value = await task;
         return TypedResults.Ok(value);
+    }
+
+    public static async Task<Created> ToCreatedResult(this Task task, string? uri = null)
+    {
+        await task;
+#if NET7_0
+        // TypedResults.Created(string) is non-nullable on net7 — pass empty string when no URI is provided.
+        return TypedResults.Created(uri ?? string.Empty);
+#else
+        return TypedResults.Created(uri);
+#endif
     }
 
     public static async Task<Created<T>> ToCreatedResult<T>(this Task<T> task, string? uri = null)

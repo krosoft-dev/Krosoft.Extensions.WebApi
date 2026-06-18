@@ -7,6 +7,15 @@ namespace Krosoft.Extensions.WebApi.Tests.Extensions;
 public class HttpResultExtensionsTests
 {
     [TestMethod]
+    public async Task ToOkResult_OnVoidTask_ReturnsOk()
+    {
+        var result = await Task.CompletedTask.ToOkResult();
+
+        Check.That(result).IsInstanceOf<Ok>();
+        Check.That(result.StatusCode).IsEqualTo(200);
+    }
+
+    [TestMethod]
     public async Task ToOkResult_ReturnsOkWithValue()
     {
         var result = await Task.FromResult("hello").ToOkResult();
@@ -14,6 +23,25 @@ public class HttpResultExtensionsTests
         Check.That(result).IsInstanceOf<Ok<string>>();
         Check.That(result.Value).IsEqualTo("hello");
         Check.That(result.StatusCode).IsEqualTo(200);
+    }
+
+    [TestMethod]
+    public async Task ToCreatedResult_OnVoidTask_WithoutUri_ReturnsCreated()
+    {
+        var result = await Task.CompletedTask.ToCreatedResult();
+
+        Check.That(result).IsInstanceOf<Created>();
+        Check.That(result.StatusCode).IsEqualTo(201);
+    }
+
+    [TestMethod]
+    public async Task ToCreatedResult_OnVoidTask_WithUri_ReturnsCreatedWithLocation()
+    {
+        var result = await Task.CompletedTask.ToCreatedResult("/resource/1");
+
+        Check.That(result).IsInstanceOf<Created>();
+        Check.That(result.StatusCode).IsEqualTo(201);
+        Check.That(result.Location).IsEqualTo("/resource/1");
     }
 
     [TestMethod]
