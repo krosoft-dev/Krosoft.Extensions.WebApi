@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2026.2.0" />
-		<PackageReference Include="Krosoft.Extensions.Testing" Version="2026.5.28.7430" />
+		<PackageReference Include="Krosoft.Extensions.Testing" Version="2026.6.20.7579" />
         <!--  CVE-2026-33116 / CVE-2026-26171 : System.Security.Cryptography.Xml DoS vulnerabilities -->
         <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.8" />
 	</ItemGroup>
