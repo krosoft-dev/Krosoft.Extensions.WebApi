@@ -1,8 +1,12 @@
 ﻿using Krosoft.Extensions.WebApi.Swagger.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Net.Http.Headers;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+#if NET10_0_OR_GREATER
+using Microsoft.OpenApi;
+#else
+using Microsoft.OpenApi.Models;
+#endif
 
 namespace Krosoft.Extensions.WebApi.Swagger.Extensions;
 

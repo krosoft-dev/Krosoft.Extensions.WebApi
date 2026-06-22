@@ -1,5 +1,10 @@
-﻿using Microsoft.OpenApi.Any;
+﻿using Microsoft.OpenApi;
+#if NET10_0_OR_GREATER
+using Microsoft.OpenApi;
+#else
 using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Any;
+#endif
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Krosoft.Extensions.WebApi.Swagger.Filters;
