@@ -145,6 +145,53 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    /// <summary>
+    /// Configure l'authentification JWT Bearer via une autorité OIDC externe (Supabase, Auth0,
+    /// Keycloak, Entra ID...). Les clés de signature publiques sont découvertes automatiquement à
+    /// partir de l'autorité (<c>{Authority}/.well-known/openid-configuration</c> puis le endpoint
+    /// JWKS) : aucune clé symétrique locale, support natif des algorithmes asymétriques (RS256,
+    /// ES256...) et de la rotation des clés.
+    /// </summary>
+    public static IServiceCollection AddJwtAuthorityAuthentication(this IServiceCollection services,
+                                                                   IConfiguration configuration)
+    {
+        services.AddOptions();
+        services.Configure<JwtAuthoritySettings>(configuration.GetSection(nameof(JwtAuthoritySettings)));
+        var jwtAuthoritySettings = configuration.GetSection(nameof(JwtAuthoritySettings)).Get<JwtAuthoritySettings>();
+        if (jwtAuthoritySettings == null)
+        {
+            throw new KrosoftTechnicalException($"Impossible d'instancier l'objet de type '{nameof(JwtAuthoritySettings)}'.");
+        }
+
+        services.AddAuthentication(authenticationOptions =>
+                {
+                    authenticationOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    authenticationOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(jwtBearerOptions =>
+                {
+                    jwtBearerOptions.Authority = jwtAuthoritySettings.Authority;
+                    jwtBearerOptions.SaveToken = true;
+                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtAuthoritySettings.Authority,
+                        ValidateAudience = true,
+                        ValidAudience = jwtAuthoritySettings.Audience,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ClockSkew = TimeSpan.FromSeconds(30)
+                    };
+                    jwtBearerOptions.Events = new JwtBearerEvents
+                    {
+                        OnAuthenticationFailed = OnAuthenticationFailed,
+                        OnTokenValidated = OnTokenValidated
+                    };
+                });
+
+        return services;
+    }
+
     public static IServiceCollection AddJwtGenerator(this IServiceCollection services,
                                                      IConfiguration configuration)
     {
