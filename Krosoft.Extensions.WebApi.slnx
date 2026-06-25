@@ -11,7 +11,6 @@
       <Build />
     </Project>
     <Project Path="samples/Krosoft.Extensions.Samples.DotNet10.Api/Krosoft.Extensions.Samples.DotNet10.Api.csproj" />
-    <Project Path="samples/Krosoft.Extensions.Samples.DotNet9.Api/Krosoft.Extensions.Samples.DotNet9.Api.csproj" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/Krosoft.Extensions.WebApi.Blocking/Krosoft.Extensions.WebApi.Blocking.csproj" />
@@ -23,8 +22,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Krosoft.Extensions.Samples.DotNet10.Api.Tests/Krosoft.Extensions.Samples.DotNet10.Api.Tests.csproj" />
-    <Project Path="tests/Krosoft.Extensions.Samples.DotNet9.Api.Tests/Krosoft.Extensions.Samples.DotNet9.Api.Tests.csproj" />
-    <Project Path="tests/Krosoft.Extensions.WebApi.Identity.Tests/Krosoft.Extensions.WebApi.Identity.Tests.csproj" />
+     <Project Path="tests/Krosoft.Extensions.WebApi.Identity.Tests/Krosoft.Extensions.WebApi.Identity.Tests.csproj" />
     <Project Path="tests/Krosoft.Extensions.WebApi.Tests/Krosoft.Extensions.WebApi.Tests.csproj" />
   </Folder>
 </Solution>

@@ -28,8 +28,6 @@ public static class ServiceCollectionExtensions
 
 #if NET6_0_OR_GREATER
         services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.SmallestSize; });
-#else
-        services.Configure<GzipCompressionProviderOptions>(options => { options.Level = CompressionLevel.Optimal; });
 #endif
         return services;
     }

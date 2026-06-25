@@ -219,11 +219,6 @@ public static class ServiceCollectionExtensions
         {
 #if NET8_0_OR_GREATER
             context.Response.Headers.Append("Token-Expired", "true");
-#else
-            if (!context.Response.Headers.ContainsKey("Token-Expired"))
-            {
-                context.Response.Headers.Add("Token-Expired", "true");
-            }
 #endif
         }
 
