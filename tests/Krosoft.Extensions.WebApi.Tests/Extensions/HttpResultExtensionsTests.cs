@@ -78,6 +78,56 @@ public class HttpResultExtensionsTests
     }
 
     [TestMethod]
+    public async Task ToAcceptedResult_OnVoidTask_WithoutUri_ReturnsAccepted()
+    {
+        var result = await Task.CompletedTask.ToAcceptedResult();
+
+        Check.That(result).IsInstanceOf<Accepted>();
+        Check.That(result.StatusCode).IsEqualTo(202);
+        Check.That(result.Location).IsNull();
+    }
+
+    [TestMethod]
+    public async Task ToAcceptedResult_OnVoidTask_WithUri_ReturnsAcceptedWithLocation()
+    {
+        var result = await Task.CompletedTask.ToAcceptedResult("/jobs/1");
+
+        Check.That(result).IsInstanceOf<Accepted>();
+        Check.That(result.StatusCode).IsEqualTo(202);
+        Check.That(result.Location).IsEqualTo("/jobs/1");
+    }
+
+    [TestMethod]
+    public async Task ToAcceptedResult_WithoutUri_ReturnsAcceptedWithValue()
+    {
+        var result = await Task.FromResult("hello").ToAcceptedResult();
+
+        Check.That(result).IsInstanceOf<Accepted<string>>();
+        Check.That(result.Value).IsEqualTo("hello");
+        Check.That(result.StatusCode).IsEqualTo(202);
+        Check.That(result.Location).IsNull();
+    }
+
+    [TestMethod]
+    public async Task ToAcceptedResult_WithUri_ReturnsAcceptedWithLocation()
+    {
+        var result = await Task.FromResult("hello").ToAcceptedResult("/jobs/1");
+
+        Check.That(result).IsInstanceOf<Accepted<string>>();
+        Check.That(result.Value).IsEqualTo("hello");
+        Check.That(result.StatusCode).IsEqualTo(202);
+        Check.That(result.Location).IsEqualTo("/jobs/1");
+    }
+
+    [TestMethod]
+    public void ToAcceptedResult_WhenTaskFails_PropagatesException()
+    {
+        Check.ThatCode(async () => await Task.FromException(new InvalidOperationException("boom")).ToAcceptedResult())
+             .Throws<InvalidOperationException>()
+             .WithMessage("boom");
+    }
+
+    [TestMethod]
     public async Task ToRedirectResult_ReturnsRedirectWithUrl()
     {
         var result = await Task.FromResult("https://app.example/callback?ok=1").ToRedirectResult();

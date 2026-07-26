@@ -36,6 +36,19 @@ public static class HttpResultExtensions
         return TypedResults.Created(uri, value);
     }
 
+    // Traitement asynchrone accepté (ex : webhook déposé dans une file d'attente).
+    public static async Task<Accepted> ToAcceptedResult(this Task task, string? uri = null)
+    {
+        await task;
+        return TypedResults.Accepted(uri);
+    }
+
+    public static async Task<Accepted<T>> ToAcceptedResult<T>(this Task<T> task, string? uri = null)
+    {
+        var value = await task;
+        return TypedResults.Accepted(uri, value);
+    }
+
     // Redirige vers l'URL produite par le handler (ex : callback OAuth qui renvoie l'URL de retour).
     public static async Task<RedirectHttpResult> ToRedirectResult(this Task<string> task,
                                                                  bool permanent = false,
