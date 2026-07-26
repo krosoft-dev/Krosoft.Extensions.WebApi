@@ -18,6 +18,12 @@ public static class HttpResultExtensions
         return TypedResults.Ok(value);
     }
 
+    public static async Task<Ok<Dictionary<string, T>>> ToOkResult<T>(this Task<T> task, string propertyName)
+    {
+        var value = await task;
+        return TypedResults.Ok(new Dictionary<string, T> { [propertyName] = value });
+    }
+
     public static async Task<Created> ToCreatedResult(this Task task, string? uri = null)
     {
         await task;

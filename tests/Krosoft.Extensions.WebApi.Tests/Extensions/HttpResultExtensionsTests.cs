@@ -26,6 +26,18 @@ public class HttpResultExtensionsTests
     }
 
     [TestMethod]
+    public async Task ToOkResult_WithPropertyName_ReturnsOkWithSinglePropertyObject()
+    {
+        var result = await Task.FromResult("https://auth.example/authorize").ToOkResult("authorizationUrl");
+
+        Check.That(result).IsInstanceOf<Ok<Dictionary<string, string>>>();
+        Check.That(result.StatusCode).IsEqualTo(200);
+        Check.That(result.Value).IsNotNull();
+        Check.That(result.Value!).ContainsKey("authorizationUrl");
+        Check.That(result.Value!["authorizationUrl"]).IsEqualTo("https://auth.example/authorize");
+    }
+
+    [TestMethod]
     public async Task ToCreatedResult_OnVoidTask_WithoutUri_ReturnsCreated()
     {
         var result = await Task.CompletedTask.ToCreatedResult();
