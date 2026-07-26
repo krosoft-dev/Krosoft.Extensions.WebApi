@@ -78,6 +78,100 @@ public class HttpResultExtensionsTests
     }
 
     [TestMethod]
+    public async Task ToRedirectResult_ReturnsRedirectWithUrl()
+    {
+        var result = await Task.FromResult("https://app.example/callback?ok=1").ToRedirectResult();
+
+        Check.That(result).IsInstanceOf<RedirectHttpResult>();
+        Check.That(result.Url).IsEqualTo("https://app.example/callback?ok=1");
+        Check.That(result.Permanent).IsFalse();
+        Check.That(result.PreserveMethod).IsFalse();
+    }
+
+    [TestMethod]
+    public async Task ToRedirectResult_WithPermanentAndPreserveMethod_ReturnsRedirect()
+    {
+        var result = await Task.FromResult("/home").ToRedirectResult(true, true);
+
+        Check.That(result.Url).IsEqualTo("/home");
+        Check.That(result.Permanent).IsTrue();
+        Check.That(result.PreserveMethod).IsTrue();
+    }
+
+    [TestMethod]
+    public async Task ToRedirectResult_WithPermanentOnly_ReturnsRedirect()
+    {
+        var result = await Task.FromResult("/home").ToRedirectResult(true);
+
+        Check.That(result.Permanent).IsTrue();
+        Check.That(result.PreserveMethod).IsFalse();
+    }
+
+    [TestMethod]
+    public async Task ToRedirectResult_WithPreserveMethodOnly_ReturnsRedirect()
+    {
+        var result = await Task.FromResult("/home").ToRedirectResult(false, true);
+
+        Check.That(result.Permanent).IsFalse();
+        Check.That(result.PreserveMethod).IsTrue();
+    }
+
+    [TestMethod]
+    public void ToRedirectResult_WhenUrlIsNull_Throws()
+    {
+        Check.ThatCode(async () => await Task.FromResult<string>(null!).ToRedirectResult())
+             .Throws<ArgumentNullException>();
+    }
+
+    [TestMethod]
+    public void ToRedirectResult_WhenUrlIsEmpty_Throws()
+    {
+        Check.ThatCode(async () => await Task.FromResult(string.Empty).ToRedirectResult())
+             .Throws<ArgumentException>();
+    }
+
+    [TestMethod]
+    public void ToRedirectResult_WhenTaskFails_PropagatesException()
+    {
+        Check.ThatCode(async () => await Task.FromException<string>(new InvalidOperationException("boom")).ToRedirectResult())
+             .Throws<InvalidOperationException>()
+             .WithMessage("boom");
+    }
+
+    [TestMethod]
+    public async Task ToRedirectResult_OnUri_ReturnsRedirectWithUrl()
+    {
+        var result = await Task.FromResult(new Uri("https://app.example/callback")).ToRedirectResult();
+
+        Check.That(result).IsInstanceOf<RedirectHttpResult>();
+        Check.That(result.Url).IsEqualTo("https://app.example/callback");
+    }
+
+    [TestMethod]
+    public async Task ToRedirectResult_OnRelativeUri_ReturnsRedirectWithUrl()
+    {
+        var result = await Task.FromResult(new Uri("/callback?ok=1", UriKind.Relative)).ToRedirectResult();
+
+        Check.That(result.Url).IsEqualTo("/callback?ok=1");
+    }
+
+    [TestMethod]
+    public async Task ToRedirectResult_OnUri_WithPermanentAndPreserveMethod_ReturnsRedirect()
+    {
+        var result = await Task.FromResult(new Uri("https://app.example/callback")).ToRedirectResult(true, true);
+
+        Check.That(result.Permanent).IsTrue();
+        Check.That(result.PreserveMethod).IsTrue();
+    }
+
+    [TestMethod]
+    public void ToRedirectResult_OnUri_WhenUriIsNull_Throws()
+    {
+        Check.ThatCode(async () => await Task.FromResult<Uri>(null!).ToRedirectResult())
+             .Throws<ArgumentNullException>();
+    }
+
+    [TestMethod]
     public async Task ToNoContentResult_OnVoidTask_ReturnsNoContent()
     {
         var result = await Task.CompletedTask.ToNoContentResult();

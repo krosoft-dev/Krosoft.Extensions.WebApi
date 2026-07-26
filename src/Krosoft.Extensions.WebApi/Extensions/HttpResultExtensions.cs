@@ -36,6 +36,24 @@ public static class HttpResultExtensions
         return TypedResults.Created(uri, value);
     }
 
+    // Redirige vers l'URL produite par le handler (ex : callback OAuth qui renvoie l'URL de retour).
+    public static async Task<RedirectHttpResult> ToRedirectResult(this Task<string> task,
+                                                                 bool permanent = false,
+                                                                 bool preserveMethod = false)
+    {
+        var url = await task;
+        return TypedResults.Redirect(url, permanent, preserveMethod);
+    }
+
+    public static async Task<RedirectHttpResult> ToRedirectResult(this Task<Uri> task,
+                                                                 bool permanent = false,
+                                                                 bool preserveMethod = false)
+    {
+        var uri = await task;
+        ArgumentNullException.ThrowIfNull(uri);
+        return TypedResults.Redirect(uri.ToString(), permanent, preserveMethod);
+    }
+
     public static async Task<NoContent> ToNoContentResult(this Task task)
     {
         await task;
