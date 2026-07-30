@@ -36,6 +36,11 @@ public static class HttpContextExtensions
             case HttpException re:
                 status = re.Code;
                 break;
+            // Levee par Kestrel et par la liaison des minimal API : corps au-dela du plafond,
+            // Content-Type inattendu, formulaire malforme. Elle porte deja son code HTTP.
+            case BadHttpRequestException bad:
+                status = (HttpStatusCode)bad.StatusCode;
+                break;
         }
 
         var error = new ErrorDto

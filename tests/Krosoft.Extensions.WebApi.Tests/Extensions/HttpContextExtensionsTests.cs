@@ -92,6 +92,41 @@ public class HttpContextExtensionsTests
     }
 
     [TestMethod]
+    public async Task HandleExceptionAsync_WithBadHttpRequestException_SetsStatusCodeFromException()
+    {
+        var exception = new BadHttpRequestException("Unexpected end of request content.", (int)HttpStatusCode.BadRequest);
+        var context = CreateMockHttpContext();
+
+        await context.HandleExceptionAsync(exception);
+
+        var responseBody = GetResponseBody(context);
+        var errorDto = JsonConvert.DeserializeObject<ErrorDto>(responseBody);
+
+        Check.That(context.Response.StatusCode).IsEqualTo((int)HttpStatusCode.BadRequest);
+        Check.That(context.Response.ContentType).IsEqualTo(MediaTypeNames.Application.Json);
+        Check.That(errorDto).IsNotNull();
+        Check.That(errorDto!.Code).IsEqualTo((int)HttpStatusCode.BadRequest);
+        Check.That(errorDto.Message).IsEqualTo(nameof(HttpStatusCode.BadRequest));
+        Check.That(errorDto.Errors).ContainsExactly("Unexpected end of request content.");
+    }
+
+    [TestMethod]
+    public async Task HandleExceptionAsync_WithBadHttpRequestExceptionTooLarge_SetsRequestEntityTooLarge()
+    {
+        var exception = new BadHttpRequestException("Request body too large.", (int)HttpStatusCode.RequestEntityTooLarge);
+        var context = CreateMockHttpContext();
+
+        await context.HandleExceptionAsync(exception);
+
+        var responseBody = GetResponseBody(context);
+        var errorDto = JsonConvert.DeserializeObject<ErrorDto>(responseBody);
+
+        Check.That(context.Response.StatusCode).IsEqualTo((int)HttpStatusCode.RequestEntityTooLarge);
+        Check.That(errorDto!.Code).IsEqualTo((int)HttpStatusCode.RequestEntityTooLarge);
+        Check.That(errorDto.Message).IsEqualTo(nameof(HttpStatusCode.RequestEntityTooLarge));
+    }
+
+    [TestMethod]
     public async Task HandleExceptionAsync_WithEmptyExceptionMessage_NoKrosoft()
     {
         var exception = new Exception();
