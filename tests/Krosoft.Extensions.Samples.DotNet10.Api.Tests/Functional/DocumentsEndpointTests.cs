@@ -43,15 +43,15 @@ public class DocumentsEndpointTests : SampleBaseApiTest<Program>
     }
 
     [TestMethod]
-    public async Task Deposer_Error()
+    public async Task Deposer_SansCorps_BadRequest()
     {
         var httpClient = Factory.CreateClient();
         var response = await httpClient.PostAsync("/Documents/Deposer/Fichier", null);
 
-        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.InternalServerError);
+        Check.That(response.StatusCode).IsEqualTo(HttpStatusCode.BadRequest);
         var errorDto = await response.Content.ReadAsNewtonsoftJsonAsync<ErrorDto>(CancellationToken.None);
         Check.That(errorDto).IsNotNull();
-        Check.That(errorDto!.Message).StartsWith("InternalServerError");
+        Check.That(errorDto!.Message).StartsWith("BadRequest");
         Check.That(errorDto.Errors).ContainsExactly("Unexpected request without body, failed to bind parameter \"long FichierId\" from the request body as form.");
     }
 
