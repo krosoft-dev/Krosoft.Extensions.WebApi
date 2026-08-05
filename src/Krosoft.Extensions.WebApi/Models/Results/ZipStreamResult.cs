@@ -2,6 +2,7 @@ using System.IO.Compression;
 using System.Net.Mime;
 using Krosoft.Extensions.Core.Tools;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Net.Http.Headers;
 
 namespace Krosoft.Extensions.WebApi.Models.Results;
@@ -12,6 +13,8 @@ namespace Krosoft.Extensions.WebApi.Models.Results;
 /// </summary>
 public class ZipStreamResult : IResult
 {
+    private const int BufferSize = 81920;
+
     private readonly CompressionLevel _compressionLevel;
     private readonly IReadOnlyDictionary<string, string> _filePathsByEntryName;
 
@@ -48,21 +51,38 @@ public class ZipStreamResult : IResult
 
         var cancellationToken = httpContext.RequestAborted;
 
-        using var archive = new ZipArchive(response.Body, ZipArchiveMode.Create, true);
-        foreach (var filePathByEntryName in _filePathsByEntryName)
+        //ZipArchive ferme ses entrées de façon synchrone, même via DisposeAsync : sans cela le serveur
+        //refuse l'écriture du descripteur de données et de l'index, et l'archive produite est illisible.
+        var bodyControlFeature = httpContext.Features.Get<IHttpBodyControlFeature>();
+        if (bodyControlFeature != null)
         {
-            if (!File.Exists(filePathByEntryName.Value))
+            bodyControlFeature.AllowSynchronousIO = true;
+        }
+
+        //Le volume, lui, transite par les API asynchrones : aucun thread n'est bloqué sur la copie.
+        var archive = await ZipArchive.CreateAsync(response.Body, ZipArchiveMode.Create, true, null, cancellationToken);
+        await using (archive)
+        {
+            foreach (var filePathByEntryName in _filePathsByEntryName)
             {
-                continue;
+                if (!File.Exists(filePathByEntryName.Value))
+                {
+                    continue;
+                }
+
+                //Le séparateur d'une entrée d'archive est toujours '/', quel que soit l'OS.
+                var entryName = filePathByEntryName.Key.Replace('\\', '/');
+
+                var entry = archive.CreateEntry(entryName, _compressionLevel);
+                await using var entryStream = await entry.OpenAsync(cancellationToken);
+                await using var fileStream = new FileStream(filePathByEntryName.Value,
+                                                            FileMode.Open,
+                                                            FileAccess.Read,
+                                                            FileShare.Read,
+                                                            BufferSize,
+                                                            true);
+                await fileStream.CopyToAsync(entryStream, cancellationToken);
             }
-
-            //Le séparateur d'une entrée d'archive est toujours '/', quel que soit l'OS.
-            var entryName = filePathByEntryName.Key.Replace('\\', '/');
-
-            var entry = archive.CreateEntry(entryName, _compressionLevel);
-            await using var entryStream = entry.Open();
-            await using var fileStream = File.OpenRead(filePathByEntryName.Value);
-            await fileStream.CopyToAsync(entryStream, cancellationToken);
         }
     }
 }
