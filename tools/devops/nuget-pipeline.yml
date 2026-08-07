@@ -15,10 +15,16 @@ trigger:
       - main
   paths:
     include:
-      - "**/Krosoft.Extensions.WebApi/*"
+      - src
+      - Directory.Build.props
 
 extends:
   template: tools/devops/templates/pipelines/nuget-template.yml@Krosoft.Extensions
   parameters:
     packages:
       - "Krosoft.Extensions.WebApi"
+      - "Krosoft.Extensions.WebApi.Blocking"
+      - "Krosoft.Extensions.WebApi.HealthChecks"
+      - "Krosoft.Extensions.WebApi.Identity"
+      - "Krosoft.Extensions.WebApi.Swagger"
+      - "Krosoft.Extensions.WebApi.Swagger.HealthChecks"
