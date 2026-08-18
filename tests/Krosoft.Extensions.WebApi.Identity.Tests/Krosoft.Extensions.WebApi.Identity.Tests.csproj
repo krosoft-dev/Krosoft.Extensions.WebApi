@@ -2,7 +2,7 @@
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2026.2.0" />
 		<PackageReference Include="Krosoft.Extensions.Testing" Version="2026.8.10.9031" />
-        <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.10" />
+        <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.11" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.Identity\Krosoft.Extensions.WebApi.Identity.csproj" />
