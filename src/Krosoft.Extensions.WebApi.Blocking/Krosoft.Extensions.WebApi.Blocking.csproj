@@ -7,7 +7,7 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Krosoft.Extensions.Blocking" Version="2026.8.7.8914" />
+		<PackageReference Include="Krosoft.Extensions.Blocking" Version="2026.8.18.9209" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Krosoft.Extensions.WebApi.Identity\Krosoft.Extensions.WebApi.Identity.csproj" />
