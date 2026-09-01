@@ -11,7 +11,7 @@
 		<PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.11" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Krosoft.Extensions.Core" Version="2026.8.27.9744" />
+		<PackageReference Include="Krosoft.Extensions.Core" Version="2026.8.31.10083" />
 		<PackageReference Include="Krosoft.Extensions.Identity" Version="2026.8.28.9786" />
 		<PackageReference Include="Krosoft.Extensions.Identity.Abstractions" Version="2026.8.28.9786" />
 	</ItemGroup>
