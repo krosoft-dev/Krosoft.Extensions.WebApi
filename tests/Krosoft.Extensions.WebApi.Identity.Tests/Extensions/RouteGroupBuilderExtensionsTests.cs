@@ -139,10 +139,61 @@ public class RouteGroupBuilderExtensionsTests
         Check.That(antiforgeryDisabled).IsTrue();
     }
 
+    [TestMethod]
+    public void RequirePermission_OnRoute_WithoutRoles_ShouldRequireAuthorizationWithoutRoles()
+    {
+        var route = _app.MapGet("/dummy-route-auth1", () => Results.Ok());
+
+        var result = route.RequirePermission();
+
+        Check.That(result).IsSameReferenceAs(route);
+
+        var endpoint = FindEndpoint("/dummy-route-auth1");
+        var authorizeData = endpoint.Metadata.GetOrderedMetadata<IAuthorizeData>();
+        Check.That(authorizeData).IsNotNull();
+        Check.That(authorizeData).Not.IsEmpty();
+
+        var hasRolesDefined = authorizeData.Any(a => !string.IsNullOrEmpty(a.Roles));
+        Check.That(hasRolesDefined).IsFalse();
+
+        var antiforgeryDisabled = endpoint.Metadata
+                                          .Any(m => m.GetType()
+                                                     .GetInterfaces()
+                                                     .Any(i => i.Name.Contains("Antiforgery")));
+        Check.That(antiforgeryDisabled).IsTrue();
+    }
+
+    [TestMethod]
+    public void RequirePermission_OnRoute_WithRoles_ShouldRequireAuthorizationWithRoles()
+    {
+        var route = _app.MapGet("/dummy-route-auth2", () => Results.Ok());
+
+        var result = route.RequirePermission("Admin,User");
+
+        Check.That(result).IsSameReferenceAs(route);
+
+        var endpoint = FindEndpoint("/dummy-route-auth2");
+        var authorizeData = endpoint.Metadata.GetOrderedMetadata<IAuthorizeData>();
+        Check.That(authorizeData).IsNotNull();
+        Check.That(authorizeData).Not.IsEmpty();
+        Check.That(authorizeData.Last().Roles).IsEqualTo("Admin,User");
+
+        var antiforgeryDisabled = endpoint.Metadata
+                                          .Any(m => m.GetType()
+                                                     .GetInterfaces()
+                                                     .Any(i => i.Name.Contains("Antiforgery")));
+        Check.That(antiforgeryDisabled).IsTrue();
+    }
+
     private Endpoint GetEndpoint(RouteGroupBuilder group, string path)
     {
         group.MapGet(path, () => Results.Ok());
 
+        return FindEndpoint(path);
+    }
+
+    private Endpoint FindEndpoint(string path)
+    {
         var appRouteBuilder = (IEndpointRouteBuilder)_app;
         var endpoints = appRouteBuilder.DataSources
                                        .SelectMany(ds => ds.Endpoints)

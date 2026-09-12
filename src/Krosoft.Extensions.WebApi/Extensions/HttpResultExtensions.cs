@@ -1,4 +1,5 @@
 #if NET7_0_OR_GREATER
+using Krosoft.Extensions.WebApi.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -6,6 +7,19 @@ namespace Krosoft.Extensions.WebApi.Extensions;
 
 public static class HttpResultExtensions
 {
+    /// <summary>
+    /// Sert le contenu binaire en fichier HTTP, ou 404 si le handler ne renvoie rien.
+    /// Évite de répéter le motif « null ? NotFound : File(Data, ContentType) » à chaque endpoint de fichier.
+    /// </summary>
+    public static async Task<Results<FileContentHttpResult, NotFound>> ToFileResult<T>(this Task<T?> task)
+        where T : class, IFileContent
+    {
+        var content = await task;
+        return content is null
+            ? TypedResults.NotFound()
+            : TypedResults.File(content.Data, content.ContentType);
+    }
+
     public static async Task<Ok> ToOkResult(this Task task)
     {
         await task;

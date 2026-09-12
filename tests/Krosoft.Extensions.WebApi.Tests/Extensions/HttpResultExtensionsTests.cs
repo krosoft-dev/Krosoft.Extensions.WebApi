@@ -1,11 +1,31 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Krosoft.Extensions.WebApi.Extensions;
+using Krosoft.Extensions.WebApi.Interfaces;
 
 namespace Krosoft.Extensions.WebApi.Tests.Extensions;
 
 [TestClass]
 public class HttpResultExtensionsTests
 {
+    private sealed record FakeFile(byte[] Data, string ContentType) : IFileContent;
+
+    [TestMethod]
+    public async Task ToFileResult_WhenContentPresent_ReturnsFile()
+    {
+        var result = await Task.FromResult<FakeFile?>(new FakeFile([1, 2, 3], "image/png")).ToFileResult();
+
+        Check.That(result.Result).IsInstanceOf<FileContentHttpResult>();
+        Check.That(((FileContentHttpResult)result.Result).ContentType).IsEqualTo("image/png");
+    }
+
+    [TestMethod]
+    public async Task ToFileResult_WhenContentNull_ReturnsNotFound()
+    {
+        var result = await Task.FromResult<FakeFile?>(null).ToFileResult();
+
+        Check.That(result.Result).IsInstanceOf<NotFound>();
+    }
+
     [TestMethod]
     public async Task ToOkResult_OnVoidTask_ReturnsOk()
     {

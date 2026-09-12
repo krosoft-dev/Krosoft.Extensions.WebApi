@@ -30,5 +30,19 @@ public static class RouteGroupBuilderExtensions
             ? group.RequireAuthorization()
             : group.RequireAuthorization(new AuthorizeAttribute { Roles = roles });
     }
+
+    /// <summary>
+    /// Surcharge route par route : <c>MapGet</c>/<c>MapPost</c>/… renvoient un <see cref="RouteHandlerBuilder" />
+    /// (et non un <see cref="RouteGroupBuilder" />), on peut ainsi exiger une permission sur une seule route
+    /// sans passer par un sous-groupe.
+    /// </summary>
+    public static RouteHandlerBuilder RequirePermission(this RouteHandlerBuilder builder,
+                                                        string? roles = null)
+    {
+        builder.DisableAntiforgery();
+        return roles is null
+            ? builder.RequireAuthorization()
+            : builder.RequireAuthorization(new AuthorizeAttribute { Roles = roles });
+    }
 #endif
 }
