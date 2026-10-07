@@ -13,6 +13,7 @@ using Krosoft.Extensions.WebApi.Identity.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -55,6 +56,19 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApiKeyStorage(this IServiceCollection services)
     {
         services.AddTransient<IApiKeyStorageProvider, SettingsApiKeyStorageProvider>();
+
+        return services;
+    }
+
+    /// <summary>
+    /// Donne un corps (<c>ErrorDto</c>) aux 401/403 du middleware d'autorisation ; un 403 indique la permission
+    /// manquante (<c>RequirePermission</c>). Remplace le <see cref="IAuthorizationMiddlewareResultHandler" /> par défaut.
+    /// </summary>
+    public static IServiceCollection AddPermissionErrorResponses(this IServiceCollection services,
+                                                                 Action<PermissionErrorOptions>? configure = null)
+    {
+        services.Configure(configure ?? (_ => { }));
+        services.AddSingleton<IAuthorizationMiddlewareResultHandler, PermissionAuthorizationResultHandler>();
 
         return services;
     }
