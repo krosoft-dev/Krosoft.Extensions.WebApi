@@ -10,7 +10,7 @@
 	<ItemGroup>
 		<PackageReference Include="Krosoft.Extensions.Cqrs" Version="2026.11.16.13419" />
 		<PackageReference Include="Krosoft.Extensions.Cqrs.Behaviors" Version="2026.11.16.13419" />
-		<PackageReference Include="Krosoft.Extensions.Cqrs.Behaviors.Validations" Version="2026.11.16.13419" />
+		<PackageReference Include="Krosoft.Extensions.Cqrs.Behaviors.Validations" Version="2026.11.16.13641" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Krosoft.Extensions.WebApi.HealthChecks\Krosoft.Extensions.WebApi.HealthChecks.csproj" />
