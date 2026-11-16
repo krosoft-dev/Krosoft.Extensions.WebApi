@@ -6,10 +6,8 @@
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
-	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Krosoft.Extensions.Core" Version="2026.11.16.13416" />
+		<PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
+		<PackageReference Include="Krosoft.Extensions.Core" Version="2026.11.16.13768" />
 	</ItemGroup>
 </Project>
